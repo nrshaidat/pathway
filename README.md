@@ -76,6 +76,8 @@ Challenges:
 - Implementing multiple hotels; we need to make sure that our code is very generic and can implement different shift times, hotel sizes, employee numbers, specifications, etc. 
 - Different languages (How do we parse information that is inputted in a different language?)
 
+TA Approval: Approved - good idea and I think the queue algorithm will be interesting. I hope you can user test this somehow!
+
 
 ### Idea 2
 ### cloutalytics
@@ -90,6 +92,8 @@ Challenges:
 - Handling the amount of data from a social media platform, because there are a lot of posts, likes, and user engagements that we would need to keep track of in a database. 
 - Security issues could arise if a company does not want to volunteer data so easiily. 
 - Recommendation would be difficult to implement because we would need to understand what posts are considered "good" and viable for a particular company in a sector. 
+
+TA Approval: Approved - make sure to differentiate yourself from the tools already built into instagram, and algorithm could also focus on identifying competitors and successful tactics on their end.
 
 ### Idea 3
 ### Pathway 
@@ -107,6 +111,10 @@ Challenges:
 - Not generic to other universities, only applicable for Brown Students (If we wanted to include RISD classes, we would also need to get that information as well)
 - Logic on the algorithm: figuring out constraints on their preferences, requirements, workload, etc. Furthermore, there are a lot of constraints because of semesters a class is offered, time a course is offered, etc. 
 - Edge cases: e.g. 0.5'ers, independent concentrators, GISPs, capstone projects, personal projects, research, recruiting scheduling, TA schedules, Sports. 
+
+TA Approval: Approved with change - contingent on making this applicable to many universities, not just Brown
+
+**Note:** You do not need to resubmit ideas.
 
 
 **Mentor TA:** _Put your mentor TA's name and email here once you're assigned one!_
