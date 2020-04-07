@@ -4,8 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+
 import com.google.common.collect.ImmutableMap;
+import edu.brown.cs.student.pathway.Node;
+import edu.brown.cs.student.pathway.Pathway;
 import freemarker.template.Configuration;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -51,32 +57,32 @@ public final class Main {
 
     // Launch gui
     if (options.has("gui")) {
-      runSparkServer((int) options.valueOf("port"));
+//      runSparkServer((int) options.valueOf("port"));
     }
 
     // Process commands in a REPL
-  }
-
-  private static FreeMarkerEngine createEngine() {
-    Configuration config = new Configuration();
-    File templates = new File("src/main/resources/spark/template/freemarker");
-    try {
-      config.setDirectoryForTemplateLoading(templates);
-    } catch (IOException ioe) {
-      System.out.printf("ERROR: Unable use %s for template loading.%n", templates);
-      System.exit(1);
-    }
-    return new FreeMarkerEngine(config);
-  }
-
-  private void runSparkServer(int port) {
-    Spark.port(port);
-    Spark.externalStaticFileLocation("src/main/resources/static");
-    Spark.exception(Exception.class, new ExceptionPrinter());
-    FreeMarkerEngine freeMarker = createEngine();
-    // Setup Spark Routes
 
   }
+
+//  private static FreeMarkerEngine createEngine() {
+//    Configuration config = new Configuration();
+//    File templates = new File("src/main/resources/spark/template/freemarker");
+//    try {
+//      config.setDirectoryForTemplateLoading(templates);
+//    } catch (IOException ioe) {
+//      System.out.printf("ERROR: Unable use %s for template loading.%n", templates);
+//      System.exit(1);
+//    }
+//    return new FreeMarkerEngine(config);
+//  }
+//
+//  private void runSparkServer(int port) {
+//    Spark.port(port);
+//    Spark.externalStaticFileLocation("src/main/resources/static");
+//    Spark.exception(Exception.class, new ExceptionPrinter());
+//    FreeMarkerEngine freeMarker = createEngine();
+//    // Setup Spark Routes
+//  }
 
   /**
    * Displays an error page when an exception occurs in the server.
