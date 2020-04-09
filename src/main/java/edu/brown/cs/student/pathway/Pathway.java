@@ -9,29 +9,45 @@ import java.util.Collections;
 import java.lang.Math;
 
 public class Pathway {
+  /**
+   * NOTE: these instance variables should be taken from
+   * the respective instance of the University class.
+   */
+  private static final int SEMESTER_SIZE = 4;
+  private static final int SEMESTER_COUNT = 8;
+
   private int[] requirements;
   private Set<Node> courses;
-
   private Set<Node> taken;
-  public int currSemester;
+  private int currSemester;
   private List<List<Node>> path;
 
   public Pathway(int[] reqs, Set<Node> courseSet) {
     requirements = reqs;
     courses = courseSet;
     path = new ArrayList<List<Node>>();
-    taken = new HashSet<Node>();
-    currSemester = 0;
   }
 
   public List<List<Node>> getPath() {
     return path;
   }
 
-  public void makePathway() {
-    Set nextSet = new HashSet<Node>(); // nextSet is for "next" courses / courses in a sequence
+  public void makePathway(Set<Node> coursesTaken, int risingSemester) {
+    // Initialize currSemester, nextSet and taken
+    currSemester = risingSemester;
+    Set nextSet = new HashSet<Node>();
+
+    taken = coursesTaken;
+    for (Node course : taken) {
+      requirements[course.getCategory()] -= 1;
+      Node next = course.getNext();
+      if (next != null) {
+        nextSet.add(next);
+      }
+    }
+
     while (this.requirementsLeft()) {
-      currSemester++;
+      // Set up new semester
       List<Node> thisSemester = new ArrayList<Node>();
       // Get available courses / sources in the DAG
       Set<Node> sources = this.getAvailableCourses();
@@ -45,18 +61,22 @@ public class Pathway {
       }
 
       // Group courses by category
+      List<Node>[] coursesByCat = new List[requirements.length];
+      for (int i = 0; i < requirements.length; i++) {
+        coursesByCat[i] = new ArrayList<Node>();
+      }
+
+      for (Node source : sources) {
+        coursesByCat[source.getCategory()].add(source);
+      }
+
       for (int i = 0; i < requirements.length; i++) {
         // Skip if we've satisfied this category
         if (requirements[i] == 0) {
           continue;
         }
-        // First, get courses in this category
-        List<Node> catCourses = new ArrayList<Node>();
-        for (Node source : sources) {
-          if (source.getCategory() == i) {
-            catCourses.add(source);
-          }
-        }
+        // Get courses in this category
+        List<Node> catCourses = coursesByCat[i];
         // Skip if no available courses in this category
         if (catCourses.size() == 0) {
           continue;
@@ -84,8 +104,8 @@ public class Pathway {
           }
         }
       }
-
       path.add(thisSemester);
+      currSemester++;
     }
   }
 
@@ -126,4 +146,5 @@ public class Pathway {
     }
     return sources;
   }
+  
 }

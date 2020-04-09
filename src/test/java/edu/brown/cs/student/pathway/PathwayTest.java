@@ -7,10 +7,16 @@ import org.junit.Test;
 
 import java.util.*;
 
+/**
+ * Testing the main algorithm, independent of the db.
+ */
 public class PathwayTest {
+  private Set<Node> csCourseSetSmall;
+  private Set<Node> csCourseSetLarger;
+  private Set<Node> csTakenSetSmall;
 
-  public void pathwayPrinter(List<List<Node>> path) {
-    int sem = 1;
+  public void pathwayPrinter(List<List<Node>> path, int risingSemester) {
+    int sem = risingSemester;
     for(List<Node> list : path) {
       System.out.println("Semester: " + Integer.toString(sem));
       for (Node course : list) {
@@ -23,55 +29,34 @@ public class PathwayTest {
 
   @Test
   public void csConcentrationSmallTest() {
-    Node cs15Node = new Node("csci0150", "Introduction to Object-Oriented Programming", 0);
-    Node cs16Node = new Node("csci0160", "Introduction to Algorithms and Data Structures", 0);
-    Node cs17Node = new Node("csci0170", "Computer Science: An Integrated Introduction", 0);
-    Node cs18Node = new Node("csci0180", "Computer Science: An Integrated Introduction II", 0);
-    Node cs19Node = new Node("csci0190", "Accelerated Introduction to Computer Science", 0);
-    Node cs22Node = new Node("csci0220", "Discrete Structures and Probability", 1);
-    Node cs1010Node = new Node("csci1010", "Theory of Computation", 1);
-    Node cs33Node = new Node("csci0330", "Introduction to Computer Systems", 1);
-    Node cs32Node = new Node("csci0320", "Introduction to Software Engineering", 1);
-    Node cs1660Node = new Node("csci1660", "Introduction to Computer Systems Security", 2);
-
-    cs15Node.setNext(cs16Node);
-    cs17Node.setNext(cs18Node);
-
-    cs15Node.setSemesters(new HashSet<Integer>(Arrays.asList(1))); // 1 is fall
-    cs17Node.setSemesters(new HashSet<Integer>(Arrays.asList(1)));
-    cs19Node.setSemesters(new HashSet<Integer>(Arrays.asList(1)));
-    cs1010Node.setSemesters(new HashSet<Integer>(Arrays.asList(1)));
-    cs33Node.setSemesters(new HashSet<Integer>(Arrays.asList(1)));
-    cs16Node.setSemesters(new HashSet<Integer>(Arrays.asList(0))); // 0 is spring
-    cs18Node.setSemesters(new HashSet<Integer>(Arrays.asList(0)));
-    cs22Node.setSemesters(new HashSet<Integer>(Arrays.asList(0)));
-    cs32Node.setSemesters(new HashSet<Integer>(Arrays.asList(0)));
-    cs1660Node.setSemesters(new HashSet<Integer>(Arrays.asList(0)));
-
-    cs16Node.addPrereq(new HashSet<Node>(Arrays.asList(cs15Node)));
-    cs18Node.addPrereq(new HashSet<Node>(Arrays.asList(cs17Node)));
-    cs1010Node.addPrereq(new HashSet<Node>(Arrays.asList(cs22Node)));
-    cs33Node.addPrereq(new HashSet<Node>(Arrays.asList(cs16Node, cs18Node, cs19Node)));
-    cs32Node.addPrereq(new HashSet<Node>(Arrays.asList(cs16Node, cs18Node, cs19Node)));
-    cs1660Node.addPrereq(new HashSet<Node>(Arrays.asList(cs16Node, cs18Node, cs19Node)));
-    cs1660Node.addPrereq(new HashSet<Node>(Arrays.asList(cs33Node)));
-
-    Set<Node> courseSet = new HashSet<Node>(Arrays.asList(cs15Node, cs16Node, cs17Node, cs18Node, cs19Node,
-        cs22Node, cs1010Node, cs33Node, cs32Node, cs1660Node));
-
     int[] reqs = {
                     1, // 1 sequence from category 0
                     3, // 3 courses from category 1
                     1  // 1 course from category 2
                  };
-
-    Pathway pathwayMaker = new Pathway(reqs, courseSet);
-    pathwayMaker.makePathway();
-    this.pathwayPrinter(pathwayMaker.getPath());
+    Pathway pathwayMaker = new Pathway(reqs, csCourseSetSmall);
+    pathwayMaker.makePathway(new HashSet<Node>(), 1);
+    this.pathwayPrinter(pathwayMaker.getPath(), 1);
   }
 
   @Test
   public void csConcentrationLargerTest() {
+    int[] reqs = {1, 3, 6, 2};
+    Pathway pathwayMaker = new Pathway(reqs, csCourseSetLarger);
+    pathwayMaker.makePathway(new HashSet<Node>(), 1);
+    this.pathwayPrinter(pathwayMaker.getPath(), 1);
+  }
+
+  @Test
+  public void csConcentrationLargerWithTakenTest() {
+    int[] reqs = {1, 3, 6, 2};
+    Pathway pathwayMaker = new Pathway(reqs, csCourseSetLarger);
+    pathwayMaker.makePathway(csTakenSetSmall, 2);
+    this.pathwayPrinter(pathwayMaker.getPath(), 2);
+  }
+
+  @Before
+  public void setUp() {
     Node cs15Node = new Node("csci0150", "Introduction to Object-Oriented Programming", 0);
     Node cs16Node = new Node("csci0160", "Introduction to Algorithms and Data Structures", 0);
     Node cs17Node = new Node("csci0170", "Computer Science: An Integrated Introduction", 0);
@@ -143,15 +128,12 @@ public class PathwayTest {
     cs1430Node.addPrereq(new HashSet<Node>(Arrays.asList(math520Node)));
     cs1951ANode.addPrereq(new HashSet<Node>(Arrays.asList(cs16Node, cs18Node, cs19Node)));
 
-    Set<Node> courseSet = new HashSet<Node>(Arrays.asList(cs15Node, cs16Node, cs17Node, cs18Node, cs19Node,
+    csCourseSetLarger = new HashSet<Node>(Arrays.asList(cs15Node, cs16Node, cs17Node, cs18Node, cs19Node,
         cs22Node, cs1010Node, cs33Node, cs32Node, cs1660Node, cs1380Node, cs1320Node, cs1950YNode,
         cs1410Node, cs1420Node, cs1430Node, cs1951ANode, math100Node, math520Node, math180Node, apma1650Node));
-
-    int[] reqs = {1, 3, 6, 2};
-
-    Pathway pathwayMaker = new Pathway(reqs, courseSet);
-    pathwayMaker.makePathway();
-    this.pathwayPrinter(pathwayMaker.getPath());
+    csCourseSetSmall = new HashSet<Node>(Arrays.asList(cs15Node, cs16Node, cs17Node, cs18Node, cs19Node,
+        cs22Node, cs1010Node, cs33Node, cs32Node, cs1660Node));
+    csTakenSetSmall = new HashSet<Node>(Arrays.asList(math100Node, math520Node, cs15Node));
   }
 
 }
