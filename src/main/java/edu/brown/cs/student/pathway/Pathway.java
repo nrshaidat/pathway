@@ -9,10 +9,7 @@ import java.util.Collections;
 import java.lang.Math;
 
 public class Pathway {
-  /**
-   * NOTE: these instance variables should be taken from
-   * the respective instance of the University class.
-   */
+  // NOTE: will vary university to university
   private static final int SEMESTER_SIZE = 4;
   private static final int SEMESTER_COUNT = 8;
 
@@ -49,7 +46,7 @@ public class Pathway {
     while (this.requirementsLeft()) {
       // Set up new semester
       List<Node> thisSemester = new ArrayList<Node>();
-      // Get available courses / sources in the DAG
+      // Get available courses (sources in the DAG)
       Set<Node> sources = this.getAvailableCourses();
 
       // Take "next" courses if available
@@ -82,16 +79,15 @@ public class Pathway {
           continue;
         }
 
-        /**
-         * TODO: make this dynamic
-         */
         // Choose number of courses to take
         int numCoursesTmp = Math.min(catCourses.size(), requirements[i]);
-        int numCourses = Math.min(4 - thisSemester.size(), numCoursesTmp);
+        int numCourses = Math.min(SEMESTER_SIZE - thisSemester.size(), numCoursesTmp);
         requirements[i] -= numCourses;
 
         /**
          * TODO: add weights/priorities
+         * Factors to consider:
+         * courseRating, avg_hrs, max_hrs, class_size
          */
         Collections.shuffle(catCourses);
         for (int j = 0; j < numCourses; j++) {
@@ -123,15 +119,18 @@ public class Pathway {
     Set<Node> sources = new HashSet<Node>();
     int sem = currSemester % 2;
     for (Node course : courses) {
+      // continue  if course is not offered this semester
       if (!course.getSemestersOffered().contains(sem)) {
         continue;
       }
 
+      // remove incoming edges from node
       Set<Set<Node>> satisfied = new HashSet<Set<Node>>();
       for (Set<Node> s : course.getPrereqs()) {
         for (Node c : taken) {
           if (s.contains(c)) {
             satisfied.add(s);
+            break;
           }
         }
       }
@@ -145,6 +144,31 @@ public class Pathway {
       }
     }
     return sources;
+  }
+
+  /**
+   * How to choose # of courses to take in a category
+   *
+   * Factors to consider:
+   * - SEMESTER_COUNT & currSemester
+   * - aggressive vs. laid-back preference, workload preference
+   * - # of courses available in category, # of requirements left in this category
+   * - # of courses available in other categories, # of requirements left in other categories
+   * - taking many courses from one category at the same time (esp. for advanced courses)
+   * - finishing one category at a time vs taking courses from many categories
+   *
+   * Output: integer i between 0 and SEMESTER_SIZE - thisSemester.size(), inclusive
+   *
+   * Biases:
+   * - Take classes in lower categories first
+   * - Take classes in categories that have more requirements left
+   * - Finish categories with only a couple of courses as fast as possible
+   * - Maximum SEMESTER_COUNT semesters, unless impossible
+   */
+
+  private int numCoursesToTake() {
+
+    return 1;
   }
 
 }
