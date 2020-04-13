@@ -2,6 +2,7 @@ package edu.brown.cs.student.main;
 
 import edu.brown.cs.student.pathway.Node;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -32,7 +33,7 @@ public interface DatabaseInterface {
    * @return an int array where the index is the category and the value at that index is the
    * number of courses needed to fulfill the requirement
    */
-  int[] getRequirements(String tableName);
+  List<Integer> getRequirements(String tableName);
   
   /**
    * getConcentrationCourses gets the courses for the concentration in the sql database it calls

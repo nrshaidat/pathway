@@ -3,6 +3,8 @@ package edu.brown.cs.student.main;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -79,7 +81,7 @@ public class DatabaseCache implements DatabaseInterface {
    *     of courses needed to fulfill the requirement
    */
   @Override
-  public int[] getRequirements(String tableName) {
+  public List<Integer> getRequirements(String tableName) {
     if(tableName == null){
       return null;
     } else {

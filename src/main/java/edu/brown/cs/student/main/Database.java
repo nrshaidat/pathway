@@ -162,7 +162,7 @@ public class Database implements DatabaseInterface {
       if (!names.get(9).equals("class_size")) {
         return false;
       }
-      
+      resultSet.close();
     } catch (SQLException e) {
       return false;
     }
@@ -183,6 +183,8 @@ public class Database implements DatabaseInterface {
       prep = conn.prepareStatement("SELECT COUNT(*) AS 'num' " + " FROM courses ");
       ResultSet rs = prep.executeQuery();
       int num = rs.getInt("num");
+      rs.close();
+      prep.close();
       return num == 0;
     } catch (SQLException e) {
       return true;
@@ -272,8 +274,26 @@ public class Database implements DatabaseInterface {
    *     of courses needed to fulfill the requirement
    */
   @Override
-  public int[] getRequirements(String tableName) {
-    return new int[0];
+  public List<Integer> getRequirements(String tableName) {
+    PreparedStatement prep;
+    try {
+      prep = conn.prepareStatement(" SELECT * "
+          + " FROM ? "
+          + " ORDER BY category ASC ");
+      prep.setString(1, tableName);
+      ResultSet rs = prep.executeQuery();
+      List<Integer> reqs = new ArrayList<Integer>();
+      while(rs.next()){
+        Integer category = Integer.parseInt(rs.getString("category"));
+        Integer numCredits = Integer.parseInt(rs.getString("num_credits"));
+        reqs.add(category, numCredits);
+      }
+      rs.close(); // close the reading of the db
+      prep.close(); // close the query
+      return reqs;
+    } catch (SQLException e) {
+      return null;
+    }
   }
   
   /**
