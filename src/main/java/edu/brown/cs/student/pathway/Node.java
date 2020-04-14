@@ -1,5 +1,7 @@
 package edu.brown.cs.student.pathway;
 
+import edu.brown.cs.student.main.Course;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
@@ -20,6 +22,24 @@ public class Node {
 
     prereqs = new ArrayList<Set<Node>>();
     semestersOffered = new HashSet<Integer>();
+  }
+  public Node(Course courseRef) {
+    id = courseRef.getId();
+    name = courseRef.getName();
+    category = courseRef.getCategory();
+    semestersOffered = courseRef.getSemestersOffered();
+    if (courseRef.getNext() != null){
+      Node nextNode = new Node(courseRef.getNext());
+      next = nextNode;
+    }
+    if (!courseRef.getPrereqs().isEmpty()) {
+      Set<Node> preqs = new HashSet<Node>();
+      for (Course preq : courseRef.getPrereqs()) {
+        Node prereq = new Node(preq);
+        preqs.add(prereq);
+      }
+      this.addPrereq(preqs);
+    }
   }
 
   public String getId() {
