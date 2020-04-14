@@ -243,7 +243,14 @@ public class Database implements DatabaseInterface {
    * @return a list of prereqs course objects
    */
   List<Course> parsePrereqs(String prereqs) {
-    return null;
+    String[] parsedLine = prereqs.split(",");
+    List<Course> courseList = new ArrayList<Course>();
+    Course tmp;
+    for(String courseID : parsedLine) {
+      tmp = this.getCourseData(courseID);
+      courseList.add(tmp);
+    }
+    return courseList;
   }
   
   /**
@@ -305,6 +312,29 @@ public class Database implements DatabaseInterface {
    */
   @Override
   public Set<Course> getConcentrationCourses(String tableName) {
-    return null;
+    PreparedStatement prep;
+    try {
+      prep = conn.prepareStatement(" SELECT * " + " FROM ? " + " ORDER BY category ASC ");
+      prep.setString(1, tableName);
+      ResultSet rs = prep.executeQuery();
+      Set<Course> courseSet = new HashSet<Course>();
+      while (rs.next()) {
+        Integer category = Integer.parseInt(rs.getString("category"));
+        String courseID = rs.getString("course_id");
+        String nextID = rs.getString("next");
+        Course tmp = this.getCourseData(courseID);
+        if (nextID.length() > 0){
+          Course next = this.getCourseData(nextID);
+          tmp.setNext(next);
+        }
+        tmp.setCategory(category);
+        courseSet.add(tmp);
+      }
+      rs.close(); // close the reading of the db
+      prep.close(); // close the query
+      return courseSet;
+    } catch (SQLException e) {
+      return null;
+    }
   }
 }
