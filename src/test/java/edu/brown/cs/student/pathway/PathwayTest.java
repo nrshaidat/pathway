@@ -27,17 +27,17 @@ public class PathwayTest {
     }
   }
 
-  @Test
-  public void csConcentrationSmallTest() {
-    int[] reqs = {
-                    1, // 1 sequence from category 0
-                    3, // 3 courses from category 1
-                    1  // 1 course from category 2
-                 };
-    Pathway pathwayMaker = new Pathway(reqs, csCourseSetSmall);
-    pathwayMaker.makePathway(new HashSet<Node>(), 1);
-    this.pathwayPrinter(pathwayMaker.getPath(), 1);
-  }
+//  @Test
+//  public void csConcentrationSmallTest() {
+//    int[] reqs = {
+//                    1, // 1 sequence from category 0
+//                    3, // 3 courses from category 1
+//                    1  // 1 course from category 2
+//                 };
+//    Pathway pathwayMaker = new Pathway(reqs, csCourseSetSmall);
+//    pathwayMaker.makePathway(new HashSet<Node>(), 1);
+//    this.pathwayPrinter(pathwayMaker.getPath(), 1);
+//  }
 
   @Test
   public void csConcentrationLargerTest() {

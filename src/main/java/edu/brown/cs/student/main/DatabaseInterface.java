@@ -10,25 +10,24 @@ import java.util.Set;
  */
 
 public interface DatabaseInterface {
+
   /**
-   * isEmpty checks if the database has data and returns a boolean representing true if it has
-   * data and false if it does not have data in its tables.
-   *
-   * @return boolean representing if the way table is empty of not
+   * isEmpty checks if the database has data and returns a boolean, returning
+   * true if it has data and false if it does not have data in its tables.
+   * @return boolean representing if table is empty of not
    */
   boolean isEmpty();
   
   /**
-   * getCourseData gets a reference to a course object with all of its field filled execpt next
-   * and category since that concentration specfic.
-   * @param courseID the course id such as CSCI0320
-   * @return course object instance with everything filled in execpt category and next
+   * getCourseData gets a reference to a Node object with all of its field filled except next
+   * and category since that is concentration specific.
+   * @param courseID course id such as CSCI 0320
+   * @return Node object with everything filled in except category and next
    */
   Node getCourseData(String courseID);
   
   /**
    * getRequirements gets the requirements for the concentration.
-   *
    * @param tableName the concentrationNameReqs table name to search for
    * @return an int array where the index is the category and the value at that index is the
    * number of courses needed to fulfill the requirement
@@ -36,9 +35,8 @@ public interface DatabaseInterface {
   List<Integer> getRequirements(String tableName);
   
   /**
-   * getConcentrationCourses gets the courses for the concentration in the sql database it calls
-   * on the getCourseData for each course in the concentration.
-   *
+   * getConcentrationCourses gets the courses for the concentration in the sql database. It calls
+   * on the getCourseData for each course id in the concentration.
    * @param tableName the concentrationName table name to search for
    * @return a set of courses all populated with category and next populated
    */

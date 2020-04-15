@@ -13,6 +13,7 @@ public class Pathway {
   private static final int SEMESTER_COUNT = 8;
 
   private int[] requirements;
+  private int numCategories;
   private Set<Node> courses;
   private Set<Node> taken;
   private int currSemester;
@@ -20,6 +21,7 @@ public class Pathway {
 
   public Pathway(int[] reqs, Set<Node> courseSet) {
     requirements = reqs;
+    numCategories = requirements.length;
     courses = courseSet;
     path = new ArrayList<List<Node>>();
   }
@@ -48,17 +50,21 @@ public class Pathway {
       // Get available courses (sources in the DAG)
       Set<Node> sources = this.getAvailableCourses();
 
-      // Take "next" courses if available
+      // Take "next" courses if available, up to SEMESTER_SIZE courses
       Set<Node> mustTakes = Sets.intersection(nextSet, sources);
+      int c = 0;
       for (Node course : mustTakes) {
-        thisSemester.add(course);
-        taken.add(course);
-        nextSet.remove(course);
+        if (c < SEMESTER_SIZE) {
+          thisSemester.add(course);
+          taken.add(course);
+          nextSet.remove(course);
+          c++;
+        }
       }
 
       // Group courses by category
-      List<Node>[] coursesByCat = new List[requirements.length];
-      for (int i = 0; i < requirements.length; i++) {
+      List<Node>[] coursesByCat = new List[numCategories];
+      for (int i = 0; i < numCategories; i++) {
         coursesByCat[i] = new ArrayList<Node>();
       }
 
@@ -66,7 +72,7 @@ public class Pathway {
         coursesByCat[source.getCategory()].add(source);
       }
 
-      for (int i = 0; i < requirements.length; i++) {
+      for (int i = 0; i < numCategories; i++) {
         // Skip if we've satisfied this category
         if (requirements[i] == 0) {
           continue;
@@ -106,12 +112,12 @@ public class Pathway {
 
   private boolean requirementsLeft() {
     int zeroCount = 0;
-    for (int i = 0; i < requirements.length; i++) {
+    for (int i = 0; i < numCategories; i++) {
       if (requirements[i] == 0) {
         zeroCount++;
       }
     }
-    return !(zeroCount == requirements.length);
+    return !(zeroCount == numCategories);
   }
 
   private Set<Node> getAvailableCourses() {
@@ -165,9 +171,29 @@ public class Pathway {
    * - Maximum SEMESTER_COUNT semesters, unless impossible
    */
 
-  private int numCoursesToTake() {
+  private int[] numCoursesToTake(List<Node>[] coursesByCat, int max) {
+    // Return empty int[] if no room left in this semester
+    if (max == 0) {
+      return new int[numCategories];
+    }
 
-    return 1;
+    int[] res = new int[numCategories];
+    int[] numCoursesByCat = new int[numCategories];
+    for (int i = 0; i < numCategories; i++) {
+      numCoursesByCat[i] = coursesByCat[i].size();
+      if (numCoursesByCat[i] == 0 || requirements[i] == 0) {
+        res[i] = 0;
+      }
+    }
+
+
+    int semsLeft = SEMESTER_COUNT - currSemester;
+    if (semsLeft <= 0) {
+
+    }
+
+
+    return res;
   }
 
 }

@@ -17,7 +17,13 @@ public class Node {
   private double avgHrs;
   private double maxHrs;
   private int classSize;
-  
+
+  /**
+   * Note: this constructor should be removed later on.
+   * @param i id
+   * @param n name
+   * @param cat category
+   */
   public Node(String i, String n, int cat) {
     id = i;
     name = n;
@@ -31,41 +37,29 @@ public class Node {
     prereqs = new ArrayList<Set<Node>>();
     semestersOffered = new HashSet<Integer>();
   }
-  
-  public String getProfessor() {
-    return professor;
-  }
-  
-  public void setProfessor(String professor) {
-    this.professor = professor;
-  }
-  
-  public void setPrereqs(List<Set<Node>> prereqs) {
-    this.prereqs = prereqs;
-  }
-  
-  public void setName(String name) {
-    this.name = name;
-  }
-  
-  public void setCategory(int category) {
-    this.category = category;
-  }
-  
-  public void setSemestersOffered(Set<Integer> semestersOffered) {
-    this.semestersOffered = semestersOffered;
-  }
-  
+
   public String getId() {
     return id;
+  }
+  
+  public void setName(String n) {
+    name = n;
   }
 
   public String getName() {
     return name;
   }
+  
+  public void setCategory(int cat) {
+    category = cat;
+  }
 
   public int getCategory() {
     return category;
+  }
+
+  public void setPrereqs(List<Set<Node>> prerequisites) {
+    prereqs = prerequisites;
   }
 
   public void addPrereq(Set<Node> prereqSet) {
@@ -94,6 +88,14 @@ public class Node {
 
   public Set<Integer> getSemestersOffered() {
     return semestersOffered;
+  }
+
+  public void setProfessor(String prof) {
+    professor = prof;
+  }
+
+  public String getProfessor() {
+    return professor;
   }
 
   public void setRating(double rate) {
@@ -127,4 +129,5 @@ public class Node {
   public int getClassSize() {
     return classSize;
   }
+
 }
