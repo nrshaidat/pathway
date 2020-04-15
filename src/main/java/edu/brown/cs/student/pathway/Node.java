@@ -1,11 +1,11 @@
 package edu.brown.cs.student.pathway;
 
-import edu.brown.cs.student.main.Course;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
+
+import edu.brown.cs.student.main.Course;
 
 public class Node {
   private String id;
@@ -14,15 +14,19 @@ public class Node {
   private List<Set<Node>> prereqs;
   private Node next;
   private Set<Integer> semestersOffered;
+  private double rating;
+  private double avgHrs;
+  private double maxHrs;
+  private int classSize;
 
   public Node(String i, String n, int cat) {
     id = i;
     name = n;
     category = cat;
-
     prereqs = new ArrayList<Set<Node>>();
     semestersOffered = new HashSet<Integer>();
   }
+
   public Node(Course courseRef) {
     id = courseRef.getId();
     name = courseRef.getName();
@@ -82,4 +86,35 @@ public class Node {
     return semestersOffered;
   }
 
+  public void setRating(double rate) {
+    rating = rate;
+  }
+
+  public double getRating() {
+    return rating;
+  }
+
+  public void setAvgHrs(double avg) {
+    avgHrs = avg;
+  }
+
+  public double getAvgHrs() {
+    return avgHrs;
+  }
+
+  public void setMaxHrs(double max) {
+    maxHrs = max;
+  }
+
+  public double getMaxHrs() {
+    return maxHrs;
+  }
+
+  public void setClassSize(int size) {
+    classSize = size;
+  }
+
+  public int getClassSize() {
+    return classSize;
+  }
 }

@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.lang.Math;
 
 public class Pathway {
-  // NOTE: will vary university to university
   private static final int SEMESTER_SIZE = 4;
   private static final int SEMESTER_COUNT = 8;
 
