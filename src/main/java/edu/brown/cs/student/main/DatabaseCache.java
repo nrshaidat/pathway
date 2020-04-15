@@ -3,6 +3,7 @@ package edu.brown.cs.student.main;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import edu.brown.cs.student.pathway.Node;
 
 import java.util.List;
 import java.util.Set;
@@ -13,9 +14,9 @@ import java.util.Set;
  */
 public class DatabaseCache implements DatabaseInterface {
   private DatabaseInterface realDB;
-  private static CacheLoader<String, Course> coursesLoader; //course id to course object instance
+  private static CacheLoader<String, Node> coursesLoader; //course id to course object instance
   // with all its attributes fully populated
-  private static LoadingCache<String, Course> cacheLoaderCourses;
+  private static LoadingCache<String, Node> cacheLoaderCourses;
   private static final int NUMENTRIES = 800; //max cache size
   /**
    * DatabaseCache constructor.
@@ -34,9 +35,9 @@ public class DatabaseCache implements DatabaseInterface {
    * init gets called once per run of the application and sets up the cache.
    */
   private void init() {
-    coursesLoader = new CacheLoader<String, Course>() { // anonymous class: a CacheLoader
+    coursesLoader = new CacheLoader<String, Node>() { // anonymous class: a CacheLoader
       @Override // but with an override...
-      public Course load(String key) {
+      public Node load(String key) {
         return realDB.getCourseData(key);
       } // returns the value to cache for the key
     };
@@ -65,7 +66,7 @@ public class DatabaseCache implements DatabaseInterface {
    * @return course object instance with everything filled in execpt category and next
    */
   @Override
-  public Course getCourseData(String courseID) {
+  public Node getCourseData(String courseID) {
     if (courseID == null) {
       return null;
     } else {
@@ -97,7 +98,7 @@ public class DatabaseCache implements DatabaseInterface {
    * @return a set of courses all populated with category and next populated
    */
   @Override
-  public Set<Course> getConcentrationCourses(String tableName) {
+  public Set<Node> getConcentrationCourses(String tableName) {
     if (tableName == null) {
       return null;
     } else {

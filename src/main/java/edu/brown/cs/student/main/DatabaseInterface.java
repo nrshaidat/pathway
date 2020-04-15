@@ -24,7 +24,7 @@ public interface DatabaseInterface {
    * @param courseID the course id such as CSCI0320
    * @return course object instance with everything filled in execpt category and next
    */
-  Course getCourseData(String courseID);
+  Node getCourseData(String courseID);
   
   /**
    * getRequirements gets the requirements for the concentration.
@@ -42,7 +42,7 @@ public interface DatabaseInterface {
    * @param tableName the concentrationName table name to search for
    * @return a set of courses all populated with category and next populated
    */
-  Set<Course> getConcentrationCourses(String tableName);
+  Set<Node> getConcentrationCourses(String tableName);
   
   /**
    * hasConnection checks if the database could connect.

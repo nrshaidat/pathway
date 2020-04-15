@@ -1,5 +1,7 @@
 package edu.brown.cs.student.main;
 
+import edu.brown.cs.student.pathway.Node;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -199,7 +201,7 @@ public class Database implements DatabaseInterface {
    * @return course object instance with everything filled in execpt category and next
    */
   @Override
-  public Course getCourseData(String courseID) {
+  public Node getCourseData(String courseID) {
     PreparedStatement prep;
     try {
       prep = conn.prepareStatement(" SELECT * "
@@ -207,25 +209,23 @@ public class Database implements DatabaseInterface {
           + " WHERE course_id = ? ");
       prep.setString(1, courseID);
       ResultSet rs = prep.executeQuery();
-      Course newCourse = new Course(courseID);
+      Node newCourse = new Node(courseID);
       String name = rs.getString("course_name");
       newCourse.setName(name);
       String prereq = rs.getString("prereqs");
-      List<Course> prereqList = this.parsePrereqs(prereq);
-      newCourse.setPrereqs(prereqList);
+      Set<Node> prereqList = this.parsePrereqs(prereq);
+      newCourse.addPrereq(prereqList);
       String sem = rs.getString("semester_offered");
       Set<Integer> semesterOff = this.parseSemesterOffered(sem);
       newCourse.setSemestersOffered(semesterOff);
       String profName = rs.getString("professor");
       newCourse.setProfessor(profName);
       Double courseRating = Double.parseDouble(rs.getString("courseRating"));
-      newCourse.setCourseRating(courseRating);
+      newCourse.setRating(courseRating);
       Double avgHrs = Double.parseDouble(rs.getString("avg_hrs"));
       newCourse.setAvgHrs(avgHrs);
       Double maxHrs = Double.parseDouble(rs.getString("max_hrs"));
       newCourse.setMaxHrs(maxHrs);
-      String CRLink = rs.getString("CR_link");
-      newCourse.setCRurl(CRLink);
       Integer classSize = Integer.parseInt(rs.getString("class_size"));
       newCourse.setClassSize(classSize);
       rs.close(); // close the reading of the db
@@ -242,10 +242,10 @@ public class Database implements DatabaseInterface {
    * @param prereqs the string of courseID's
    * @return a list of prereqs course objects
    */
-  List<Course> parsePrereqs(String prereqs) {
+  Set<Node> parsePrereqs(String prereqs) {
     String[] parsedLine = prereqs.split(",");
-    List<Course> courseList = new ArrayList<Course>();
-    Course tmp;
+    Set<Node> courseList = new HashSet<Node>();
+    Node tmp;
     for(String courseID : parsedLine) {
       tmp = this.getCourseData(courseID);
       courseList.add(tmp);
@@ -311,20 +311,20 @@ public class Database implements DatabaseInterface {
    * @return a set of courses all populated with category and next populated
    */
   @Override
-  public Set<Course> getConcentrationCourses(String tableName) {
+  public Set<Node> getConcentrationCourses(String tableName) {
     PreparedStatement prep;
     try {
       prep = conn.prepareStatement(" SELECT * " + " FROM ? " + " ORDER BY category ASC ");
       prep.setString(1, tableName);
       ResultSet rs = prep.executeQuery();
-      Set<Course> courseSet = new HashSet<Course>();
+      Set<Node> courseSet = new HashSet<Node>();
       while (rs.next()) {
         Integer category = Integer.parseInt(rs.getString("category"));
         String courseID = rs.getString("course_id");
         String nextID = rs.getString("next");
-        Course tmp = this.getCourseData(courseID);
+        Node tmp = this.getCourseData(courseID);
         if (nextID.length() > 0){
-          Course next = this.getCourseData(nextID);
+          Node next = this.getCourseData(nextID);
           tmp.setNext(next);
         }
         tmp.setCategory(category);

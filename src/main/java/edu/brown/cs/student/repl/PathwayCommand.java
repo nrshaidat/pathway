@@ -1,6 +1,5 @@
 package edu.brown.cs.student.repl;
 
-import edu.brown.cs.student.main.Course;
 import edu.brown.cs.student.main.DatabaseInterface;
 import edu.brown.cs.student.pathway.Node;
 import edu.brown.cs.student.pathway.Pathway;
@@ -34,18 +33,8 @@ public class PathwayCommand implements Command {
     String concentrationName = null;
     String concentrationRules = concentrationName + "_rules";
     int[] reqs = toArray(proxyDB.getRequirements(concentrationRules));
-    Pathway path = new Pathway(reqs,getCourseSet(concentrationName));
     //NEED TO PARSE INPUT ARGS AND BUILD THE PATHWAY
     return new String[0];
   }
   
-  private Set<Node> getCourseSet(String concentrationTableName) {
-    Set<Course> courses = proxyDB.getConcentrationCourses(concentrationTableName);
-    Set<Node> nodes = new HashSet<Node>();
-    for (Course tmp: courses) {
-      Node nodeCourse = new Node(tmp);
-      nodes.add(nodeCourse);
-    }
-    return nodes;
-  }
 }

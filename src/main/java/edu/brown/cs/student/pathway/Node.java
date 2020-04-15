@@ -5,12 +5,11 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 
-import edu.brown.cs.student.main.Course;
-
 public class Node {
   private String id;
   private String name;
   private int category;
+  private String professor;
   private List<Set<Node>> prereqs;
   private Node next;
   private Set<Integer> semestersOffered;
@@ -18,7 +17,7 @@ public class Node {
   private double avgHrs;
   private double maxHrs;
   private int classSize;
-
+  
   public Node(String i, String n, int cat) {
     id = i;
     name = n;
@@ -27,25 +26,36 @@ public class Node {
     semestersOffered = new HashSet<Integer>();
   }
 
-  public Node(Course courseRef) {
-    id = courseRef.getId();
-    name = courseRef.getName();
-    category = courseRef.getCategory();
-    semestersOffered = courseRef.getSemestersOffered();
-    if (courseRef.getNext() != null){
-      Node nextNode = new Node(courseRef.getNext());
-      next = nextNode;
-    }
-    if (!courseRef.getPrereqs().isEmpty()) {
-      Set<Node> preqs = new HashSet<Node>();
-      for (Course preq : courseRef.getPrereqs()) {
-        Node prereq = new Node(preq);
-        preqs.add(prereq);
-      }
-      this.addPrereq(preqs);
-    }
+  public Node(String i) {
+    id = i;
+    prereqs = new ArrayList<Set<Node>>();
+    semestersOffered = new HashSet<Integer>();
   }
-
+  
+  public String getProfessor() {
+    return professor;
+  }
+  
+  public void setProfessor(String professor) {
+    this.professor = professor;
+  }
+  
+  public void setPrereqs(List<Set<Node>> prereqs) {
+    this.prereqs = prereqs;
+  }
+  
+  public void setName(String name) {
+    this.name = name;
+  }
+  
+  public void setCategory(int category) {
+    this.category = category;
+  }
+  
+  public void setSemestersOffered(Set<Integer> semestersOffered) {
+    this.semestersOffered = semestersOffered;
+  }
+  
   public String getId() {
     return id;
   }
