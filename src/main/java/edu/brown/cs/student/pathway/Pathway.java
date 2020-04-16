@@ -12,9 +12,11 @@ import java.util.Arrays;
 public class Pathway {
   private static final int SEMESTER_SIZE = 4;
   private static final int SEMESTER_COUNT = 8;
+
   private int[] requirements;
-  private int[] initialRequirements;
   private int numCategories;
+  private int[] initialRequirements;
+
   private Set<Node> courses;
   private Set<Node> taken;
   private int currSemester;
@@ -74,37 +76,25 @@ public class Pathway {
         coursesByCat[source.getCategory()].add(source);
       }
 
-      int[] coursesToTake = this.numCoursesToTake(coursesByCat, SEMESTER_SIZE - thisSemester.size(), false);
-      System.out.println(currSemester);
+      System.out.println("currSemester: " + Integer.toString(currSemester));
+      int[] coursesToTake = this.numCoursesToTake(coursesByCat,
+          SEMESTER_SIZE - thisSemester.size(), false);
       System.out.println(Arrays.toString(coursesToTake));
 
       for (int i = 0; i < numCategories; i++) {
-        // Skip if we've satisfied this category
-//        if (coursesToTake[i] == 0) {
-//          continue;
-//        }
-        if (requirements[i] == 0) {
-          continue;
-        }
-        // Get courses in this category
-        List<Node> catCourses = coursesByCat[i];
-        // Skip if no available courses in this category
-        if (catCourses.size() == 0) {
+        if (coursesToTake[i] == 0) {
           continue;
         }
 
-        // Choose number of courses to take
-        int numCoursesTmp = Math.min(catCourses.size(), requirements[i]);
-        int numCourses = Math.min(SEMESTER_SIZE - thisSemester.size(), numCoursesTmp);
+        int numCourses = coursesToTake[i];
         requirements[i] -= numCourses;
-//        int numCourses = coursesToTake[i];
-//        requirements[i] -= numCourses;
 
         /**
          * TODO: add weights/priorities
          * Factors to consider:
          * courseRating, avg_hrs, max_hrs, class_size
          */
+        List<Node> catCourses = coursesByCat[i];
         Collections.shuffle(catCourses);
         for (int j = 0; j < numCourses; j++) {
           thisSemester.add(catCourses.get(j));
@@ -185,10 +175,13 @@ public class Pathway {
 
     // Finding how many courses are available per category
     int[] reqsAhead = new int[numCategories];
+    int[] numCoursesPerCat = new int[numCategories];
     int count = 0;
     for (int i = numCategories - 1; i >= 0; i--) {
+      int size = coursesByCat[i].size();
+      numCoursesPerCat[i] = size;
       reqsAhead[i] = count;
-      count += Math.min(requirements[i], coursesByCat[i].size());
+      count += Math.min(requirements[i], size);
     }
 
     double semFrac = ((double) currSemester) / SEMESTER_COUNT; // how "done" we are with school
@@ -206,9 +199,9 @@ public class Pathway {
     }
 
     if (lag <= (-1.0 / SEMESTER_COUNT)) { // ahead by 2 semesters
-      maxFrac -= (1.5 / SEMESTER_SIZE);
-    } else if (lag <= 0) { // ahead by 1 semester
       maxFrac -= (1.0 / SEMESTER_SIZE);
+    } else if (lag <= 0) { // ahead by 1 semester
+      maxFrac = 0.625;
     } else if (lag <= (1.0 / SEMESTER_COUNT)) { // on track
       maxFrac = 0.625;
     } else { // behind
@@ -216,18 +209,24 @@ public class Pathway {
     }
 
     int numCourses = (int) Math.ceil(maxFrac * max);
+
+//    System.out.println("reqsAhead: " + Arrays.toString(reqsAhead));
+//    System.out.println("semFrac: " + Double.toString(semFrac));
+//    System.out.println(Arrays.toString(reqsFrac));
+//    System.out.println("reqsFracAvg: " + Double.toString(reqsFracAvg));
+//    System.out.println("lag: " + Double.toString(lag));
+//    System.out.println("maxFrac: " + Double.toString(maxFrac));
+//    System.out.println("numCourses: " + Integer.toString(numCourses));
+
     numCourses = Math.min(numCourses, count);
-//    if (Math.random() >= 0.5) {
-//      numCourses = (int) Math.ceil(maxFrac * max);
-//    } else {
-//      numCourses = (int) Math.floor(maxFrac * max);
-//    }
+
+//    System.out.println("numCourses after Math.min: " + Integer.toString(numCourses));
 
     for (int i = 0; i < numCategories; i++) {
       if (numCourses == 0) {
         break;
       }
-      if (coursesByCat[i].size() == 0 || reqsFrac[i] == 1) { // if no available courses or finished req
+      if (coursesByCat[i].size() == 0 || requirements[i] == 0) { // if no available courses or finished req
         res[i] = 0;
         continue;
       }
@@ -235,16 +234,16 @@ public class Pathway {
         res[i] = 1;
         numCourses -= 1;
       } else {
-        int numCoursesLeft = (int) (1.0 - reqsFrac[i]) * initialRequirements[i];
+        // int numCoursesLeft = (int) (1.0 - reqsFrac[i]) * initialRequirements[i];
         if (reqsAhead[i] >= numCourses) {
           res[i] = 1;
           numCourses -= 1;
         } else if (reqsAhead[i] < numCourses && reqsAhead[i] > 0) {
-          int taking = Math.min(numCourses - 1, numCoursesLeft);
+          int taking = Math.min(numCourses - 1, numCoursesPerCat[i]);
           res[i] = taking;
           numCourses -= taking;
         } else {
-          int taking = Math.min(numCourses, numCoursesLeft);
+          int taking = Math.min(numCourses, numCoursesPerCat[i]);
           res[i] = taking;
           numCourses -= taking;
         }

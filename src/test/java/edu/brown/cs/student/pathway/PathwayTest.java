@@ -47,13 +47,13 @@ public class PathwayTest {
     this.pathwayPrinter(pathwayMaker.getPath(), 1);
   }
 
-//  @Test
-//  public void csConcentrationLargerWithTakenTest() {
-//    int[] reqs = {1, 3, 6, 2};
-//    Pathway pathwayMaker = new Pathway(reqs, csCourseSetLarger);
-//    pathwayMaker.makePathway(csTakenSetSmall, 2);
-//    this.pathwayPrinter(pathwayMaker.getPath(), 2);
-//  }
+  @Test
+  public void csConcentrationLargerWithTakenTest() {
+    int[] reqs = {1, 3, 6, 2};
+    Pathway pathwayMaker = new Pathway(reqs, csCourseSetLarger);
+    pathwayMaker.makePathway(csTakenSetSmall, 2);
+    this.pathwayPrinter(pathwayMaker.getPath(), 2);
+  }
 
   @Before
   public void setUp() {
