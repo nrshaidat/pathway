@@ -7,12 +7,13 @@ import java.util.HashSet;
 import com.google.common.collect.Sets;
 import java.util.Collections;
 import java.lang.Math;
+import java.util.Arrays;
 
 public class Pathway {
   private static final int SEMESTER_SIZE = 4;
   private static final int SEMESTER_COUNT = 8;
-
   private int[] requirements;
+  private int[] initialRequirements;
   private int numCategories;
   private Set<Node> courses;
   private Set<Node> taken;
@@ -21,7 +22,8 @@ public class Pathway {
 
   public Pathway(int[] reqs, Set<Node> courseSet) {
     requirements = reqs;
-    numCategories = requirements.length;
+    numCategories = reqs.length;
+    initialRequirements = Arrays.copyOf(reqs, numCategories);
     courses = courseSet;
     path = new ArrayList<List<Node>>();
   }
@@ -31,13 +33,16 @@ public class Pathway {
   }
 
   public void makePathway(Set<Node> coursesTaken, int risingSemester) {
-    // Initialize currSemester, nextSet and taken
     currSemester = risingSemester;
     Set nextSet = new HashSet<Node>();
 
     taken = coursesTaken;
     for (Node course : taken) {
-      requirements[course.getCategory()] -= 1;
+      int category = course.getCategory();
+      if (requirements[category] == 0) {
+        continue;
+      }
+      requirements[category] -= 1;
       Node next = course.getNext();
       if (next != null) {
         nextSet.add(next);
@@ -45,9 +50,7 @@ public class Pathway {
     }
 
     while (this.requirementsLeft()) {
-      // Set up new semester
       List<Node> thisSemester = new ArrayList<Node>();
-      // Get available courses (sources in the DAG)
       Set<Node> sources = this.getAvailableCourses();
 
       // Take "next" courses if available, up to SEMESTER_SIZE courses
@@ -62,18 +65,24 @@ public class Pathway {
         }
       }
 
-      // Group courses by category
+      // Group sources by category
       List<Node>[] coursesByCat = new List[numCategories];
       for (int i = 0; i < numCategories; i++) {
         coursesByCat[i] = new ArrayList<Node>();
       }
-
       for (Node source : sources) {
         coursesByCat[source.getCategory()].add(source);
       }
 
+      int[] coursesToTake = this.numCoursesToTake(coursesByCat, SEMESTER_SIZE - thisSemester.size(), false);
+      System.out.println(currSemester);
+      System.out.println(Arrays.toString(coursesToTake));
+
       for (int i = 0; i < numCategories; i++) {
         // Skip if we've satisfied this category
+//        if (coursesToTake[i] == 0) {
+//          continue;
+//        }
         if (requirements[i] == 0) {
           continue;
         }
@@ -88,6 +97,8 @@ public class Pathway {
         int numCoursesTmp = Math.min(catCourses.size(), requirements[i]);
         int numCourses = Math.min(SEMESTER_SIZE - thisSemester.size(), numCoursesTmp);
         requirements[i] -= numCourses;
+//        int numCourses = coursesToTake[i];
+//        requirements[i] -= numCourses;
 
         /**
          * TODO: add weights/priorities
@@ -98,7 +109,6 @@ public class Pathway {
         for (int j = 0; j < numCourses; j++) {
           thisSemester.add(catCourses.get(j));
           taken.add(catCourses.get(j));
-
           Node next = catCourses.get(j).getNext();
           if (next != null) {
             nextSet.add(next);
@@ -113,7 +123,7 @@ public class Pathway {
   private boolean requirementsLeft() {
     int zeroCount = 0;
     for (int i = 0; i < numCategories; i++) {
-      if (requirements[i] == 0) {
+      if (requirements[i] <= 0) {
         zeroCount++;
       }
     }
@@ -156,42 +166,90 @@ public class Pathway {
    *
    * Factors to consider:
    * - SEMESTER_COUNT & currSemester
-   * - aggressive vs. laid-back preference, workload preference
-   * - # of courses available in category, # of requirements left in this category
-   * - # of courses available in other categories, # of requirements left in other categories
+   * - aggressive vs. laid-back
+   * - # of courses available in categories, # of requirements left in categories
    * - taking many courses from one category at the same time (esp. for advanced courses)
    * - finishing one category at a time vs taking courses from many categories
    *
-   * Output: integer i between 0 and SEMESTER_SIZE - thisSemester.size(), inclusive
-   *
    * Biases:
    * - Take classes in lower categories first
-   * - Take classes in categories that have more requirements left
-   * - Finish categories with only a couple of courses as fast as possible
-   * - Maximum SEMESTER_COUNT semesters, unless impossible
+   * - Take classes in categories that have more requirements left & finish categories
+   *   with only a couple of courses
    */
 
-  private int[] numCoursesToTake(List<Node>[] coursesByCat, int max) {
-    // Return empty int[] if no room left in this semester
-    if (max == 0) {
-      return new int[numCategories];
+  private int[] numCoursesToTake(List<Node>[] coursesByCat, int max, boolean aggressive) {
+    int[] res = new int[numCategories]; // how many courses we take in each category
+    if (max == 0) { // return empty res if no room left in this semester
+      return res;
     }
 
-    int[] res = new int[numCategories];
-    int[] numCoursesByCat = new int[numCategories];
+    // Finding how many courses are available per category
+    int[] reqsAhead = new int[numCategories];
+    int count = 0;
+    for (int i = numCategories - 1; i >= 0; i--) {
+      reqsAhead[i] = count;
+      count += Math.min(requirements[i], coursesByCat[i].size());
+    }
+
+    double semFrac = ((double) currSemester) / SEMESTER_COUNT; // how "done" we are with school
+    double[] reqsFrac = new double[numCategories]; // how "done" we are with requirements
+    double reqsFracAvg = 0;
     for (int i = 0; i < numCategories; i++) {
-      numCoursesByCat[i] = coursesByCat[i].size();
-      if (numCoursesByCat[i] == 0 || requirements[i] == 0) {
+      reqsFrac[i] = ((double) (initialRequirements[i] - requirements[i])) / initialRequirements[i];
+      reqsFracAvg += (reqsFrac[i] / ((double) numCategories));
+    }
+
+    double maxFrac = 0.625;
+    double lag = semFrac - reqsFracAvg;
+    if (aggressive) {
+      lag += (2.0 / SEMESTER_COUNT);
+    }
+
+    if (lag <= (-1.0 / SEMESTER_COUNT)) { // ahead by 2 semesters
+      maxFrac -= (1.5 / SEMESTER_SIZE);
+    } else if (lag <= 0) { // ahead by 1 semester
+      maxFrac -= (1.0 / SEMESTER_SIZE);
+    } else if (lag <= (1.0 / SEMESTER_COUNT)) { // on track
+      maxFrac = 0.625;
+    } else { // behind
+      maxFrac += (1.0 / SEMESTER_SIZE);
+    }
+
+    int numCourses = (int) Math.ceil(maxFrac * max);
+    numCourses = Math.min(numCourses, count);
+//    if (Math.random() >= 0.5) {
+//      numCourses = (int) Math.ceil(maxFrac * max);
+//    } else {
+//      numCourses = (int) Math.floor(maxFrac * max);
+//    }
+
+    for (int i = 0; i < numCategories; i++) {
+      if (numCourses == 0) {
+        break;
+      }
+      if (coursesByCat[i].size() == 0 || reqsFrac[i] == 1) { // if no available courses or finished req
         res[i] = 0;
+        continue;
+      }
+      if (reqsFrac[i] + (1.0 / initialRequirements[i]) == 1) { // if need 1 more course, take it
+        res[i] = 1;
+        numCourses -= 1;
+      } else {
+        int numCoursesLeft = (int) (1.0 - reqsFrac[i]) * initialRequirements[i];
+        if (reqsAhead[i] >= numCourses) {
+          res[i] = 1;
+          numCourses -= 1;
+        } else if (reqsAhead[i] < numCourses && reqsAhead[i] > 0) {
+          int taking = Math.min(numCourses - 1, numCoursesLeft);
+          res[i] = taking;
+          numCourses -= taking;
+        } else {
+          int taking = Math.min(numCourses, numCoursesLeft);
+          res[i] = taking;
+          numCourses -= taking;
+        }
       }
     }
-
-
-    int semsLeft = SEMESTER_COUNT - currSemester;
-    if (semsLeft <= 0) {
-
-    }
-
 
     return res;
   }
