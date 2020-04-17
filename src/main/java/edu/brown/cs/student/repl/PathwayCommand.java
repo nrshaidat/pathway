@@ -15,8 +15,11 @@ import static com.google.common.primitives.Ints.toArray;
  */
 public class PathwayCommand implements Command {
   private DatabaseInterface proxyDB;
+  
   /**
    * PathwayCommand constructor.
+   *
+   * @param proxy the proxy db
    */
   public PathwayCommand(DatabaseInterface proxy) {
     proxyDB = proxy;

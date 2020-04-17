@@ -5,7 +5,6 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import java.util.List;
 import java.util.Set;
-
 import edu.brown.cs.student.pathway.Node;
 
 /**
@@ -14,12 +13,14 @@ import edu.brown.cs.student.pathway.Node;
  */
 public class DatabaseCache implements DatabaseInterface {
   private DatabaseInterface realDB;
-  private static CacheLoader<String, Node> coursesLoader; // course id to node with all its attributes set
+  // course id to node with all its attributes set
+  private static CacheLoader<String, Node> coursesLoader;
   private static LoadingCache<String, Node> cacheLoaderCourses;
   private static final int NUMENTRIES = 800; // max cache size
 
   /**
    * DatabaseCache constructor.
+   * @param dB database instance
    */
   public DatabaseCache(DatabaseInterface dB) {
     if (dB.hasConnection()) {
@@ -29,7 +30,6 @@ public class DatabaseCache implements DatabaseInterface {
       realDB = null;
     }
   }
-  
   /**
    * init gets called once per run of the application and sets up the cache.
    */
@@ -78,7 +78,7 @@ public class DatabaseCache implements DatabaseInterface {
    */
   @Override
   public List<Integer> getRequirements(String tableName) {
-    if(tableName == null) {
+    if (tableName == null) {
       return null;
     } else {
       return realDB.getRequirements(tableName);
@@ -108,7 +108,6 @@ public class DatabaseCache implements DatabaseInterface {
   public boolean hasConnection() {
     return realDB.hasConnection();
   }
-  
   /**
    * checkConcentration checks if the concentration and its rules are in the database and that the
    * number of categories lines up with both tables.
@@ -121,7 +120,6 @@ public class DatabaseCache implements DatabaseInterface {
   public boolean checkConcentration(String concentrationName) {
     return realDB.checkConcentration(concentrationName);
   }
-  
   /**
    * checkCoursesTable checks if the courses table format is correct.
    *
@@ -131,5 +129,4 @@ public class DatabaseCache implements DatabaseInterface {
   public boolean checkCoursesTable() {
     return realDB.checkCoursesTable();
   }
-  
 }

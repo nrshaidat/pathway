@@ -19,10 +19,12 @@ import edu.brown.cs.student.pathway.Node;
  * Database class that handles sql queries to the sql database.
  */
 public class Database implements DatabaseInterface {
+  public static final int COURSE = 13;
   private static Connection conn;
-  
+
   /**
    * Database constructor.
+   *
    * @param filename for the sql database to connect to
    */
   public Database(String filename) {
@@ -33,13 +35,13 @@ public class Database implements DatabaseInterface {
 
   /**
    * hasConnection checks if the database could connect.
+   *
    * @return a boolean if the database was able to connect
    */
-  @Override
-  public boolean hasConnection() {
+  @Override public boolean hasConnection() {
     return conn != null;
   }
-  
+
   /**
    * checkConcentration checks if the concentration and its rules are in the database and that the
    * number of categories lines up with both tables.
@@ -48,8 +50,7 @@ public class Database implements DatabaseInterface {
    *     with ba/bs on the end
    * @return a boolean if the database has the accurate concentration data from the db
    */
-  @Override
-  public boolean checkConcentration(String concentrationName) {
+  @Override public boolean checkConcentration(String concentrationName) {
     //checks that the tables exist and they have the correct column names and types
     String concentrationRules = concentrationName + "_rules";
     if (!this.checkTableExists(concentrationName)) {
@@ -62,7 +63,7 @@ public class Database implements DatabaseInterface {
     if (!this.checkTableExists(concentrationRules)) {
       return false;
     } else { //table exists not check if columns are accurate
-      if(!this.checkConcentrationRulesColNames(concentrationRules)) {
+      if (!this.checkConcentrationRulesColNames(concentrationRules)) {
         return false;
       }
     }
@@ -71,8 +72,8 @@ public class Database implements DatabaseInterface {
     PreparedStatement prep;
     try {
       //query the concentrationName table to populate its array of
-      String strQuery = "SELECT category, COUNT(*) AS 'available_courses' " + " FROM $tableName " +
-          " GROUP BY category " + " ORDER BY category ASC ";
+      String strQuery = "SELECT category, COUNT(*) AS 'available_courses' " + " FROM $tableName "
+          + " GROUP BY category " + " ORDER BY category ASC ";
       String query = strQuery.replace("$tableName", concentrationName);
       prep = conn.prepareStatement(query);
       ResultSet rs = prep.executeQuery();
@@ -107,9 +108,10 @@ public class Database implements DatabaseInterface {
     }
     return true;
   }
-  
+
   /**
    * connectDB connect to the database.
+   *
    * @param filename to connect to
    * @return boolean representing if it could connect to the database file
    */
@@ -131,26 +133,26 @@ public class Database implements DatabaseInterface {
       return false;
     }
   }
-  
+
   /**
    * checkDBFormat checks that database's format.
+   *
    * @return a boolean that represents if the database is of the correct format
    */
-  @Override
-  public boolean checkCoursesTable() {
+  @Override public boolean checkCoursesTable() {
     return (checkTableExists("courses") && checkCoursesColNames());
   }
-  
+
   /**
    * checkTableNames checks for the table names.
+   *
+   * @param tableName name of the table to check
    * @return a boolean representing if the table names are of the correct format
    */
   public boolean checkTableExists(String tableName) {
     try {
       DatabaseMetaData dbmd = conn.getMetaData();
-      String[] types = {
-          "TABLE"
-      };
+      String[] types = {"TABLE"};
       ResultSet rs = dbmd.getTables(null, null, "%", types);
       List<String> tableNames = new ArrayList<>();
       while (rs.next()) {
@@ -167,11 +169,12 @@ public class Database implements DatabaseInterface {
     }
     return true;
   }
-  
+
   /**
    * checkCoursesColNames checks that the columns names and types for the courses table are
    * accuracte.
    *
+   * @param concentrationName concentration name in lowercase and no spaces
    * @return a boolean representing if the way table column names are of the correct format
    */
   public boolean checkConcentrationColNames(String concentrationName) {
@@ -205,11 +208,12 @@ public class Database implements DatabaseInterface {
     }
     return true;
   }
-  
+
   /**
    * checkCoursesColNames checks that the columns names and types for the courses table are
    * accuracte.
    *
+   * @param concentrationNameRules concentration name for rules table
    * @return a boolean representing if the way table column names are of the correct format
    */
   public boolean checkConcentrationRulesColNames(String concentrationNameRules) {
@@ -235,17 +239,19 @@ public class Database implements DatabaseInterface {
         return false;
       }
       resultSet.close();
-      
     } catch (SQLException e) {
       return false;
     }
     return true;
   }
+
   /**
    * checkCoursesColNames checks that the columns names and types for the courses table are
    * accuracte.
+   *
    * @return a boolean representing if the way table column names are of the correct format
    */
+  @SuppressWarnings("checkstyle:MagicNumber")
   public boolean checkCoursesColNames() {
     try {
       DatabaseMetaData metadata = conn.getMetaData();
@@ -259,7 +265,7 @@ public class Database implements DatabaseInterface {
           return false;
         }
       }
-      if (names.size() != 13) {
+      if (names.size() != COURSE) {
         return false;
       }
       if (!names.get(0).equals("course_id")) {
@@ -286,9 +292,6 @@ public class Database implements DatabaseInterface {
       if (!names.get(7).equals("max_hrs")) {
         return false;
       }
-      if (!names.get(8).equals("CR_link")) {
-        return false;
-      }
       if (!names.get(9).equals("class_size")) {
         return false;
       }
@@ -300,12 +303,12 @@ public class Database implements DatabaseInterface {
   }
 
   /**
-   * isEmpty checks if the database has data and returns a boolean, returning
-   * true if it has data and false if it does not have data in its tables.
+   * isEmpty checks if the database has data and returns a boolean, returning true if it has data
+   * and false if it does not have data in its tables.
+   *
    * @return boolean representing if table is empty of not
    */
-  @Override
-  public boolean isEmptyCourses() {
+  @Override public boolean isEmptyCourses() {
     PreparedStatement prep;
     try {
       prep = conn.prepareStatement("SELECT COUNT(*) AS 'num' " + "FROM courses ");
@@ -320,18 +323,16 @@ public class Database implements DatabaseInterface {
   }
 
   /**
-   * getCourseData gets a reference to a Node object with all of its field filled except next
-   * and category since that is concentration specific.
+   * getCourseData gets a reference to a Node object with all of its field filled except next and
+   * category since that is concentration specific.
+   *
    * @param courseID course id such as CSCI 0320
    * @return Node object with everything filled in except category and next
    */
-  @Override
-  public Node getCourseData(String courseID) {
+  @Override public Node getCourseData(String courseID) {
     PreparedStatement prep;
     try {
-      prep = conn.prepareStatement(" SELECT * "
-          + " FROM courses "
-          + " WHERE course_id = ?");
+      prep = conn.prepareStatement(" SELECT * " + " FROM courses " + " WHERE course_id = ?");
       prep.setString(1, courseID);
       ResultSet rs = prep.executeQuery();
       Node newCourse = new Node(courseID);
@@ -354,16 +355,17 @@ public class Database implements DatabaseInterface {
       return null;
     }
   }
-  
+
   /**
    * parsePrereqs parses the comma separated prereqs.
+   *
    * @param prereqs the string of courseID's
    * @return a list of prereqs course objects
    */
   List<Set<Node>> parsePrereqs(String prereqs) {
     String[] parsedLine = prereqs.split(",");
     List<Set<Node>> courseList = new ArrayList<>();
-    for(String courseID : parsedLine) {
+    for (String courseID : parsedLine) {
       String[] parsedOrs = courseID.split("=");
       Node tmp = this.getCourseData(parsedOrs[0]);
       Set<Node> courseEquivs = new HashSet<Node>();
@@ -375,9 +377,10 @@ public class Database implements DatabaseInterface {
     }
     return courseList;
   }
-  
+
   /**
    * parseSemesterOffered parses the int into a set of 0 and/or 1.
+   *
    * @param sem the string of semester_offered 2 is both semesters, 1 is fall, and 0 is spring
    * @return set of the semesters offered
    */
@@ -396,20 +399,17 @@ public class Database implements DatabaseInterface {
   }
 
   /**
-   * NOTE from Ifechi: may be simpler parsing if return type is int[]. Declare int[]
-   * of size COUNT(*) and fill with num_credits values. I can make this change later on
-   * if you're cool with it!
-   * NOTE from Natalie I tried sis it requires another query why not just keep it a list I set
+   * NOTE from Ifechi: may be simpler parsing if return type is int[]. Declare int[] of size
+   * COUNT(*) and fill with num_credits values. I can make this change later on if you're cool with
+   * it! NOTE from Natalie I tried sis it requires another query why not just keep it a list I set
    * the indice with its value. You can call .get(indice) on the list and it gives you the same
-   * result
+   * result getRequirements gets the requirements for the concentration.
    *
-   * getRequirements gets the requirements for the concentration.
    * @param tableName the concentrationNameReqs table name to search for
-   * @return an int array where the index is the category and the value at that index is the
-   * number of courses needed to fulfill the requirement
+   * @return an int array where the index is the category and the value at that index is the number
+   *     of courses needed to fulfill the requirement
    */
-  @Override
-  public List<Integer> getRequirements(String tableName) {
+  @Override public List<Integer> getRequirements(String tableName) {
     PreparedStatement prep;
     try {
       String strQuery = " SELECT * " + "FROM $tableName " + " ORDER BY category ASC ";
@@ -417,7 +417,7 @@ public class Database implements DatabaseInterface {
       prep = conn.prepareStatement(query);
       ResultSet rs = prep.executeQuery();
       List<Integer> reqs = new ArrayList<Integer>();
-      while(rs.next()){
+      while (rs.next()) {
         Integer category = Integer.parseInt(rs.getString("category"));
         Integer numCredits = Integer.parseInt(rs.getString("num_credits"));
         if (category < 0) {
@@ -435,16 +435,16 @@ public class Database implements DatabaseInterface {
   }
 
   /**
-   * getConcentrationCourses gets the courses for the concentration in the sql database. It calls
-   * on the getCourseData for each course id in the concentration.
+   * getConcentrationCourses gets the courses for the concentration in the sql database. It calls on
+   * the getCourseData for each course id in the concentration.
+   *
    * @param tableName the concentrationName table name to search for
    * @return a set of courses all populated with category and next populated
    */
-  @Override
-  public Set<Node> getConcentrationCourses(String tableName) {
+  @Override public Set<Node> getConcentrationCourses(String tableName) {
     PreparedStatement prep;
     try {
-      String strQuery = " SELECT * " + "FROM $tableName " + "ORDER BY category ASC";
+      String strQuery = " SELECT * " + " FROM $tableName " + " ORDER BY category ASC ";
       String query = strQuery.replace("$tableName", tableName);
       prep = conn.prepareStatement(query);
       ResultSet rs = prep.executeQuery();
@@ -454,7 +454,7 @@ public class Database implements DatabaseInterface {
         String nextID = rs.getString("next");
         String courseID = rs.getString("course_id");
         Node tmp = this.getCourseData(courseID);
-        if (nextID.length() > 0){
+        if (nextID.length() > 0) {
           Node next = this.getCourseData(nextID);
           next.setCategory(category);
           tmp.setNext(next);
@@ -469,5 +469,4 @@ public class Database implements DatabaseInterface {
       return null;
     }
   }
-
 }
