@@ -1,14 +1,19 @@
 package edu.brown.cs.student.pathway;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import edu.brown.cs.student.main.Database;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * DatabaseTest.
@@ -131,7 +136,25 @@ public class DatabaseTest {
     setUp();
     String validCon = "computationalbiologyba";
     //Node math = realDB.getCourseData("MATH 0100");
-    assertEquals(21,realDB.getConcentrationCourses(validCon).size());
+    Set<Node> comp = realDB.getConcentrationCourses(validCon);
+    assertEquals(21,comp.size());
+    Map<String, Node> mapy = this.covertDict(comp);
+    Set<Node> preqs = mapy.get("MATH 0090").getNext().getPrereqs().get(0);
+    Map<String, Node> pre = this.covertDict(preqs);
+
+    assertEquals(0, mapy.get("MATH 0090").getCategory());
+    assertEquals("MATH 0100", mapy.get("MATH 0090").getNext().getId());
+    assertEquals(1, mapy.get("MATH 0090").getNext().getPrereqs().size());
+    assertEquals(1, mapy.get("BIOL 0200").getCategory());
+    assertEquals(1, mapy.get("BIOL 0200").getCategory());
     tearDown();
+  }
+
+  public Map<String, Node> covertDict(Set<Node> cp) {
+      Map<String, Node> mapy = new HashMap<>();
+      for(Node n:cp) {
+          mapy.put(n.getId(), n);
+      }
+      return mapy;
   }
 }
