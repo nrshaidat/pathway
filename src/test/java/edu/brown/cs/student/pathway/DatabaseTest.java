@@ -36,7 +36,7 @@ public class DatabaseTest {
    * Tests the checkCoursesTable method returns true for the current db.
    */
   @Test
-  public void validCheckCoursesTableName() {
+  public void validCheckCoursesTable() {
     setUp();
     assertTrue(realDB.checkCoursesTable());
     tearDown();
@@ -46,27 +46,27 @@ public class DatabaseTest {
    * Tests the checkCoursesColNames method returns true for the current db.
    */
   @Test
-  public void validCoursesColName() {
+  public void validCoursesColNames() {
     setUp();
     assertTrue(realDB.checkCoursesColNames());
     tearDown();
   }
   
   /**
-   * Tests the checkDBFormat method returns true for the current db.
+   * Tests the checkTableExists method returns true for the courses table in the current db.
    */
   @Test
-  public void validCheckDBFormat() {
+  public void validCheckTableExists() {
     setUp();
     assertTrue(realDB.checkTableExists("courses"));
     tearDown();
   }
   
   /**
-   * Tests the isEmpty method returns false for the current db.
+   * Tests the isEmptyCourses method returns false for the current db.
    */
   @Test
-  public void validisEmpty() {
+  public void validisEmptyCourses() {
     setUp();
     assertFalse(realDB.isEmptyCourses());
     tearDown();
@@ -79,6 +79,31 @@ public class DatabaseTest {
   public void validhasConnection() {
     setUp();
     assertTrue(realDB.hasConnection());
+    tearDown();
+  }
+  
+  /**
+   * Tests the checkConcentration method returns true for a valid concentration in the the current
+   * db.
+   */
+  @Test
+  public void validCheckConcentration() {
+    setUp();
+    String validCon = "computationalbiologyba";
+    String rules = validCon+"_rules";
+    assertTrue(realDB.checkConcentration(validCon));
+    tearDown();
+  }
+  
+  /**
+   * Tests the checkConcentration method returns false for an invalid concentration not in the the
+   * current db.
+   */
+  @Test
+  public void invalidCheckConcentration() {
+    setUp();
+    String invalidCon = "PERIODTcocentration";
+    assertFalse(realDB.checkConcentration(invalidCon));
     tearDown();
   }
   

@@ -71,11 +71,10 @@ public class Database implements DatabaseInterface {
     PreparedStatement prep;
     try {
       //query the concentrationName table to populate its array of
-      prep = conn.prepareStatement("SELECT category, COUNT(*) AS 'available_courses' "
-          + " FROM ? "
-          + " GROUP BY category "
-          + " ORDER BY category ASC ");
-      prep.setString(1, concentrationName);
+      String strQuery = "SELECT category, COUNT(*) AS 'available_courses' " + " FROM $tableName " +
+          " GROUP BY category " + " ORDER BY category ASC ";
+      String query = strQuery.replace("$tableName", concentrationName);
+      prep = conn.prepareStatement(query);
       ResultSet rs = prep.executeQuery();
       List<Integer> reqsAvailable = new ArrayList<Integer>();
       while (rs.next()) {
@@ -103,10 +102,10 @@ public class Database implements DatabaseInterface {
           }
         }
       }
-      return true;
     } catch (SQLException e) {
       return false;
     }
+    return true;
   }
   
   /**
@@ -236,6 +235,7 @@ public class Database implements DatabaseInterface {
         return false;
       }
       resultSet.close();
+      
     } catch (SQLException e) {
       return false;
     }
@@ -412,10 +412,9 @@ public class Database implements DatabaseInterface {
   public List<Integer> getRequirements(String tableName) {
     PreparedStatement prep;
     try {
-      prep = conn.prepareStatement(" SELECT * "
-          + "FROM ? "
-          + "ORDER BY category ASC");
-      prep.setString(1, tableName);
+      String strQuery = " SELECT * " + "FROM $tableName " + " ORDER BY category ASC ";
+      String query = strQuery.replace("$tableName", tableName);
+      prep = conn.prepareStatement(query);
       ResultSet rs = prep.executeQuery();
       List<Integer> reqs = new ArrayList<Integer>();
       while(rs.next()){
@@ -445,8 +444,9 @@ public class Database implements DatabaseInterface {
   public Set<Node> getConcentrationCourses(String tableName) {
     PreparedStatement prep;
     try {
-      prep = conn.prepareStatement(" SELECT * " + "FROM ? " + "ORDER BY category ASC");
-      prep.setString(1, tableName);
+      String strQuery = " SELECT * " + "FROM $tableName " + "ORDER BY category ASC";
+      String query = strQuery.replace("$tableName", tableName);
+      prep = conn.prepareStatement(query);
       ResultSet rs = prep.executeQuery();
       Set<Node> courseSet = new HashSet<Node>();
       while (rs.next()) {
