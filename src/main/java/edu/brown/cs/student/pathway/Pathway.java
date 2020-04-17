@@ -76,10 +76,10 @@ public class Pathway {
         coursesByCat[source.getCategory()].add(source);
       }
 
-      System.out.println("currSemester: " + Integer.toString(currSemester));
+//      System.out.println("currSemester: " + Integer.toString(currSemester));
       int[] coursesToTake = this.numCoursesToTake(coursesByCat,
           SEMESTER_SIZE - thisSemester.size(), false);
-      System.out.println(Arrays.toString(coursesToTake));
+//      System.out.println(Arrays.toString(coursesToTake));
 
       for (int i = 0; i < numCategories; i++) {
         if (coursesToTake[i] == 0) {
@@ -92,7 +92,11 @@ public class Pathway {
         /**
          * TODO: add weights/priorities
          * Factors to consider:
-         * courseRating, avg_hrs, max_hrs, class_size
+         * courseRating & class_size --> Laplace's rule of succession
+         * avg_hrs, max_hrs --> variance of max from avg
+         *
+         *
+         *
          */
         List<Node> catCourses = coursesByCat[i];
         Collections.shuffle(catCourses);
