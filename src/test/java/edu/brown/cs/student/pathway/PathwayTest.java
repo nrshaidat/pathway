@@ -1,6 +1,8 @@
 package edu.brown.cs.student.pathway;
-
 import static org.junit.Assert.assertEquals;
+
+import edu.brown.cs.student.pathway.Node;
+import edu.brown.cs.student.pathway.Pathway;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

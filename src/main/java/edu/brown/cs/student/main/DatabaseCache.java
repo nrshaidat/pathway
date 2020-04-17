@@ -51,8 +51,8 @@ public class DatabaseCache implements DatabaseInterface {
    * @return boolean representing if table is empty of not
    */
   @Override
-  public boolean isEmpty() {
-    return realDB.isEmpty();
+  public boolean isEmptyCourses() {
+    return realDB.isEmptyCourses();
   }
 
   /**
@@ -78,7 +78,7 @@ public class DatabaseCache implements DatabaseInterface {
    */
   @Override
   public List<Integer> getRequirements(String tableName) {
-    if(tableName == null){
+    if(tableName == null) {
       return null;
     } else {
       return realDB.getRequirements(tableName);
@@ -108,5 +108,28 @@ public class DatabaseCache implements DatabaseInterface {
   public boolean hasConnection() {
     return realDB.hasConnection();
   }
-
+  
+  /**
+   * checkConcentration checks if the concentration and its rules are in the database and that the
+   * number of categories lines up with both tables.
+   *
+   * @param concentrationName the name of the concentration in lower case and without spaces
+   *     with ba/bs on the end
+   * @return a boolean if the database has the accurate concentration data from the db
+   */
+  @Override
+  public boolean checkConcentration(String concentrationName) {
+    return realDB.checkConcentration(concentrationName);
+  }
+  
+  /**
+   * checkCoursesTable checks if the courses table format is correct.
+   *
+   * @return a boolean if the database has the courses data from the db
+   */
+  @Override
+  public boolean checkCoursesTable() {
+    return realDB.checkCoursesTable();
+  }
+  
 }

@@ -12,11 +12,11 @@ import java.util.Set;
 public interface DatabaseInterface {
 
   /**
-   * isEmpty checks if the database has data and returns a boolean, returning
-   * true if it has data and false if it does not have data in its tables.
+   * isEmptyCourses checks if the database has data for the courses table and returns a boolean,
+   * returning true if it has data and false if it does not have data in its tables.
    * @return boolean representing if table is empty of not
    */
-  boolean isEmpty();
+  boolean isEmptyCourses();
   
   /**
    * getCourseData gets a reference to a Node object with all of its field filled except next
@@ -47,5 +47,21 @@ public interface DatabaseInterface {
    * @return a boolean if the database was able to connect
    */
   boolean hasConnection();
+  
+  /**
+   * checkConcentration checks if the concentration and its rules are in the database and that
+   * the number of categories lines up with both tables.
+   * @param concentrationName the name of the concentration in lower case and without spaces with
+   * ba/bs on the end
+   * @return a boolean if the database has the accurate concentration data from the db
+   */
+  boolean checkConcentration(String concentrationName);
+  
+  /**
+   * checkCoursesTable checks if the courses table format is correct.
+   *
+   * @return a boolean if the database has the courses data from the db
+   */
+  boolean checkCoursesTable();
   
 }

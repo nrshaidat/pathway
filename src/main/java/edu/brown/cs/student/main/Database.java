@@ -3,7 +3,6 @@ package edu.brown.cs.student.main;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.io.File;
@@ -12,7 +11,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 import edu.brown.cs.student.pathway.Node;
@@ -43,10 +41,72 @@ public class Database implements DatabaseInterface {
   }
   
   /**
-   * Method to reset the connection.
+   * checkConcentration checks if the concentration and its rules are in the database and that the
+   * number of categories lines up with both tables.
+   *
+   * @param concentrationName the name of the concentration in lower case and without spaces
+   *     with ba/bs on the end
+   * @return a boolean if the database has the accurate concentration data from the db
    */
-  public void resetConn() {
-    conn = null;
+  @Override
+  public boolean checkConcentration(String concentrationName) {
+    //checks that the tables exist and they have the correct column names and types
+    String concentrationRules = concentrationName + "_rules";
+    if (!this.checkTableExists(concentrationName)) {
+      return false;
+    } else { //table exists now check if columns are accurate
+      if (!this.checkConcentrationColNames(concentrationName)) {
+        return false;
+      }
+    }
+    if (!this.checkTableExists(concentrationRules)) {
+      return false;
+    } else { //table exists not check if columns are accurate
+      if(!this.checkConcentrationRulesColNames(concentrationRules)) {
+        return false;
+      }
+    }
+    // check that the number of categories and number of credits from each category lines up with
+    // the concentration table's categories and the number of options availible for each category
+    PreparedStatement prep;
+    try {
+      //query the concentrationName table to populate its array of
+      prep = conn.prepareStatement("SELECT category, COUNT(*) AS 'available_courses' "
+          + " FROM ? "
+          + " GROUP BY category "
+          + " ORDER BY category ASC ");
+      prep.setString(1, concentrationName);
+      ResultSet rs = prep.executeQuery();
+      List<Integer> reqsAvailable = new ArrayList<Integer>();
+      while (rs.next()) {
+        Integer categoryNum = Integer.parseInt(rs.getString("category"));
+        Integer numAvailable = Integer.parseInt(rs.getString("available_courses"));
+        if (categoryNum < 0) {
+          return false;
+        } else {
+          reqsAvailable.add(categoryNum, numAvailable);
+        }
+      }
+      rs.close(); // close the reading of the db
+      prep.close(); // close the query
+      List<Integer> reqs = this.getRequirements(concentrationRules);
+      int numReqs = reqs.size();
+      int numAvail = reqsAvailable.size();
+      if (numReqs != numAvail) {
+        return false;
+      } else {
+        for (int category = 0; category < numReqs; category++) {
+          int numberCoursesAvailable = reqsAvailable.get(category);
+          int numberCoursesNeeded = reqs.get(category);
+          if (numberCoursesAvailable < numberCoursesNeeded) {
+            return false;
+          }
+        }
+      }
+      return true;
+    } catch (SQLException e) {
+      return false;
+    }
   }
   
   /**
@@ -77,15 +137,16 @@ public class Database implements DatabaseInterface {
    * checkDBFormat checks that database's format.
    * @return a boolean that represents if the database is of the correct format
    */
-  public boolean checkDBFormat() {
-    return (checkTableNames() && checkCoursesColNames());
+  @Override
+  public boolean checkCoursesTable() {
+    return (checkTableExists("courses") && checkCoursesColNames());
   }
   
   /**
    * checkTableNames checks for the table names.
    * @return a boolean representing if the table names are of the correct format
    */
-  public boolean checkTableNames() {
+  public boolean checkTableExists(String tableName) {
     try {
       DatabaseMetaData dbmd = conn.getMetaData();
       String[] types = {
@@ -99,7 +160,7 @@ public class Database implements DatabaseInterface {
       if (tableNames.isEmpty()) {
         return false;
       }
-      if (!tableNames.contains("courses")) {
+      if (!tableNames.contains(tableName)) {
         return false;
       }
     } catch (SQLException e) {
@@ -108,6 +169,78 @@ public class Database implements DatabaseInterface {
     return true;
   }
   
+  /**
+   * checkCoursesColNames checks that the columns names and types for the courses table are
+   * accuracte.
+   *
+   * @return a boolean representing if the way table column names are of the correct format
+   */
+  public boolean checkConcentrationColNames(String concentrationName) {
+    try {
+      DatabaseMetaData metadata = conn.getMetaData();
+      ResultSet resultSet = metadata.getColumns(null, null, concentrationName, null);
+      List<String> names = new ArrayList<>();
+      while (resultSet.next()) {
+        String name = resultSet.getString("COLUMN_NAME");
+        String type = resultSet.getString("TYPE_NAME");
+        names.add(name);
+        if (!(type.equals("TEXT"))) {
+          return false;
+        }
+      }
+      if (names.size() != 3) {
+        return false;
+      }
+      if (!names.get(0).equals("course_id")) {
+        return false;
+      }
+      if (!names.get(1).equals("next")) {
+        return false;
+      }
+      if (!names.get(2).equals("category")) {
+        return false;
+      }
+      resultSet.close();
+    } catch (SQLException e) {
+      return false;
+    }
+    return true;
+  }
+  
+  /**
+   * checkCoursesColNames checks that the columns names and types for the courses table are
+   * accuracte.
+   *
+   * @return a boolean representing if the way table column names are of the correct format
+   */
+  public boolean checkConcentrationRulesColNames(String concentrationNameRules) {
+    try {
+      DatabaseMetaData metadata = conn.getMetaData();
+      ResultSet resultSet = metadata.getColumns(null, null, concentrationNameRules, null);
+      List<String> names = new ArrayList<>();
+      while (resultSet.next()) {
+        String name = resultSet.getString("COLUMN_NAME");
+        String type = resultSet.getString("TYPE_NAME");
+        names.add(name);
+        if (!(type.equals("TEXT"))) {
+          return false;
+        }
+      }
+      if (names.size() != 2) {
+        return false;
+      }
+      if (!names.get(0).equals("category")) {
+        return false;
+      }
+      if (!names.get(1).equals("num_credits")) {
+        return false;
+      }
+      resultSet.close();
+    } catch (SQLException e) {
+      return false;
+    }
+    return true;
+  }
   /**
    * checkCoursesColNames checks that the columns names and types for the courses table are
    * accuracte.
@@ -126,7 +259,7 @@ public class Database implements DatabaseInterface {
           return false;
         }
       }
-      if (names.size() != 10) {
+      if (names.size() != 13) {
         return false;
       }
       if (!names.get(0).equals("course_id")) {
@@ -172,7 +305,7 @@ public class Database implements DatabaseInterface {
    * @return boolean representing if table is empty of not
    */
   @Override
-  public boolean isEmpty() {
+  public boolean isEmptyCourses() {
     PreparedStatement prep;
     try {
       prep = conn.prepareStatement("SELECT COUNT(*) AS 'num' " + "FROM courses ");
@@ -201,7 +334,6 @@ public class Database implements DatabaseInterface {
           + " WHERE course_id = ?");
       prep.setString(1, courseID);
       ResultSet rs = prep.executeQuery();
-
       Node newCourse = new Node(courseID);
       String name = rs.getString("course_name");
       newCourse.setName(name);
@@ -252,7 +384,6 @@ public class Database implements DatabaseInterface {
   Set<Integer> parseSemesterOffered(String sem) {
     Integer semOff = Integer.parseInt(sem);
     Set<Integer> semset = new HashSet<Integer>();
-
     if (semOff == 2) {
       semset.add(0);
       semset.add(1);
@@ -268,6 +399,9 @@ public class Database implements DatabaseInterface {
    * NOTE from Ifechi: may be simpler parsing if return type is int[]. Declare int[]
    * of size COUNT(*) and fill with num_credits values. I can make this change later on
    * if you're cool with it!
+   * NOTE from Natalie I tried sis it requires another query why not just keep it a list I set
+   * the indice with its value. You can call .get(indice) on the list and it gives you the same
+   * result
    *
    * getRequirements gets the requirements for the concentration.
    * @param tableName the concentrationNameReqs table name to search for
@@ -283,14 +417,16 @@ public class Database implements DatabaseInterface {
           + "ORDER BY category ASC");
       prep.setString(1, tableName);
       ResultSet rs = prep.executeQuery();
-
       List<Integer> reqs = new ArrayList<Integer>();
       while(rs.next()){
         Integer category = Integer.parseInt(rs.getString("category"));
         Integer numCredits = Integer.parseInt(rs.getString("num_credits"));
-        reqs.add(category, numCredits);
+        if (category < 0) {
+          return null;
+        } else {
+          reqs.add(category, numCredits);
+        }
       }
-
       rs.close(); // close the reading of the db
       prep.close(); // close the query
       return reqs;
@@ -312,7 +448,6 @@ public class Database implements DatabaseInterface {
       prep = conn.prepareStatement(" SELECT * " + "FROM ? " + "ORDER BY category ASC");
       prep.setString(1, tableName);
       ResultSet rs = prep.executeQuery();
-
       Set<Node> courseSet = new HashSet<Node>();
       while (rs.next()) {
         Integer category = Integer.parseInt(rs.getString("category"));
@@ -327,7 +462,6 @@ public class Database implements DatabaseInterface {
         tmp.setCategory(category);
         courseSet.add(tmp);
       }
-
       rs.close(); // close the reading of the db
       prep.close(); // close the query
       return courseSet;
