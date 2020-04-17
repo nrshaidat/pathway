@@ -13,10 +13,11 @@ public class Node {
   private List<Set<Node>> prereqs;
   private Node next;
   private Set<Integer> semestersOffered;
-  private double rating;
   private double avgHrs;
   private double maxHrs;
+  private double rating;
   private int classSize;
+  private double priority;
 
   /**
    * Note: this constructor should be removed later on.
@@ -30,16 +31,26 @@ public class Node {
     category = cat;
     prereqs = new ArrayList<Set<Node>>();
     semestersOffered = new HashSet<Integer>();
+    priority = 0;
   }
 
   public Node(String i) {
     id = i;
     prereqs = new ArrayList<Set<Node>>();
     semestersOffered = new HashSet<Integer>();
+    priority = 0;
   }
 
   public String getId() {
     return id;
+  }
+
+  public void setPriority(double pri) {
+    priority = pri;
+  }
+
+  public double getPriority() {
+    return priority;
   }
   
   public void setName(String n) {

@@ -1,8 +1,6 @@
 package edu.brown.cs.student.pathway;
 import static org.junit.Assert.assertEquals;
 
-import edu.brown.cs.student.pathway.Node;
-import edu.brown.cs.student.pathway.Pathway;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +17,7 @@ public class PathwayTest {
 
   public void pathwayPrinter(List<List<Node>> path, int risingSemester) {
     int sem = risingSemester;
+    System.out.println("----");
     for(List<Node> list : path) {
       System.out.println("Semester: " + Integer.toString(sem));
       for (Node course : list) {
@@ -68,14 +67,95 @@ public class PathwayTest {
     Node cs1010Node = new Node("csci1010", "Theory of Computation", 1);
     Node cs33Node = new Node("csci0330", "Introduction to Computer Systems", 1);
     Node cs32Node = new Node("csci0320", "Introduction to Software Engineering", 1);
-    Node cs1660Node = new Node("csci1660", "Introduction to Computer Systems Security", 2);
-    Node cs1380Node = new Node("csci1380", "Distributed Computer Systems", 2);
     Node cs1320Node = new Node("csci1320", "Creating Modern Web & Mobile Applications", 2);
-    Node cs1950YNode = new Node("csci1950Y", "Logic For Systems", 2);
-    Node cs1430Node = new Node("csci1430", "Computer Vision", 2);
-    Node cs1420Node = new Node("csci1420", "Machine Learning", 2);
+    Node cs1380Node = new Node("csci1380", "Distributed Computer Systems", 2);
     Node cs1410Node = new Node("csci1410", "Artificial Intelligence", 2);
+    Node cs1420Node = new Node("csci1420", "Machine Learning", 2);
+    Node cs1430Node = new Node("csci1430", "Computer Vision", 2);
+    Node cs1660Node = new Node("csci1660", "Introduction to Computer Systems Security", 2);
+    Node cs1950YNode = new Node("csci1950Y", "Logic For Systems", 2);
     Node cs1951ANode = new Node("csci1951A", "Data Science", 2);
+
+    cs15Node.setAvgHrs(11.59);
+    cs15Node.setMaxHrs(20.74);
+    cs15Node.setRating(4.21);
+    cs15Node.setClassSize(390);
+    cs16Node.setAvgHrs(9.03);
+    cs16Node.setMaxHrs(17.46);
+    cs16Node.setRating(3.92);
+    cs16Node.setClassSize(275);
+
+    cs17Node.setAvgHrs(9.91);
+    cs17Node.setMaxHrs(19.58);
+    cs17Node.setRating(4.05);
+    cs17Node.setClassSize(181);
+    cs18Node.setAvgHrs(10.09);
+    cs18Node.setMaxHrs(22.34);
+    cs18Node.setRating(4.08);
+    cs18Node.setClassSize(182);
+
+    cs19Node.setAvgHrs(9.04);
+    cs19Node.setMaxHrs(15.00);
+    cs19Node.setRating(4.22);
+    cs19Node.setClassSize(76);
+
+    cs22Node.setAvgHrs(7.73);
+    cs22Node.setMaxHrs(12.31);
+    cs22Node.setRating(4.25);
+    cs22Node.setClassSize(290);
+    cs1010Node.setAvgHrs(9.31);
+    cs1010Node.setMaxHrs(14.00);
+    cs1010Node.setRating(4.06);
+    cs1010Node.setClassSize(53);
+
+    cs32Node.setAvgHrs(19.21);
+    cs32Node.setMaxHrs(32.15);
+    cs32Node.setRating(3.97);
+    cs32Node.setClassSize(140);
+    cs33Node.setAvgHrs(13.79);
+    cs33Node.setMaxHrs(22.24);
+    cs33Node.setRating(4.01);
+    cs33Node.setClassSize(323);
+
+    cs1320Node.setAvgHrs(8.96);
+    cs1320Node.setMaxHrs(18.00);
+    cs1320Node.setRating(3.16);
+    cs1320Node.setClassSize(101);
+
+    cs1380Node.setAvgHrs(13.4);
+    cs1380Node.setMaxHrs(25.05);
+    cs1380Node.setRating(3.58);
+    cs1380Node.setClassSize(98);
+
+    cs1410Node.setAvgHrs(7.92);
+    cs1410Node.setMaxHrs(14.38);
+    cs1410Node.setRating(3.86);
+    cs1410Node.setClassSize(196);
+
+    cs1420Node.setAvgHrs(8.53);
+    cs1420Node.setMaxHrs(14.47);
+    cs1420Node.setRating(3.7);
+    cs1420Node.setClassSize(271);
+
+    cs1430Node.setAvgHrs(8.15);
+    cs1430Node.setMaxHrs(13.15);
+    cs1430Node.setRating(4.19);
+    cs1430Node.setClassSize(181);
+
+    cs1660Node.setAvgHrs(8.13);
+    cs1660Node.setMaxHrs(14.53);
+    cs1660Node.setRating(3.98);
+    cs1660Node.setClassSize(89);
+
+    cs1950YNode.setAvgHrs(5.86);
+    cs1950YNode.setMaxHrs(10.36);
+    cs1950YNode.setRating(3.86);
+    cs1950YNode.setClassSize(139);
+
+    cs1951ANode.setAvgHrs(8.37);
+    cs1951ANode.setMaxHrs(17.28);
+    cs1951ANode.setRating(3.5);
+    cs1951ANode.setClassSize(198);
 
     cs15Node.setNext(cs16Node);
     cs17Node.setNext(cs18Node);
@@ -102,6 +182,26 @@ public class PathwayTest {
     Node math520Node = new Node("math0520", "Linear Algebra", 3);
     Node math180Node = new Node("math0180", "Intermediate Calculus", 3);
     Node apma1650Node = new Node("apma1650", "Statistical Inference", 3);
+
+    math100Node.setAvgHrs(3.6);
+    math100Node.setMaxHrs(6.4);
+    math100Node.setRating(3.79);
+    math100Node.setClassSize(27);
+
+    math520Node.setAvgHrs(5.5);
+    math520Node.setMaxHrs(8.63);
+    math520Node.setRating(3.41);
+    math520Node.setClassSize(41);
+
+    math180Node.setAvgHrs(3.63);
+    math180Node.setMaxHrs(6.5);
+    math180Node.setRating(3.5);
+    math180Node.setClassSize(16);
+
+    apma1650Node.setAvgHrs(6.13);
+    apma1650Node.setMaxHrs(10.63);
+    apma1650Node.setRating(4.01);
+    apma1650Node.setClassSize(278);
 
     math100Node.setSemesters(new HashSet<Integer>(Arrays.asList(1, 0)));
     math520Node.setSemesters(new HashSet<Integer>(Arrays.asList(1, 0)));

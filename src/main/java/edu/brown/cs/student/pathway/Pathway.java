@@ -90,27 +90,30 @@ public class Pathway {
         requirements[i] -= numCourses;
 
         /**
-         * TODO: add weights/priorities
+         * Add weights/priorities
          * Factors to consider:
          * courseRating & class_size --> Laplace's rule of succession
-         * avg_hrs, max_hrs --> variance of max from avg
-         *
-         * 0 < priority < 1
-         *
+         * average avg_hrs, average max_hrs --> avg / max (higher ratio is better)
          */
 
         List<Node> catCourses = coursesByCat[i];
+
         for (Node course: catCourses) {
+          if (course.getPriority() != 0) {
+            continue;
+          }
+
           // Rating priority
           int classSize = course.getClassSize();
           int ratingAsNum = (int) Math.round((course.getRating() / 5.0) * classSize);
           double trueRating = ((double) (ratingAsNum + 1)) / (classSize + 2);
 
           // Avg vs. max hours priority
-
+          double avgOverMax = course.getAvgHrs() / course.getMaxHrs();
 
           // Rating > hrs
-
+          double priority = ((3/4) * trueRating) + ((1/4) * avgOverMax);
+          course.setPriority(priority);
         }
 
 
