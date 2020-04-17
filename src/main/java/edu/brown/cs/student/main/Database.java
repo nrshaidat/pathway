@@ -3,6 +3,7 @@ package edu.brown.cs.student.main;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.io.File;
@@ -235,10 +236,20 @@ public class Database implements DatabaseInterface {
    */
   Set<Node> parsePrereqs(String prereqs) {
     String[] parsedLine = prereqs.split(",");
+    HashMap<Node, List<Node>> prereqsMap = new HashMap<>();
     Set<Node> courseList = new HashSet<Node>();
     for(String courseID : parsedLine) {
-      Node tmp = this.getCourseData(courseID);
+      String[] parsedOrs = courseID.split("=");
+      Node tmp = this.getCourseData(parsedOrs[0]);
+      List<Node> equivCourseList = new ArrayList<>();
+      if (parsedOrs.length > 1) {
+        for (String courseIDOr : parsedOrs) {
+          Node equivCourse = this.getCourseData(courseIDOr);
+          equivCourseList.add(equivCourse);
+        }
+      }
       courseList.add(tmp);
+      prereqsMap.put(tmp, equivCourseList);
     }
     return courseList;
   }
