@@ -205,14 +205,9 @@ public class Database implements DatabaseInterface {
       Node newCourse = new Node(courseID);
       String name = rs.getString("course_name");
       newCourse.setName(name);
-
-      // NOTE from Ifechi: we'll need to come back this. Once Nick
-      // adds all course data, parsing has to be updated. You probably
-      // already know this, but I'm putting this note here just in case.
       String prereq = rs.getString("prereqs");
-      Set<Node> prereqList = this.parsePrereqs(prereq);
-      newCourse.addPrereq(prereqList);
-
+      List<Set<Node>> prereqList = this.parsePrereqs(prereq);
+      newCourse.setPrereqs(prereqList);
       String sem = rs.getString("semester_offered");
       newCourse.setSemesters(this.parseSemesterOffered(sem));
       newCourse.setProfessor(rs.getString("professor"));
@@ -220,7 +215,6 @@ public class Database implements DatabaseInterface {
       newCourse.setAvgHrs(Double.parseDouble(rs.getString("avg_hrs")));
       newCourse.setMaxHrs(Double.parseDouble(rs.getString("max_hrs")));
       newCourse.setClassSize(Integer.parseInt(rs.getString("class_size")));
-
       rs.close(); // close the reading of the db
       prep.close(); // close the query
       return newCourse;
@@ -234,22 +228,18 @@ public class Database implements DatabaseInterface {
    * @param prereqs the string of courseID's
    * @return a list of prereqs course objects
    */
-  Set<Node> parsePrereqs(String prereqs) {
+  List<Set<Node>> parsePrereqs(String prereqs) {
     String[] parsedLine = prereqs.split(",");
-    HashMap<Node, List<Node>> prereqsMap = new HashMap<>();
-    Set<Node> courseList = new HashSet<Node>();
+    List<Set<Node>> courseList = new ArrayList<>();
     for(String courseID : parsedLine) {
       String[] parsedOrs = courseID.split("=");
       Node tmp = this.getCourseData(parsedOrs[0]);
-      List<Node> equivCourseList = new ArrayList<>();
-      if (parsedOrs.length > 1) {
-        for (String courseIDOr : parsedOrs) {
-          Node equivCourse = this.getCourseData(courseIDOr);
-          equivCourseList.add(equivCourse);
-        }
+      Set<Node> courseEquivs = new HashSet<Node>();
+      for (String courseIDOr : parsedOrs) {
+        Node equivCourse = this.getCourseData(courseIDOr);
+        courseEquivs.add(equivCourse);
       }
-      courseList.add(tmp);
-      prereqsMap.put(tmp, equivCourseList);
+      courseList.add(courseEquivs);
     }
     return courseList;
   }
