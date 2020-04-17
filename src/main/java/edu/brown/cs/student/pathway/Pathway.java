@@ -95,10 +95,25 @@ public class Pathway {
          * courseRating & class_size --> Laplace's rule of succession
          * avg_hrs, max_hrs --> variance of max from avg
          *
-         *
+         * 0 < priority < 1
          *
          */
+
         List<Node> catCourses = coursesByCat[i];
+        for (Node course: catCourses) {
+          // Rating priority
+          int classSize = course.getClassSize();
+          int ratingAsNum = (int) Math.round((course.getRating() / 5.0) * classSize);
+          double trueRating = ((double) (ratingAsNum + 1)) / (classSize + 2);
+
+          // Avg vs. max hours priority
+
+
+          // Rating > hrs
+
+        }
+
+
         Collections.shuffle(catCourses);
         for (int j = 0; j < numCourses; j++) {
           thisSemester.add(catCourses.get(j));
