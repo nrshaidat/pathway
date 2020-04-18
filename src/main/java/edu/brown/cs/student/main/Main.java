@@ -57,32 +57,53 @@ public final class Main {
 
     // Launch gui
     if (options.has("gui")) {
-//      runSparkServer((int) options.valueOf("port"));
+      runSparkServer((int) options.valueOf("port"));
     }
 
     // Process commands in a REPL
 
   }
 
-//  private static FreeMarkerEngine createEngine() {
-//    Configuration config = new Configuration();
-//    File templates = new File("src/main/resources/spark/template/freemarker");
-//    try {
-//      config.setDirectoryForTemplateLoading(templates);
-//    } catch (IOException ioe) {
-//      System.out.printf("ERROR: Unable use %s for template loading.%n", templates);
-//      System.exit(1);
-//    }
-//    return new FreeMarkerEngine(config);
-//  }
-//
-//  private void runSparkServer(int port) {
-//    Spark.port(port);
-//    Spark.externalStaticFileLocation("src/main/resources/static");
-//    Spark.exception(Exception.class, new ExceptionPrinter());
-//    FreeMarkerEngine freeMarker = createEngine();
-//    // Setup Spark Routes
-//  }
+  private static FreeMarkerEngine createEngine() {
+    Configuration config = new Configuration();
+    File templates = new File("src/main/resources/spark/template/freemarker");
+    try {
+      config.setDirectoryForTemplateLoading(templates);
+    } catch (IOException ioe) {
+      System.out.printf("ERROR: Unable use %s for template loading.%n", templates);
+      System.exit(1);
+    }
+    return new FreeMarkerEngine(config);
+  }
+
+  private void runSparkServer(int port) {
+    Spark.port(port);
+    Spark.externalStaticFileLocation("src/main/resources/static");
+    Spark.exception(Exception.class, new ExceptionPrinter());
+    FreeMarkerEngine freeMarker = createEngine();
+    // Setup Spark Routes
+
+    Spark.get("/login", new loginHandler(), freeMarker);
+    Spark.post("/pathway", new pathwayHandler(), freeMarker);
+  }
+
+  private static class loginHandler implements TemplateViewRoute {
+    @Override
+    public ModelAndView handle(Request req, Response res) {
+      Map<String, Object> variables = ImmutableMap.of("title", "Pathway", "results", "");
+      return new ModelAndView(variables, "main.ftl");
+    }
+
+  }
+
+  private static class pathwayHandler implements TemplateViewRoute {
+    @Override
+    public ModelAndView handle(Request req, Response res) {
+      Map<String, Object> variables = ImmutableMap.of("title", "Mel's Pathway", "results", "");
+      return new ModelAndView(variables, "pathway.ftl");
+    }
+
+  }
 
   /**
    * Displays an error page when an exception occurs in the server.
