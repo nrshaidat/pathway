@@ -344,7 +344,7 @@ public class Database implements DatabaseInterface {
       String name = rs.getString("course_name");
       newCourse.setName(name);
       String prereq = rs.getString("prereqs");
-      if (prereq.length() > 0) { //has prereqs so parse it and set it
+      if (!prereq.equals("")) { //has prereqs so parse it and set it
         List<Set<Node>> prereqList = this.parsePrereqs(prereq);
         newCourse.setPrereqs(prereqList);
       }
@@ -352,19 +352,19 @@ public class Database implements DatabaseInterface {
       newCourse.setSemesters(this.parseSemesterOffered(sem));
       newCourse.setProfessor(rs.getString("professor"));
       String courseRating = rs.getString("courseRating");
-      if (courseRating.length() > 0) { //has a courseRating
+      if (!courseRating.equals("")) { //has a courseRating
         newCourse.setRating(Double.parseDouble(courseRating));
       }
       String avgHrs = rs.getString("avg_hrs");
-      if (avgHrs.length() > 0) { //has avghrs value
+      if (!avgHrs.equals("")) { //has avghrs value
         newCourse.setAvgHrs(Double.parseDouble(avgHrs));
       }
       String maxHrs = rs.getString("max_hrs");
-      if (maxHrs.length() > 0) { //has maxhrs value
+      if (!maxHrs.equals("")) { //has maxhrs value
         newCourse.setMaxHrs(Double.parseDouble(maxHrs));
       }
       String classSize = rs.getString("class_size");
-      if (classSize.length() > 0) { //has class size value set
+      if (!classSize.equals("")) { //has class size value set
         newCourse.setClassSize(Integer.parseInt(classSize));
       }
       rs.close(); // close the reading of the db

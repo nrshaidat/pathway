@@ -284,11 +284,88 @@ public class DatabaseTest {
   }
 
   /**
-   * Tests the getCourseData method returns the correct course data
+   * Tests the getCourseData method returns the correct course data for valid input
    * the current db.
    */
   @Test
   public void validGetCourseData() {
+    setUp();
+    //course that has everything filled in the db
+    Node math10 = realDB.getCourseData("MATH 0100");
+    //course with no prereqs
+    Node math9 = realDB.getCourseData("MATH 0090");
+    assertEquals("MATH 0100", math10.getId());
+    assertEquals("Introductory Calculus, Part II", math10.getName());
+    assertEquals(1, math10.getPrereqs().size());
+    assertTrue(math10.getPrereqs().get(0).contains(math9));
+    assertTrue(3.79==math10.getRating());
+    assertTrue(3.60 == math10.getAvgHrs());
+    assertTrue(6.40 == math10.getMaxHrs());
+    assertTrue(27 == math10.getClassSize());
+    assertTrue(math10.getSemestersOffered().contains(0));
+    assertTrue(math10.getSemestersOffered().contains(1));
+
+    //math90
+    assertEquals("MATH 0090", math9.getId());
+    assertEquals("Introductory Calculus, Part I", math9.getName());
+    assertEquals(0, math9.getPrereqs().size());
+    assertTrue(3.99 == math9.getRating());
+    assertTrue(3.83 == math9.getAvgHrs());
+    assertTrue(4.92 == math9.getMaxHrs());
+    assertTrue(21 == math9.getClassSize());
+    assertTrue(math9.getSemestersOffered().contains(0));
+    assertTrue(math9.getSemestersOffered().contains(1));
+    //course with no prereqs and no critical review data in db
+    Node afri = realDB.getCourseData("AFRI 0980");
+    assertEquals("AFRI 0980", afri.getId());
+    assertEquals("Fela Kuti: African Freedom from Afrobeat to Afrobeats", afri.getName());
+    assertEquals(0, afri.getPrereqs().size());
+    assertTrue(afri.getRating()==0.0);
+    assertTrue(afri.getAvgHrs()==0.0);
+    assertTrue(afri.getMaxHrs()==0.0);
+    assertTrue(afri.getClassSize()==0);
+    assertTrue(afri.getSemestersOffered().contains(1));
+    //course with only class size only from critical review
+    Node mcm = realDB.getCourseData("MCM 0150");
+    assertEquals("MCM 0150", mcm.getId());
+    assertEquals("Text/Media/Culture: Theories of Modern Culture and Media", mcm.getName());
+    assertEquals(0, afri.getPrereqs().size());
+    assertTrue(mcm.getRating()==0.0);
+    assertTrue(mcm.getAvgHrs()==0.0);
+    assertTrue(mcm.getMaxHrs()==0.0);
+    assertTrue(50 == mcm.getClassSize());
+    assertTrue(mcm.getSemestersOffered().contains(1));
+    //course with only course rating and class size
+    Node anth = realDB.getCourseData("ANTH 1250");
+    assertEquals("ANTH 1250", anth.getId());
+    assertEquals("Film and Anthropology: Identity and Images of Indian Societies", anth.getName());
+    assertEquals(0, anth.getPrereqs().size());
+    assertTrue(4.24 == anth.getRating());
+    assertTrue(anth.getAvgHrs()==0.0);
+    assertTrue(anth.getMaxHrs()==0.0);
+    assertTrue(28 == anth.getClassSize());
+    assertTrue(anth.getSemestersOffered().contains(0));
+    tearDown();
+  }
+
+  /**
+   * Tests the getCourseData method returns null for invalid input.
+   */
+  @Test
+  public void invalidGetCourseData() {
+    setUp();
+    String invalid0 = "PERIODT 101";
+    assertNull(realDB.getCourseData(invalid0));
+    assertNull(realDB.getCourseData(null));
+    tearDown();
+  }
+
+  /**
+   * Tests the getConcentrationCourses method returns the correct course data
+   * the current db.
+   */
+  @Test
+  public void validGetConcentrationData() {
     setUp();
     String validCon = "computationalbiologyba";
     Set<Node> comp = realDB.getConcentrationCourses(validCon);
