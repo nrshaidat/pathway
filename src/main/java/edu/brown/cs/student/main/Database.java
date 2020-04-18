@@ -407,18 +407,22 @@ public class Database implements DatabaseInterface {
    * @param sem the string of semester_offered 2 is both semesters, 1 is fall, and 0 is spring
    * @return set of the semesters offered
    */
-  Set<Integer> parseSemesterOffered(String sem) {
-    Integer semOff = Integer.parseInt(sem);
-    Set<Integer> semset = new HashSet<Integer>();
-    if (semOff == 2) {
-      semset.add(0);
-      semset.add(1);
-    } else if (semOff == 1) {
-      semset.add(1);
-    } else if (semOff == 0) {
-      semset.add(0);
+  public Set<Integer> parseSemesterOffered(String sem) {
+    if (sem == null || sem.length() < 1) {
+      return null;
+    } else {
+      Integer semOff = Integer.parseInt(sem);
+      Set<Integer> semset = new HashSet<Integer>();
+      if (semOff == 2) {
+        semset.add(0);
+        semset.add(1);
+      } else if (semOff == 1) {
+        semset.add(1);
+      } else if (semOff == 0) {
+        semset.add(0);
+      }
+      return semset;
     }
-    return semset;
   }
 
   /**

@@ -187,6 +187,40 @@ public class DatabaseTest {
   }
 
   /**
+   * Tests the parseSemestersOffered method returns the correct values for valid input.
+   */
+  @Test
+  public void validParseSemestersOffered() {
+    setUp();
+    String valid0 = "0";
+    String valid1 = "1";
+    String valid2 = "2";
+    Set<Integer> result0 = realDB.parseSemesterOffered(valid0);
+    assertEquals(1, result0.size());
+    assertTrue(result0.contains(0));
+    Set<Integer> result1 = realDB.parseSemesterOffered(valid1);
+    assertEquals(1, result1.size());
+    assertTrue(result1.contains(1));
+    Set<Integer> result2 = realDB.parseSemesterOffered(valid2);
+    assertEquals(2, result2.size());
+    assertTrue(result2.contains(1));
+    assertTrue(result2.contains(0));
+    tearDown();
+  }
+
+  /**
+   * Tests the parseSemestersOffered method returns null for invalid input.
+   */
+  @Test
+  public void invalidParseSemestersOffered() {
+    setUp();
+    String invalid0 = "";
+    assertNull(realDB.parseSemesterOffered(invalid0));
+    assertNull(realDB.parseSemesterOffered(null));
+    tearDown();
+  }
+
+  /**
    * Tests the parsePrereqs method returns the correct values for a multitude of variations of prereqs.
    */
   @Test
