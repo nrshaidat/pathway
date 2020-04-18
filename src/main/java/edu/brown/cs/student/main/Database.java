@@ -38,7 +38,8 @@ public class Database implements DatabaseInterface {
    *
    * @return a boolean if the database was able to connect
    */
-  @Override public boolean hasConnection() {
+  @Override
+  public boolean hasConnection() {
     return conn != null;
   }
 
@@ -47,10 +48,11 @@ public class Database implements DatabaseInterface {
    * number of categories lines up with both tables.
    *
    * @param concentrationName the name of the concentration in lower case and without spaces
-   *     with ba/bs on the end
+   *         with ba/bs on the end
    * @return a boolean if the database has the accurate concentration data from the db
    */
-  @Override public boolean checkConcentration(String concentrationName) {
+  @Override
+  public boolean checkConcentration(String concentrationName) {
     //checks that the tables exist and they have the correct column names and types
     String concentrationRules = concentrationName + "_rules";
     if (!this.checkTableExists(concentrationName)) {
@@ -139,7 +141,8 @@ public class Database implements DatabaseInterface {
    *
    * @return a boolean that represents if the database is of the correct format
    */
-  @Override public boolean checkCoursesTable() {
+  @Override
+  public boolean checkCoursesTable() {
     return (checkTableExists("courses") && checkCoursesColNames());
   }
 
@@ -308,7 +311,8 @@ public class Database implements DatabaseInterface {
    *
    * @return boolean representing if table is empty of not
    */
-  @Override public boolean isEmptyCourses() {
+  @Override
+  public boolean isEmptyCourses() {
     PreparedStatement prep;
     try {
       prep = conn.prepareStatement("SELECT COUNT(*) AS 'num' " + "FROM courses ");
@@ -329,7 +333,8 @@ public class Database implements DatabaseInterface {
    * @param courseID course id such as CSCI 0320
    * @return Node object with everything filled in except category and next
    */
-  @Override public Node getCourseData(String courseID) {
+  @Override
+  public Node getCourseData(String courseID) {
     PreparedStatement prep;
     try {
       prep = conn.prepareStatement(" SELECT * " + " FROM courses " + " WHERE course_id = ?");
@@ -339,15 +344,29 @@ public class Database implements DatabaseInterface {
       String name = rs.getString("course_name");
       newCourse.setName(name);
       String prereq = rs.getString("prereqs");
-      List<Set<Node>> prereqList = this.parsePrereqs(prereq);
-      newCourse.setPrereqs(prereqList);
+      if (prereq.length() > 0) { //has prereqs so parse it and set it
+        List<Set<Node>> prereqList = this.parsePrereqs(prereq);
+        newCourse.setPrereqs(prereqList);
+      }
       String sem = rs.getString("semester_offered");
       newCourse.setSemesters(this.parseSemesterOffered(sem));
       newCourse.setProfessor(rs.getString("professor"));
-      newCourse.setRating(Double.parseDouble(rs.getString("courseRating")));
-      newCourse.setAvgHrs(Double.parseDouble(rs.getString("avg_hrs")));
-      newCourse.setMaxHrs(Double.parseDouble(rs.getString("max_hrs")));
-      newCourse.setClassSize(Integer.parseInt(rs.getString("class_size")));
+      String courseRating = rs.getString("courseRating");
+      if (courseRating.length() > 0) { //has a courseRating
+        newCourse.setRating(Double.parseDouble(courseRating));
+      }
+      String avgHrs = rs.getString("avg_hrs");
+      if (avgHrs.length() > 0) { //has avghrs value
+        newCourse.setAvgHrs(Double.parseDouble(avgHrs));
+      }
+      String maxHrs = rs.getString("max_hrs");
+      if (maxHrs.length() > 0) { //has maxhrs value
+        newCourse.setMaxHrs(Double.parseDouble(maxHrs));
+      }
+      String classSize = rs.getString("class_size");
+      if (classSize.length() > 0) { //has class size value set
+        newCourse.setClassSize(Integer.parseInt(classSize));
+      }
       rs.close(); // close the reading of the db
       prep.close(); // close the query
       return newCourse;
@@ -362,18 +381,22 @@ public class Database implements DatabaseInterface {
    * @param prereqs the string of courseID's
    * @return a list of prereqs course objects
    */
-  List<Set<Node>> parsePrereqs(String prereqs) {
-    String[] parsedLine = prereqs.split(",");
+  public List<Set<Node>> parsePrereqs(String prereqs) {
+    String[] parsedLine = prereqs.split(","); //split on , (AND)
     List<Set<Node>> courseList = new ArrayList<>();
-    for (String courseID : parsedLine) {
-      String[] parsedOrs = courseID.split("=");
-      Node tmp = this.getCourseData(parsedOrs[0]);
-      Set<Node> courseEquivs = new HashSet<Node>();
-      for (String courseIDOr : parsedOrs) {
-        Node equivCourse = this.getCourseData(courseIDOr);
-        courseEquivs.add(equivCourse);
+    for (String courseID : parsedLine) { //loop thru each required prereqs (AND)
+      String[] parsedOrs = courseID.split("="); //split each requirment on = (OR)
+      Set<Node> courseSet = new HashSet<Node>();
+      if (parsedOrs.length == 1) { //no ors in prereqs
+        Node tmp = this.getCourseData(parsedOrs[0]);
+        courseSet.add(tmp);
+      } else if (parsedOrs.length > 1) { //has or courses
+        for (String courseIDOr : parsedOrs) {
+          Node equivCourse = this.getCourseData(courseIDOr);
+          courseSet.add(equivCourse);
+        }
       }
-      courseList.add(courseEquivs);
+      courseList.add(courseSet);
     }
     return courseList;
   }
@@ -407,9 +430,10 @@ public class Database implements DatabaseInterface {
    *
    * @param tableName the concentrationNameReqs table name to search for
    * @return an int array where the index is the category and the value at that index is the number
-   *     of courses needed to fulfill the requirement
+   *         of courses needed to fulfill the requirement
    */
-  @Override public List<Integer> getRequirements(String tableName) {
+  @Override
+  public List<Integer> getRequirements(String tableName) {
     PreparedStatement prep;
     try {
       String strQuery = " SELECT * " + "FROM $tableName " + " ORDER BY category ASC ";
@@ -443,7 +467,8 @@ public class Database implements DatabaseInterface {
    * @param tableName the concentrationName table name to search for
    * @return a set of courses all populated with category and next populated
    */
-  @Override public Set<Node> getConcentrationCourses(String tableName) {
+  @Override
+  public Set<Node> getConcentrationCourses(String tableName) {
     PreparedStatement prep;
     try {
       String strQuery = " SELECT * " + " FROM $tableName " + " ORDER BY category ASC ";
@@ -456,13 +481,18 @@ public class Database implements DatabaseInterface {
         String nextID = rs.getString("next");
         String courseID = rs.getString("course_id");
         Node tmp = this.getCourseData(courseID);
-        if (nextID.length() > 0) {
-          Node next = this.getCourseData(nextID);
-          next.setCategory(category);
-          tmp.setNext(next);
+        if (tmp == null) { //course is not offered anymore so don't add it
+          continue;
+        } else { //course is in our courses table and is offered
+          if (nextID.length() > 0) {
+            Node next = this.getCourseData(nextID);
+            next.setCategory(category);
+            tmp.setNext(next);
+          }
+          tmp.setCategory(category);
+          courseSet.add(tmp);
         }
-        tmp.setCategory(category);
-        courseSet.add(tmp);
+
       }
       rs.close(); // close the reading of the db
       prep.close(); // close the query

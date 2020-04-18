@@ -179,7 +179,11 @@ public class Pathway {
       if (!course.getSemestersOffered().contains(sem)) {
         continue;
       }
-
+        /**IFECHI YOU NEED TO ERROR CHECK ALL CALLS TO getPrereqs ARE NOT EQUAL TO NULL
+         * -NAT <3 <3
+         * (THESE ARE GENTLE CAPS JUST WANNA MAKE SURE YOU SEE THIS)
+         *
+         */
       // remove incoming edges from node
       Set<Set<Node>> satisfied = new HashSet<Set<Node>>();
       for (Set<Node> s : course.getPrereqs()) {

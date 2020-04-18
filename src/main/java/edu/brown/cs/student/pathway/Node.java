@@ -2,6 +2,7 @@ package edu.brown.cs.student.pathway;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -36,6 +37,30 @@ public class Node {
     id = i;
     prereqs = new ArrayList<Set<Node>>();
     semestersOffered = new HashSet<Integer>();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Node)) {
+      return false;
+    }
+    Node node = (Node) o;
+    return Double.compare(node.getAvgHrs(), getAvgHrs()) == 0 &&
+        Double.compare(node.getMaxHrs(), getMaxHrs()) == 0 &&
+        Double.compare(node.getRating(), getRating()) == 0 &&
+        getClassSize() == node.getClassSize() &&
+        getId().equals(node.getId()) &&
+        getName().equals(node.getName()) &&
+        Objects.equals(getPrereqs(), node.getPrereqs()) &&
+        getSemestersOffered().equals(node.getSemestersOffered());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId(), getName());
   }
 
   public String getId() {
