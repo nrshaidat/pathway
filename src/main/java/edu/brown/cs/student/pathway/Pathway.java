@@ -88,21 +88,16 @@ public class Pathway {
 
         int numCourses = coursesToTake[i];
         requirements[i] -= numCourses;
+        List<Node> catCourses = coursesByCat[i];
 
         /**
-         * Add weights/priorities
+         * Add weights/priorities to courses
          * Factors to consider:
          * courseRating & class_size --> Laplace's rule of succession
          * average avg_hrs, average max_hrs --> avg / max (higher ratio is better)
          */
-
-        List<Node> catCourses = coursesByCat[i];
-
-        for (Node course: catCourses) {
-          if (course.getPriority() != 0) {
-            continue;
-          }
-
+        List<Double> weights = new ArrayList<Double>();
+        for (Node course : catCourses) {
           // Rating priority
           int classSize = course.getClassSize();
           int ratingAsNum = (int) Math.round((course.getRating() / 5.0) * classSize);
@@ -112,16 +107,50 @@ public class Pathway {
           double avgOverMax = course.getAvgHrs() / course.getMaxHrs();
 
           // Rating > hrs
-          double priority = ((3/4) * trueRating) + ((1/4) * avgOverMax);
-          course.setPriority(priority);
+          double priority = (0.75 * trueRating) + (0.25 * avgOverMax);
+          weights.add(priority);
         }
 
+        // Approaches to weighted random selection/shuffle:
+        // Collections.shuffle() (no weights) --> O(nlogn), n is # of courses in category
+        // Weighted Randomized Ordering --> O(W * n)
+        // Random Interval Selection/Linear Scan (possible duplicates) --> O(n * numCourses)
+        // Random Binary Search (possible duplicates) --> O(logn)
+        // Fast Weighted Shuffle --> O(nlogn)
 
-        Collections.shuffle(catCourses);
+        Node[] shuffledCatCourses = new Node[catCourses.size()];
+        List<Double> running = new ArrayList<Double>();
+        double acc = 0;
+        for (double weight : weights) {
+          acc += weight;
+          running.add(acc);
+        }
+        for (int j = 0; j < catCourses.size(); j++) {
+          double target = Math.random() * running.get(running.size() - 1);
+          int index = Collections.binarySearch(running, target);
+          if (index < 0) {
+            index *= -1;
+            index--;
+          }
+          shuffledCatCourses[j] = catCourses.get(index);
+          for (int k = index; k < running.size(); k++) {
+            running.set(k, running.get(k) - weights.get(index));
+          }
+        }
+
+//        for (Node course : shuffledCatCourses) {
+//          thisSemester.add(course);
+//          taken.add(course);
+//          Node next = course.getNext();
+//          if (next != null) {
+//            nextSet.add(next);
+//          }
+//        }
+
         for (int j = 0; j < numCourses; j++) {
-          thisSemester.add(catCourses.get(j));
-          taken.add(catCourses.get(j));
-          Node next = catCourses.get(j).getNext();
+          thisSemester.add(shuffledCatCourses[j]);
+          taken.add(shuffledCatCourses[j]);
+          Node next = shuffledCatCourses[j].getNext();
           if (next != null) {
             nextSet.add(next);
           }
@@ -256,7 +285,6 @@ public class Pathway {
         res[i] = 1;
         numCourses -= 1;
       } else {
-        // int numCoursesLeft = (int) (1.0 - reqsFrac[i]) * initialRequirements[i];
         if (reqsAhead[i] >= numCourses) {
           res[i] = 1;
           numCourses -= 1;
