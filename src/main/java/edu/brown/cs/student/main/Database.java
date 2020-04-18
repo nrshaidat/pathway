@@ -440,12 +440,12 @@ public class Database implements DatabaseInterface {
       String query = strQuery.replace("$tableName", tableName);
       prep = conn.prepareStatement(query);
       ResultSet rs = prep.executeQuery();
-      List<Integer> reqs = new ArrayList<Integer>();
+      List<Integer> reqs = new ArrayList<>();
       int n = rs.getFetchSize();
 
       while (rs.next()) {
-        Integer category = Integer.parseInt(rs.getString("category"));
-        Integer numCredits = Integer.parseInt(rs.getString("num_credits"));
+        int category = Integer.parseInt(rs.getString("category"));
+        int numCredits = Integer.parseInt(rs.getString("num_credits"));
         if (category < 0) {
           return null;
         } else {
