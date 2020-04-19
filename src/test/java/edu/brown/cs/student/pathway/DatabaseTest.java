@@ -162,7 +162,7 @@ public class DatabaseTest {
     val = result.get(4);
     assertEquals(1, val);
     val = result.get(5);
-    assertEquals(2, val);
+    assertEquals(1, val);
     val = result.get(6);
     assertEquals(1, val);
     val = result.get(7);
@@ -369,22 +369,71 @@ public class DatabaseTest {
     setUp();
     String validCon = "computationalbiologyba";
     Set<Node> comp = realDB.getConcentrationCourses(validCon);
-    //SHOULD BE 21
-    //assertEquals(18,
-        //comp.size());//CHANGE ONCE IK HOW TO HANDLE MORE THAN ONE OPTION FOR A NEXT AKA CS19
+    assertEquals(18,comp.size());
     Map<String, Node> mapy = this.covertDict(comp);
-    Set<Node> preqs = mapy.get("MATH 0090").getNext().getPrereqs().get(0);
-    Map<String, Node> pre = this.covertDict(preqs);
-
+    Node math10 = realDB.getCourseData("MATH 0100");
+    assertEquals(math10,mapy.get("MATH 0090").getNext());
     assertEquals(0, mapy.get("MATH 0090").getCategory());
-    assertEquals("MATH 0100", mapy.get("MATH 0090").getNext().getId());
-    assertEquals(1, mapy.get("MATH 0090").getNext().getPrereqs().size());
     assertEquals(1, mapy.get("BIOL 0200").getCategory());
-    assertEquals(1, mapy.get("BIOL 0200").getCategory());
+    assertNull(mapy.get("BIOL 0200").getNext());
+    assertEquals(2, mapy.get("BIOL 0470").getCategory());
+    assertNull(mapy.get("BIOL 0470").getNext());
+    assertEquals(3, mapy.get("BIOL 0280").getCategory());
+    assertNull(mapy.get("BIOL 0280").getNext());
+    assertEquals(3, mapy.get("BIOL 0500").getCategory());
+    assertNull(mapy.get("BIOL 0500").getNext());
+    assertEquals(4, mapy.get("CHEM 0330").getCategory());
+    assertNull(mapy.get("CHEM 0330").getNext());
+    assertEquals(4, mapy.get("CHEM 0350").getCategory());
+    assertNull(mapy.get("CHEM 0350").getNext());
+    Node cs16 = realDB.getCourseData("CSCI 0160");
+    assertEquals(cs16, mapy.get("CSCI 0150").getNext());
+    assertEquals(5, mapy.get("CSCI 0150").getCategory());
+    Node cs18 = realDB.getCourseData("CSCI 0180");
+    assertEquals(cs18, mapy.get("CSCI 0170").getNext());
+    assertEquals(5, mapy.get("CSCI 0170").getCategory());
+    assertNull(mapy.get("CSCI 0190").getNext());
+    assertEquals(5, mapy.get("CSCI 0190").getCategory());
+    assertNull(mapy.get("APMA 1650").getNext());
+    assertEquals(6, mapy.get("APMA 1650").getCategory());
+    assertNull(mapy.get("CSCI 1450").getNext());
+    assertEquals(6, mapy.get("CSCI 1450").getCategory());
+    assertNull(mapy.get("MATH 1610").getNext());
+    assertEquals(6, mapy.get("MATH 1610").getCategory());
+    assertNull(mapy.get("CSCI 1810").getNext());
+    assertEquals(7, mapy.get("CSCI 1810").getCategory());
+    assertNull(mapy.get("APMA 1080").getNext());
+    assertEquals(7, mapy.get("APMA 1080").getCategory());
+    assertNull(mapy.get("CSCI 1420").getNext());
+    assertEquals(8, mapy.get("CSCI 1420").getCategory());
+    assertNull(mapy.get("APMA 1690").getNext());
+    assertEquals(8, mapy.get("APMA 1690").getCategory());
+    assertNull(mapy.get("APMA 1660").getNext());
+    assertEquals(8, mapy.get("APMA 1660").getCategory());
+    tearDown();
+  }
+
+  /**
+   * Tests the getConcentrationCourses method returns the null for an invalid table name in
+   * the current db.
+   */
+  @Test
+  public void invalidGetConcentrationData() {
+    setUp();
+    String invalidCon = "PERIODT CONCENTRATION";
+    assertNull(realDB.getConcentrationCourses(invalidCon));
+
     tearDown();
   }
 
 
+  /**
+   * CovertDict is a helper method that converts the set of nodes to a dictionary for
+   * testing getConcentrationCourses.
+   *
+   * @param cp the cp
+   * @return the map
+   */
   public Map<String, Node> covertDict(Set<Node> cp) {
     Map<String, Node> mapy = new HashMap<>();
     for (Node n : cp) {
