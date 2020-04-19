@@ -505,4 +505,34 @@ public class Database implements DatabaseInterface {
       return null;
     }
   }
+
+  public List<List<String>> getConcentrations() throws SQLException {
+    PreparedStatement prep = null;
+    ResultSet rs = null;
+    List<List<String>> courseList = new ArrayList<>();
+
+    try {
+      prep = conn.prepareStatement("select * from concentrations order by concentration_name asc");
+      while (rs.next()) {
+        List<String> course = new ArrayList<>();
+        course.add(rs.getString(0));
+        course.add(rs.getString(1));
+        courseList.add(course);
+      }
+
+    } catch (SQLException e){
+      return null;
+    } finally {
+      if (rs != null) {
+        rs.close();
+      }
+      if (prep != null) {
+        prep.close();
+      }
+    }
+
+    return courseList;
+
+  }
+
 }

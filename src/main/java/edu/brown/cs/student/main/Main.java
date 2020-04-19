@@ -4,10 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.*;
 
 import com.google.common.collect.ImmutableMap;
 import edu.brown.cs.student.pathway.Node;
@@ -98,8 +97,16 @@ public final class Main {
 
   private static class pathwayHandler implements TemplateViewRoute {
     @Override
-    public ModelAndView handle(Request req, Response res) {
-      Map<String, Object> variables = ImmutableMap.of("title", "Mel's Pathway", "results", "");
+    public ModelAndView handle(Request req, Response res) throws SQLException {
+
+      List<List<String>> courseList = new ArrayList<>();
+      Database db = new Database("coursesDB.db");
+      System.out.println(db);
+      System.out.println(db.checkTableExists("courses"));
+      System.out.println(db.checkTableExists("economicsba"));
+      courseList = db.getConcentrations();
+
+      Map<String, Object> variables = ImmutableMap.of("title", "Mel's Pathway", "results", "", "courseList", courseList);
       return new ModelAndView(variables, "pathway.ftl");
     }
 

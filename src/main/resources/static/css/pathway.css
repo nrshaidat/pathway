@@ -1,0 +1,18 @@
+body {
+    background-color: whitesmoke;
+    text-align: center;
+    font-family: 'Helvetica Neue', sans-serif;
+    margin-top: 150px;
+}
+
+input {
+    margin: 10px;
+    font-family: 'Helvetica Neue', sans-serif;
+    border-radius: 7px;
+    padding: 5px;
+}
+
+.dropdown-menu {
+    height:100px;
+    overflow-x: hidden;
+}

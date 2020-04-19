@@ -10,12 +10,22 @@
          avoid minification for clarity. -->
 
     <link rel="shortcut icon" href="/logo/t.png"/>
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/pathway.css">
   </head>
   <body>
 
+  <link rel="stylesheet" href="/css/pathway.css">
 
-     <!-- Again, we're serving up the unminified source for clarity. -->
+  <p> Choose a concentration:</p>
+  <div class="dropdown" style = "overflow-y:scroll">
+      <select>
+          <#list courseList as item>
+              <option value="${item}">${item}</option>
+          </#list>
+      </select>
+  </div>
+
+  <!-- Again, we're serving up the unminified source for clarity. -->
      <script src="js/jquery-2.1.1.js"></script>
      <script src="js/main.js"></script>
 
