@@ -29,6 +29,7 @@ public class Pathway {
    *  multithreading, should each thread have its own Pathway instance
    *  or all share an instance and run makePathway with different args?
    *  Consider that path is an instance variable for 1 path.
+   *  -Semester class?
    *
    * @param reqs
    * @param courseSet
@@ -59,6 +60,7 @@ public class Pathway {
    *  -> What if they try to move the course to a semester when it's not a source?
    *
    * - Add a desired course
+   *  -> What if they want to add a course to a semester when it's not offered?
    * - Users CANNOT just remove a course (won't satisfy reqs)
    */
   public List<List<Node>> editPathwayShift(List<List<Node>> path, Node shiftCourse, int startSemester, int desiredSemester) {
@@ -95,7 +97,7 @@ public class Pathway {
        * with time it becomes source?
        */
     }
-    
+
 
     return path;
   }
