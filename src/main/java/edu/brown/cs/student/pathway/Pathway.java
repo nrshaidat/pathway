@@ -22,6 +22,18 @@ public class Pathway {
   private int currSemester;
   private List<List<Node>> path;
 
+  /**
+   * TODO:
+   *  -Modifying paths
+   *  -Should one Pathway instance hold the different generated paths? When
+   *  multithreading, should each thread have its own Pathway instance
+   *  or all share an instance and run makePathway with different args?
+   *  Consider that path is an instance variable for 1 path.
+   *
+   * @param reqs
+   * @param courseSet
+   */
+
   public Pathway(int[] reqs, Set<Node> courseSet) {
     requirements = reqs;
     numCategories = reqs.length;
@@ -34,7 +46,13 @@ public class Pathway {
     return path;
   }
 
-  public void makePathway(Set<Node> coursesTaken, int risingSemester) {
+  /**
+   * TODO: add arguments: workload preference ("lo", "med", "hi")
+   *
+   * @param coursesTaken
+   * @param risingSemester
+   */
+  public void makePathway(Set<Node> coursesTaken, int risingSemester, boolean aggressive, String workload) {
     currSemester = risingSemester;
     Set nextSet = new HashSet<Node>();
 
@@ -52,6 +70,7 @@ public class Pathway {
     }
 
     while (this.requirementsLeft()) {
+      System.out.println(currSemester);
       List<Node> thisSemester = new ArrayList<Node>();
       Set<Node> sources = this.getAvailableCourses();
 
@@ -78,7 +97,7 @@ public class Pathway {
 
 //      System.out.println("currSemester: " + Integer.toString(currSemester));
       int[] coursesToTake = this.numCoursesToTake(coursesByCat,
-          SEMESTER_SIZE - thisSemester.size(), false);
+          SEMESTER_SIZE - thisSemester.size(), aggressive);
 //      System.out.println(Arrays.toString(coursesToTake));
 
       for (int i = 0; i < numCategories; i++) {
@@ -179,11 +198,7 @@ public class Pathway {
       if (!course.getSemestersOffered().contains(sem)) {
         continue;
       }
-        /**IFECHI YOU NEED TO ERROR CHECK ALL CALLS TO getPrereqs ARE NOT EQUAL TO NULL
-         * -NAT <3 <3
-         * (THESE ARE GENTLE CAPS JUST WANNA MAKE SURE YOU SEE THIS)
-         *
-         */
+
       // remove incoming edges from node
       Set<Set<Node>> satisfied = new HashSet<Set<Node>>();
       for (Set<Node> s : course.getPrereqs()) {
@@ -292,7 +307,7 @@ public class Pathway {
         if (reqsAhead[i] >= numCourses) {
           res[i] = 1;
           numCourses -= 1;
-        } else if (reqsAhead[i] < numCourses && reqsAhead[i] > 0) {
+        } else if (reqsAhead[i] > 0) {
           int taking = Math.min(numCourses - 1, numCoursesPerCat[i]);
           res[i] = taking;
           numCourses -= taking;
@@ -303,7 +318,6 @@ public class Pathway {
         }
       }
     }
-
     return res;
   }
 
