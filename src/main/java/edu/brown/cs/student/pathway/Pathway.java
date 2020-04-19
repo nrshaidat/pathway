@@ -47,6 +47,64 @@ public class Pathway {
   }
 
   /**
+   * If I got a Pathway and wanted to edit it, how would I change it?
+   * - Swap with course of same category
+   *   -> What if they swap a course that is a next or has a next?
+   *   -> What if they swap a course that is a prereq for another course in pathway?
+   *   -> What if the swap can't happen that semester?
+   *   -> Can we honor workload preference if they swap?
+   *
+   * - Move course to a different semester (take AI in semester 5 instead of 3)
+   *  -> What if they try to move the course to a semester when it's not offered?
+   *  -> What if they try to move the course to a semester when it's not a source?
+   *
+   * - Add a desired course
+   * - Users CANNOT just remove a course (won't satisfy reqs)
+   */
+  public List<List<Node>> editPathwayShift(List<List<Node>> path, Node shiftCourse, int startSemester, int desiredSemester) {
+    // Check if we course is available in desired semester
+    int sem = desiredSemester % 2;
+    if (!shiftCourse.getSemestersOffered().contains(sem)) {
+      System.out.println(shiftCourse.getId() + ": " + shiftCourse.getName() +
+          " is not offered in semester " + desiredSemester);
+      return null;
+    }
+
+    List<Node> startList = null;
+    for(List<Node> list : path) {
+      for (Node course : list) {
+        if (course.equals(shiftCourse)) {
+          startList = list;
+          break;
+        }
+      }
+    }
+
+    if (desiredSemester > startSemester) {
+      startList.remove(shiftCourse);
+      int start = path.indexOf(startList);
+      int desired = start + (desiredSemester - startSemester);
+      path.get(desired).add(shiftCourse);
+    } else { // desiredSemester < startSemester
+      // Need to check if shiftCourse is source at that point
+      /**
+       * Need to know courses taken and courses
+       * in path up until that semester.
+       *
+       * May have taken as an arg, or could decorate node
+       * with time it becomes source?
+       */
+    }
+    
+
+    return path;
+  }
+
+  public void editPathwaySwap(List<List<Node>> path, Node swapOutCourse, Node swapInCourse) {
+
+  }
+
+  /**
    * TODO: add arguments: workload preference ("lo", "med", "hi")
    *
    * @param coursesTaken
