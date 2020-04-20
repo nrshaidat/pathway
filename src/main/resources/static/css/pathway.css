@@ -1,8 +1,8 @@
 body {
     background-color: whitesmoke;
     text-align: center;
-    font-family: 'Helvetica Neue', sans-serif;
-    margin-top: 150px;
+    font-family: 'Lato', sans-serif;
+    margin-top: 100px;
 }
 
 input {
@@ -10,6 +10,23 @@ input {
     font-family: 'Helvetica Neue', sans-serif;
     border-radius: 7px;
     padding: 5px;
+}
+
+note {
+    color: grey;
+    font-size: 12px;
+}
+
+button {
+    background-color: lightgray;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 10px;
+
 }
 
 .dropdown-menu {

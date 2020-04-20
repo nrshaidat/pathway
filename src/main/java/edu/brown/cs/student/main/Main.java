@@ -99,11 +99,9 @@ public final class Main {
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
 
-      List<List<String>> courseList = new ArrayList<>();
-      Database db = new Database("coursesDB.db");
-      System.out.println(db);
-      System.out.println(db.checkTableExists("courses"));
-      System.out.println(db.checkTableExists("economicsba"));
+      List<String> courseList = new ArrayList<>();
+      Database db = new Database("data/coursesDB.db");
+
       courseList = db.getConcentrations();
 
       Map<String, Object> variables = ImmutableMap.of("title", "Mel's Pathway", "results", "", "courseList", courseList);
