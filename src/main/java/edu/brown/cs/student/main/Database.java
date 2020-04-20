@@ -356,15 +356,15 @@ public class Database implements DatabaseInterface {
         newCourse.setRating(Double.parseDouble(courseRating));
       }
       String avgHrs = rs.getString("avg_hrs");
-      if (!avgHrs.equals("")) { //has avghrs value
+      if (!avgHrs.equals("")) { // has avghrs value
         newCourse.setAvgHrs(Double.parseDouble(avgHrs));
       }
       String maxHrs = rs.getString("max_hrs");
-      if (!maxHrs.equals("")) { //has maxhrs value
+      if (!maxHrs.equals("")) { // has maxhrs value
         newCourse.setMaxHrs(Double.parseDouble(maxHrs));
       }
       String classSize = rs.getString("class_size");
-      if (!classSize.equals("")) { //has class size value set
+      if (!classSize.equals("")) { // has class size value set
         newCourse.setClassSize(Integer.parseInt(classSize));
       }
       rs.close(); // close the reading of the db
