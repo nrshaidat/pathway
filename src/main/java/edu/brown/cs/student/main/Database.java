@@ -496,6 +496,7 @@ public class Database implements DatabaseInterface {
             Node next = this.getCourseData(nextID);
             next.setCategory(category);
             tmp.setNext(next);
+            // courseSet.add(next); We may need to add next to course Set
           }
           tmp.setCategory(category);
           courseSet.add(tmp);
