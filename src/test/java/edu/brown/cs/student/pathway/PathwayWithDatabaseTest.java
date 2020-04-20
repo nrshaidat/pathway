@@ -29,9 +29,22 @@ public class PathwayWithDatabaseTest {
     }
   }
 
+//  @Test
+//  public void csConcentrationTest() {
+//    String tablename = "computerscienceba";
+//    List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
+//    int[] reqs = reqsTmp.stream().mapToInt(i->i).toArray();
+//
+//    Set<Node> courseSet = cache.getConcentrationCourses(tablename);
+//    Pathway pathwayMaker = new Pathway(reqs, courseSet);
+//    pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
+//    this.pathwayPrinter(pathwayMaker.getPath());
+//  }
+
+
   @Test
-  public void csConcentrationTest() {
-    String tablename = "computerscienceba";
+  public void businesseconomicsConcentrationTest() {
+    String tablename = "businesseconomicsba";
     List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
     int[] reqs = reqsTmp.stream().mapToInt(i->i).toArray();
 
@@ -39,12 +52,6 @@ public class PathwayWithDatabaseTest {
     Pathway pathwayMaker = new Pathway(reqs, courseSet);
     pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
     this.pathwayPrinter(pathwayMaker.getPath());
-  }
-
-
-  @Test
-  public void mathConcentrationTest() {
-
   }
 
 }
