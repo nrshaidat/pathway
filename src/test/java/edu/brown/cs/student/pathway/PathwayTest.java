@@ -1,7 +1,5 @@
 package edu.brown.cs.student.pathway;
-import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,34 +9,19 @@ import java.util.*;
  * Testing the main algorithm, independent of the db.
  */
 public class PathwayTest {
-  private Set<Node> csCourseSetSmall;
   private Set<Node> csCourseSetLarger;
   private Set<Node> csTakenSetSmall;
 
-  public void pathwayPrinter(List<List<Node>> path, int risingSemester) {
-    int sem = risingSemester;
+  public void pathwayPrinter(List<Semester> path, int risingSemester) {
     System.out.println("----");
-    for(List<Node> list : path) {
-      System.out.println("Semester: " + Integer.toString(sem));
-      for (Node course : list) {
+    for(Semester list : path) {
+      System.out.println("Semester: " + list.getSemester());
+      for (Node course : list.getCourses()) {
         System.out.println(course.getId() + ": " + course.getName());
       }
       System.out.println();
-      sem++;
     }
   }
-
-//  @Test
-//  public void csConcentrationSmallTest() {
-//    int[] reqs = {
-//                    1, // 1 sequence from category 0
-//                    3, // 3 courses from category 1
-//                    1  // 1 course from category 2
-//                 };
-//    Pathway pathwayMaker = new Pathway(reqs, csCourseSetSmall);
-//    pathwayMaker.makePathway(new HashSet<Node>(), 1);
-//    this.pathwayPrinter(pathwayMaker.getPath(), 1);
-//  }
 
   @Test
   public void csConcentrationLargerTest() {
@@ -233,8 +216,6 @@ public class PathwayTest {
     csCourseSetLarger = new HashSet<Node>(Arrays.asList(cs15Node, cs16Node, cs17Node, cs18Node, cs19Node,
         cs22Node, cs1010Node, cs33Node, cs32Node, cs1660Node, cs1380Node, cs1320Node, cs1950YNode,
         cs1410Node, cs1420Node, cs1430Node, cs1951ANode, math100Node, math520Node, math180Node, apma1650Node));
-    csCourseSetSmall = new HashSet<Node>(Arrays.asList(cs15Node, cs16Node, cs17Node, cs18Node, cs19Node,
-        cs22Node, cs1010Node, cs33Node, cs32Node, cs1660Node));
     csTakenSetSmall = new HashSet<Node>(Arrays.asList(math100Node, math520Node, cs15Node));
   }
 
