@@ -114,45 +114,8 @@ None.
 - Lack of experience with large group projects 
 - Testing 
 
-**Project Idea(s):** 
-### Idea 1
-### Portr
-Problem: When guests are at a hotel, they can't request things unless they are in their room next to a hotel cable phone. In order to optimize guest requests and use of employee's time, We will create an online web-app with a guest user frontend and a hotel employee backend, with a central algorithm to optimize employee-guest interactions. Given a data on guest location, staff information, employee experience and request importance, we will calculate the best way to handle a particular guest request and have it display on a real-time user interface so managers can allocate who does what. 
+**Project Idea:** 
 
-
-
-Features: 
-- Algorithms: Prioritize guest requests by importance, location, and time to completion in a queue, then allocate particular requests to employees by weighting a given employee's experience, location, and specialization/skill set. We would need to store information about employees and guests by using a static employee database and dynamic caching (). 
-  
-- Front-End: Simple guest user interface for guests to make requests, details, request type and specify location for delivery/completion. A log-in portal would differentiate guests and managers that lets them see current requests and delegate requests to an employee. 
-
-Challenges: 
-- Security would be very important, because we need to hold both the guest data and employee information, which if leaked could cause a big problem. 
-- Difficulties testing if the algorithms work and is optimizing requests correctly, disconnect between algorithmic accuracy and customer service needs
-- Getting accurate location data between employees and guests
-- Implementing multiple hotels; we need to make sure that our code is very generic and can implement different shift times, hotel sizes, employee numbers, specifications, etc. 
-- Different languages (How do we parse information that is inputted in a different language?)
-
-TA Approval: Approved - good idea and I think the queue algorithm will be interesting. I hope you can user test this somehow!
-
-
-### Idea 2
-### cloutalytics
-
-Problem: Companies, social media managers, and advertising companies spend a lot of time figuring out what social media posts are most effective and gain traction among followers. We will create a data analytics platform based on social media sites like Instagram to provide insight on page engagements and recommend best types of content that pertain to their product and personal branding. 
-
-Features: 
-- Nicely visualized data analytics including measures like: likes, comments, shares, views, engagement, reach, and impressions. We could analyze best times and days to post given a audience, as well as doing basic sentiment analysis on a particular post, perhaps using a random sample of comments. 
-- Recommendations for best content labels / hashtags to use, as well as locations to post from. Competitor analysis to compare competitor performance against yours. 
-
-Challenges: 
-- Handling the amount of data from a social media platform, because there are a lot of posts, likes, and user engagements that we would need to keep track of in a database. 
-- Security issues could arise if a company does not want to volunteer data so easiily. 
-- Recommendation would be difficult to implement because we would need to understand what posts are considered "good" and viable for a particular company in a sector. 
-
-TA Approval: Approved - make sure to differentiate yourself from the tools already built into instagram, and algorithm could also focus on identifying competitors and successful tactics on their end.
-
-### Idea 3
 ### Pathway 
 
 Problem: Colleges have a lot of information about majors online, but it is very difficult to centralize that data without doing a lot of research. For Brown students specifically, we want to make a platform that allows students to input past classes they've taken, concentration interests, and workload preferences to help them better navigate concentration requirements and possible degrees. 
@@ -171,17 +134,18 @@ Challenges:
 
 TA Approval: Approved with change - contingent on making this applicable to many universities, not just Brown
 
-**Note:** You do not need to resubmit ideas.
+**Mentor TA:** _Julianne Rudner julianne_rudner@brown.edu_
 
 
-**Mentor TA:** _Put your mentor TA's name and email here once you're assigned one!_
+## Design Details 
+
 
 ## Meetings
 _On your first meeting with your mentor TA, you should plan dates for at least the following meetings:_
 
-**Specs, Mockup, and Design Meeting:** _(Schedule for on or before March 13)_
+**Specs, Mockup, and Design Meeting:** _April 5_
 
-**4-Way Checkpoint:** _(Schedule for on or before April 23)_
+**4-Way Checkpoint:** _April 20_
 
 **Adversary Checkpoint:** _(Schedule for on or before April 29 once you are assigned an adversary TA)_
 
