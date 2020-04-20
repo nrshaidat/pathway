@@ -24,19 +24,15 @@ public class Pathway {
   private Set<Node> courses;
   private Set<Node> taken;
   private int currSemester;
-  private List<List<Node>> path;
+  private List<Semester> path;
 
   /**
    * TODO:
-   *  -Modifying paths
-   *  -Should one Pathway instance hold the different generated paths? When
-   *  multithreading, should each thread have its own Pathway instance
-   *  or all share an instance and run makePathway with different args?
-   *  Consider that path is an instance variable for 1 path.
-   *  -Semester class? Instead of List<List>, maybe HashSet<List>?
-   *
-   * @param reqs
-   * @param courseSet
+   *  -Testing on DB nodes
+   *  -When multithreading, each thread have its own Pathway instance
+   *  to start. Later on, can alter path instance variable -> HashMap
+   * @param reqs concentration requirements
+   * @param courseSet courses in this concentration
    */
 
   public Pathway(int[] reqs, Set<Node> courseSet) {
@@ -44,86 +40,16 @@ public class Pathway {
     numCategories = reqs.length;
     initialRequirements = Arrays.copyOf(reqs, numCategories);
     courses = courseSet;
-    path = new ArrayList<List<Node>>();
-
+    path = new ArrayList<Semester>();
     workloads = ImmutableMap.of("lo", Range.closedOpen(1.0, 25.0),
         "med", Range.closedOpen(25.0, 40.0),
         "hi", Range.closedOpen(40.0, 70.0));
   }
 
-  public List<List<Node>> getPath() {
+  public List<Semester> getPath() {
     return path;
   }
 
-  /**
-   * If I got a Pathway and wanted to edit it, how would I change it?
-   * - Swap with course of same category
-   *   -> What if they swap a course that is a next or has a next?
-   *   -> What if they swap a course that is a prereq for another course in pathway?
-   *   -> What if the swap can't happen that semester?
-   *   -> Can we honor workload preference if they swap?
-   *
-   * - Move course to a different semester (take AI in semester 5 instead of 3)
-   *  -> What if they try to move the course to a semester when it's not offered?
-   *  -> What if they try to move the course to a semester when it's not a source?
-   *
-   * - Add a desired course
-   *  -> What if they want to add a course to a semester when it's not offered?
-   *
-   * - Users CANNOT just remove a course (won't satisfy reqs)
-   */
-
-  public void editPathwayAdd(List<List<Node>> path, Node addCourse, int desiredSemester) {
-
-  }
-
-
-  public void editPathwayShift(List<List<Node>> path, Node shiftCourse,
-                                           int startSemester, int desiredSemester) {
-    // Check if we course is available in desired semester
-    int sem = desiredSemester % 2;
-    if (!shiftCourse.getSemestersOffered().contains(sem)) {
-      System.out.println(shiftCourse.getId() + ": " + shiftCourse.getName() +
-          " is not offered in semester " + desiredSemester);
-    }
-
-    List<Node> startList = null;
-    for(List<Node> list : path) {
-      for (Node course : list) {
-        if (course.equals(shiftCourse)) {
-          startList = list;
-          break;
-        }
-      }
-    }
-
-    if (desiredSemester > startSemester) {
-      startList.remove(shiftCourse);
-      int start = path.indexOf(startList);
-      int desired = start + (desiredSemester - startSemester);
-      path.get(desired).add(shiftCourse);
-    } else { // desiredSemester < startSemester
-      // Need to check if shiftCourse is source at that point
-      /**
-       * Need to know courses taken and courses
-       * in path up until that semester.
-       *
-       * May have taken as an arg, or could decorate node
-       * with time it becomes source?
-       */
-    }
-  }
-
-  public void editPathwaySwap(List<List<Node>> path, Node swapOutCourse, Node swapInCourse) {
-
-  }
-
-  /**
-   * TODO: add arguments: workload preference ("lo", "med", "hi")
-   *
-   * @param coursesTaken
-   * @param risingSemester
-   */
   public void makePathway(Set<Node> coursesTaken, int risingSemester, boolean aggressive, String workload) {
     currSemester = risingSemester;
     Set nextSet = new HashSet<Node>();
@@ -142,7 +68,10 @@ public class Pathway {
     }
 
     while (this.requirementsLeft()) {
-      System.out.println(currSemester);
+      if (currSemester > 1.5 * SEMESTER_COUNT) { // handling very rare edge case
+        System.out.println("Invalid Pathway - 50% longer than intended. Please try again.");
+        break;
+      }
       List<Node> thisSemester = new ArrayList<Node>();
       Set<Node> sources = this.getAvailableCourses();
 
@@ -167,11 +96,8 @@ public class Pathway {
         coursesByCat[source.getCategory()].add(source);
       }
 
-//      System.out.println("currSemester: " + Integer.toString(currSemester));
       int[] coursesToTake = this.numCoursesToTake(coursesByCat,
           SEMESTER_SIZE - thisSemester.size(), aggressive);
-//      System.out.println(Arrays.toString(coursesToTake));
-
 
       double thisSemAvgHours = 0.0;
       for (int i = 0; i < numCategories; i++) {
@@ -277,7 +203,8 @@ public class Pathway {
           }
         }
       }
-      path.add(thisSemester);
+      Semester semester = new Semester(currSemester, thisSemester);
+      path.add(semester);
       currSemester++;
     }
   }
@@ -392,13 +319,11 @@ public class Pathway {
 
     numCourses = Math.min(numCourses, count);
 
-//    System.out.println("numCourses after Math.min: " + Integer.toString(numCourses));
-
     for (int i = 0; i < numCategories; i++) {
       if (numCourses == 0) {
         break;
       }
-      if (coursesByCat[i].size() == 0 || requirements[i] == 0) { // if no available courses or finished req
+      if (numCoursesPerCat[i] == 0 || requirements[i] == 0) { // if no available courses or finished req
         res[i] = 0;
         continue;
       }
