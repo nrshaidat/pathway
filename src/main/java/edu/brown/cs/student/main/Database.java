@@ -354,18 +354,26 @@ public class Database implements DatabaseInterface {
       String courseRating = rs.getString("courseRating");
       if (!courseRating.equals("")) { //has a courseRating
         newCourse.setRating(Double.parseDouble(courseRating));
+      }else { //set default
+        newCourse.setRating(3.5);
       }
       String avgHrs = rs.getString("avg_hrs");
       if (!avgHrs.equals("")) { // has avghrs value
         newCourse.setAvgHrs(Double.parseDouble(avgHrs));
+      }else { //set default
+        newCourse.setAvgHrs(8);
       }
       String maxHrs = rs.getString("max_hrs");
       if (!maxHrs.equals("")) { // has maxhrs value
         newCourse.setMaxHrs(Double.parseDouble(maxHrs));
+      }else { //set default
+        newCourse.setMaxHrs(14);
       }
       String classSize = rs.getString("class_size");
       if (!classSize.equals("")) { // has class size value set
         newCourse.setClassSize(Integer.parseInt(classSize));
+      } else { //set default
+        newCourse.setClassSize(40);
       }
       rs.close(); // close the reading of the db
       prep.close(); // close the query
@@ -426,15 +434,11 @@ public class Database implements DatabaseInterface {
   }
 
   /**
-   * NOTE from Ifechi: may be simpler parsing if return type is int[]. Declare int[] of size
-   * COUNT(*) and fill with num_credits values. I can make this change later on if you're cool with
-   * it! NOTE from Natalie I tried sis it requires another query why not just keep it a list I set
-   * the indice with its value. You can call .get(indice) on the list and it gives you the same
-   * result getRequirements gets the requirements for the concentration.
+   * getRequirements gets the requirements for the concentration.
    *
    * @param tableName the concentrationNameReqs table name to search for
    * @return an int array where the index is the category and the value at that index is the number
-   *         of courses needed to fulfill the requirement
+   * of courses needed to fulfill the requirement
    */
   @Override
   public List<Integer> getRequirements(String tableName) {
@@ -506,16 +510,23 @@ public class Database implements DatabaseInterface {
     }
   }
 
+  /**
+   * getConcentrations gets the concentrations in the sql database for use in the GUI.
+   *
+   * @return a list of concentration names
+   */
   public List<String> getConcentrations() throws SQLException {
     PreparedStatement prep = null;
     ResultSet rs = null;
     List<String> courseList = new ArrayList<>();
 
     try {
-      prep = conn.prepareStatement("select * from concentrations order by concentration_name asc");
+      prep = conn.prepareStatement("SELECT concentration_name "
+          + " FROM concentrations "
+          + " ORDER BY concentration_name ASC ");
       rs = prep.executeQuery();
       while (rs.next()) {
-        courseList.add(rs.getString(2));
+        courseList.add(rs.getString("concentration_name"));
       }
 
     } catch (SQLException e){
