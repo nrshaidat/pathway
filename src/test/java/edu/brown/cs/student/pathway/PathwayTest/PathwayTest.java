@@ -1,5 +1,8 @@
-package edu.brown.cs.student.pathway;
+package edu.brown.cs.student.pathway.PathwayTest;
 
+import edu.brown.cs.student.pathway.Node;
+import edu.brown.cs.student.pathway.Pathway;
+import edu.brown.cs.student.pathway.Semester;
 import org.junit.Before;
 import org.junit.Test;
 

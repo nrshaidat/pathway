@@ -1,11 +1,11 @@
-package edu.brown.cs.student.pathway;
+package edu.brown.cs.student.pathway.DatabaseTest;
 
 import edu.brown.cs.student.main.Database;
+import edu.brown.cs.student.pathway.Node;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
