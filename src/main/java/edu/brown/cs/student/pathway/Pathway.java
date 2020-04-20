@@ -29,6 +29,7 @@ public class Pathway {
   /**
    * TODO:
    *  -Testing on DB nodes
+   *  -Optimizations
    *  -When multithreading, each thread have its own Pathway instance
    *  to start. Later on, can alter path instance variable -> HashMap
    * @param reqs concentration requirements

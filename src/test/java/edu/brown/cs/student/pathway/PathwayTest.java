@@ -12,7 +12,7 @@ public class PathwayTest {
   private Set<Node> csCourseSetLarger;
   private Set<Node> csTakenSetSmall;
 
-  public void pathwayPrinter(List<Semester> path, int risingSemester) {
+  public void pathwayPrinter(List<Semester> path) {
     System.out.println("----");
     for(Semester list : path) {
       System.out.println("Semester: " + list.getSemester());
@@ -28,7 +28,7 @@ public class PathwayTest {
     int[] reqs = {1, 3, 6, 2};
     Pathway pathwayMaker = new Pathway(reqs, csCourseSetLarger);
     pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
-    this.pathwayPrinter(pathwayMaker.getPath(), 1);
+    this.pathwayPrinter(pathwayMaker.getPath());
   }
 
   @Test
@@ -36,7 +36,7 @@ public class PathwayTest {
     int[] reqs = {1, 3, 6, 2};
     Pathway pathwayMaker = new Pathway(reqs, csCourseSetLarger);
     pathwayMaker.makePathway(csTakenSetSmall, 2, false, "med");
-    this.pathwayPrinter(pathwayMaker.getPath(), 2);
+    this.pathwayPrinter(pathwayMaker.getPath());
   }
 
   @Before
