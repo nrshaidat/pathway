@@ -29,12 +29,22 @@ public class Node {
     id = i;
     name = n;
     category = cat;
+    // default values in case CR doesn't contain the data
+    avgHrs = 10;
+    maxHrs = 17;
+    rating = 3.5;
+    classSize = 40;
     prereqs = new ArrayList<Set<Node>>();
     semestersOffered = new HashSet<Integer>();
   }
 
   public Node(String i) {
     id = i;
+    // default values in case CR doesn't contain the data
+    avgHrs = 8;
+    maxHrs = 14;
+    rating = 3.5;
+    classSize = 40;
     prereqs = new ArrayList<Set<Node>>();
     semestersOffered = new HashSet<Integer>();
   }
