@@ -3,9 +3,20 @@ package edu.brown.cs.student.pathway;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import edu.brown.cs.student.main.DatabaseCache;
+import edu.brown.cs.student.main.Database;
+
 
 public class PathwayWithDatabaseTest {
+  private DatabaseCache cache;
+
+  @Before
+  public void setUp() {
+    cache = new DatabaseCache(new Database("data/coursesDB.db"));
+  }
 
   public void pathwayPrinter(List<Semester> path) {
     System.out.println("----");
@@ -20,7 +31,14 @@ public class PathwayWithDatabaseTest {
 
   @Test
   public void csConcentrationTest() {
+    String tablename = "computerscienceba";
+    List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
+    int[] reqs = reqsTmp.stream().mapToInt(i->i).toArray();
 
+    Set<Node> courseSet = cache.getConcentrationCourses(tablename);
+    Pathway pathwayMaker = new Pathway(reqs, courseSet);
+    pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
+    this.pathwayPrinter(pathwayMaker.getPath());
   }
 
 
@@ -28,5 +46,5 @@ public class PathwayWithDatabaseTest {
   public void mathConcentrationTest() {
 
   }
-  
+
 }

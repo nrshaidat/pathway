@@ -23,13 +23,13 @@ public class PathwayTest {
     }
   }
 
-  @Test
-  public void csConcentrationLargerTest() {
-    int[] reqs = {1, 3, 6, 2};
-    Pathway pathwayMaker = new Pathway(reqs, csCourseSetLarger);
-    pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
-    this.pathwayPrinter(pathwayMaker.getPath());
-  }
+//  @Test
+//  public void csConcentrationLargerTest() {
+//    int[] reqs = {1, 3, 6, 2};
+//    Pathway pathwayMaker = new Pathway(reqs, csCourseSetLarger);
+//    pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
+//    this.pathwayPrinter(pathwayMaker.getPath());
+//  }
 
   @Test
   public void csConcentrationLargerWithTakenTest() {

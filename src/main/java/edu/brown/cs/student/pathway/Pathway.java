@@ -73,6 +73,7 @@ public class Pathway {
         System.out.println("Invalid Pathway - 50% longer than intended. Please try again.");
         break;
       }
+
       List<Node> thisSemester = new ArrayList<Node>();
       Set<Node> sources = this.getAvailableCourses();
 
@@ -88,6 +89,7 @@ public class Pathway {
         }
       }
 
+
       // Group sources by category
       List<Node>[] coursesByCat = new List[numCategories];
       for (int i = 0; i < numCategories; i++) {
@@ -97,8 +99,10 @@ public class Pathway {
         coursesByCat[source.getCategory()].add(source);
       }
 
+
       int[] coursesToTake = this.numCoursesToTake(coursesByCat,
           SEMESTER_SIZE - thisSemester.size(), aggressive);
+
 
       double thisSemAvgHours = 0.0;
       for (int i = 0; i < numCategories; i++) {
@@ -109,6 +113,7 @@ public class Pathway {
         int numCourses = coursesToTake[i];
         requirements[i] -= numCourses;
         List<Node> catCourses = coursesByCat[i];
+
 
         /**
          * Add weights/priorities to courses
@@ -179,6 +184,7 @@ public class Pathway {
           }
         };
         Collections.sort(catCourses, courseComparator);
+
 
         for (int j = 0; j < numCourses; j++) {
           if (thisSemAvgHours > (workloads.get(workload).upperEndpoint() - 7.0)) {
