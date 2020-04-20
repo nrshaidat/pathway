@@ -510,16 +510,23 @@ public class Database implements DatabaseInterface {
     }
   }
 
+  /**
+   * getConcentrations gets the concentrations in the sql database for use in the GUI.
+   *
+   * @return a list of concentration names
+   */
   public List<String> getConcentrations() throws SQLException {
     PreparedStatement prep = null;
     ResultSet rs = null;
     List<String> courseList = new ArrayList<>();
 
     try {
-      prep = conn.prepareStatement("select * from concentrations order by concentration_name asc");
+      prep = conn.prepareStatement("SELECT concentration_name "
+          + " FROM concentrations "
+          + " ORDER BY concentration_name ASC ");
       rs = prep.executeQuery();
       while (rs.next()) {
-        courseList.add(rs.getString(2));
+        courseList.add(rs.getString("concentration_name"));
       }
 
     } catch (SQLException e){
