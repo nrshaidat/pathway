@@ -44,7 +44,7 @@ public class PathwayTest {
   public void csConcentrationLargerTest() {
     int[] reqs = {1, 3, 6, 2};
     Pathway pathwayMaker = new Pathway(reqs, csCourseSetLarger);
-    pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
+    pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "lo");
     this.pathwayPrinter(pathwayMaker.getPath(), 1);
   }
 
@@ -52,7 +52,7 @@ public class PathwayTest {
   public void csConcentrationLargerWithTakenTest() {
     int[] reqs = {1, 3, 6, 2};
     Pathway pathwayMaker = new Pathway(reqs, csCourseSetLarger);
-    pathwayMaker.makePathway(csTakenSetSmall, 2, false, "med");
+    pathwayMaker.makePathway(csTakenSetSmall, 2, false, "lo");
     this.pathwayPrinter(pathwayMaker.getPath(), 2);
   }
 

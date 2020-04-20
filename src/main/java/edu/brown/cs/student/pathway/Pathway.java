@@ -1,13 +1,16 @@
 package edu.brown.cs.student.pathway;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 import com.google.common.collect.Sets;
 import java.util.Collections;
+import java.util.Comparator;
 import java.lang.Math;
-import java.util.Arrays;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Range;
 
 public class Pathway {
   private static final int SEMESTER_SIZE = 4;
@@ -16,6 +19,7 @@ public class Pathway {
   private int[] requirements;
   private int numCategories;
   private int[] initialRequirements;
+  private ImmutableMap<String, Range<Double>> workloads;
 
   private Set<Node> courses;
   private Set<Node> taken;
@@ -29,7 +33,7 @@ public class Pathway {
    *  multithreading, should each thread have its own Pathway instance
    *  or all share an instance and run makePathway with different args?
    *  Consider that path is an instance variable for 1 path.
-   *  -Semester class?
+   *  -Semester class? Instead of List<List>, maybe HashSet<List>?
    *
    * @param reqs
    * @param courseSet
@@ -41,6 +45,10 @@ public class Pathway {
     initialRequirements = Arrays.copyOf(reqs, numCategories);
     courses = courseSet;
     path = new ArrayList<List<Node>>();
+
+    workloads = ImmutableMap.of("lo", Range.closedOpen(1.0, 25.0),
+        "med", Range.closedOpen(25.0, 40.0),
+        "hi", Range.closedOpen(40.0, 70.0));
   }
 
   public List<List<Node>> getPath() {
@@ -61,15 +69,22 @@ public class Pathway {
    *
    * - Add a desired course
    *  -> What if they want to add a course to a semester when it's not offered?
+   *
    * - Users CANNOT just remove a course (won't satisfy reqs)
    */
-  public List<List<Node>> editPathwayShift(List<List<Node>> path, Node shiftCourse, int startSemester, int desiredSemester) {
+
+  public void editPathwayAdd(List<List<Node>> path, Node addCourse, int desiredSemester) {
+
+  }
+
+
+  public void editPathwayShift(List<List<Node>> path, Node shiftCourse,
+                                           int startSemester, int desiredSemester) {
     // Check if we course is available in desired semester
     int sem = desiredSemester % 2;
     if (!shiftCourse.getSemestersOffered().contains(sem)) {
       System.out.println(shiftCourse.getId() + ": " + shiftCourse.getName() +
           " is not offered in semester " + desiredSemester);
-      return null;
     }
 
     List<Node> startList = null;
@@ -97,9 +112,6 @@ public class Pathway {
        * with time it becomes source?
        */
     }
-
-
-    return path;
   }
 
   public void editPathwaySwap(List<List<Node>> path, Node swapOutCourse, Node swapInCourse) {
@@ -160,6 +172,8 @@ public class Pathway {
           SEMESTER_SIZE - thisSemester.size(), aggressive);
 //      System.out.println(Arrays.toString(coursesToTake));
 
+
+      double thisSemAvgHours = 0.0;
       for (int i = 0; i < numCategories; i++) {
         if (coursesToTake[i] == 0) {
           continue;
@@ -217,18 +231,46 @@ public class Pathway {
           }
         }
 
-//        for (Node course : shuffledCatCourses) {
-//          thisSemester.add(course);
-//          taken.add(course);
-//          Node next = course.getNext();
-//          if (next != null) {
-//            nextSet.add(next);
-//          }
-//        }
+        /**
+         * Need to take numCourses courses,
+         * prioritizing courses that come first
+         * in shuffledCatCourses, trying to stay
+         * within the workload range:
+         *
+         * If thisSemAvgHours is less than the lowerEndpoint or well
+         * within the range, we will choose from the first courses in
+         * shuffledCatCourses (ratings > workload). Only if the workload
+         * exceeds the range do we choose lower workload courses over
+         * better rated courses.
+         */
+
+        // sort courses by avgHrs ascending order
+        Comparator<Node> courseComparator = new Comparator<Node>() {
+          @Override
+          public int compare(Node n1, Node n2) {
+            return Double.compare(n1.getAvgHrs(), n2.getAvgHrs());
+          }
+        };
+        Collections.sort(catCourses, courseComparator);
 
         for (int j = 0; j < numCourses; j++) {
+          if (thisSemAvgHours > (workloads.get(workload).upperEndpoint() - 7.0)) {
+            int numLeft = numCourses - j;
+            for (int k = 0; k < numLeft; k++) {
+              thisSemester.add(catCourses.get(k));
+              taken.add(catCourses.get(k));
+              thisSemAvgHours += catCourses.get(k).getAvgHrs();
+              Node next = catCourses.get(k).getNext();
+              if (next != null) {
+                nextSet.add(next);
+              }
+            }
+            break;
+          }
           thisSemester.add(shuffledCatCourses[j]);
           taken.add(shuffledCatCourses[j]);
+          thisSemAvgHours += shuffledCatCourses[j].getAvgHrs();
+          catCourses.remove(shuffledCatCourses[j]);
           Node next = shuffledCatCourses[j].getNext();
           if (next != null) {
             nextSet.add(next);
