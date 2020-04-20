@@ -1,8 +1,7 @@
-# cs0320 Term Project 2020
+# cs0320 Term Project 2020: Pathway
 
 **Team Members:**
 Members: Melissa Cui, Natalie Rshaidat, Ifechi Ilozor, Nicholas Keirstead 
-## Pathway
 
 ## Known bugs:
 None
