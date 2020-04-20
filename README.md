@@ -2,6 +2,64 @@
 
 **Team Members:**
 Members: Melissa Cui, Natalie Rshaidat, Ifechi Ilozor, Nicholas Keirstead 
+## Pathway
+
+## Known bugs:
+None
+## Design details:
+- Main Package:
+  -Database Design:
+  -GUI Design
+- REPL Package:
+- Pathway Package   
+- SQL Database Design:
+
+## Runtime/Space optimizations:
+
+
+## How to build and run our program:
+- To build:  
+	Use "mvn package" or "mvn site" (for more project details). Make sure to do the
+steps in the "How to run our tests" section before building, so that JUnit tests
+don't fail when building.    
+
+- To run Maps via terminal:  
+	./run 
+
+## How to run our tests:
+	- To run unit tests: "mvn test", or using one of the build commands (mvn package)
+## Tests we wrote:
+	
+## Checkstyle appeals:
+
+None.
+
+## Partner division of labor:
+
+    Natalie:
+        -Database and its unit tests
+        -Integrating CAB scraping to main sql database
+        -Fixing ALL of Nick's bugs in cab scraping
+        -Manually double checking, fixing inaccurate prereqs, and entering missing prereqs for all courses in MATH, APMA, BIOL, CSCI.
+        -Giving Nick a step by step guide to cab scraping 
+        -Figured shibboleth authentication for all scraping
+        -Cleaning up Nicks data (removing NULLs, extra commas etc)
+
+	Mel:
+        -Critical review scraping
+        -Login setup 
+        -Concentration table in the database
+        -Connecting spark to java 
+        -REPL
+        -Manually double checking, fixing inaccurate prereqs, and entering missing prereqs for all courses in ECON
+    
+	Ifechi:
+        -Pathway package
+        -Pathway algorithm
+        -Optimizations in the algorithm 
+        -Shuffling and weights addition to the courses
+        -Junit testing for pathway
+		
 
 #### Member: Melissa Cui
 ##### Strengths
@@ -128,5 +186,3 @@ _On your first meeting with your mentor TA, you should plan dates for at least t
 
 **Adversary Checkpoint:** _(Schedule for on or before April 29 once you are assigned an adversary TA)_
 
-## How to Build and Run
-_A necessary part of any README!_
