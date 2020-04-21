@@ -545,4 +545,28 @@ public class Database implements DatabaseInterface {
 
   }
 
+  /**
+   * getConcentrations gets the concentrations in the sql database for use in the GUI.
+   *
+   * @return a list of concentration names
+   */
+  public boolean hasLoop() {
+    PreparedStatement prep = null;
+    ResultSet rs = null;
+    try {
+      prep = conn.prepareStatement("SELECT course_id "
+          + " FROM courses");
+      rs = prep.executeQuery();
+      while (rs.next()) {
+        this.getCourseData(rs.getString("course_id"));
+      }
+      rs.close();
+      prep.close();
+      return true;
+    } catch (SQLException e) {
+      return false;
+    }
+
+  }
+
 }

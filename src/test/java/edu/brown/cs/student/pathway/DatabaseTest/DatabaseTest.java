@@ -370,7 +370,7 @@ public class DatabaseTest {
     setUp();
     String validCon = "computationalbiologyba";
     Set<Node> comp = realDB.getConcentrationCourses(validCon);
-    assertEquals(18, comp.size());
+    assertEquals(21, comp.size());
     Map<String, Node> mapy = this.covertDict(comp);
     Node math10 = realDB.getCourseData("MATH 0100");
     assertEquals(math10, mapy.get("MATH 0090").getNext());
@@ -423,6 +423,19 @@ public class DatabaseTest {
     setUp();
     String invalidCon = "PERIODT CONCENTRATION";
     assertNull(realDB.getConcentrationCourses(invalidCon));
+
+    tearDown();
+  }
+
+  /**
+   * Tests that the courses data does not have a loop for example VISA 1520 says it has VISA 1530 as
+   * a prereq and VISA 1530 has VISA 1520 as a prereq.
+   * the current db.
+   */
+  @Test
+  public void validCourseNoLoops() {
+    setUp();
+    assertTrue(realDB.hasLoop());
 
     tearDown();
   }
