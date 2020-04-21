@@ -68,6 +68,7 @@ public class Pathway {
       }
     }
 
+
     while (this.requirementsLeft()) {
       if (currSemester > 1.5 * SEMESTER_COUNT) { // handling very rare edge case
         System.out.println("Invalid Pathway - 50% longer than intended. Please try again.");
@@ -76,17 +77,20 @@ public class Pathway {
 
       List<Node> thisSemester = new ArrayList<Node>();
       Set<Node> sources = this.getAvailableCourses();
+      for (Node source: sources) {
+//        System.out.println("Source: " + source.getId());
+      }
+//      System.out.println();
 
       // Take "next" courses if available, up to SEMESTER_SIZE courses
       Set<Node> mustTakes = Sets.intersection(nextSet, sources);
-      //fix of concurrentModification java bug
-      Set<Node> toRemove = new HashSet<>(); //set of nodes to remove after done iterating
+
+      Set<Node> toRemove = new HashSet<>();
       int c = 0;
       for (Node course : mustTakes) {
         if (c < SEMESTER_SIZE) {
           thisSemester.add(course);
           taken.add(course);
-          //nextSet.remove(course);
           toRemove.add(course);
           c++;
         }

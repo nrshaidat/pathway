@@ -354,19 +354,19 @@ public class Database implements DatabaseInterface {
       String courseRating = rs.getString("courseRating");
       if (!courseRating.equals("")) { //has a courseRating
         newCourse.setRating(Double.parseDouble(courseRating));
-      }else { //set default
+      } else { //set default
         newCourse.setRating(3.5);
       }
       String avgHrs = rs.getString("avg_hrs");
       if (!avgHrs.equals("")) { // has avghrs value
         newCourse.setAvgHrs(Double.parseDouble(avgHrs));
-      }else { //set default
+      } else { //set default
         newCourse.setAvgHrs(8);
       }
       String maxHrs = rs.getString("max_hrs");
       if (!maxHrs.equals("")) { // has maxhrs value
         newCourse.setMaxHrs(Double.parseDouble(maxHrs));
-      }else { //set default
+      } else { //set default
         newCourse.setMaxHrs(14);
       }
       String classSize = rs.getString("class_size");
@@ -489,9 +489,9 @@ public class Database implements DatabaseInterface {
         String nextID = rs.getString("next");
         String courseID = rs.getString("course_id");
         Node tmp = this.getCourseData(courseID);
-        if (tmp == null) { //course is not offered anymore so don't add it
+        if (tmp == null) { // course is not offered anymore so don't add it
           continue;
-        } else { //course is in our courses table and is offered
+        } else { // course is in our courses table and is offered
           if (nextID.length() > 0) {
             Node next = this.getCourseData(nextID);
             next.setCategory(category);
