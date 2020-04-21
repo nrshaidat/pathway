@@ -344,6 +344,8 @@ public class DatabaseTest {
     assertTrue(anth.getMaxHrs() == 14);
     assertTrue(28 == anth.getClassSize());
     assertTrue(anth.getSemestersOffered().contains(0));
+
+    Node art = realDB.getCourseData("VISA 1520");
     tearDown();
   }
 
