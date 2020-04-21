@@ -79,15 +79,19 @@ public class Pathway {
 
       // Take "next" courses if available, up to SEMESTER_SIZE courses
       Set<Node> mustTakes = Sets.intersection(nextSet, sources);
+      //fix of concurrentModification java bug
+      Set<Node> toRemove = new HashSet<>(); //set of nodes to remove after done iterating
       int c = 0;
       for (Node course : mustTakes) {
         if (c < SEMESTER_SIZE) {
           thisSemester.add(course);
           taken.add(course);
-          nextSet.remove(course);
+          //nextSet.remove(course);
+          toRemove.add(course);
           c++;
         }
       }
+      nextSet.removeAll(toRemove);
 
 
       // Group sources by category
