@@ -75,12 +75,6 @@ public class Pathway {
         break;
       }
 
-      for (Node c : taken) {
-        System.out.println("------");
-        System.out.println(c.getId());
-        System.out.println("------");
-      }
-
       List<Node> thisSemester = new ArrayList<Node>();
       Set<Node> sources = this.getAvailableCourses();
 
