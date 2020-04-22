@@ -16,15 +16,15 @@ public class Pathway {
   private static final int SEMESTER_SIZE = 4;
   private static final int SEMESTER_COUNT = 8;
 
-  private int[] requirements;
-  private int numCategories;
+  private int[] requirements; //indices are the categories and the values are number of credits to satisfy the category
+  private int numCategories; //size of the requirements array
   private int[] initialRequirements;
   private ImmutableMap<String, Range<Double>> workloads;
 
-  private Set<Node> courses;
-  private Set<Node> taken;
+  private Set<Node> courses; //All possible courses that can be taken for credit for that concentration
+  private Set<Node> taken; //All courses the student has already taken
   private int currSemester;
-  private List<Semester> path;
+  private List<Semester> path; //path to be returned
 
   /**
    * TODO:
@@ -44,7 +44,7 @@ public class Pathway {
     path = new ArrayList<Semester>();
     workloads = ImmutableMap.of("lo", Range.closedOpen(1.0, 25.0),
         "med", Range.closedOpen(25.0, 40.0),
-        "hi", Range.closedOpen(40.0, 70.0));
+        "hi", Range.closedOpen(40.0, 70.0)); //may need to increase to 80
   }
 
   public List<Semester> getPath() {
@@ -53,12 +53,12 @@ public class Pathway {
 
   public void makePathway(Set<Node> coursesTaken, int risingSemester, boolean aggressive, String workload) {
     currSemester = risingSemester;
-    Set nextSet = new HashSet<Node>();
+    Set nextSet = new HashSet<Node>();//what is this
 
     taken = coursesTaken;
     for (Node course : taken) {
       int category = course.getCategory();
-      if (requirements[category] == 0) {
+      if (requirements[category] == 0) { //what is this check for
         continue;
       }
       requirements[category] -= 1;
@@ -79,7 +79,7 @@ public class Pathway {
       Set<Node> sources = this.getAvailableCourses();
 
       // Take "next" courses if available, up to SEMESTER_SIZE courses
-      Set<Node> mustTakes = Sets.intersection(nextSet, sources);
+      Set<Node> mustTakes = Sets.intersection(nextSet, sources); //what is this you lost me
 
       Set<Node> toRemove = new HashSet<>();
       int c = 0;
@@ -219,7 +219,10 @@ public class Pathway {
       currSemester++;
     }
   }
-
+  /*
+  Why not have a variable of the total number requirements left and update that variable
+  as you take a course, instead of looping each time thru the array -Nat
+   */
   private boolean requirementsLeft() {
     int zeroCount = 0;
     for (int i = 0; i < numCategories; i++) {
@@ -253,7 +256,8 @@ public class Pathway {
       for (Set<Node> s : satisfied) {
         course.removePrereq(s);
       }
-
+      //this will re add courses like cs15 when one takes cs19 each fall
+      //why not run this by category instead of over the whole set
       if (course.getPrereqs().size() == 0 && !taken.contains(course)) {
         sources.add(course);
       }
