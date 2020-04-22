@@ -75,6 +75,12 @@ public class Pathway {
         break;
       }
 
+      for (Node c : taken) {
+        System.out.println("------");
+        System.out.println(c.getId());
+        System.out.println("------");
+      }
+
       List<Node> thisSemester = new ArrayList<Node>();
       Set<Node> sources = this.getAvailableCourses();
 
@@ -238,6 +244,10 @@ public class Pathway {
     int sem = currSemester % 2;
     for (Node course : courses) {
       // continue  if course is not offered this semester
+
+      System.out.println("COURSE: " + course.getId());
+
+
       if (!course.getSemestersOffered().contains(sem)) {
         continue;
       }
@@ -245,8 +255,11 @@ public class Pathway {
       // remove incoming edges from node
       Set<Set<Node>> satisfied = new HashSet<Set<Node>>();
       for (Set<Node> s : course.getPrereqs()) {
-        for (Node c : taken) {
-          if (s.contains(c)) {
+        System.out.println("Set containing: ");
+        for (Node c : s) {
+          System.out.println("Course: " + c.getId());
+          if (taken.contains(c)) {
+            System.out.println("Taken req and covered set: " + c.getId());
             satisfied.add(s);
             break;
           }
@@ -255,6 +268,10 @@ public class Pathway {
 
       for (Set<Node> s : satisfied) {
         course.removePrereq(s);
+        System.out.println("Removed set containing: ");
+        for (Node c : s) {
+          System.out.println(c.getId());
+        }
       }
       //this will re add courses like cs15 when one takes cs19 each fall
       //why not run this by category instead of over the whole set

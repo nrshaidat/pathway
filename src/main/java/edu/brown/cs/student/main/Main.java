@@ -84,7 +84,6 @@ public final class Main {
 
     Spark.get("/login", new loginHandler(), freeMarker);
     Spark.post("/mypath", new myPathHandler(), freeMarker);
-    SPark.post()
 
   }
 
@@ -111,8 +110,6 @@ public final class Main {
     }
 
   }
-
-  private static class
 
   /**
    * Displays an error page when an exception occurs in the server.
