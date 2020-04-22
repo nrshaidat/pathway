@@ -77,10 +77,6 @@ public class Pathway {
 
       List<Node> thisSemester = new ArrayList<Node>();
       Set<Node> sources = this.getAvailableCourses();
-      for (Node source: sources) {
-//        System.out.println("Source: " + source.getId());
-      }
-//      System.out.println();
 
       // Take "next" courses if available, up to SEMESTER_SIZE courses
       Set<Node> mustTakes = Sets.intersection(nextSet, sources);

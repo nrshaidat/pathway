@@ -393,7 +393,7 @@ public class Database implements DatabaseInterface {
     String[] parsedLine = prereqs.split(","); //split on , (AND)
     List<Set<Node>> courseList = new ArrayList<>();
     for (String courseID : parsedLine) { //loop thru each required prereqs (AND)
-      String[] parsedOrs = courseID.split("="); //split each requirment on = (OR)
+      String[] parsedOrs = courseID.split("="); //split each requirement on = (OR)
       Set<Node> courseSet = new HashSet<Node>();
       if (parsedOrs.length == 1) { //no ors in prereqs
         Node tmp = this.getCourseData(parsedOrs[0]);
