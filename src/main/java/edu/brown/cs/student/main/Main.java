@@ -83,7 +83,8 @@ public final class Main {
     // Setup Spark Routes
 
     Spark.get("/login", new loginHandler(), freeMarker);
-    Spark.post("/pathway", new pathwayHandler(), freeMarker);
+    Spark.post("/mypath", new pathwayHandler(), freeMarker);
+
   }
 
   private static class loginHandler implements TemplateViewRoute {
