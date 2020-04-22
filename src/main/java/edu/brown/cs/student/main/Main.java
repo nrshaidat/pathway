@@ -83,7 +83,8 @@ public final class Main {
     // Setup Spark Routes
 
     Spark.get("/login", new loginHandler(), freeMarker);
-    Spark.post("/mypath", new pathwayHandler(), freeMarker);
+    Spark.post("/mypath", new myPathHandler(), freeMarker);
+    SPark.post()
 
   }
 
@@ -96,7 +97,7 @@ public final class Main {
 
   }
 
-  private static class pathwayHandler implements TemplateViewRoute {
+  private static class myPathHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
 
@@ -110,6 +111,8 @@ public final class Main {
     }
 
   }
+
+  private static class
 
   /**
    * Displays an error page when an exception occurs in the server.
