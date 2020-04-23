@@ -6,6 +6,15 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.HashSet;
 
+/**
+ * The Node class represents a course that 1) fulfills a concentration requirement or 2)
+ * satisfies a prerequisite for
+ * a course that fulfills a concentration requierement and 3) is still offered at Brown and has
+ * data on CAB. The
+ * database class is the only class that instantiates a node object and initializes all it's
+ * values for the pathway class
+ * and GUI.
+ */
 public class Node {
   private String id;
   private String name;
@@ -21,24 +30,36 @@ public class Node {
 
   /**
    * Note: this constructor should be removed later on.
-   * @param i id
-   * @param n name
-   * @param cat category
+   *
+   * @param courseID       course id
+   * @param courseName     course name
+   * @param courseCategory course category
    */
-  public Node(String i, String n, int cat) {
-    id = i;
-    name = n;
-    category = cat;
+  public Node(String courseID, String courseName, int courseCategory) {
+    id = courseID;
+    name = courseName;
+    category = courseCategory;
     prereqs = new ArrayList<Set<Node>>();
     semestersOffered = new HashSet<Integer>();
   }
 
-  public Node(String i) {
-    id = i;
+  /**
+   * Instantiates a new Node.
+   *
+   * @param courseID the course ID w/out its course name so just the department code space and
+   *                 the course number
+   */
+  public Node(String courseID) {
+    id = courseID;
     prereqs = new ArrayList<Set<Node>>();
     semestersOffered = new HashSet<Integer>();
   }
 
+  /**
+   * Equals method that checks if two nodes are equal.
+   *
+   * @return a boolean if they are equal or not
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -48,109 +69,254 @@ public class Node {
       return false;
     }
     Node node = (Node) o;
-    return Double.compare(node.getAvgHrs(), getAvgHrs()) == 0 &&
-        Double.compare(node.getMaxHrs(), getMaxHrs()) == 0 &&
-        Double.compare(node.getRating(), getRating()) == 0 &&
-        getClassSize() == node.getClassSize() &&
-        getId().equals(node.getId()) &&
-        getName().equals(node.getName()) &&
-        Objects.equals(getPrereqs(), node.getPrereqs()) &&
-        getSemestersOffered().equals(node.getSemestersOffered());
+    return Double.compare(node.getAvgHrs(), getAvgHrs()) == 0
+        && Double.compare(node.getMaxHrs(), getMaxHrs()) == 0
+        && Double.compare(node.getRating(), getRating()) == 0
+        && getClassSize() == node.getClassSize()
+        && getId().equals(node.getId())
+        && getName().equals(node.getName())
+        && Objects.equals(getPrereqs(), node.getPrereqs())
+        && getSemestersOffered().equals(node.getSemestersOffered());
   }
 
+  /**
+   * hashCode method gets the hashcode for the node.
+   *
+   * @return the node's hashcode
+   */
   @Override
   public int hashCode() {
     return Objects.hash(getId(), getName());
   }
 
+  /**
+   * getId method gets the node's id (ie CSCI 0150) and can never be null so long
+   * as the course exists in the db.
+   *
+   * @return the course id
+   */
   public String getId() {
     return id;
   }
-  
-  public void setName(String n) {
-    name = n;
+
+  /**
+   * setName sets the name of the course (ie Intro to Software Engineering).
+   *
+   * @param courseName the name of the course with its id
+   */
+  public void setName(String courseName) {
+    name = courseName;
   }
 
+  /**
+   * getName gets the course name and is never null .
+   *
+   * @return the course name
+   */
   public String getName() {
     return name;
   }
-  
-  public void setCategory(int cat) {
-    category = cat;
+
+  /**
+   * setCategory sets the concentration requierment category that the course fulfills.
+   *
+   * @param courseCategory the course's category
+   */
+  public void setCategory(int courseCategory) {
+    category = courseCategory;
   }
 
+  /**
+   * getCategory gets the course's category and can never be null.
+   *
+   * @return the category for the course
+   */
   public int getCategory() {
     return category;
   }
 
+  /**
+   * setPrereqs sets the course's prereqs if there are any and if there
+   * arent any prereqs then an empty list is set as the prereqs.This method is specifically
+   * used solely for the database class.
+   *
+   * @param prerequisites the prerequisites
+   */
   public void setPrereqs(List<Set<Node>> prerequisites) {
     prereqs = prerequisites;
   }
 
+  /**
+   * addPrereq adds a required set of prereqs, where one course in a set needs to be taken to
+   * satisfy that
+   * prereq qualification. This is used in the pathway class.
+   *
+   * @param prereqSet a prereq set to add
+   */
   public void addPrereq(Set<Node> prereqSet) {
     prereqs.add(prereqSet);
   }
 
+  /**
+   * removePrereq removes a prereq set when a student has fulfilled that section of the prereqs
+   * .This is
+   * used in the pathway class.
+   *
+   * @param prereqSet the prereq set to remove
+   */
   public void removePrereq(Set<Node> prereqSet) {
     prereqs.remove(prereqSet);
   }
 
+  /**
+   * getPrereqs gets all prereqs for a course and if there aren't any prereqs then it
+   * returns an empty list, so check if the size is 0 to see if a course has prereqs.
+   *
+   * @return all the prereqs for the course
+   */
   public List<Set<Node>> getPrereqs() {
     return prereqs;
   }
 
-  public void setNext(Node n) {
-    next = n;
+  /**
+   * setNext sets the next course in a sequence (CS15's next field would be CS16).
+   * This is only used for mandatory sequence courses.
+   *
+   * @param nextCourse of the sequence
+   */
+  public void setNext(Node nextCourse) {
+    next = nextCourse;
   }
 
+  /**
+   * getNext gets the next course in the sequence if it exists and if it doesn't it will return
+   * null.
+   *
+   * @return the next course in a sequence or null if it doesn't exist
+   */
   public Node getNext() {
     return next;
   }
 
+  /**
+   * setSemesters sets the hash set of semesters that this course is offered in, so a course that
+   * is offered
+   * both semesters would have a set of 1 and 0 while if a course if only offered in the fall its
+   * set would have only 1
+   * and a course that is only offered in the spring would only have 0.
+   *
+   * @param sems the semesters set to set
+   */
   public void setSemesters(Set<Integer> sems) {
     semestersOffered = sems;
   }
 
+  /**
+   * getSemestersOffered gets the semesters offered for the course.
+   *
+   * @return the semesters offered
+   */
   public Set<Integer> getSemestersOffered() {
     return semestersOffered;
   }
 
+  /**
+   * setProfessor sets the professor for the course, but we are aware that one course can have
+   * many professors in a semester so to simplify things we just picked the first section's
+   * professor.
+   *
+   * @param prof the professor to set for the course
+   */
   public void setProfessor(String prof) {
     professor = prof;
   }
 
+  /**
+   * getProfessor gets the professor for the course.
+   *
+   * @return the professor that teaches the course
+   */
   public String getProfessor() {
     return professor;
   }
 
+  /**
+   * setRating sets the course's most recent rating from critical review if it exists, but
+   * if it doesnt exist then we set the default to 3.5 as it was the average course rating
+   * from all courses.
+   *
+   * @param rate the course rating
+   */
   public void setRating(double rate) {
     rating = rate;
   }
 
+  /**
+   * getRating gets the most recent course rating from critical review.
+   *
+   * @return the course rating
+   */
   public double getRating() {
     return rating;
   }
 
+  /**
+   * setAvgHrs sets the most recent average hrs for the course from critical review if it exists,
+   * but
+   * if it doesnt exist then we set the default to 8 hours as it was the average average hourse
+   * from all courses.
+   *
+   * @param avg the most recent average hours for the course from critical review
+   */
   public void setAvgHrs(double avg) {
     avgHrs = avg;
   }
 
+  /**
+   * getAvgHrs gets the most recent average hrs for the course from critical review.
+   *
+   * @return the average hrs for the course from critical review
+   */
   public double getAvgHrs() {
     return avgHrs;
   }
 
+  /**
+   * setMaxHrs sets the most recent max hourse from critical review if it exists, but
+   * if it doesnt exist then we set the default to 14 hours as it was the average max
+   * hours from all courses.
+   *
+   * @param max the most recent max hours from critical review
+   */
   public void setMaxHrs(double max) {
     maxHrs = max;
   }
 
+  /**
+   * getMaxHrs gets the most recent max hrs for the course from critical review.
+   *
+   * @return the most recent max hrs from critical review
+   */
   public double getMaxHrs() {
     return maxHrs;
   }
 
+  /**
+   * setClassSize sets the most recent class size from critical review if it exists, but
+   * if it doesnt exist then we set the default to 40 as it was the average class size
+   * from all courses.
+   *
+   * @param size the most recent class size from critical review
+   */
   public void setClassSize(int size) {
     classSize = size;
   }
 
+  /**
+   * getClassSize gets the most recent class size from critical review.
+   *
+   * @return the most recent class size from critical review
+   */
   public int getClassSize() {
     return classSize;
   }

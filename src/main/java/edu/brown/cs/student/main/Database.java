@@ -19,7 +19,20 @@ import edu.brown.cs.student.pathway.Node;
  * Database class that handles sql queries to the sql database.
  */
 public class Database implements DatabaseInterface {
-  public static final int COURSE = 13;
+  private static final int COURSE = 13; //courses table number of columns
+  private static final int COURSECODEIDX = 0;
+  private static final int COURSENAMEIDX = 1;
+  private static final int PREREQIDX = 2;
+  private static final int SEMESTERIDX = 3;
+  private static final int PROFESSORIDX = 4;
+  private static final int COURSERATINGIDX = 5;
+  private static final int AVGHRSIDX = 6;
+  private static final int MAXHRSIDX = 7;
+  private static final int CLASSSIZEIDX = 9;
+  private static final double DEFAULTRATING = 3.5;
+  private static final double DEFAULTAVGHRS = 8;
+  private static final double DEFAULTMAXHRS = 14;
+  private static final int DEFAULTCLASSSIZE = 40;
   private static Connection conn;
 
   /**
@@ -271,31 +284,31 @@ public class Database implements DatabaseInterface {
       if (names.size() != COURSE) {
         return false;
       }
-      if (!names.get(0).equals("course_id")) {
+      if (!names.get(COURSECODEIDX).equals("course_id")) {
         return false;
       }
-      if (!names.get(1).equals("course_name")) {
+      if (!names.get(COURSENAMEIDX).equals("course_name")) {
         return false;
       }
-      if (!names.get(2).equals("prereqs")) {
+      if (!names.get(PREREQIDX).equals("prereqs")) {
         return false;
       }
-      if (!names.get(3).equals("semester_offered")) {
+      if (!names.get(SEMESTERIDX).equals("semester_offered")) {
         return false;
       }
-      if (!names.get(4).equals("professor")) {
+      if (!names.get(PROFESSORIDX).equals("professor")) {
         return false;
       }
-      if (!names.get(5).equals("courseRating")) {
+      if (!names.get(COURSERATINGIDX).equals("courseRating")) {
         return false;
       }
-      if (!names.get(6).equals("avg_hrs")) {
+      if (!names.get(AVGHRSIDX).equals("avg_hrs")) {
         return false;
       }
-      if (!names.get(7).equals("max_hrs")) {
+      if (!names.get(MAXHRSIDX).equals("max_hrs")) {
         return false;
       }
-      if (!names.get(9).equals("class_size")) {
+      if (!names.get(CLASSSIZEIDX).equals("class_size")) {
         return false;
       }
       resultSet.close();
@@ -355,25 +368,25 @@ public class Database implements DatabaseInterface {
       if (!courseRating.equals("")) { //has a courseRating
         newCourse.setRating(Double.parseDouble(courseRating));
       } else { //set default
-        newCourse.setRating(3.5);
+        newCourse.setRating(DEFAULTRATING);
       }
       String avgHrs = rs.getString("avg_hrs");
       if (!avgHrs.equals("")) { // has avghrs value
         newCourse.setAvgHrs(Double.parseDouble(avgHrs));
       } else { //set default
-        newCourse.setAvgHrs(8);
+        newCourse.setAvgHrs(DEFAULTAVGHRS);
       }
       String maxHrs = rs.getString("max_hrs");
       if (!maxHrs.equals("")) { // has maxhrs value
         newCourse.setMaxHrs(Double.parseDouble(maxHrs));
       } else { //set default
-        newCourse.setMaxHrs(14);
+        newCourse.setMaxHrs(DEFAULTMAXHRS);
       }
       String classSize = rs.getString("class_size");
       if (!classSize.equals("")) { // has class size value set
         newCourse.setClassSize(Integer.parseInt(classSize));
       } else { //set default
-        newCourse.setClassSize(40);
+        newCourse.setClassSize(DEFAULTCLASSSIZE);
       }
       rs.close(); // close the reading of the db
       prep.close(); // close the query
@@ -533,7 +546,7 @@ public class Database implements DatabaseInterface {
         courseList.add(rs.getString("concentration_name"));
       }
 
-    } catch (SQLException e){
+    } catch (SQLException e) {
       return null;
     } finally {
       if (rs != null) {
