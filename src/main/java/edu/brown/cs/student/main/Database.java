@@ -2,16 +2,13 @@ package edu.brown.cs.student.main;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.io.File;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.List;
 
 import edu.brown.cs.student.pathway.Node;
 
@@ -537,7 +534,7 @@ public class Database implements DatabaseInterface {
   public List<String> getConcentrations() throws SQLException {
     PreparedStatement prep = null;
     ResultSet rs = null;
-    List<String> courseList = new ArrayList<>();
+    List<String> concentrationList = new ArrayList<>();
 
     try {
       prep = conn.prepareStatement("SELECT concentration_name "
@@ -545,7 +542,7 @@ public class Database implements DatabaseInterface {
           + " ORDER BY concentration_name ASC ");
       rs = prep.executeQuery();
       while (rs.next()) {
-        courseList.add(rs.getString("concentration_name"));
+        concentrationList.add(rs.getString("concentration_name"));
       }
 
     } catch (SQLException e) {
@@ -559,7 +556,34 @@ public class Database implements DatabaseInterface {
       }
     }
 
-    return courseList;
+    return concentrationList;
+
+  }
+
+  public String getConcentrationID(String concName) throws SQLException {
+    PreparedStatement prep = null;
+    ResultSet rs = null;
+    String concentration_id = "";
+
+    try {
+      prep = conn.prepareStatement("SELECT concentration_id FROM concentrations WHERE concentration_name = ?");
+      prep.setString(1, concName);
+      rs = prep.executeQuery();
+      while (rs.next()) {
+        concentration_id = rs.getString("concentration_id");
+      }
+    } catch (SQLException e) {
+      return null;
+    } finally {
+      if (rs != null) {
+        rs.close();
+      }
+    }
+    if (prep != null) {
+      prep.close();
+    }
+
+  return concentration_id;
 
   }
 
