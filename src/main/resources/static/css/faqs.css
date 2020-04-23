@@ -14,6 +14,10 @@ input {
     padding: 5px;
 }
 
+content {
+    width: 800px;
+}
+
 
 input[type=text], input[type=password] {
     width: 100%;

@@ -84,6 +84,7 @@ public final class Main {
 
     Spark.get("/login", new loginHandler(), freeMarker);
     Spark.post("/mypath", new myPathHandler(), freeMarker);
+    Spark.get("/faqs", new faqHandler(), freeMarker);
 
   }
 
@@ -105,10 +106,19 @@ public final class Main {
 
       courseList = db.getConcentrations();
 
-      Map<String, Object> variables = ImmutableMap.of("title", "Mel's Pathway", "results", "", "courseList", courseList);
+      Map<String, Object> variables = ImmutableMap.of("title", "Your Personalized Pathway",
+              "results", "", "courseList", courseList);
       return new ModelAndView(variables, "mypath.ftl");
     }
 
+  }
+
+  private static class faqHandler implements TemplateViewRoute {
+    @Override
+    public ModelAndView handle(Request req, Response res) {
+      Map<String, Object> variables = ImmutableMap.of("title", "FAQs", "results", "");
+      return new ModelAndView(variables, "faqs.ftl");
+    }
   }
 
   /**
