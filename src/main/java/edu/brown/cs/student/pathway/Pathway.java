@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
-import com.google.common.collect.Sets;
 import java.util.Collections;
 import java.util.Comparator;
 import java.lang.Math;
@@ -22,7 +21,7 @@ public class Pathway {
   private ImmutableMap<String, Range<Double>> workloads;
 
   private Set<Node> courses; //All possible courses that can be taken for credit for that concentration
-  private Set<Node> taken; //All courses the student has already taken
+  private Set<String> taken; //All courses the student has already taken
   private int currSemester;
   private List<Semester> path; //path to be returned
 
@@ -37,6 +36,7 @@ public class Pathway {
    */
 
   public Pathway(int[] reqs, Set<Node> courseSet) {
+    taken = new HashSet<String>();
     requirements = reqs;
     numCategories = reqs.length;
     initialRequirements = Arrays.copyOf(reqs, numCategories);
@@ -53,12 +53,11 @@ public class Pathway {
 
   public void makePathway(Set<Node> coursesTaken, int risingSemester, boolean aggressive, String workload) {
     currSemester = risingSemester;
-    Set nextSet = new HashSet<Node>();//what is this
+    Set<Node> nextSet = new HashSet<Node>();
 
-    taken = coursesTaken;
-    for (Node course : taken) {
+    for (Node course : coursesTaken) {
       int category = course.getCategory();
-      if (requirements[category] == 0) { //what is this check for
+      if (requirements[category] == 0) {
         continue;
       }
       requirements[category] -= 1;
@@ -66,6 +65,8 @@ public class Pathway {
       if (next != null) {
         nextSet.add(next);
       }
+
+      taken.add(course.getId());
     }
 
 
@@ -78,22 +79,17 @@ public class Pathway {
       List<Node> thisSemester = new ArrayList<Node>();
       Set<Node> sources = this.getAvailableCourses();
 
-      // Take "next" courses if available, up to SEMESTER_SIZE courses
-      Set<Node> mustTakes = Sets.intersection(nextSet, sources); //what is this you lost me
-
+      // Take "next" courses if available
       Set<Node> toRemove = new HashSet<>();
-      int c = 0;
-      for (Node course : mustTakes) {
-        if (c < SEMESTER_SIZE) {
-          thisSemester.add(course);
-          taken.add(course);
-          toRemove.add(course);
-          c++;
+      for (Node next : nextSet) {
+        if (sources.contains(next)) {
+          thisSemester.add(next);
+          taken.add(next.getId());
+          toRemove.add(next);
         }
       }
       nextSet.removeAll(toRemove);
-
-
+      
       // Group sources by category
       List<Node>[] coursesByCat = new List[numCategories];
       for (int i = 0; i < numCategories; i++) {
@@ -195,7 +191,7 @@ public class Pathway {
             int numLeft = numCourses - j;
             for (int k = 0; k < numLeft; k++) {
               thisSemester.add(catCourses.get(k));
-              taken.add(catCourses.get(k));
+              taken.add(catCourses.get(k).getId());
               thisSemAvgHours += catCourses.get(k).getAvgHrs();
               Node next = catCourses.get(k).getNext();
               if (next != null) {
@@ -205,7 +201,7 @@ public class Pathway {
             break;
           }
           thisSemester.add(shuffledCatCourses[j]);
-          taken.add(shuffledCatCourses[j]);
+          taken.add(shuffledCatCourses[j].getId());
           thisSemAvgHours += shuffledCatCourses[j].getAvgHrs();
           catCourses.remove(shuffledCatCourses[j]);
           Node next = shuffledCatCourses[j].getNext();
@@ -239,9 +235,6 @@ public class Pathway {
     for (Node course : courses) {
       // continue  if course is not offered this semester
 
-      System.out.println("COURSE: " + course.getId());
-
-
       if (!course.getSemestersOffered().contains(sem)) {
         continue;
       }
@@ -249,11 +242,8 @@ public class Pathway {
       // remove incoming edges from node
       Set<Set<Node>> satisfied = new HashSet<Set<Node>>();
       for (Set<Node> s : course.getPrereqs()) {
-        System.out.println("Set containing: ");
         for (Node c : s) {
-          System.out.println("Course: " + c.getId());
-          if (taken.contains(c)) {
-            System.out.println("Taken req and covered set: " + c.getId());
+          if (taken.contains(c.getId())) {
             satisfied.add(s);
             break;
           }
@@ -262,14 +252,10 @@ public class Pathway {
 
       for (Set<Node> s : satisfied) {
         course.removePrereq(s);
-        System.out.println("Removed set containing: ");
-        for (Node c : s) {
-          System.out.println(c.getId());
-        }
       }
       //this will re add courses like cs15 when one takes cs19 each fall
       //why not run this by category instead of over the whole set
-      if (course.getPrereqs().size() == 0 && !taken.contains(course)) {
+      if (course.getPrereqs().size() == 0 && !taken.contains(course.getId())) {
         sources.add(course);
       }
     }

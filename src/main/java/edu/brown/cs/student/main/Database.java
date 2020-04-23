@@ -501,7 +501,6 @@ public class Database implements DatabaseInterface {
           tmp.setCategory(category);
           courseSet.add(tmp);
         }
-
       }
       rs.close(); // close the reading of the db
       prep.close(); // close the query
