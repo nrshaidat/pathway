@@ -25,7 +25,7 @@
      <!-- Login form test -->
      <h2>Login</h2>
 
-     <form action="/pathway" method="post">
+     <form action="/mypath" method="post">
 
          <div class="container">
              <label for="uname"><b>Username</b></label>
@@ -39,6 +39,13 @@
          </div>
 
      </form>
+
+
+  <h3> <a href="/signup" class="link"> Sign Up </a> </h3>
+
+     <br>
+
+  <p> <small> For any questions or ideas about how Pathway can be improved, please <a href = "mailto: melissa_cui@brown.edu" class = "link"> send us an email! </a> </small> </p>
 
   </body>
   <!-- See http://html5boilerplate.com/ for a good place to start

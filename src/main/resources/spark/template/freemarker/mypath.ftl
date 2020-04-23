@@ -10,13 +10,20 @@
          avoid minification for clarity. -->
 
     <link rel="shortcut icon" href="/logo/t.png"/>
-    <link rel="stylesheet" href="/css/pathway.css">
+    <link rel="stylesheet" href="/css/mypath.css">
   </head>
   <body>
 
-  <link rel="stylesheet" href="/css/pathway.css">
+
+  <p> To generate the most accurate pathway, please input as much information as possible!
+    <br> For FAQs on how we design pathways, <a href="/faqs" class="link"> click here. </a> </p>
 
   <br>
+
+  <form action="/displaypath" method="post">
+
+
+
 
   <p> Choose a concentration:</p>
   <div class="dropdown" style = "overflow-y:scroll">
@@ -41,6 +48,14 @@
   <textarea name="comments" rows="4" maxlength="200" cols="60"></textarea>
 
 
+  <br>
+    <br>
+    <br>
+
+  <button type="submit"> Submit</button>
+
+
+  </form>
 
 
 

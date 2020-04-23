@@ -106,7 +106,7 @@ public final class Main {
       courseList = db.getConcentrations();
 
       Map<String, Object> variables = ImmutableMap.of("title", "Mel's Pathway", "results", "", "courseList", courseList);
-      return new ModelAndView(variables, "pathway.ftl");
+      return new ModelAndView(variables, "mypath.ftl");
     }
 
   }
