@@ -6,7 +6,11 @@ import com.google.common.cache.LoadingCache;
 import java.util.List;
 import java.util.Set;
 import edu.brown.cs.student.pathway.Node;
-
+/* MIGHT DELETE THIS CLASS BECAUSE WE NEVER USE THE CACHE BECAUSE I HAVE TO ERROR CHECK
+THAT A COURSE IS NOT NULL EACH TIME AND THE CACHE WILL JUST THROW ERRORS ON NULL'S. DUE TO
+THE FACT THAT COURSES CAN BE NULL AND NULL BEING A SIGNAL THAT THE COURSE IS NOT OFFERED ANYMORE
+A CACHE ISNT VERY HELPFUL.
+ */
 /**
  * DatabaseCache that has a course cache and calls on the real database that handles the sql
  * queries.
