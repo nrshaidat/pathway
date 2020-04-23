@@ -23,14 +23,15 @@
   <form action="/displaypath" method="post">
 
   <p> Choose a concentration:</p>
-  <div class="dropdown" style = "overflow-y:scroll">
-      <select>
+  <div class="dropdown" name="concentration" id="concentration" style = "overflow-y:scroll">
+      <select name="concentration" id="concentration" type="dropdown">
           <#list courseList as item>
               <option value="${item}">${item}</option>
           </#list>
       </select>
-    <input type="submit">
+    <input name="concentration" id="concentration" type="submit">
   </div>
+  </form>
 
 
   <p> Enter Rising semester number: <input type="text" name="semester" value=""> </p>
@@ -54,7 +55,6 @@
   <button type="submit"> Submit</button>
 
 
-  </form>
 
 
 

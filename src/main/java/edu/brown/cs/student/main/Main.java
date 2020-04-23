@@ -4,13 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.*;
 
 import com.google.common.collect.ImmutableMap;
-import edu.brown.cs.student.pathway.Node;
-import edu.brown.cs.student.pathway.Pathway;
 import freemarker.template.Configuration;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -29,6 +26,7 @@ import spark.template.freemarker.FreeMarkerEngine;
 public final class Main {
 
   private static final int DEFAULT_PORT = 4567;
+  private static Database db;
 
   /**
    * The initial method called when execution begins.
@@ -36,9 +34,11 @@ public final class Main {
    */
   public static void main(String[] args) {
     new Main(args).run();
+    db = new Database("data/coursesDB.db");
   }
 
   private String[] args;
+
 
   private Main(String[] args) {
     this.args = args;
@@ -103,11 +103,11 @@ public final class Main {
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
 
-      Database db = new Database("data/coursesDB.db");
-      List<String> courseList = db.getConcentrations();
+
+      List<String> concentrationList = db.getConcentrations();
 
       Map<String, Object> variables = ImmutableMap.of("title", "Your Personalized Pathway",
-              "results", "", "courseList", courseList);
+              "results", "", "courseList", concentrationList);
       return new ModelAndView(variables, "mypath.ftl");
     }
 
@@ -115,20 +115,15 @@ public final class Main {
 
   private static class pathwayHandler implements TemplateViewRoute {
     @Override
-    public ModelAndView handle(Request req, Response res) {
+    public ModelAndView handle(Request req, Response res) throws SQLException {
 
       QueryParamsMap qm = req.queryMap();
 
-      //TODO: Find a way to get the ${item} from mypath.ftl to be passed into
-      System.out.println("=================================");
-      System.out.println("content content:" + qm.hasKey("item"));
-//      System.out.println("user's workload specified:" + workload);
-      System.out.println("=================================");
-
-      String concentration = "placeholder help me";
+      String concentration_id = db.getConcentrationID(qm.value("concentration"));
+      String display = qm.value("concentration");
 
       Map<String, Object> variables = ImmutableMap.of("title", "Your Personalized Pathway",
-              "content", concentration);
+              "content", display);
       return new ModelAndView(variables, "pathway.ftl");
 
     }
