@@ -22,7 +22,9 @@
 
      <p style="margin-left:20em;" align="left"> 1. How do we generate concentrations? </p>
 
-     <div class="content" style="margin-left:23em;" align="left"> (insert Ifechi's explanation)</div>
+     <div class="content" style="margin-left:23em;" align="left">  We take into account each student's workload preferences,
+         whether they want their pathway to be aggressively completed (in the least number of semesters) or not,
+         as well as the courses they have received credit for in the past to generate the most optimal concentration! </div>
 
      <p style="margin-left:20em;" align="left"> 2. Where do we get course information? </p>
 
@@ -33,8 +35,9 @@
      <p style="margin-left:20em;" align="left"> 3. Can I edit my pathway? </p>
 
      <div class="content" style="margin-left:23em;" align="left"> We are currently working on implementing pathway edit functionality! For now, you can add on to your pathway by dragging courses in.
-     <br> However, we haven't yet implemented functionality for editing pathways dynamically. Stay tuned for more progress on Pathway! </div>
+     However, we haven't yet implemented functionality for editing pathways dynamically. Stay tuned for more progress on Pathway! </div>
 
+     <br>
      <br>
      <br>
      <br>

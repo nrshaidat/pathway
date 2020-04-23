@@ -85,6 +85,8 @@ public final class Main {
     Spark.get("/login", new loginHandler(), freeMarker);
     Spark.post("/mypath", new myPathHandler(), freeMarker);
     Spark.get("/faqs", new faqHandler(), freeMarker);
+    Spark.get("/signup", new signUpHandler(), freeMarker);
+    Spark.post("/displaypath", new pathwayHandler(), freeMarker);
 
   }
 
@@ -101,16 +103,45 @@ public final class Main {
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
 
-      List<String> courseList = new ArrayList<>();
       Database db = new Database("data/coursesDB.db");
-
-      courseList = db.getConcentrations();
+      List<String> courseList = db.getConcentrations();
 
       Map<String, Object> variables = ImmutableMap.of("title", "Your Personalized Pathway",
               "results", "", "courseList", courseList);
       return new ModelAndView(variables, "mypath.ftl");
     }
 
+  }
+
+  private static class pathwayHandler implements TemplateViewRoute {
+    @Override
+    public ModelAndView handle(Request req, Response res) {
+
+      QueryParamsMap qm = req.queryMap();
+
+      //TODO: Find a way to get the ${item} from mypath.ftl to be passed into
+      System.out.println("=================================");
+      System.out.println("content content:" + qm.hasKey("item"));
+//      System.out.println("user's workload specified:" + workload);
+      System.out.println("=================================");
+
+      String concentration = "placeholder help me";
+
+      Map<String, Object> variables = ImmutableMap.of("title", "Your Personalized Pathway",
+              "content", concentration);
+      return new ModelAndView(variables, "pathway.ftl");
+
+    }
+  }
+
+  private static class signUpHandler implements TemplateViewRoute {
+    @Override
+    public ModelAndView handle(Request req, Response res) throws SQLException {
+      Map<String, Object> variables = ImmutableMap.of("title", "Sign Up",
+              "results", "");
+      return new ModelAndView(variables, "signup.ftl");
+
+    }
   }
 
   private static class faqHandler implements TemplateViewRoute {
