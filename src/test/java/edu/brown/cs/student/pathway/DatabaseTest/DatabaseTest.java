@@ -283,6 +283,34 @@ public class DatabaseTest {
   }
 
   /**
+   * Tests the parsePrereqs method returns the correct values for prereqs with courses that are
+   * not offered at Brown anymore aka not in the courses table.
+   */
+  @Test
+  public void invalidParsePrereqs() {
+    setUp();
+    String notOfferedAnd = "CSCI 0150=CSCI 0170=CSCI 0190,MATH 0170"; //1
+    String notOfferedOrs = "CSCI 0150=MATH 0170,MATH 0100"; //2
+    Node cs15 = realDB.getCourseData("CSCI 0150");
+    Node cs17 = realDB.getCourseData("CSCI 0170");
+    Node cs19 = realDB.getCourseData("CSCI 0190");
+    Node math10 = realDB.getCourseData("MATH 0100");
+    List<Set<Node>> sol1 = realDB.parsePrereqs(notOfferedAnd);
+    assertEquals(1, sol1.size());
+    assertTrue(sol1.get(0).contains(cs15));
+    assertTrue(sol1.get(0).contains(cs17));
+    assertTrue(sol1.get(0).contains(cs19));
+    List<Set<Node>> sol2 = realDB.parsePrereqs(notOfferedOrs);
+    assertEquals(2, sol2.size());
+    assertEquals(1,sol2.get(0).size());
+    assertTrue(sol2.get(0).contains(cs15));
+    assertTrue(sol2.get(1).contains(math10));
+    List<Set<Node>> sol3 = realDB.parsePrereqs("");
+    assertEquals(0, sol3.size());
+    tearDown();
+  }
+
+  /**
    * Tests the getCourseData method returns the correct course data for valid input
    * the current db.
    */

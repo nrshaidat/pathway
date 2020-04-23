@@ -421,7 +421,9 @@ public class Database implements DatabaseInterface {
           }
         }
       }
-      courseList.add(courseSet);
+      if (!courseSet.isEmpty()) {
+        courseList.add(courseSet);
+      }
     }
     return courseList;
   }
