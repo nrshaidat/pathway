@@ -397,11 +397,15 @@ public class Database implements DatabaseInterface {
       Set<Node> courseSet = new HashSet<Node>();
       if (parsedOrs.length == 1) { //no ors in prereqs
         Node tmp = this.getCourseData(parsedOrs[0]);
-        courseSet.add(tmp);
+        if (tmp != null) {
+          courseSet.add(tmp);
+        }
       } else if (parsedOrs.length > 1) { //has or courses
         for (String courseIDOr : parsedOrs) {
           Node equivCourse = this.getCourseData(courseIDOr);
-          courseSet.add(equivCourse);
+          if (equivCourse != null) {
+            courseSet.add(equivCourse);
+          }
         }
       }
       courseList.add(courseSet);
