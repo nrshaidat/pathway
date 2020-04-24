@@ -22,7 +22,6 @@ public class PathwayWithDatabaseTest {
   }
 
   public void pathwayPrinter(List<Semester> path) {
-    System.out.println("----");
     for(Semester list : path) {
       System.out.println("Semester: " + list.getSemester());
       for (Node course : list.getCourses()) {
@@ -42,6 +41,8 @@ public class PathwayWithDatabaseTest {
     Set<Node> courseSet = cache.getConcentrationCourses(tablename);
     Pathway pathwayMaker = new Pathway(reqs, courseSet);
     pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
+    System.out.println("Computer Science B.A.");
+    System.out.println("----");
     this.pathwayPrinter(pathwayMaker.getPath());
   }
 
@@ -55,6 +56,8 @@ public class PathwayWithDatabaseTest {
     Set<Node> courseSet = cache.getConcentrationCourses(tablename);
     Pathway pathwayMaker = new Pathway(reqs, courseSet);
     pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
+    System.out.println("Computational Biology B.A.");
+    System.out.println("----");
     this.pathwayPrinter(pathwayMaker.getPath());
   }
 
@@ -67,6 +70,8 @@ public class PathwayWithDatabaseTest {
     Set<Node> courseSet = cache.getConcentrationCourses(tablename);
     Pathway pathwayMaker = new Pathway(reqs, courseSet);
     pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
+    System.out.println("Chemistry B.A.");
+    System.out.println("----");
     this.pathwayPrinter(pathwayMaker.getPath());
   }
 
@@ -79,6 +84,8 @@ public class PathwayWithDatabaseTest {
     Set<Node> courseSet = cache.getConcentrationCourses(tablename);
     Pathway pathwayMaker = new Pathway(reqs, courseSet);
     pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
+    System.out.println("Cognitive Neuroscience B.A.");
+    System.out.println("----");
     this.pathwayPrinter(pathwayMaker.getPath());
   }
 
