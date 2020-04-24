@@ -16,7 +16,7 @@
   <body>
 
 
-  <p> Your input was received as: ${content} </p>
+  <p> ${content} </p>
 
 
 

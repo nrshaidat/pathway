@@ -94,14 +94,13 @@ public final class Main {
     @Override
     public ModelAndView handle(Request req, Response res) {
 
+      //TODO: Implement some sort of uname/password check (put on hold to work on more important stuff)
 //      QueryParamsMap qm = req.queryMap();
 //      System.out.println("=========================================");
 //      System.out.println(qm.hasKey("username"));
 //      System.out.println(qm.hasKey("uname"));
 //      System.out.println("=========================================");
       String status = "";
-
-
 
       Map<String, Object> variables = ImmutableMap.of("title", "Pathway", "loginStatus", status, "username", "");
       return new ModelAndView(variables, "main.ftl");
@@ -138,7 +137,18 @@ public final class Main {
       QueryParamsMap qm = req.queryMap();
 
       String concentration_id = db.getConcentrationID(qm.value("concentration"));
-      String display = qm.value("concentration");
+      String concentration = qm.value("concentration");
+      String semester_level = qm.value("semester");
+      String workload = qm.value("workload");
+      String aggressive;
+
+      if (qm.value("aggressive") != null) {
+        aggressive = "aggressive";
+      } else {
+        aggressive = "normal";
+      }
+
+      String display = "Pathways generated for the concentration: " + concentration;
 
       Map<String, Object> variables = ImmutableMap.of("title", "Pathway",
               "content", display);

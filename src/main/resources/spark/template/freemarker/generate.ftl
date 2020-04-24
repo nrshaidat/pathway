@@ -30,16 +30,14 @@
               <option value="${item}">${item}</option>
           </#list>
       </select>
-    <input type="submit">
-  </div>
-  </form>
 
+  </div>
 
   <p> Enter Rising semester number: <input type="text" name="semester" value=""> </p>
 
   <p> Enter Preferred workload hours: <input type="text" name="workload" value=""> </p>
 
-  <p> Prefer Honors courses when possible: <input type="checkbox" name="honors" value="Honors"> </p>
+  <p> Prefer Honors courses when possible: <input type="checkbox" name="aggressive" value="Aggressive"> </p>
 
 
   <p>Please enter courses you have received credit for: </p>
@@ -50,10 +48,14 @@
 
 
   <br>
+  <input type="submit">
+  </form>
+
+  <br>
   <br>
   <br>
 
-  <button type="submit"> Submit</button>
+
 
 
 
