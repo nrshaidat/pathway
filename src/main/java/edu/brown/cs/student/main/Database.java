@@ -394,6 +394,48 @@ public class Database implements DatabaseInterface {
   }
 
   /**
+   * getConcentrationCourses gets the courses for the concentration in the sql database. It calls on
+   * the getCourseData for each course id in the concentration.
+   *
+   * @param tableName the concentrationName table name to search for
+   * @return a set of courses all populated with category and next populated
+   */
+  @Override
+  public Set<Node> getConcentrationCourses(String tableName) {
+    PreparedStatement prep;
+    try {
+      String strQuery = " SELECT * " + " FROM $tableName " + " ORDER BY category ASC ";
+      String query = strQuery.replace("$tableName", tableName);
+      prep = conn.prepareStatement(query);
+      ResultSet rs = prep.executeQuery();
+      Set<Node> courseSet = new HashSet<Node>();
+      while (rs.next()) {
+        Integer category = Integer.parseInt(rs.getString("category"));
+        String nextID = rs.getString("next");
+        String courseID = rs.getString("course_id");
+        Node tmp = this.getCourseData(courseID);
+        if (tmp == null) { // course is not offered anymore so don't add it
+          continue;
+        } else { // course is in our courses table and is offered
+          if (nextID.length() > 0) {
+            Node next = this.getCourseData(nextID);
+            next.setCategory(category);
+            tmp.setNext(next);
+            courseSet.add(next);
+          }
+          tmp.setCategory(category);
+          courseSet.add(tmp);
+        }
+      }
+      rs.close(); // close the reading of the db
+      prep.close(); // close the query
+      return courseSet;
+    } catch (SQLException e) {
+      return null;
+    }
+  }
+
+  /**
    * parsePrereqs parses the comma separated prereqs.
    *
    * @param prereqs the string of courseID's
@@ -484,47 +526,6 @@ public class Database implements DatabaseInterface {
     }
   }
 
-  /**
-   * getConcentrationCourses gets the courses for the concentration in the sql database. It calls on
-   * the getCourseData for each course id in the concentration.
-   *
-   * @param tableName the concentrationName table name to search for
-   * @return a set of courses all populated with category and next populated
-   */
-  @Override
-  public Set<Node> getConcentrationCourses(String tableName) {
-    PreparedStatement prep;
-    try {
-      String strQuery = " SELECT * " + " FROM $tableName " + " ORDER BY category ASC ";
-      String query = strQuery.replace("$tableName", tableName);
-      prep = conn.prepareStatement(query);
-      ResultSet rs = prep.executeQuery();
-      Set<Node> courseSet = new HashSet<Node>();
-      while (rs.next()) {
-        Integer category = Integer.parseInt(rs.getString("category"));
-        String nextID = rs.getString("next");
-        String courseID = rs.getString("course_id");
-        Node tmp = this.getCourseData(courseID);
-        if (tmp == null) { // course is not offered anymore so don't add it
-          continue;
-        } else { // course is in our courses table and is offered
-          if (nextID.length() > 0) {
-            Node next = this.getCourseData(nextID);
-            next.setCategory(category);
-            tmp.setNext(next);
-            courseSet.add(next);
-          }
-          tmp.setCategory(category);
-          courseSet.add(tmp);
-        }
-      }
-      rs.close(); // close the reading of the db
-      prep.close(); // close the query
-      return courseSet;
-    } catch (SQLException e) {
-      return null;
-    }
-  }
 
   /**
    * getConcentrations gets the concentrations in the sql database for use in the GUI.

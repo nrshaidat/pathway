@@ -151,7 +151,7 @@ public class DatabaseTest {
     List<Integer> result = realDB.getRequirements(rules);
     assertEquals(9, result.size());
     int val = result.get(0);
-    assertEquals(1, val);
+    assertEquals(2, val);
     val = result.get(1);
     assertEquals(1, val);
     val = result.get(2);
@@ -398,7 +398,7 @@ public class DatabaseTest {
     setUp();
     String validCon = "computationalbiologyba";
     Set<Node> comp = realDB.getConcentrationCourses(validCon);
-    assertEquals(21, comp.size());
+    assertEquals(22, comp.size());
     Map<String, Node> mapy = this.covertDict(comp);
     Node math10 = realDB.getCourseData("MATH 0100");
     assertEquals(math10, mapy.get("MATH 0090").getNext());
