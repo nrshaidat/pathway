@@ -58,17 +58,17 @@ public class PathwayWithDatabaseTest {
     this.pathwayPrinter(pathwayMaker.getPath());
   }
 
-//  @Test
-//  public void chemistryConcentrationTest() {
-//    String tablename = "chemistryba";
-//    List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
-//    int[] reqs = reqsTmp.stream().mapToInt(i->i).toArray();
-//
-//    Set<Node> courseSet = cache.getConcentrationCourses(tablename);
-//    Pathway pathwayMaker = new Pathway(reqs, courseSet);
-//    pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
-//    this.pathwayPrinter(pathwayMaker.getPath());
-//  }
+  @Test
+  public void chemistryConcentrationTest() {
+    String tablename = "chemistryba";
+    List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
+    int[] reqs = reqsTmp.stream().mapToInt(i->i).toArray();
+
+    Set<Node> courseSet = cache.getConcentrationCourses(tablename);
+    Pathway pathwayMaker = new Pathway(reqs, courseSet);
+    pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
+    this.pathwayPrinter(pathwayMaker.getPath());
+  }
 
   @Test
   public void cognitiveneuroscienceConcentrationTest() {
