@@ -41,12 +41,11 @@ button {
 button {
     background-color: lightgray;
     color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 20%;
-    border-radius: 10px;
+    justify-content: space-around;
+    alignment: center;
+    width: 30%;
+    text-align: center;
+    display:flex;
 
 }
 a.link
