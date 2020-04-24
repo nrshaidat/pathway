@@ -1,6 +1,8 @@
 <!DOCTYPE html>
   <head>
     <meta charset="utf-8">
+
+    <title>${title}</title>
     <h1>Welcome to Pathway</h1>
 
     <p>Your personalized course generator for Brown University.
@@ -20,19 +22,24 @@
      <script src="js/jquery-2.1.1.js"></script>
      <script src="js/main.js"></script>
 
-     <br> </br>
+     <br>
+
+     <!-- Informing the user if they logged in incorrectly -->
+     ${loginStatus}
 
      <!-- Login form test -->
      <h2>Login</h2>
 
-     <form action="/mypath" method="post">
+     <form action="/generate" method="post">
 
          <div class="container">
-             <label for="uname"><b>Username</b></label>
-             <input type="text" placeholder="Enter Username" name="uname" required>
+             <label name="username" id="username" for="uname"><b>${username}</b></label>
+             <input name="username" id="username"
+                    type="text" placeholder="Enter Username" name="uname" value="${username}" required>
 
-             <label for="psw"><b>Password</b></label>
-             <input type="password" placeholder="Enter Password" name="psw" required>
+             <label name="password" id="password" for="psw"><b>Password</b></label>
+             <input name="password" id="password"
+                    type="password" placeholder="Enter Password" name="psw" required>
 
              <button type="submit">Login</button>
 

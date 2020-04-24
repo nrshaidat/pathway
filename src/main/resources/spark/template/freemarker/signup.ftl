@@ -1,6 +1,7 @@
 <!DOCTYPE html>
   <head>
     <meta charset="utf-8">
+    <title>${title}</title>
     <h1>Sign Up</h1>
 
     <title></title>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
   <head>
     <meta charset="utf-8">
+    <title>${title}</title>
     <h1>Frequently Asked Questions</h1>
 
     <title></title>

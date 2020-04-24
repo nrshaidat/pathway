@@ -1,6 +1,7 @@
 <!DOCTYPE html>
   <head>
     <meta charset="utf-8">
+    <title>${title}</title>
     <h1>Melissa's Pathways</h1>
 
     <title></title>
@@ -10,7 +11,7 @@
          avoid minification for clarity. -->
 
     <link rel="shortcut icon" href="/logo/t.png"/>
-    <link rel="stylesheet" href="/css/mypath.css">
+    <link rel="stylesheet" href="/css/generate.css">
   </head>
   <body>
 

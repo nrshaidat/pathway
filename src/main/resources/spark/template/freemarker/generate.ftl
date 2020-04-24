@@ -1,7 +1,8 @@
 <!DOCTYPE html>
   <head>
     <meta charset="utf-8">
-    <h1>Melissa's Pathway</h1>
+    <title>${title}</title>
+    <h1>Generate a Pathway</h1>
 
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,7 +11,7 @@
          avoid minification for clarity. -->
 
     <link rel="shortcut icon" href="/logo/t.png"/>
-    <link rel="stylesheet" href="/css/mypath.css">
+    <link rel="stylesheet" href="/css/generate.css">
   </head>
   <body>
 
@@ -20,16 +21,16 @@
 
   <br>
 
-  <form action="/displaypath" method="post">
+  <form action="/mypath" method="post">
 
   <p> Choose a concentration:</p>
-  <div class="dropdown" name="concentration" id="concentration" style = "overflow-y:scroll">
+  <div class="dropdown" style = "overflow-y:scroll">
       <select name="concentration" id="concentration" type="dropdown">
           <#list courseList as item>
               <option value="${item}">${item}</option>
           </#list>
       </select>
-    <input name="concentration" id="concentration" type="submit">
+    <input type="submit">
   </div>
   </form>
 

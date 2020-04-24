@@ -83,17 +83,27 @@ public final class Main {
     // Setup Spark Routes
 
     Spark.get("/login", new loginHandler(), freeMarker);
-    Spark.post("/mypath", new myPathHandler(), freeMarker);
+    Spark.post("/generate", new myPathHandler(), freeMarker);
     Spark.get("/faqs", new faqHandler(), freeMarker);
     Spark.get("/signup", new signUpHandler(), freeMarker);
-    Spark.post("/displaypath", new pathwayHandler(), freeMarker);
+    Spark.post("/mypath", new pathwayHandler(), freeMarker);
 
   }
 
   private static class loginHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
-      Map<String, Object> variables = ImmutableMap.of("title", "Pathway", "results", "");
+
+//      QueryParamsMap qm = req.queryMap();
+//      System.out.println("=========================================");
+//      System.out.println(qm.hasKey("username"));
+//      System.out.println(qm.hasKey("uname"));
+//      System.out.println("=========================================");
+      String status = "";
+
+
+
+      Map<String, Object> variables = ImmutableMap.of("title", "Pathway", "loginStatus", status, "username", "");
       return new ModelAndView(variables, "main.ftl");
     }
 
@@ -104,11 +114,19 @@ public final class Main {
     public ModelAndView handle(Request req, Response res) throws SQLException {
 
 
+      QueryParamsMap qm = req.queryMap();
+      System.out.println("=========================================");
+      System.out.println(qm.hasKey("username"));
+      System.out.println(qm.hasKey("uname"));
+      System.out.println("=========================================");
+      String status = "";
+
+
       List<String> concentrationList = db.getConcentrations();
 
-      Map<String, Object> variables = ImmutableMap.of("title", "Your Personalized Pathway",
+      Map<String, Object> variables = ImmutableMap.of("title", "Pathway",
               "results", "", "courseList", concentrationList);
-      return new ModelAndView(variables, "mypath.ftl");
+      return new ModelAndView(variables, "generate.ftl");
     }
 
   }
@@ -122,7 +140,7 @@ public final class Main {
       String concentration_id = db.getConcentrationID(qm.value("concentration"));
       String display = qm.value("concentration");
 
-      Map<String, Object> variables = ImmutableMap.of("title", "Your Personalized Pathway",
+      Map<String, Object> variables = ImmutableMap.of("title", "Pathway",
               "content", display);
       return new ModelAndView(variables, "pathway.ftl");
 
@@ -132,7 +150,7 @@ public final class Main {
   private static class signUpHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
-      Map<String, Object> variables = ImmutableMap.of("title", "Sign Up",
+      Map<String, Object> variables = ImmutableMap.of("title", "Pathway Sign Up",
               "results", "");
       return new ModelAndView(variables, "signup.ftl");
 
@@ -142,7 +160,7 @@ public final class Main {
   private static class faqHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
-      Map<String, Object> variables = ImmutableMap.of("title", "FAQs", "results", "");
+      Map<String, Object> variables = ImmutableMap.of("title", "Pathway FAQs", "results", "");
       return new ModelAndView(variables, "faqs.ftl");
     }
   }
