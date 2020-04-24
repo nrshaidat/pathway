@@ -118,12 +118,12 @@ public class CABScrapingTest {
     assertEquals(biol0280.getPrereqs(), biol0280PR);
 
     /* Test course with one OR prereq */
-    Node clps1495 = db.getCourseData("CLPS 1495");
-    Node clps0040 = db.getCourseData("CLPS 0040");
-    Node clps0400 = db.getCourseData("CLPS 0400");
-    List<Set<Node>> clps1495PR = new ArrayList<>();
-    clps1495PR.add(new HashSet<>(Arrays.asList(clps0040, clps0400)));
-//    assertEquals(clps1495.getPrereqs(), clps1495PR);
+    Node clps1478 = db.getCourseData("CLPS 1478");
+    Node clps0010 = db.getCourseData("CLPS 0010");
+    Node neur0010 = db.getCourseData("NEUR 0010");
+    List<Set<Node>> clps1478PR = new ArrayList<>();
+    clps1478PR.add(new HashSet<>(Arrays.asList(clps0010, neur0010)));
+    assertEquals(clps1478.getPrereqs(), clps1478PR);
 
     /* Test course with several OR prereqs */
     Node csci1730 = db.getCourseData("CSCI 1730");
@@ -145,9 +145,21 @@ public class CABScrapingTest {
 
     /* Test course with multiple AND and OR prereqs */
     Node phys1600 = db.getCourseData("PHYS 1600");
-    String phys1600PR = "PHYS 0070=PHYS 0050,PHYS 0160=PHYS 0060,PHYS 0470=ENGN 0510,MATH 0180=" +
-        "MATH 0200=MATH 0350";
-    assertEquals(phys1600.getPrereqs(), db.parsePrereqs(phys1600PR));
+    Node phys0070 = db.getCourseData("PHYS 0070");
+    Node phys0050 = db.getCourseData("PHYS 0050");
+    Node phys0160 = db.getCourseData("PHYS 0160");
+    Node phys0060 = db.getCourseData("PHYS 0060");
+    Node phys0470 = db.getCourseData("PHYS 0470");
+    Node engn0510 = db.getCourseData("ENGN 0510");
+    Node math0180 = db.getCourseData("MATH 0180");
+    Node math0200 = db.getCourseData("MATH 0200");
+    Node math0350 = db.getCourseData("MATH 0350");
+    List<Set<Node>> phys1600PR = new ArrayList<>();
+    phys1600PR.add(new HashSet<>(Arrays.asList(phys0070, phys0050)));
+    phys1600PR.add(new HashSet<>(Arrays.asList(phys0160, phys0060)));
+    phys1600PR.add(new HashSet<>(Arrays.asList(phys0470, engn0510)));
+    phys1600PR.add(new HashSet<>(Arrays.asList(math0180, math0200, math0350)));
+    assertEquals(phys1600.getPrereqs(), phys1600PR);
 
     /* EDGE CASES */
 
@@ -155,25 +167,50 @@ public class CABScrapingTest {
     Node biol0190s = db.getCourseData("BIOL 0190S");
     assertTrue(biol0190s.getPrereqs().isEmpty());
     Node biol0420 = db.getCourseData("BIOL 0420");
-    assertEquals(biol0420.getPrereqs(), db.parsePrereqs("BIOL 0200,MATH 0090"));
+    Node biol0200 = db.getCourseData("BIOL 0200");
+    Node math0090 = db.getCourseData("MATH 0090");
+    List<Set<Node>> biol0190PR = new ArrayList<>();
+    biol0190PR.add(new HashSet<>(Arrays.asList(biol0200)));
+    biol0190PR.add(new HashSet<>(Arrays.asList(math0090)));
+    assertEquals(biol0420.getPrereqs(), biol0190PR);
 
     /* Test FREN course that was causing weird number error */
     Node fren1410t = db.getCourseData("FREN 1410T");
-    assertEquals(fren1410t.getPrereqs(), db.parsePrereqs("FREN 0600"));
+    Node fren0600 = db.getCourseData("FREN 0600");
+    List<Set<Node>> fren1410tPR = new ArrayList<>();
+    fren1410tPR.add(new HashSet<>(Arrays.asList(fren0600)));
+    assertEquals(fren1410t.getPrereqs(), fren1410tPR);
 
     /* Test MATH course, as math classes used "Prerequisites:" field in text w/o prereqs area */
     Node math1410 = db.getCourseData("MATH 1410");
-    assertEquals(math1410.getPrereqs(), db.parsePrereqs("MATH 0520=MATH 0540"));
+    Node math0520 = db.getCourseData("MATH 0520");
+    Node math0540 = db.getCourseData("MATH 0540");
+    List<Set<Node>> math1410PR = new ArrayList<>();
+    math1410PR.add(new HashSet<>(Arrays.asList(math0520, math0540)));
+    assertEquals(math1410.getPrereqs(), math1410PR);
 
     /* Test ECON course */
     Node econ1510 = db.getCourseData("ECON 1510");
-    assertEquals(econ1510.getPrereqs(), db.parsePrereqs("ECON 1110=ECON 1130,ECON 1629=ECON 1620="
-        + "ECON 1630=CSCI 1450=APMA 1655=APMA 1650"));
+    Node econ1110 = db.getCourseData("ECON 1110");
+    Node econ1130 = db.getCourseData("ECON 1130");
+    Node econ1629 = db.getCourseData("ECON 1629");
+    Node econ1620 = db.getCourseData("ECON 1620");
+    Node econ1630 = db.getCourseData("ECON 1630");
+    Node csci1450 = db.getCourseData("CSCI 1450");
+    Node apma1655 = db.getCourseData("APMA 1655");
+    Node apma1650 = db.getCourseData("APMA 1650");
+    List<Set<Node>> econ1510PR = new ArrayList<>();
+    econ1510PR.add(new HashSet<>(Arrays.asList(econ1110, econ1130)));
+    econ1510PR.add(new HashSet<>(Arrays.asList(econ1629, econ1620, econ1630, csci1450, apma1655,
+        apma1650)));
+    assertEquals(econ1510.getPrereqs(), econ1510PR);
 
     /* Test APMA course */
-    Node apma1650 = db.getCourseData("APMA 1650");
-    assertEquals(apma1650.getPrereqs(), db.parsePrereqs("MATH 0100=MATH 0180=MATH 0190=MATH 0200="
-        + "MATH 0350"));
+    List<Set<Node>> apma1650PR = new ArrayList<>();
+    Node math0100 = db.getCourseData("MATH 0100");
+    Node math0190 = db.getCourseData("MATH 0190");
+    apma1650PR.add(new HashSet<>(Arrays.asList(math0100, math0180, math0190, math0200, math0350)));
+    assertEquals(apma1650.getPrereqs(), apma1650PR);
 
     tearDown();
   }

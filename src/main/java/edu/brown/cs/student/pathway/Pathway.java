@@ -15,19 +15,19 @@ public class Pathway {
   private static final int SEMESTER_SIZE = 4;
   private static final int SEMESTER_COUNT = 8;
 
-  private int[] requirements; //indices are the categories and the values are number of credits to satisfy the category
-  private int numCategories; //size of the requirements array
-  private int[] initialRequirements;
+  private int[] requirements; // indices are categories and values are number of credits to satisfy the category
+  private int numCategories; // size of requirements array
+  private int[] initialRequirements; // copy of requirements (used for pacing)
   private ImmutableMap<String, Range<Double>> workloads;
 
-  private Set<Node> courses; //All possible courses that can be taken for credit for that concentration
-  private Set<String> taken; //All courses the student has already taken
+  private Set<Node> courses; // courses that can be taken for credit for that concentration
+  private Set<String> taken; // courses the student has already taken
   private int currSemester;
-  private List<Semester> path; //path to be returned
+  private List<Semester> path; // path to be returned
 
   /**
    * TODO:
-   *  -Testing on DB nodes
+   *  -Testing on DB nodes!
    *  -Optimizations
    *  -When multithreading, each thread have its own Pathway instance
    *  to start. Later on, can alter path instance variable -> HashMap
@@ -44,7 +44,7 @@ public class Pathway {
     path = new ArrayList<Semester>();
     workloads = ImmutableMap.of("lo", Range.closedOpen(1.0, 25.0),
         "med", Range.closedOpen(25.0, 40.0),
-        "hi", Range.closedOpen(40.0, 70.0)); //may need to increase to 80
+        "hi", Range.closedOpen(40.0, 80.0));
   }
 
   public List<Semester> getPath() {
@@ -78,6 +78,11 @@ public class Pathway {
 
       List<Node> thisSemester = new ArrayList<Node>();
       Set<Node> sources = this.getAvailableCourses();
+
+      System.out.println("-----------");
+      for (Node course : sources) {
+        System.out.println(course.getId());
+      }
 
       // Take "next" courses if available
       Set<Node> toRemove = new HashSet<>();
