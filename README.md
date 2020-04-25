@@ -40,7 +40,8 @@ None.
         -Integrating CAB scraping to main sql database
         -Manually double checking, fixing inaccurate prereqs, and entering missing prereqs for all courses in MATH, APMA, BIOL, CSCI.
         -Figured shibboleth authentication for all scraping
-        -Assisting with cleaning CAB parsing data (removing nulls, extra commas, numbers)
+        -Cleaning CAB parsing data (removing nulls, extra commas, numbers), debugging cab scraping, and 
+	figuring out CAB/self service scraping 
 
 	Mel:
         -Critical review scraping
