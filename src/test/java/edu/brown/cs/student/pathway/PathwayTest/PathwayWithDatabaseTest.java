@@ -81,10 +81,11 @@ public class PathwayWithDatabaseTest {
     Set<Node> courseSet = cache.getConcentrationCourses(tablename);
     Pathway pathwayMaker = new Pathway(reqs, courseSet);
     pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
-    System.out.println("Computational Computer Science Track B.S.");
+    System.out.println("Computational Biology Computer Science Track B.S.");
     System.out.println("----");
     this.pathwayPrinter(pathwayMaker.getPath());
   }
+
 
   @Test
   public void chemistrybaConcentrationTest() throws SQLException {
