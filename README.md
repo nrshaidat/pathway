@@ -22,7 +22,7 @@ None
 steps in the "How to run our tests" section before building, so that JUnit tests
 don't fail when building.    
 
-- To run Maps via terminal:  
+- To run Pathway via terminal:  
 	./run 
 
 ## How to run our tests:
@@ -38,11 +38,9 @@ None.
     Natalie:
         -Database and its unit tests
         -Integrating CAB scraping to main sql database
-        -Fixing ALL of Nick's bugs in cab scraping
         -Manually double checking, fixing inaccurate prereqs, and entering missing prereqs for all courses in MATH, APMA, BIOL, CSCI.
-        -Giving Nick a step by step guide to cab scraping 
         -Figured shibboleth authentication for all scraping
-        -Cleaning up Nicks data (removing NULLs, extra commas etc)
+        -Assisting with cleaning CAB parsing data (removing nulls, extra commas, numbers)
 
 	Mel:
         -Critical review scraping
@@ -58,6 +56,11 @@ None.
         -Optimizations in the algorithm 
         -Shuffling and weights addition to the courses
         -Junit testing for pathway
+        
+    Nick:
+        -Courses at Brown / Self Service scraping
+        -Manually fixing prereqs for various departments
+        -Unit testing CAB database outputs
 		
 
 #### Member: Melissa Cui
