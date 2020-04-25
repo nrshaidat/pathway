@@ -152,17 +152,5 @@ public class PathwayWithDatabaseTest {
     this.pathwayPrinter(pathwayMaker.getPath());
   }
 
-//  @Test
-//  public void computationalbiologybiotrackConcentrationTest() {
-//    String tablename = "computationalbiologybiologicalsciencestrackbs";
-//    List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
-//    int[] reqs = reqsTmp.stream().mapToInt(i->i).toArray();
-//    Set<Node> courseSet = cache.getConcentrationCourses(tablename);
-//    Pathway pathwayMaker = new Pathway(reqs, courseSet);
-//    pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
-//    System.out.println("Computational Biology Biological Sciences Track B.S.");
-//    System.out.println("----");
-//    this.pathwayPrinter(pathwayMaker.getPath());
-//  }
-
 }
+
