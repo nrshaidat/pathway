@@ -84,4 +84,17 @@ public class PathwayWithDatabaseTest {
     this.pathwayPrinter(pathwayMaker.getPath());
   }
 
+  @Test
+  public void arthistoryConcentrationTest() {
+    String tablename = "historyofartandarchitectureba";
+    List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
+    int[] reqs = reqsTmp.stream().mapToInt(i->i).toArray();
+    Set<Node> courseSet = cache.getConcentrationCourses(tablename);
+    Pathway pathwayMaker = new Pathway(reqs, courseSet);
+    pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
+    System.out.println("History of Art and Architecture B.A.");
+    System.out.println("----");
+    this.pathwayPrinter(pathwayMaker.getPath());
+  }
+
 }
