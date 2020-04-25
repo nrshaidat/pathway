@@ -5,15 +5,12 @@ import edu.brown.cs.student.pathway.Pathway;
 import edu.brown.cs.student.pathway.Semester;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import edu.brown.cs.student.main.DatabaseCache;
 import edu.brown.cs.student.main.Database;
-
 
 public class PathwayWithDatabaseTest {
   private DatabaseCache cache;

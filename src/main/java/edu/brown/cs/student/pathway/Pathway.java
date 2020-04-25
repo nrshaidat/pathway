@@ -47,7 +47,7 @@ public class Pathway {
     numCategories = reqs.length;
     initialRequirements = Arrays.copyOf(reqs, numCategories);
     courses = courseSet;
-    categoryMap = new HashMap<>();
+    //categoryMap = new HashMap<>();
 
 //    for (Node course: courses) {
 //      System.out.println(course.getId());
@@ -83,7 +83,7 @@ public class Pathway {
     }
     for (int i = 0; i < numCategories; i++) {
       List<Node> nodeList = new ArrayList<>();
-      categoryMap.put(i, nodeList);
+      //categoryMap.put(i, nodeList);
     }
 
 
@@ -111,6 +111,7 @@ public class Pathway {
         }
       }
       nextSet.removeAll(toRemove);
+      sources.removeAll(toRemove);
 
       // Group sources by category
       List<Node>[] coursesByCat = new List[numCategories];
@@ -270,7 +271,6 @@ public class Pathway {
     int sem = currSemester % 2;
     for (Node course : courses) {
       // continue  if course is not offered this semester
-      categoryMap.get(course.getCategory()).add(course);
       if (!course.getSemestersOffered().contains(sem)) {
         continue;
       }
@@ -298,25 +298,25 @@ public class Pathway {
     //this checks if there are still requierments to fulfill but no sources because the student
     //has not satisfied the prereqs for teh requiered courses so find that prereq and take the
     //course by adding it to our sources
-    if (this.requirementsLeft() && sources.isEmpty()) {
-      int category = whichRequirements();
-      List<Node> courseInCat = this.categoryMap.get(category);
-      for (Node course : courseInCat) {
-        if (!taken.contains(course)) {
-          for (Set<Node> s : course.getPrereqs()) {
-            for (Node c : s) {
-              if (!taken.contains(c)) {
-                if (!c.getSemestersOffered().contains(sem)) {
-                  continue;
-                } else {
-                  sources.add(c);
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+//    if (this.requirementsLeft() && sources.isEmpty()) {
+//      int category = whichRequirements();
+//      List<Node> courseInCat = this.categoryMap.get(category);
+//      for (Node course : courseInCat) {
+//        if (!taken.contains(course)) {
+//          for (Set<Node> s : course.getPrereqs()) {
+//            for (Node c : s) {
+//              if (!taken.contains(c)) {
+//                if (!c.getSemestersOffered().contains(sem)) {
+//                  continue;
+//                } else {
+//                  sources.add(c);
+//                }
+//              }
+//            }
+//          }
+//        }
+//      }
+//    }
     return sources;
   }
 
