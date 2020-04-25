@@ -7,6 +7,7 @@ import edu.brown.cs.student.pathway.PathwayMaker;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +23,7 @@ public class MultiPathwayTest {
     cache = new DatabaseCache(new Database("data/coursesDB.db"));
   }
   @Test
-  public void testThreePathways() {
+  public void testThreePathways() throws SQLException {
     String tablename = "computerscienceba";
     List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
     int[] reqs = reqsTmp.stream().mapToInt(i->i).toArray();

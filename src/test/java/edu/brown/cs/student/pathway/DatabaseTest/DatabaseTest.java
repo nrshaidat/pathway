@@ -152,7 +152,7 @@ public class DatabaseTest {
     List<Integer> result = realDB.getRequirements(rules);
     assertEquals(9, result.size());
     int val = result.get(0);
-    assertEquals(2, val);
+    assertEquals(1, val);
     val = result.get(1);
     assertEquals(1, val);
     val = result.get(2);
@@ -318,7 +318,6 @@ public class DatabaseTest {
   @Test
   public void validGetCourseData() throws SQLException {
     setUp();
-    Node tmp = realDB.getCourseData("ECON 1310");
     //course that has everything filled in the db
     Node math10 = realDB.getCourseData("MATH 0100");
     //course with no prereqs
@@ -374,8 +373,6 @@ public class DatabaseTest {
     assertTrue(anth.getMaxHrs() == 14);
     assertTrue(28 == anth.getClassSize());
     assertTrue(anth.getSemestersOffered().contains(0));
-
-    Node art = realDB.getCourseData("VISA 1520");
     tearDown();
   }
 
@@ -400,46 +397,44 @@ public class DatabaseTest {
     setUp();
     String validCon = "computationalbiologyba";
     Set<Node> comp = realDB.getConcentrationCourses(validCon);
-    assertEquals(22, comp.size());
+    assertEquals(18, comp.size());
     Map<String, Node> mapy = this.covertDict(comp);
     Node math10 = realDB.getCourseData("MATH 0100");
-    assertEquals(math10, mapy.get("MATH 0090").getNext());
+    assertEquals("MATH 0100", mapy.get("MATH 0090").getNextID());
     assertEquals(0, mapy.get("MATH 0090").getCategory());
     assertEquals(1, mapy.get("BIOL 0200").getCategory());
-    assertNull(mapy.get("BIOL 0200").getNext());
+    assertEquals("",mapy.get("BIOL 0200").getNextID());
     assertEquals(2, mapy.get("BIOL 0470").getCategory());
-    assertNull(mapy.get("BIOL 0470").getNext());
+    assertEquals("",mapy.get("BIOL 0470").getNextID());
     assertEquals(3, mapy.get("BIOL 0280").getCategory());
-    assertNull(mapy.get("BIOL 0280").getNext());
+    assertEquals("",mapy.get("BIOL 0280").getNextID());
     assertEquals(3, mapy.get("BIOL 0500").getCategory());
-    assertNull(mapy.get("BIOL 0500").getNext());
-    assertEquals(4, mapy.get("CHEM 0330").getCategory());
-    assertNull(mapy.get("CHEM 0330").getNext());
+    assertEquals("",mapy.get("BIOL 0500").getNextID());
+    assertEquals(4, mapy.get("CHEM 0100").getCategory());
+    assertEquals("CHEM 0330",mapy.get("CHEM 0100").getNextID());
     assertEquals(4, mapy.get("CHEM 0350").getCategory());
-    assertNull(mapy.get("CHEM 0350").getNext());
-    Node cs16 = realDB.getCourseData("CSCI 0160");
-    assertEquals(cs16, mapy.get("CSCI 0150").getNext());
+    assertEquals("",mapy.get("CHEM 0350").getNextID());
+    assertEquals("CSCI 0160", mapy.get("CSCI 0150").getNextID());
     assertEquals(5, mapy.get("CSCI 0150").getCategory());
-    Node cs18 = realDB.getCourseData("CSCI 0180");
-    assertEquals(cs18, mapy.get("CSCI 0170").getNext());
+    assertEquals("CSCI 0180", mapy.get("CSCI 0170").getNextID());
     assertEquals(5, mapy.get("CSCI 0170").getCategory());
-    assertNull(mapy.get("CSCI 0190").getNext());
+    assertEquals("",mapy.get("CSCI 0190").getNextID());
     assertEquals(5, mapy.get("CSCI 0190").getCategory());
-    assertNull(mapy.get("APMA 1650").getNext());
+    assertEquals("",mapy.get("APMA 1650").getNextID());
     assertEquals(6, mapy.get("APMA 1650").getCategory());
-    assertNull(mapy.get("CSCI 1450").getNext());
+    assertEquals("",mapy.get("CSCI 1450").getNextID());
     assertEquals(6, mapy.get("CSCI 1450").getCategory());
-    assertNull(mapy.get("MATH 1610").getNext());
+    assertEquals("",mapy.get("MATH 1610").getNextID());
     assertEquals(6, mapy.get("MATH 1610").getCategory());
-    assertNull(mapy.get("CSCI 1810").getNext());
+    assertEquals("",mapy.get("CSCI 1810").getNextID());
     assertEquals(7, mapy.get("CSCI 1810").getCategory());
-    assertNull(mapy.get("APMA 1080").getNext());
+    assertEquals("",mapy.get("APMA 1080").getNextID());
     assertEquals(7, mapy.get("APMA 1080").getCategory());
-    assertNull(mapy.get("CSCI 1420").getNext());
-    assertEquals(8, mapy.get("CSCI 1420").getCategory());
-    assertNull(mapy.get("APMA 1690").getNext());
+    assertEquals("CSCI 1420",mapy.get("MATH 0520").getNextID());
+    assertEquals(8, mapy.get("MATH 0520").getCategory());
+    assertEquals("",mapy.get("APMA 1690").getNextID());
     assertEquals(8, mapy.get("APMA 1690").getCategory());
-    assertNull(mapy.get("APMA 1660").getNext());
+    assertEquals("",mapy.get("APMA 1660").getNextID());
     assertEquals(8, mapy.get("APMA 1660").getCategory());
     tearDown();
   }

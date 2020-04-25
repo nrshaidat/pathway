@@ -418,19 +418,20 @@ public class Database implements DatabaseInterface {
         Integer category = Integer.parseInt(rs.getString("category"));
         String nextID = rs.getString("next");
         String courseID = rs.getString("course_id");
-        Node tmp = this.getCourseData(courseID);
-        if (tmp == null) { // course is not offered anymore so don't add it
-          continue;
-        } else { // course is in our courses table and is offered
-          if (nextID.length() > 0) {
-            Node next = this.getCourseData(nextID);
-            next.setCategory(category);
-            tmp.setNext(next);
-            courseSet.add(next);
-          }
-          tmp.setCategory(category);
-          courseSet.add(tmp);
-        }
+        Node tmp = new Node(courseID, nextID, category);
+        courseSet.add(tmp);
+//        if (tmp == null) { // course is not offered anymore so don't add it
+//          continue;
+//        } else { // course is in our courses table and is offered
+//          if (nextID.length() > 0) {
+//            Node next = this.getCourseData(nextID);
+//            next.setCategory(category);
+//            tmp.setNext(next);
+//            courseSet.add(next);
+//          }
+//          tmp.setCategory(category);
+//          courseSet.add(tmp);
+//        }
       }
       rs.close(); // close the reading of the db
       prep.close(); // close the query
@@ -610,6 +611,29 @@ public class Database implements DatabaseInterface {
       return true;
     } catch (SQLException e) {
       return false;
+    }
+  }
+
+  /**
+   * getConcentrations gets the concentrations in the sql database for use in the GUI.
+   *
+   * @return a list of concentration names
+   */
+  public List<String> getAllCourseIDs() {
+    PreparedStatement prep = null;
+    ResultSet rs = null;
+    List<String> courseIDs = new ArrayList<>();
+    try {
+      prep = conn.prepareStatement("SELECT course_id " + " FROM courses");
+      rs = prep.executeQuery();
+      while (rs.next()) {
+        courseIDs.add(rs.getString("course_id"));
+      }
+      rs.close();
+      prep.close();
+      return courseIDs;
+    } catch (SQLException e) {
+      return courseIDs;
     }
 
   }

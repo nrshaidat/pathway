@@ -1,13 +1,16 @@
 package edu.brown.cs.student.pathway;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Collections;
 import java.util.Comparator;
 import java.lang.Math;
+
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Range;
 
@@ -15,7 +18,8 @@ public class Pathway {
   private static final int SEMESTER_SIZE = 4;
   private static final int SEMESTER_COUNT = 8;
 
-  private int[] requirements; // indices are categories and values are number of credits to satisfy the category
+  private int[] requirements;
+  // indices are categories and values are number of credits to satisfy the category
   private int numCategories; // size of requirements array
   private int[] initialRequirements; // copy of requirements (used for pacing)
   private ImmutableMap<String, Range<Double>> workloads;
@@ -24,14 +28,16 @@ public class Pathway {
   private Set<String> taken; // courses the student has already taken
   private int currSemester;
   private List<Semester> path; // path to be returned
+  private Map<Integer, List<Node>> categoryMap;
 
   /**
    * TODO:
-   *  -Testing on DB nodes!
-   *  -Optimizations
-   *  -When multithreading, each thread have its own Pathway instance
-   *  to start. Later on, can alter path instance variable -> HashMap
-   * @param reqs concentration requirements
+   * -Testing on DB nodes!
+   * -Optimizations
+   * -When multithreading, each thread have its own Pathway instance
+   * to start. Later on, can alter path instance variable -> HashMap
+   *
+   * @param reqs      concentration requirements
    * @param courseSet courses in this concentration
    */
 
@@ -41,22 +47,24 @@ public class Pathway {
     numCategories = reqs.length;
     initialRequirements = Arrays.copyOf(reqs, numCategories);
     courses = courseSet;
+    categoryMap = new HashMap<>();
 
 //    for (Node course: courses) {
 //      System.out.println(course.getId());
 //    }
 
     path = new ArrayList<Semester>();
-    workloads = ImmutableMap.of("lo", Range.closedOpen(1.0, 25.0),
-        "med", Range.closedOpen(25.0, 40.0),
-        "hi", Range.closedOpen(40.0, 80.0));
+    workloads = ImmutableMap
+        .of("lo", Range.closedOpen(1.0, 25.0), "med", Range.closedOpen(25.0, 40.0), "hi",
+            Range.closedOpen(40.0, 80.0));
   }
 
   public List<Semester> getPath() {
     return path;
   }
 
-  public void makePathway(Set<Node> coursesTaken, int risingSemester, boolean aggressive, String workload) {
+  public void makePathway(Set<Node> coursesTaken, int risingSemester, boolean aggressive,
+                          String workload) {
     currSemester = risingSemester;
     Set<Node> nextSet = new HashSet<Node>();
 
@@ -72,6 +80,10 @@ public class Pathway {
       }
 
       taken.add(course.getId());
+    }
+    for (int i = 0; i < numCategories; i++) {
+      List<Node> nodeList = new ArrayList<>();
+      categoryMap.put(i, nodeList);
     }
 
 
@@ -99,7 +111,7 @@ public class Pathway {
         }
       }
       nextSet.removeAll(toRemove);
-      
+
       // Group sources by category
       List<Node>[] coursesByCat = new List[numCategories];
       for (int i = 0; i < numCategories; i++) {
@@ -110,8 +122,8 @@ public class Pathway {
       }
 
 
-      int[] coursesToTake = this.numCoursesToTake(coursesByCat,
-          SEMESTER_SIZE - thisSemester.size(), aggressive);
+      int[] coursesToTake =
+          this.numCoursesToTake(coursesByCat, SEMESTER_SIZE - thisSemester.size(), aggressive);
 
 
       double thisSemAvgHours = 0.0;
@@ -225,6 +237,7 @@ public class Pathway {
       currSemester++;
     }
   }
+
   /*
   Why not have a variable of the total number requirements left and update that variable
   as you take a course, instead of looping each time thru the array -Nat
@@ -239,12 +252,25 @@ public class Pathway {
     return !(zeroCount == numCategories);
   }
 
+  /*
+  Why not have a variable of the total number requirements left and update that variable
+  as you take a course, instead of looping each time thru the array -Nat
+   */
+  private int whichRequirements() {
+    for (int i = 0; i < numCategories; i++) {
+      if (requirements[i] > 0) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
   private Set<Node> getAvailableCourses() {
     Set<Node> sources = new HashSet<Node>();
     int sem = currSemester % 2;
     for (Node course : courses) {
       // continue  if course is not offered this semester
-
+      categoryMap.get(course.getCategory()).add(course);
       if (!course.getSemestersOffered().contains(sem)) {
         continue;
       }
@@ -269,23 +295,45 @@ public class Pathway {
         sources.add(course);
       }
     }
+    //this checks if there are still requierments to fulfill but no sources because the student
+    //has not satisfied the prereqs for teh requiered courses so find that prereq and take the
+    //course by adding it to our sources
+    if (this.requirementsLeft() && sources.isEmpty()) {
+      int category = whichRequirements();
+      List<Node> courseInCat = this.categoryMap.get(category);
+      for (Node course : courseInCat) {
+        if (!taken.contains(course)) {
+          for (Set<Node> s : course.getPrereqs()) {
+            for (Node c : s) {
+              if (!taken.contains(c)) {
+                if (!c.getSemestersOffered().contains(sem)) {
+                  continue;
+                } else {
+                  sources.add(c);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
     return sources;
   }
 
   /**
    * How to choose # of courses to take in a category
-   *
+   * <p>
    * Factors to consider:
    * - SEMESTER_COUNT & currSemester
    * - aggressive vs. laid-back
    * - # of courses available in categories, # of requirements left in categories
    * - taking many courses from one category at the same time (esp. for advanced courses)
    * - finishing one category at a time vs taking courses from many categories
-   *
+   * <p>
    * Biases:
    * - Take classes in lower categories first
    * - Take classes in categories that have more requirements left & finish categories
-   *   with only a couple of courses
+   * with only a couple of courses
    */
 
   private int[] numCoursesToTake(List<Node>[] coursesByCat, int max, boolean aggressive) {
@@ -345,7 +393,8 @@ public class Pathway {
       if (numCourses == 0) {
         break;
       }
-      if (numCoursesPerCat[i] == 0 || requirements[i] == 0) { // if no available courses or finished req
+      if (numCoursesPerCat[i] == 0
+          || requirements[i] == 0) { // if no available courses or finished req
         res[i] = 0;
         continue;
       }

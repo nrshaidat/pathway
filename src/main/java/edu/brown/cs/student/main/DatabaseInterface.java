@@ -32,7 +32,7 @@ public interface DatabaseInterface {
    *
    * @param tableName the concentrationNameReqs table name to search for
    * @return an int array where the index is the category and the value at that index is the number
-   *     of courses needed to fulfill the requirement
+   * of courses needed to fulfill the requirement
    */
   List<Integer> getRequirements(String tableName);
 
@@ -57,7 +57,7 @@ public interface DatabaseInterface {
    * number of categories lines up with both tables.
    *
    * @param concentrationName the name of the concentration in lower case and without spaces
-   *     with ba/bs on the end
+   *                          with ba/bs on the end
    * @return a boolean if the database has the accurate concentration data from the db
    */
   boolean checkConcentration(String concentrationName);
@@ -68,4 +68,6 @@ public interface DatabaseInterface {
    * @return a boolean if the database has the courses data from the db
    */
   boolean checkCoursesTable();
+
+  List<String> getAllCourseIDs();
 }

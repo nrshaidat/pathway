@@ -22,6 +22,7 @@ public class Node {
   private String professor;
   private List<Set<Node>> prereqs;
   private Node next;
+  private String nextID;
   private Set<Integer> semestersOffered;
   private double avgHrs;
   private double maxHrs;
@@ -32,12 +33,10 @@ public class Node {
    * Note: this constructor should be removed later on.
    *
    * @param courseID       course id
-   * @param courseName     course name
    * @param courseCategory course category
    */
-  public Node(String courseID, String courseName, int courseCategory) {
+  public Node(String courseID, int courseCategory) {
     id = courseID;
-    name = courseName;
     category = courseCategory;
     prereqs = new ArrayList<Set<Node>>();
     semestersOffered = new HashSet<Integer>();
@@ -53,6 +52,15 @@ public class Node {
     id = courseID;
     prereqs = new ArrayList<Set<Node>>();
     semestersOffered = new HashSet<Integer>();
+  }
+  public Node(String courseID, String nextid, int cat) {
+    id = courseID;
+    nextID = nextid;
+    category = cat;
+  }
+
+  public String getNextID() {
+    return nextID;
   }
 
   /**
