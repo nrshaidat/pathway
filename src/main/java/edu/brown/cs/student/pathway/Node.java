@@ -22,7 +22,7 @@ public class Node {
   private String professor;
   private List<Set<Node>> prereqs;
   private Node next;
-  private String nextID;
+  private String nextID; //used SOLELY for the cache database to get the info from the result set
   private Set<Integer> semestersOffered;
   private double avgHrs;
   private double maxHrs;
@@ -53,12 +53,34 @@ public class Node {
     prereqs = new ArrayList<Set<Node>>();
     semestersOffered = new HashSet<Integer>();
   }
+
+  /**
+   * Instantiates a new Node and meant to be used EXCLUSIVELY in the database to store the values
+   * returned from the result set in getConcentrationCourses in the database class, so the cache
+   * can use that information and the course data in the cache to make new nodes with all the
+   * concentration specific info. This was needed to avoid having multiple result sets open at
+   * the same time. None of the arrays and hashmaps are initialized here because I don't actually
+   * end up using this an actual node, it is merely for the cache to know what was in the result
+   * set called in the database.
+   *
+   * @param courseID the course ID w/out its course name so just the department code space and
+   *                 the course number
+   * @param nextid   the course ID of the next course in a sequence if none exists then it is an
+   *                 empty string
+   * @param cat      the category associated with the course
+   */
   public Node(String courseID, String nextid, int cat) {
     id = courseID;
     nextID = nextid;
     category = cat;
   }
 
+  /**
+   * getNextID gets next id as a string, this is only used for the cache database to build the
+   * course set for the concentration.
+   *
+   * @return the next id
+   */
   public String getNextID() {
     return nextID;
   }
@@ -79,12 +101,10 @@ public class Node {
     Node node = (Node) o;
     return Double.compare(node.getAvgHrs(), getAvgHrs()) == 0
         && Double.compare(node.getMaxHrs(), getMaxHrs()) == 0
-        && Double.compare(node.getRating(), getRating()) == 0
-        && getClassSize() == node.getClassSize()
-        && getId().equals(node.getId())
-        && getName().equals(node.getName())
-        && Objects.equals(getPrereqs(), node.getPrereqs())
-        && getSemestersOffered().equals(node.getSemestersOffered());
+        && Double.compare(node.getRating(), getRating()) == 0 && getClassSize() == node
+        .getClassSize() && getId().equals(node.getId()) && getName().equals(node.getName())
+        && Objects.equals(getPrereqs(), node.getPrereqs()) && getSemestersOffered()
+        .equals(node.getSemestersOffered());
   }
 
   /**

@@ -44,7 +44,7 @@ public class DatabaseTest {
    * Tests the checkCoursesTable method returns true for the current db.
    */
   @Test
-  public void validCheckCoursesTable() {
+  public void validCheckCoursesTable() throws SQLException {
     setUp();
     assertTrue(realDB.checkCoursesTable());
     tearDown();
@@ -54,7 +54,7 @@ public class DatabaseTest {
    * Tests the checkCoursesColNames method returns true for the current db.
    */
   @Test
-  public void validCoursesColNames() {
+  public void validCoursesColNames() throws SQLException {
     setUp();
     assertTrue(realDB.checkCoursesColNames());
     tearDown();
@@ -64,7 +64,7 @@ public class DatabaseTest {
    * Tests the checkTableExists method returns true for the courses table in the current db.
    */
   @Test
-  public void validCheckTableExists() {
+  public void validCheckTableExists() throws SQLException {
     setUp();
     assertTrue(realDB.checkTableExists("courses"));
     tearDown();
@@ -74,7 +74,7 @@ public class DatabaseTest {
    * Tests the isEmptyCourses method returns false for the current db.
    */
   @Test
-  public void validisEmptyCourses() {
+  public void validisEmptyCourses() throws SQLException {
     setUp();
     assertFalse(realDB.isEmptyCourses());
     tearDown();
@@ -95,7 +95,7 @@ public class DatabaseTest {
    * db.
    */
   @Test
-  public void validCheckConcentration() {
+  public void validCheckConcentration() throws SQLException {
     setUp();
     String validCon = "computationalbiologyba";
     assertTrue(realDB.checkConcentration(validCon));
@@ -107,7 +107,7 @@ public class DatabaseTest {
    * current db.
    */
   @Test
-  public void invalidCheckConcentration() {
+  public void invalidCheckConcentration() throws SQLException {
     setUp();
     String invalidCon = "PERIODTcocentration";
     assertFalse(realDB.checkConcentration(invalidCon));
@@ -119,7 +119,7 @@ public class DatabaseTest {
    * current db.
    */
   @Test
-  public void validCheckConcentrationColNames() {
+  public void validCheckConcentrationColNames() throws SQLException {
     setUp();
     String validCon = "computationalbiologyba";
     assertTrue(realDB.checkConcentrationColNames(validCon));
@@ -131,7 +131,7 @@ public class DatabaseTest {
    * the current db.
    */
   @Test
-  public void validCheckConcentrationRulesColNames() {
+  public void validCheckConcentrationRulesColNames() throws SQLException {
     setUp();
     String validCon = "computationalbiologyba";
     String rules = validCon + "_rules";
@@ -145,7 +145,7 @@ public class DatabaseTest {
    * the current db.
    */
   @Test
-  public void validGetRequirements() {
+  public void validGetRequirements() throws SQLException {
     setUp();
     String validCon = "computationalbiologyba";
     String rules = validCon + "_rules";
@@ -177,7 +177,7 @@ public class DatabaseTest {
    * the current db.
    */
   @Test
-  public void invalidGetRequirements() {
+  public void invalidGetRequirements() throws SQLException {
     setUp();
     String validCon = "PERIODTTT";
     String rules = validCon + "_rules";
@@ -458,7 +458,7 @@ public class DatabaseTest {
    * the current db.
    */
   @Test
-  public void validCourseNoLoops() {
+  public void validCourseNoLoops() throws SQLException {
     setUp();
     assertTrue(realDB.hasLoop());
 

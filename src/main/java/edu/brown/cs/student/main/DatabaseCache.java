@@ -8,11 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import edu.brown.cs.student.pathway.Node;
-/* MIGHT DELETE THIS CLASS BECAUSE WE NEVER USE THE CACHE BECAUSE I HAVE TO ERROR CHECK
-THAT A COURSE IS NOT NULL EACH TIME AND THE CACHE WILL JUST THROW ERRORS ON NULL'S. DUE TO
-THE FACT THAT COURSES CAN BE NULL AND NULL BEING A SIGNAL THAT THE COURSE IS NOT OFFERED ANYMORE
-A CACHE ISNT VERY HELPFUL.
- */
+
 
 /**
  * DatabaseCache that has a course cache and calls on the real database that handles the sql
@@ -29,8 +25,9 @@ public class DatabaseCache implements DatabaseInterface {
    * DatabaseCache constructor.
    *
    * @param dB database instance
+   * @throws SQLException the sql exception
    */
-  public DatabaseCache(DatabaseInterface dB) {
+  public DatabaseCache(DatabaseInterface dB) throws SQLException {
     if (dB.hasConnection()) {
       realDB = dB;
       this.init();
@@ -60,9 +57,10 @@ public class DatabaseCache implements DatabaseInterface {
    * true if it has data and false if it does not have data in its tables.
    *
    * @return boolean representing if table is empty of not
+   * @throws SQLException the sql exception
    */
   @Override
-  public boolean isEmptyCourses() {
+  public boolean isEmptyCourses() throws SQLException {
     return realDB.isEmptyCourses();
   }
 
@@ -88,9 +86,10 @@ public class DatabaseCache implements DatabaseInterface {
    * @param tableName the concentrationNameReqs table name to search for
    * @return an int array where the index is the category and the value at that index is the
    * number of courses needed to fulfill the requirement
+   * @throws SQLException the sql exception
    */
   @Override
-  public List<Integer> getRequirements(String tableName) {
+  public List<Integer> getRequirements(String tableName) throws SQLException {
     if (tableName == null) {
       return null;
     } else {
@@ -104,6 +103,7 @@ public class DatabaseCache implements DatabaseInterface {
    *
    * @param tableName the concentrationName table name to search for
    * @return a set of courses all populated with category and next populated
+   * @throws SQLException the sql exception
    */
   @Override
   public Set<Node> getConcentrationCourses(String tableName) throws SQLException {
@@ -159,9 +159,10 @@ public class DatabaseCache implements DatabaseInterface {
    * @param concentrationName the name of the concentration in lower case and without spaces
    *                          with ba/bs on the end
    * @return a boolean if the database has the accurate concentration data from the db
+   * @throws SQLException the sql exception
    */
   @Override
-  public boolean checkConcentration(String concentrationName) {
+  public boolean checkConcentration(String concentrationName) throws SQLException {
     return realDB.checkConcentration(concentrationName);
   }
 
@@ -169,18 +170,31 @@ public class DatabaseCache implements DatabaseInterface {
    * checkCoursesTable checks if the courses table format is correct.
    *
    * @return a boolean if the database has the courses data from the db
+   * @throws SQLException the sql exception
    */
   @Override
-  public boolean checkCoursesTable() {
+  public boolean checkCoursesTable() throws SQLException {
     return realDB.checkCoursesTable();
   }
 
+  /**
+   * getAllCourseIDs gets all course ids from the courses table to load each course into the cache.
+   *
+   * @return the all course i ds
+   * @throws SQLException the sql exception
+   */
   @Override
-  public List<String> getAllCourseIDs() {
+  public List<String> getAllCourseIDs() throws SQLException {
     return realDB.getAllCourseIDs();
   }
 
-  private void loadALLCourses() {
+  /**
+   * loadALLCourses add's all the courses from the courses table into the cache. This method gets
+   * called on initialization of the cache object.
+   *
+   * @throws SQLException the sql exception
+   */
+  private void loadALLCourses() throws SQLException {
     List<String> courseIDS = this.getAllCourseIDs();
     for (String id : courseIDS) {
       this.getCourseData(id);

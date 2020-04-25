@@ -29,7 +29,7 @@ public class DatabaseCacheTest {
    * Sets up the database connection.
    */
   @Before
-  public void setUp() {
+  public void setUp() throws SQLException {
     String file = "data/coursesDB.db";
     Database realDB = new Database(file); // real database that handles sql queries
     cache = new DatabaseCache(realDB);

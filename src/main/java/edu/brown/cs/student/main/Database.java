@@ -63,9 +63,10 @@ public class Database implements DatabaseInterface {
    * @param concentrationName the name of the concentration in lower case and without spaces
    *                          with ba/bs on the end
    * @return a boolean if the database has the accurate concentration data from the db
+   * @throws SQLException the sql exception
    */
   @Override
-  public boolean checkConcentration(String concentrationName) {
+  public boolean checkConcentration(String concentrationName) throws SQLException {
     //checks that the tables exist and they have the correct column names and types
     String concentrationRules = concentrationName + "_rules";
     if (!this.checkTableExists(concentrationName)) {
@@ -84,16 +85,15 @@ public class Database implements DatabaseInterface {
     }
     // check that the number of categories and number of credits from each category lines up with
     // the concentration table's categories and the number of options availible for each category
-    PreparedStatement prep;
+    PreparedStatement prep = null;
+    ResultSet rs = null;
     try {
       //query the concentrationName table to populate its array of
-      String strQuery = "SELECT category, COUNT(*) AS 'available_courses' "
-          + " FROM $tableName "
-          + " GROUP BY category "
-          + " ORDER BY category ASC ";
+      String strQuery = "SELECT category, COUNT(*) AS 'available_courses' " + " FROM $tableName "
+          + " GROUP BY category " + " ORDER BY category ASC ";
       String query = strQuery.replace("$tableName", concentrationName);
       prep = conn.prepareStatement(query);
-      ResultSet rs = prep.executeQuery();
+      rs = prep.executeQuery();
       List<Integer> reqsAvailable = new ArrayList<Integer>();
       while (rs.next()) {
         Integer categoryNum = Integer.parseInt(rs.getString("category"));
@@ -104,8 +104,6 @@ public class Database implements DatabaseInterface {
           reqsAvailable.add(categoryNum, numAvailable);
         }
       }
-      rs.close(); // close the reading of the db
-      prep.close(); // close the query
       List<Integer> reqs = this.getRequirements(concentrationRules);
       int numReqs = reqs.size();
       int numAvail = reqsAvailable.size();
@@ -122,6 +120,13 @@ public class Database implements DatabaseInterface {
       }
     } catch (SQLException e) {
       return false;
+    } finally {
+      if (rs != null) {
+        rs.close();
+      }
+      if (prep != null) {
+        prep.close();
+      }
     }
     return true;
   }
@@ -155,9 +160,10 @@ public class Database implements DatabaseInterface {
    * checkDBFormat checks that database's format.
    *
    * @return a boolean that represents if the database is of the correct format
+   * @throws SQLException the sql exception
    */
   @Override
-  public boolean checkCoursesTable() {
+  public boolean checkCoursesTable() throws SQLException {
     return (checkTableExists("courses") && checkCoursesColNames());
   }
 
@@ -166,12 +172,14 @@ public class Database implements DatabaseInterface {
    *
    * @param tableName name of the table to check
    * @return a boolean representing if the table names are of the correct format
+   * @throws SQLException the sql exception
    */
-  public boolean checkTableExists(String tableName) {
+  public boolean checkTableExists(String tableName) throws SQLException {
+    ResultSet rs = null;
     try {
       DatabaseMetaData dbmd = conn.getMetaData();
       String[] types = {"TABLE"};
-      ResultSet rs = dbmd.getTables(null, null, "%", types);
+      rs = dbmd.getTables(null, null, "%", types);
       List<String> tableNames = new ArrayList<>();
       while (rs.next()) {
         tableNames.add(rs.getString("TABLE_NAME"));
@@ -184,6 +192,10 @@ public class Database implements DatabaseInterface {
       }
     } catch (SQLException e) {
       return false;
+    } finally {
+      if (rs != null) {
+        rs.close();
+      }
     }
     return true;
   }
@@ -194,15 +206,17 @@ public class Database implements DatabaseInterface {
    *
    * @param concentrationName concentration name in lowercase and no spaces
    * @return a boolean representing if the way table column names are of the correct format
+   * @throws SQLException the sql exception
    */
-  public boolean checkConcentrationColNames(String concentrationName) {
+  public boolean checkConcentrationColNames(String concentrationName) throws SQLException {
+    ResultSet rs = null;
     try {
       DatabaseMetaData metadata = conn.getMetaData();
-      ResultSet resultSet = metadata.getColumns(null, null, concentrationName, null);
+      rs = metadata.getColumns(null, null, concentrationName, null);
       List<String> names = new ArrayList<>();
-      while (resultSet.next()) {
-        String name = resultSet.getString("COLUMN_NAME");
-        String type = resultSet.getString("TYPE_NAME");
+      while (rs.next()) {
+        String name = rs.getString("COLUMN_NAME");
+        String type = rs.getString("TYPE_NAME");
         names.add(name);
         if (!(type.equals("TEXT"))) {
           return false;
@@ -220,9 +234,12 @@ public class Database implements DatabaseInterface {
       if (!names.get(2).equals("category")) {
         return false;
       }
-      resultSet.close();
     } catch (SQLException e) {
       return false;
+    } finally {
+      if (rs != null) {
+        rs.close();
+      }
     }
     return true;
   }
@@ -233,15 +250,18 @@ public class Database implements DatabaseInterface {
    *
    * @param concentrationNameRules concentration name for rules table
    * @return a boolean representing if the way table column names are of the correct format
+   * @throws SQLException the sql exception
    */
-  public boolean checkConcentrationRulesColNames(String concentrationNameRules) {
+  public boolean checkConcentrationRulesColNames(String concentrationNameRules)
+      throws SQLException {
+    ResultSet rs = null;
     try {
       DatabaseMetaData metadata = conn.getMetaData();
-      ResultSet resultSet = metadata.getColumns(null, null, concentrationNameRules, null);
+      rs = metadata.getColumns(null, null, concentrationNameRules, null);
       List<String> names = new ArrayList<>();
-      while (resultSet.next()) {
-        String name = resultSet.getString("COLUMN_NAME");
-        String type = resultSet.getString("TYPE_NAME");
+      while (rs.next()) {
+        String name = rs.getString("COLUMN_NAME");
+        String type = rs.getString("TYPE_NAME");
         names.add(name);
         if (!(type.equals("TEXT"))) {
           return false;
@@ -256,9 +276,12 @@ public class Database implements DatabaseInterface {
       if (!names.get(1).equals("num_credits")) {
         return false;
       }
-      resultSet.close();
     } catch (SQLException e) {
       return false;
+    } finally {
+      if (rs != null) {
+        rs.close();
+      }
     }
     return true;
   }
@@ -268,16 +291,18 @@ public class Database implements DatabaseInterface {
    * accuracte.
    *
    * @return a boolean representing if the way table column names are of the correct format
+   * @throws SQLException the sql exception
    */
   @SuppressWarnings("checkstyle:MagicNumber")
-  public boolean checkCoursesColNames() {
+  public boolean checkCoursesColNames() throws SQLException {
+    ResultSet rs = null;
     try {
       DatabaseMetaData metadata = conn.getMetaData();
-      ResultSet resultSet = metadata.getColumns(null, null, "courses", null);
+      rs = metadata.getColumns(null, null, "courses", null);
       List<String> names = new ArrayList<>();
-      while (resultSet.next()) {
-        String name = resultSet.getString("COLUMN_NAME");
-        String type = resultSet.getString("TYPE_NAME");
+      while (rs.next()) {
+        String name = rs.getString("COLUMN_NAME");
+        String type = rs.getString("TYPE_NAME");
         names.add(name);
         if (!(type.equals("TEXT"))) {
           return false;
@@ -313,9 +338,12 @@ public class Database implements DatabaseInterface {
       if (!names.get(CLASSSIZEIDX).equals("class_size")) {
         return false;
       }
-      resultSet.close();
     } catch (SQLException e) {
       return false;
+    } finally {
+      if (rs != null) {
+        rs.close();
+      }
     }
     return true;
   }
@@ -325,20 +353,28 @@ public class Database implements DatabaseInterface {
    * and false if it does not have data in its tables.
    *
    * @return boolean representing if table is empty of not
+   * @throws SQLException the sql exception
    */
   @Override
-  public boolean isEmptyCourses() {
-    PreparedStatement prep;
+  public boolean isEmptyCourses() throws SQLException {
+    PreparedStatement prep = null;
+    ResultSet rs = null;
+    int num;
     try {
       prep = conn.prepareStatement("SELECT COUNT(*) AS 'num' " + "FROM courses ");
-      ResultSet rs = prep.executeQuery();
-      int num = rs.getInt("num");
-      rs.close();
-      prep.close();
-      return num == 0;
+      rs = prep.executeQuery();
+      num = rs.getInt("num");
     } catch (SQLException e) {
       return true;
+    } finally {
+      if (rs != null) {
+        rs.close();
+      }
+      if (prep != null) {
+        prep.close();
+      }
     }
+    return num == 0;
   }
 
   /**
@@ -347,15 +383,17 @@ public class Database implements DatabaseInterface {
    *
    * @param courseID course id such as CSCI 0320
    * @return Node object with everything filled in except category and next
+   * @throws SQLException the sql exception
    */
   @Override
-  public Node getCourseData(String courseID) {
-    PreparedStatement prep;
+  public Node getCourseData(String courseID) throws SQLException {
+    PreparedStatement prep = null;
+    ResultSet rs = null;
+    Node newCourse = new Node(courseID);
     try {
       prep = conn.prepareStatement(" SELECT * " + " FROM courses " + " WHERE course_id = ?");
       prep.setString(1, courseID);
-      ResultSet rs = prep.executeQuery();
-      Node newCourse = new Node(courseID);
+      rs = prep.executeQuery();
       String name = rs.getString("course_name");
       newCourse.setName(name);
       String prereq = rs.getString("prereqs");
@@ -390,12 +428,17 @@ public class Database implements DatabaseInterface {
       } else { //set default
         newCourse.setClassSize(DEFAULTCLASSSIZE);
       }
-      rs.close(); // close the reading of the db
-      prep.close(); // close the query
-      return newCourse;
     } catch (SQLException e) {
       return null;
+    } finally {
+      if (rs != null) {
+        rs.close();
+      }
+      if (prep != null) {
+        prep.close();
+      }
     }
+    return newCourse;
   }
 
   /**
@@ -404,50 +447,47 @@ public class Database implements DatabaseInterface {
    *
    * @param tableName the concentrationName table name to search for
    * @return a set of courses all populated with category and next populated
+   * @throws SQLException the sql exception
    */
   @Override
-  public Set<Node> getConcentrationCourses(String tableName) {
-    PreparedStatement prep;
+  public Set<Node> getConcentrationCourses(String tableName) throws SQLException {
+    PreparedStatement prep = null;
+    ResultSet rs = null;
+    Set<Node> courseSet = new HashSet<Node>();
     try {
       String strQuery = " SELECT * " + " FROM $tableName " + " ORDER BY category ASC ";
       String query = strQuery.replace("$tableName", tableName);
       prep = conn.prepareStatement(query);
-      ResultSet rs = prep.executeQuery();
-      Set<Node> courseSet = new HashSet<Node>();
+      rs = prep.executeQuery();
       while (rs.next()) {
         Integer category = Integer.parseInt(rs.getString("category"));
         String nextID = rs.getString("next");
         String courseID = rs.getString("course_id");
         Node tmp = new Node(courseID, nextID, category);
         courseSet.add(tmp);
-//        if (tmp == null) { // course is not offered anymore so don't add it
-//          continue;
-//        } else { // course is in our courses table and is offered
-//          if (nextID.length() > 0) {
-//            Node next = this.getCourseData(nextID);
-//            next.setCategory(category);
-//            tmp.setNext(next);
-//            courseSet.add(next);
-//          }
-//          tmp.setCategory(category);
-//          courseSet.add(tmp);
-//        }
       }
-      rs.close(); // close the reading of the db
-      prep.close(); // close the query
-      return courseSet;
     } catch (SQLException e) {
       return null;
+    } finally {
+      if (rs != null) {
+        rs.close();
+      }
+      if (prep != null) {
+        prep.close();
+      }
     }
+    return courseSet;
   }
 
   /**
-   * parsePrereqs parses the comma separated prereqs.
+   * parsePrereqs parses the comma separated (AND) prereqs and the equal sign (OR) seperated
+   * prereqs.
    *
    * @param prereqs the string of courseID's
    * @return a list of prereqs course objects
+   * @throws SQLException the sql exception
    */
-  public List<Set<Node>> parsePrereqs(String prereqs) {
+  public List<Set<Node>> parsePrereqs(String prereqs) throws SQLException {
     String[] parsedLine = prereqs.split(","); //split on , (AND)
     List<Set<Node>> courseList = new ArrayList<>();
     for (String courseID : parsedLine) { //loop thru each required prereqs (AND)
@@ -503,17 +543,18 @@ public class Database implements DatabaseInterface {
    * @param tableName the concentrationNameReqs table name to search for
    * @return an int array where the index is the category and the value at that index is the number
    * of courses needed to fulfill the requirement
+   * @throws SQLException the sql exception
    */
   @Override
-  public List<Integer> getRequirements(String tableName) {
-    PreparedStatement prep;
+  public List<Integer> getRequirements(String tableName) throws SQLException {
+    PreparedStatement prep = null;
+    ResultSet rs = null;
+    List<Integer> reqs = new ArrayList<>();
     try {
       String strQuery = " SELECT * " + "FROM $tableName " + " ORDER BY category ASC ";
       String query = strQuery.replace("$tableName", tableName);
       prep = conn.prepareStatement(query);
-      ResultSet rs = prep.executeQuery();
-      List<Integer> reqs = new ArrayList<>();
-
+      rs = prep.executeQuery();
       while (rs.next()) {
         int category = Integer.parseInt(rs.getString("category"));
         int numCredits = Integer.parseInt(rs.getString("num_credits"));
@@ -523,12 +564,17 @@ public class Database implements DatabaseInterface {
           reqs.add(category, numCredits);
         }
       }
-      rs.close(); // close the reading of the db
-      prep.close(); // close the query
-      return reqs;
     } catch (SQLException e) {
       return null;
+    } finally {
+      if (rs != null) {
+        rs.close();
+      }
+      if (prep != null) {
+        prep.close();
+      }
     }
+    return reqs;
   }
 
 
@@ -536,21 +582,19 @@ public class Database implements DatabaseInterface {
    * getConcentrations gets the concentrations in the sql database for use in the GUI.
    *
    * @return a list of concentration names
+   * @throws SQLException the sql exception
    */
   public List<String> getConcentrations() throws SQLException {
     PreparedStatement prep = null;
     ResultSet rs = null;
     List<String> concentrationList = new ArrayList<>();
-
     try {
-      prep = conn.prepareStatement("SELECT concentration_name "
-          + " FROM concentrations "
+      prep = conn.prepareStatement("SELECT concentration_name " + " FROM concentrations "
           + " ORDER BY concentration_name ASC ");
       rs = prep.executeQuery();
       while (rs.next()) {
         concentrationList.add(rs.getString("concentration_name"));
       }
-
     } catch (SQLException e) {
       return null;
     } finally {
@@ -566,11 +610,17 @@ public class Database implements DatabaseInterface {
 
   }
 
+  /**
+   * getConcentrationID gets the concentration id associated with the concentration name from GUI.
+   *
+   * @param concName the conc name
+   * @return the concentration id
+   * @throws SQLException the sql exception
+   */
   public String getConcentrationID(String concName) throws SQLException {
     PreparedStatement prep = null;
     ResultSet rs = null;
     String concentrationId = "";
-
     try {
       prep = conn.prepareStatement(
           "SELECT concentration_id FROM concentrations WHERE concentration_name = ?");
@@ -593,11 +643,13 @@ public class Database implements DatabaseInterface {
   }
 
   /**
-   * getConcentrations gets the concentrations in the sql database for use in the GUI.
+   * hasLoop checks that all the courses in the courses db don't have a loop between prereqs
+   * pointing to each other.
    *
    * @return a list of concentration names
+   * @throws SQLException the sql exception
    */
-  public boolean hasLoop() {
+  public boolean hasLoop() throws SQLException {
     PreparedStatement prep = null;
     ResultSet rs = null;
     try {
@@ -606,20 +658,27 @@ public class Database implements DatabaseInterface {
       while (rs.next()) {
         this.getCourseData(rs.getString("course_id"));
       }
-      rs.close();
-      prep.close();
-      return true;
     } catch (SQLException e) {
       return false;
+    } finally {
+      if (rs != null) {
+        rs.close();
+      }
+      if (prep != null) {
+        prep.close();
+      }
     }
+    return true;
   }
 
   /**
-   * getConcentrations gets the concentrations in the sql database for use in the GUI.
+   * getAllCourseIDs gets all the course's id's for the cache database to populate the cache with.
    *
    * @return a list of concentration names
+   * @throws SQLException the sql exception
    */
-  public List<String> getAllCourseIDs() {
+  @Override
+  public List<String> getAllCourseIDs() throws SQLException {
     PreparedStatement prep = null;
     ResultSet rs = null;
     List<String> courseIDs = new ArrayList<>();
@@ -634,6 +693,13 @@ public class Database implements DatabaseInterface {
       return courseIDs;
     } catch (SQLException e) {
       return courseIDs;
+    } finally {
+      if (rs != null) {
+        rs.close();
+      }
+      if (prep != null) {
+        prep.close();
+      }
     }
 
   }

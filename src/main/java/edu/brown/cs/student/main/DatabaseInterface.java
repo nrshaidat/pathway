@@ -15,8 +15,9 @@ public interface DatabaseInterface {
    * returning true if it has data and false if it does not have data in its tables.
    *
    * @return boolean representing if table is empty of not
+   * @throws SQLException the sql exception
    */
-  boolean isEmptyCourses();
+  boolean isEmptyCourses() throws SQLException;
 
   /**
    * getCourseData gets a reference to a Node object with all of its field filled except next and
@@ -24,6 +25,7 @@ public interface DatabaseInterface {
    *
    * @param courseID course id such as CSCI 0320
    * @return Node object with everything filled in except category and next
+   * @throws SQLException the sql exception
    */
   Node getCourseData(String courseID) throws SQLException;
 
@@ -33,8 +35,9 @@ public interface DatabaseInterface {
    * @param tableName the concentrationNameReqs table name to search for
    * @return an int array where the index is the category and the value at that index is the number
    * of courses needed to fulfill the requirement
+   * @throws SQLException the sql exception
    */
-  List<Integer> getRequirements(String tableName);
+  List<Integer> getRequirements(String tableName) throws SQLException;
 
   /**
    * getConcentrationCourses gets the courses for the concentration in the sql database. It calls on
@@ -42,6 +45,7 @@ public interface DatabaseInterface {
    *
    * @param tableName the concentrationName table name to search for
    * @return a set of courses all populated with category and next populated
+   * @throws SQLException the sql exception
    */
   Set<Node> getConcentrationCourses(String tableName) throws SQLException;
 
@@ -59,15 +63,23 @@ public interface DatabaseInterface {
    * @param concentrationName the name of the concentration in lower case and without spaces
    *                          with ba/bs on the end
    * @return a boolean if the database has the accurate concentration data from the db
+   * @throws SQLException the sql exception
    */
-  boolean checkConcentration(String concentrationName);
+  boolean checkConcentration(String concentrationName) throws SQLException;
 
   /**
    * checkCoursesTable checks if the courses table format is correct.
    *
    * @return a boolean if the database has the courses data from the db
+   * @throws SQLException the sql exception
    */
-  boolean checkCoursesTable();
+  boolean checkCoursesTable() throws SQLException;
 
-  List<String> getAllCourseIDs();
+  /**
+   * getAllCourseIDs gets all course ids from the courses table to load each course into the cache.
+   *
+   * @return the all course i ds
+   * @throws SQLException the sql exception
+   */
+  List<String> getAllCourseIDs() throws SQLException;
 }

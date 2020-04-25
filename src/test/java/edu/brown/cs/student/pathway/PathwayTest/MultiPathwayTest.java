@@ -19,7 +19,7 @@ public class MultiPathwayTest {
   private DatabaseCache cache;
 
   @Before
-  public void setUp() {
+  public void setUp() throws SQLException {
     cache = new DatabaseCache(new Database("data/coursesDB.db"));
   }
   @Test
