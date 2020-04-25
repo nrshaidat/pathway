@@ -25,8 +25,7 @@ public class PathwayWithDatabaseTest {
     for(Semester list : path) {
       System.out.println("Semester: " + list.getSemester());
       for (Node course : list.getCourses()) {
-        System.out.println(course.getId() + ": " + course.getCategory());
-        //System.out.println(course.getId() + ": " + course.getName());
+        System.out.println(course.getId() + ": " + course.getName());
       }
       System.out.println();
     }
@@ -37,7 +36,6 @@ public class PathwayWithDatabaseTest {
     String tablename = "computerscienceba";
     List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
     int[] reqs = reqsTmp.stream().mapToInt(i->i).toArray();
-
     Set<Node> courseSet = cache.getConcentrationCourses(tablename);
     Pathway pathwayMaker = new Pathway(reqs, courseSet);
     pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
@@ -52,7 +50,6 @@ public class PathwayWithDatabaseTest {
     String tablename = "computationalbiologyba";
     List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
     int[] reqs = reqsTmp.stream().mapToInt(i->i).toArray();
-
     Set<Node> courseSet = cache.getConcentrationCourses(tablename);
     Pathway pathwayMaker = new Pathway(reqs, courseSet);
     pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
@@ -66,7 +63,6 @@ public class PathwayWithDatabaseTest {
     String tablename = "chemistryba";
     List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
     int[] reqs = reqsTmp.stream().mapToInt(i->i).toArray();
-
     Set<Node> courseSet = cache.getConcentrationCourses(tablename);
     Pathway pathwayMaker = new Pathway(reqs, courseSet);
     pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
@@ -80,7 +76,6 @@ public class PathwayWithDatabaseTest {
     String tablename = "cognitiveneuroscienceba";
     List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
     int[] reqs = reqsTmp.stream().mapToInt(i->i).toArray();
-
     Set<Node> courseSet = cache.getConcentrationCourses(tablename);
     Pathway pathwayMaker = new Pathway(reqs, courseSet);
     pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
