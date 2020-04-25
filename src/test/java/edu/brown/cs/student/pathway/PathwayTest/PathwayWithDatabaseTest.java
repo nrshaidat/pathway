@@ -144,7 +144,20 @@ public class PathwayWithDatabaseTest {
     Set<Node> courseSet = cache.getConcentrationCourses(tablename);
     Pathway pathwayMaker = new Pathway(reqs, courseSet);
     pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
-    System.out.println("Business and Economics B.A.");
+    System.out.println("Business Economics B.A.");
+    System.out.println("----");
+    this.pathwayPrinter(pathwayMaker.getPath());
+  }
+
+  @Test
+  public void economicsbaConcentrationTest() throws SQLException {
+    String tablename = "economicsba";
+    List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
+    int[] reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
+    Set<Node> courseSet = cache.getConcentrationCourses(tablename);
+    Pathway pathwayMaker = new Pathway(reqs, courseSet);
+    pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
+    System.out.println("Economics B.A.");
     System.out.println("----");
     this.pathwayPrinter(pathwayMaker.getPath());
   }
