@@ -48,7 +48,7 @@ public class PathwayWithDatabaseTest {
 
 
   @Test
-  public void computationalbiologyConcentrationTest() throws SQLException {
+  public void computationalbiologybaConcentrationTest() throws SQLException {
     String tablename = "computationalbiologyba";
     List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
     int[] reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
@@ -61,7 +61,7 @@ public class PathwayWithDatabaseTest {
   }
 
   @Test
-  public void chemistryConcentrationTest() throws SQLException {
+  public void chemistrybaConcentrationTest() throws SQLException {
     String tablename = "chemistryba";
     List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
     int[] reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
@@ -74,7 +74,7 @@ public class PathwayWithDatabaseTest {
   }
 
   @Test
-  public void cognitiveneuroscienceConcentrationTest() throws SQLException {
+  public void cognitiveneurosciencebaConcentrationTest() throws SQLException {
     String tablename = "cognitiveneuroscienceba";
     List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
     int[] reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
@@ -82,6 +82,19 @@ public class PathwayWithDatabaseTest {
     Pathway pathwayMaker = new Pathway(reqs, courseSet);
     pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
     System.out.println("Cognitive Neuroscience B.A.");
+    System.out.println("----");
+    this.pathwayPrinter(pathwayMaker.getPath());
+  }
+
+  @Test
+  public void cognitiveneurosciencebsConcentrationTest() throws SQLException {
+    String tablename = "cognitiveneurosciencebs";
+    List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
+    int[] reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
+    Set<Node> courseSet = cache.getConcentrationCourses(tablename);
+    Pathway pathwayMaker = new Pathway(reqs, courseSet);
+    pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
+    System.out.println("Cognitive Neuroscience B.S.");
     System.out.println("----");
     this.pathwayPrinter(pathwayMaker.getPath());
   }
@@ -100,7 +113,7 @@ public class PathwayWithDatabaseTest {
   }
 
   @Test
-  public void bussinessEconomicsConcentrationTest() throws SQLException {
+  public void bussinessEconomicsbaConcentrationTest() throws SQLException {
     String tablename = "businesseconomicsba";
     List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
     int[] reqs = reqsTmp.stream().mapToInt(i -> i).toArray();

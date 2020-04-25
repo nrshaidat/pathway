@@ -551,7 +551,8 @@ public class Database implements DatabaseInterface {
     ResultSet rs = null;
     List<Integer> reqs = new ArrayList<>();
     try {
-      String strQuery = " SELECT * " + "FROM $tableName " + " ORDER BY category ASC ";
+      String strQuery = " SELECT * " + " FROM $tableName "
+          + " ORDER BY cast(category as unsigned) ASC ";
       String query = strQuery.replace("$tableName", tableName);
       prep = conn.prepareStatement(query);
       rs = prep.executeQuery();
