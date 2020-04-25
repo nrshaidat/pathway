@@ -5,6 +5,9 @@ import edu.brown.cs.student.pathway.Node;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.sql.SQLException;
+
 import static org.junit.Assert.*;
 
 /**
@@ -38,7 +41,7 @@ public class CriticalReviewScrapingTest {
    * all four parameters (Avg Hours, Max Hours, Course Rating, Class Size).
    */
   @Test
-  public void testValidCourses() {
+  public void testValidCourses() throws SQLException {
 
     this.setUp();
     //Tests valid courses with all four params filled
@@ -84,7 +87,7 @@ public class CriticalReviewScrapingTest {
    * CR doesn't contain data.
    */
   @Test
-  public void testMissingData() {
+  public void testMissingData() throws SQLException {
     this.setUp();
 
     double defaultAvgHrs = 8;
@@ -143,7 +146,7 @@ public class CriticalReviewScrapingTest {
    * account for that by using default values, which are listed below.
    */
   @Test
-  public void testNotCR() {
+  public void testNotCR() throws SQLException {
 
     this.setUp();
 

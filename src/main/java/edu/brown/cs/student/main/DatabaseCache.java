@@ -3,6 +3,8 @@ package edu.brown.cs.student.main;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 import edu.brown.cs.student.pathway.Node;
@@ -40,7 +42,7 @@ public class DatabaseCache implements DatabaseInterface {
   private void init() {
     coursesLoader = new CacheLoader<String, Node>() { // anonymous CacheLoader class
       @Override // but with an override...
-      public Node load(String key) {
+      public Node load(String key) throws SQLException {
         return realDB.getCourseData(key);
       } // returns the value to cache for the key
     };
@@ -96,7 +98,7 @@ public class DatabaseCache implements DatabaseInterface {
    * @return a set of courses all populated with category and next populated
    */
   @Override
-  public Set<Node> getConcentrationCourses(String tableName) {
+  public Set<Node> getConcentrationCourses(String tableName) throws SQLException {
     if (tableName == null) {
       return null;
     } else {

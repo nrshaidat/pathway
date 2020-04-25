@@ -2,6 +2,7 @@ package edu.brown.cs.student.main;
 
 import edu.brown.cs.student.pathway.Node;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
@@ -24,7 +25,7 @@ public interface DatabaseInterface {
    * @param courseID course id such as CSCI 0320
    * @return Node object with everything filled in except category and next
    */
-  Node getCourseData(String courseID);
+  Node getCourseData(String courseID) throws SQLException;
 
   /**
    * getRequirements gets the requirements for the concentration.
@@ -42,7 +43,7 @@ public interface DatabaseInterface {
    * @param tableName the concentrationName table name to search for
    * @return a set of courses all populated with category and next populated
    */
-  Set<Node> getConcentrationCourses(String tableName);
+  Set<Node> getConcentrationCourses(String tableName) throws SQLException;
 
   /**
    * hasConnection checks if the database could connect.

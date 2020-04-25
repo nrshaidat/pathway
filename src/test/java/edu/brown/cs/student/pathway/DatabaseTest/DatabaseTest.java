@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -223,7 +224,7 @@ public class DatabaseTest {
    * Tests the parsePrereqs method returns the correct values for a multitude of variations of prereqs.
    */
   @Test
-  public void validParsePrereqs() {
+  public void validParsePrereqs() throws SQLException {
     setUp();
     String oddNumOrs = "CSCI 0150=CSCI 0170=CSCI 0190,MATH 0100"; //2
     String evenNumOrs = "CSCI 0150=CSCI 0170,MATH 0100"; //2
@@ -287,7 +288,7 @@ public class DatabaseTest {
    * not offered at Brown anymore aka not in the courses table.
    */
   @Test
-  public void invalidParsePrereqs() {
+  public void invalidParsePrereqs() throws SQLException {
     setUp();
     String notOfferedAnd = "CSCI 0150=CSCI 0170=CSCI 0190,MATH 0170"; //1
     String notOfferedOrs = "CSCI 0150=MATH 0170,MATH 0100"; //2
@@ -315,8 +316,9 @@ public class DatabaseTest {
    * the current db.
    */
   @Test
-  public void validGetCourseData() {
+  public void validGetCourseData() throws SQLException {
     setUp();
+    Node tmp = realDB.getCourseData("ECON 1310");
     //course that has everything filled in the db
     Node math10 = realDB.getCourseData("MATH 0100");
     //course with no prereqs
@@ -381,7 +383,7 @@ public class DatabaseTest {
    * Tests the getCourseData method returns null for invalid input.
    */
   @Test
-  public void invalidGetCourseData() {
+  public void invalidGetCourseData() throws SQLException {
     setUp();
     String invalid0 = "PERIODT 101";
     assertNull(realDB.getCourseData(invalid0));
@@ -394,7 +396,7 @@ public class DatabaseTest {
    * the current db.
    */
   @Test
-  public void validGetConcentrationData() {
+  public void validGetConcentrationData() throws SQLException {
     setUp();
     String validCon = "computationalbiologyba";
     Set<Node> comp = realDB.getConcentrationCourses(validCon);
@@ -447,7 +449,7 @@ public class DatabaseTest {
    * the current db.
    */
   @Test
-  public void invalidGetConcentrationData() {
+  public void invalidGetConcentrationData() throws SQLException {
     setUp();
     String invalidCon = "PERIODT CONCENTRATION";
     assertNull(realDB.getConcentrationCourses(invalidCon));

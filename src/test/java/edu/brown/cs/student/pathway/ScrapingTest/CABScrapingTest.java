@@ -91,7 +91,7 @@ public class CABScrapingTest {
   }
 
   @Test
-  public void testSpecificClasses() {
+  public void testSpecificClasses() throws SQLException {
     setUp();
 
     /* Test all CAB attributes of a random class */
