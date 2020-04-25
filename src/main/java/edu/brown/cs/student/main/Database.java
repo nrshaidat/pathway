@@ -507,7 +507,6 @@ public class Database implements DatabaseInterface {
       prep = conn.prepareStatement(query);
       ResultSet rs = prep.executeQuery();
       List<Integer> reqs = new ArrayList<>();
-      int n = rs.getFetchSize();
 
       while (rs.next()) {
         int category = Integer.parseInt(rs.getString("category"));
