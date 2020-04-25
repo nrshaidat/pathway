@@ -86,7 +86,8 @@ public final class Main {
     Spark.post("/generate", new myPathHandler(), freeMarker);
     Spark.get("/faqs", new faqHandler(), freeMarker);
     Spark.get("/signup", new signUpHandler(), freeMarker);
-    Spark.post("/mypath", new pathwayHandler(), freeMarker);
+    Spark.post("/mypath", new pathLandingHandler(), freeMarker);
+    Spark.get("/mypath/:id", new pathwayHandler(), freeMarker);
 
   }
 
@@ -112,15 +113,6 @@ public final class Main {
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
 
-
-      QueryParamsMap qm = req.queryMap();
-      System.out.println("=========================================");
-      System.out.println(qm.hasKey("username"));
-      System.out.println(qm.hasKey("uname"));
-      System.out.println("=========================================");
-      String status = "";
-
-
       List<String> concentrationList = db.getConcentrations();
 
       Map<String, Object> variables = ImmutableMap.of("title", "Pathway",
@@ -130,7 +122,7 @@ public final class Main {
 
   }
 
-  private static class pathwayHandler implements TemplateViewRoute {
+  private static class pathLandingHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
 
@@ -153,6 +145,23 @@ public final class Main {
       Map<String, Object> variables = ImmutableMap.of("title", "Pathway",
               "content", display);
       return new ModelAndView(variables, "pathway.ftl");
+    }
+  }
+
+  private static class pathwayHandler implements TemplateViewRoute {
+    @Override
+    public ModelAndView handle(Request req, Response res) {
+
+      QueryParamsMap qm = req.queryMap();
+
+      String pathNum = req.params(":id");
+
+      System.out.println("====================-=");
+      System.out.println(pathNum);
+      System.out.println("====================-=");
+
+      Map<String, Object> variables = ImmutableMap.of("title", "My Path", "id", pathNum);
+      return new ModelAndView(variables, "mypath.ftl");
 
     }
   }

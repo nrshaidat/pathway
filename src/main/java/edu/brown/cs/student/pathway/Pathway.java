@@ -41,6 +41,11 @@ public class Pathway {
     numCategories = reqs.length;
     initialRequirements = Arrays.copyOf(reqs, numCategories);
     courses = courseSet;
+
+//    for (Node course: courses) {
+//      System.out.println(course.getId());
+//    }
+
     path = new ArrayList<Semester>();
     workloads = ImmutableMap.of("lo", Range.closedOpen(1.0, 25.0),
         "med", Range.closedOpen(25.0, 40.0),
@@ -79,10 +84,10 @@ public class Pathway {
       List<Node> thisSemester = new ArrayList<Node>();
       Set<Node> sources = this.getAvailableCourses();
 
-      System.out.println("-----------");
-      for (Node course : sources) {
-        System.out.println(course.getId());
-      }
+//      System.out.println("-----------");
+//      for (Node course : sources) {
+//        System.out.println(course.getId());
+//      }
 
       // Take "next" courses if available
       Set<Node> toRemove = new HashSet<>();

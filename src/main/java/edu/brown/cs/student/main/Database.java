@@ -2,15 +2,15 @@ package edu.brown.cs.student.main;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.io.File;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import edu.brown.cs.student.pathway.Node;
@@ -61,7 +61,7 @@ public class Database implements DatabaseInterface {
    * number of categories lines up with both tables.
    *
    * @param concentrationName the name of the concentration in lower case and without spaces
-   *         with ba/bs on the end
+   *                          with ba/bs on the end
    * @return a boolean if the database has the accurate concentration data from the db
    */
   @Override
@@ -87,8 +87,10 @@ public class Database implements DatabaseInterface {
     PreparedStatement prep;
     try {
       //query the concentrationName table to populate its array of
-      String strQuery = "SELECT category, COUNT(*) AS 'available_courses' " + " FROM $tableName "
-          + " GROUP BY category " + " ORDER BY category ASC ";
+      String strQuery = "SELECT category, COUNT(*) AS 'available_courses' "
+          + " FROM $tableName "
+          + " GROUP BY category "
+          + " ORDER BY category ASC ";
       String query = strQuery.replace("$tableName", concentrationName);
       prep = conn.prepareStatement(query);
       ResultSet rs = prep.executeQuery();
@@ -347,63 +349,95 @@ public class Database implements DatabaseInterface {
    * @return Node object with everything filled in except category and next
    */
   @Override
-  public Node getCourseData(String courseID) throws SQLException {
-    PreparedStatement preper = null;
-    ResultSet rss = null;
-    Node newCourse = null;
+  public Node getCourseData(String courseID) {
+    PreparedStatement prep;
     try {
-      preper = conn.prepareStatement(" SELECT * "
-          + " FROM courses "
-          + " WHERE course_id = ? ");
-      preper.setString(1, courseID);
-      rss = preper.executeQuery();
-      newCourse = new Node(courseID);
-      String name = rss.getString("course_name");
+      prep = conn.prepareStatement(" SELECT * " + " FROM courses " + " WHERE course_id = ?");
+      prep.setString(1, courseID);
+      ResultSet rs = prep.executeQuery();
+      Node newCourse = new Node(courseID);
+      String name = rs.getString("course_name");
       newCourse.setName(name);
-      String prereq = rss.getString("prereqs");
+      String prereq = rs.getString("prereqs");
       if (!prereq.equals("")) { //has prereqs so parse it and set it
         List<Set<Node>> prereqList = this.parsePrereqs(prereq);
         newCourse.setPrereqs(prereqList);
       }
-      String sem = rss.getString("semester_offered");
+      String sem = rs.getString("semester_offered");
       newCourse.setSemesters(this.parseSemesterOffered(sem));
-      newCourse.setProfessor(rss.getString("professor"));
-      String courseRating = rss.getString("courseRating");
+      newCourse.setProfessor(rs.getString("professor"));
+      String courseRating = rs.getString("courseRating");
       if (!courseRating.equals("")) { //has a courseRating
         newCourse.setRating(Double.parseDouble(courseRating));
       } else { //set default
         newCourse.setRating(DEFAULTRATING);
       }
-      String avgHrs = rss.getString("avg_hrs");
+      String avgHrs = rs.getString("avg_hrs");
       if (!avgHrs.equals("")) { // has avghrs value
         newCourse.setAvgHrs(Double.parseDouble(avgHrs));
       } else { //set default
         newCourse.setAvgHrs(DEFAULTAVGHRS);
       }
-      String maxHrs = rss.getString("max_hrs");
+      String maxHrs = rs.getString("max_hrs");
       if (!maxHrs.equals("")) { // has maxhrs value
         newCourse.setMaxHrs(Double.parseDouble(maxHrs));
       } else { //set default
         newCourse.setMaxHrs(DEFAULTMAXHRS);
       }
-      String classSize = rss.getString("class_size");
+      String classSize = rs.getString("class_size");
       if (!classSize.equals("")) { // has class size value set
         newCourse.setClassSize(Integer.parseInt(classSize));
       } else { //set default
         newCourse.setClassSize(DEFAULTCLASSSIZE);
       }
-
+      rs.close(); // close the reading of the db
+      prep.close(); // close the query
+      return newCourse;
     } catch (SQLException e) {
       return null;
-    } finally {
-      if (rss != null) {
-        rss.close();
-      }
-      if (preper != null) {
-        preper.close();
-      }
     }
-    return newCourse;
+  }
+
+  /**
+   * getConcentrationCourses gets the courses for the concentration in the sql database. It calls on
+   * the getCourseData for each course id in the concentration.
+   *
+   * @param tableName the concentrationName table name to search for
+   * @return a set of courses all populated with category and next populated
+   */
+  @Override
+  public Set<Node> getConcentrationCourses(String tableName) {
+    PreparedStatement prep;
+    try {
+      String strQuery = " SELECT * " + " FROM $tableName " + " ORDER BY category ASC ";
+      String query = strQuery.replace("$tableName", tableName);
+      prep = conn.prepareStatement(query);
+      ResultSet rs = prep.executeQuery();
+      Set<Node> courseSet = new HashSet<Node>();
+      while (rs.next()) {
+        Integer category = Integer.parseInt(rs.getString("category"));
+        String nextID = rs.getString("next");
+        String courseID = rs.getString("course_id");
+        Node tmp = this.getCourseData(courseID);
+        if (tmp == null) { // course is not offered anymore so don't add it
+          continue;
+        } else { // course is in our courses table and is offered
+          if (nextID.length() > 0) {
+            Node next = this.getCourseData(nextID);
+            next.setCategory(category);
+            tmp.setNext(next);
+            courseSet.add(next);
+          }
+          tmp.setCategory(category);
+          courseSet.add(tmp);
+        }
+      }
+      rs.close(); // close the reading of the db
+      prep.close(); // close the query
+      return courseSet;
+    } catch (SQLException e) {
+      return null;
+    }
   }
 
   /**
@@ -412,7 +446,7 @@ public class Database implements DatabaseInterface {
    * @param prereqs the string of courseID's
    * @return a list of prereqs course objects
    */
-  public List<Set<Node>> parsePrereqs(String prereqs) throws SQLException {
+  public List<Set<Node>> parsePrereqs(String prereqs) {
     String[] parsedLine = prereqs.split(","); //split on , (AND)
     List<Set<Node>> courseList = new ArrayList<>();
     for (String courseID : parsedLine) { //loop thru each required prereqs (AND)
@@ -478,7 +512,6 @@ public class Database implements DatabaseInterface {
       prep = conn.prepareStatement(query);
       ResultSet rs = prep.executeQuery();
       List<Integer> reqs = new ArrayList<>();
-      int n = rs.getFetchSize();
 
       while (rs.next()) {
         int category = Integer.parseInt(rs.getString("category"));
@@ -497,79 +530,6 @@ public class Database implements DatabaseInterface {
     }
   }
 
-  /**
-   * getConcentrationCourses gets the courses for the concentration in the sql database. It calls on
-   * the getCourseData for each course id in the concentration.
-   *
-   * @param tableName the concentrationName table name to search for
-   * @return a set of courses all populated with category and next populated
-   */
-  @Override
-  public Set<Node> getConcentrationCourses(String tableName) throws SQLException {
-    PreparedStatement prep = null;
-    ResultSet rs = null;
-    List<String> courseIds = new ArrayList<>();
-    List<String> courseNext = new ArrayList<>();
-    List<Integer> courseCats = new ArrayList<>();
-    Set<Node> courseSet = new HashSet<Node>();
-    try {
-      String strQuery = " SELECT * " + " FROM $tableName " + " ORDER BY category ASC ";
-      String query = strQuery.replace("$tableName", tableName);
-      prep = conn.prepareStatement(query);
-      rs = prep.executeQuery();
-      while (rs.next()) {
-        Integer category = Integer.parseInt(rs.getString("category"));
-        String nextID = rs.getString("next");
-        String courseID = rs.getString("course_id");
-        courseIds.add(courseID);
-        courseNext.add(nextID);
-        courseCats.add(category);
-      }
-        //Node tmp = getCourseData(courseID);
-        //if (tmp == null) { // course is not offered anymore so don't add it
-          //continue;
-        //} else { // course is in our courses table and is offered
-          //if (nextID.length() > 0) {
-            //Node next = this.getCourseData(nextID);
-            //next.setCategory(category);
-            //tmp.setNext(next);
-            //courseSet.add(next);
-          //}
-          //tmp.setCategory(category);
-          //courseSet.add(tmp);
-        //}
-      rs.close(); // close the reading of the db
-      prep.close(); // close the query
-    } catch (SQLException e) {
-      return null;
-    } finally {
-      if (rs != null) {
-        rs.close();
-      }
-      if (prep != null) {
-        prep.close();
-      }
-    }
-    for (int i = 0; i < courseIds.size(); i++) {
-      String courseID = courseIds.get(i);
-      String nextID = courseNext.get(i);
-      Integer category = courseCats.get(i);
-      Node tmp = getCourseData(courseID);
-      if (tmp == null) { // course is not offered anymore so don't add it
-        continue;
-      } else { // course is in our courses table and is offered
-        if (courseNext.get(i).length() > 0) {
-          Node next = this.getCourseData(nextID);
-          next.setCategory(category);
-          tmp.setNext(next);
-          courseSet.add(next);
-        }
-        tmp.setCategory(category);
-        courseSet.add(tmp);
-      }
-    }
-    return courseSet;
-  }
 
   /**
    * getConcentrations gets the concentrations in the sql database for use in the GUI.
@@ -640,8 +600,7 @@ public class Database implements DatabaseInterface {
     PreparedStatement prep = null;
     ResultSet rs = null;
     try {
-      prep = conn.prepareStatement("SELECT course_id "
-          + " FROM courses");
+      prep = conn.prepareStatement("SELECT course_id " + " FROM courses");
       rs = prep.executeQuery();
       while (rs.next()) {
         this.getCourseData(rs.getString("course_id"));
@@ -654,5 +613,4 @@ public class Database implements DatabaseInterface {
     }
 
   }
-
 }
