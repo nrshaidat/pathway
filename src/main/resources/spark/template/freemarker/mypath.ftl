@@ -3,6 +3,7 @@
     <meta charset="utf-8">
     <title>My Pathway:</title>
     <h1> Pathway
+
         <#list id as node>
         ${node}
         </#list>
@@ -41,7 +42,7 @@
          avoid minification for clarity. -->
 
     <link rel="shortcut icon" href="/logo/t.png"/>
-    <link rel="stylesheet" href="/css/pathway.css">
+    <link rel="stylesheet" href="/css/mypath.css">
   </head>
   <body>
 

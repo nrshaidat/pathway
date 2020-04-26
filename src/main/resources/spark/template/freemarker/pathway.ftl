@@ -2,7 +2,9 @@
 <head>
     <meta charset="utf-8">
     <title>Pathway</title>
-    <h1>Melissa's Pathways</h1>
+    <h1>My Pathways</h1>
+
+    <p>${header}</p>
 
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -115,21 +117,33 @@
 <#--    </a>-->
 <#--</div>-->
 
+<br>
+
+<#--placeholder-->
 <a href="mypath/1" class="link" name="pathway" id="pathway" value="one">
     <div id="container">
-        Pathway 1
+        <header> Pathway 1 </header>
+
+        <p> # Semesters: 6</p>
+        <p> Average Workload (hrs): 23.6 </p>
     </div>
 </a>
 
 <a href="mypath/2" class="link">
     <div id="container">
-        Pathway 2
+        <header> Pathway 2 </header>
+
+        <p> # Semesters: 6</p>
+        <p> Average Workload (hrs): 23.6 </p>
     </div>
 </a>
 
 <a href="mypath/3" class="link">
     <div id="container">
-        Pathway 3
+        <header> Pathway 3 </header>
+
+        <p> # Semesters: 6</p>
+        <p> Average Workload (hrs): 23.6 </p>
     </div>
 </a>
 

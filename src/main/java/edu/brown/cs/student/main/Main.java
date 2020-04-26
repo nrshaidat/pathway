@@ -141,24 +141,25 @@ public final class Main {
     public ModelAndView handle(Request req, Response res) throws SQLException {
       QueryParamsMap qm = req.queryMap();
       String concentration = qm.value("concentration");
-      //Have error checks if the user enters in the wrong type for any of the number fields
       String concentrationId = pathwayProgram.getConcentrationMap().get(qm.value("concentration"));
-      String semesterLevel = qm.value("semester");
-      Double workload = Double.parseDouble(qm.value("workload"));
-      String workloadLevel = "";
+      int semesterLevel = Integer.parseInt(qm.value("semester"));
+
+      //TODO: Currently not using user input workload
+//      Double workload = Double.parseDouble(qm.value("workload"));
+//      String workloadLevel = "";
       boolean aggressive = false;
       if (qm.value("aggressive") != null) {
         aggressive = true;
       }
 
-      if (workload > HIGH) {
-        workloadLevel = "hi";
-      } else if (workload < LOW) {
-        workloadLevel = "lo";
-      } else {
-        workloadLevel = "med";
-      }
-      pathwayProgram.makePathways(concentrationId, new HashSet<Node>(), 1, aggressive);
+//      if (workload > HIGH) {
+//        workloadLevel = "hi";
+//      } else if (workload < LOW) {
+//        workloadLevel = "lo";
+//      } else {
+//        workloadLevel = "med";
+//      }
+      pathwayProgram.makePathways(concentrationId, new HashSet<Node>(), semesterLevel, aggressive);
       String display = "Pathways generated for the concentration: " + concentration;
       pathwayPrinter(pathwayProgram.getPath1());
       pathwayPrinter(pathwayProgram.getPath2());
@@ -166,18 +167,14 @@ public final class Main {
       List<Object> concentrationList = new ArrayList<>();
       List<Object> titles = new ArrayList<>();
       titles.add("Pathway");
-      concentrationList.add(display);
+//      concentrationList.add(display);
       pathway1 = pathwayProgram.getPath1();
       pathway2 = pathwayProgram.getPath2();
       pathway3 = pathwayProgram.getPath3();
 
       Map<String, Object> variables = ImmutableMap
-              .of("content", concentrationList, "results1", "Pathway 1", "results2", "Pathway 2", "results3",
+              .of("header", display, "results1", "Pathway 1", "results2", "Pathway 2", "results3",
                       "Pathway 3");
-
-//      Map<String, List<? extends Object>> variables = ImmutableMap
-//          .of("content", concentrationList, "results1", result1, "results2", result2, "results3",
-//              result3);
       return new ModelAndView(variables, "pathway.ftl");
     }
   }
@@ -192,26 +189,19 @@ public final class Main {
       switch (num) {
         case 1:
           path = pathway1;
-//          path = pathwayProgram.getPath1();
           break;
         case 2:
           path = pathway2;
-//          path = pathwayProgram.getPath2();
           break;
         case 3:
           path = pathway3;
-//          path = pathwayProgram.getPath3();
           break;
         default:
           path = pathway1;
-//          path = pathwayProgram.getPath1();
           break;
       }
       List<String> pathnumlst = new ArrayList<>();
       pathnumlst.add(pathNum);
-      System.out.println("====================-=");
-      System.out.println(pathNum);
-      System.out.println("====================-=");
       Map<String, List<? extends Object>> variables =
           ImmutableMap.of("id", pathnumlst, "results", path);
       return new ModelAndView(variables, "mypath.ftl");

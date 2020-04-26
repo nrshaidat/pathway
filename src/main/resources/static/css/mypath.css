@@ -4,7 +4,7 @@ body {
     font-family: 'Lato', sans-serif;
     font-weight: 100;
     font-size: 16px;
-    margin-top: 100px;
+    margin-top: 75px;
 }
 
 #container {
@@ -23,17 +23,6 @@ header {
     font-size: 20px;
 }
 
-/*#results {*/
-/*    display: inline-block;*/
-/*    background-color: lightgray;*/
-/*    padding: 14px 20px;*/
-/*    margin: 8px 10px;*/
-/*    border: none;*/
-/*    cursor: pointer;*/
-/*    width: 20%;*/
-/*    height: 150px;*/
-/*    border-radius: 10px;*/
-/*}*/
 
 span.psw {
     float: right;
