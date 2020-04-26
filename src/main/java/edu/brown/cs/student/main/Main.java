@@ -34,6 +34,9 @@ public final class Main {
   private static final int HIGH = 40;
   private static final int LOW = 30;
   private static PathwayProgram pathwayProgram;
+  private static List<Semester> pathway1;
+  private static List<Semester> pathway2;
+  private static List<Semester> pathway3;
 
   /**
    * The initial method called when execution begins.
@@ -101,16 +104,7 @@ public final class Main {
   private static class LoginHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
-
-      //Implement some sort of uname/password check (put on hold to work on more important
-      //  stuff)
-//      QueryParamsMap qm = req.queryMap();
-//      System.out.println("=========================================");
-//      System.out.println(qm.hasKey("username"));
-//      System.out.println(qm.hasKey("uname"));
-//      System.out.println("=========================================");
       String status = "";
-
       Map<String, Object> variables =
           ImmutableMap.of("title", "Pathway", "loginStatus", status, "username", "");
       return new ModelAndView(variables, "main.ftl");
@@ -156,6 +150,7 @@ public final class Main {
       if (qm.value("aggressive") != null) {
         aggressive = true;
       }
+
       if (workload > HIGH) {
         workloadLevel = "hi";
       } else if (workload < LOW) {
@@ -172,12 +167,17 @@ public final class Main {
       List<Object> titles = new ArrayList<>();
       titles.add("Pathway");
       concentrationList.add(display);
-      List<Semester> result1 = pathwayProgram.getPath1();
-      List<Semester> result2 = pathwayProgram.getPath2();
-      List<Semester> result3 = pathwayProgram.getPath3();
-      Map<String, List<? extends Object>> variables = ImmutableMap
-          .of("content", concentrationList, "results1", result1, "results2", result2, "results3",
-              result3);
+      pathway1 = pathwayProgram.getPath1();
+      pathway2 = pathwayProgram.getPath2();
+      pathway3 = pathwayProgram.getPath3();
+
+      Map<String, Object> variables = ImmutableMap
+              .of("content", concentrationList, "results1", "Pathway 1", "results2", "Pathway 2", "results3",
+                      "Pathway 3");
+
+//      Map<String, List<? extends Object>> variables = ImmutableMap
+//          .of("content", concentrationList, "results1", result1, "results2", result2, "results3",
+//              result3);
       return new ModelAndView(variables, "pathway.ftl");
     }
   }
@@ -191,16 +191,20 @@ public final class Main {
       List<Semester> path;
       switch (num) {
         case 1:
-          path = pathwayProgram.getPath1();
+          path = pathway1;
+//          path = pathwayProgram.getPath1();
           break;
         case 2:
-          path = pathwayProgram.getPath2();
+          path = pathway2;
+//          path = pathwayProgram.getPath2();
           break;
         case 3:
-          path = pathwayProgram.getPath3();
+          path = pathway3;
+//          path = pathwayProgram.getPath3();
           break;
         default:
-          path = pathwayProgram.getPath1();
+          path = pathway1;
+//          path = pathwayProgram.getPath1();
           break;
       }
       List<String> pathnumlst = new ArrayList<>();

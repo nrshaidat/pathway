@@ -48,9 +48,6 @@
 
   <br>
 
-  <a href="/generate" class="link"> Generate another pathway </a>
-
-
   <!-- Again, we're serving up the unminified source for clarity. -->
      <script src="js/jquery-2.1.1.js"></script>
      <script src="js/main.js"></script>

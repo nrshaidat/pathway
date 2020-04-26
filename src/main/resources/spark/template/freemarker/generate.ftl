@@ -33,9 +33,9 @@
 
   </div>
 
-  <p> Enter Rising semester number: <input type="text" name="semester" value=""> </p>
+  <p> Enter Rising semester number: <input type="number" name="semester" value=""> </p>
 
-  <p> Enter Preferred workload hours: <input type="text" name="workload" value=""> </p>
+  <p> Enter Preferred workload hours: <input type="number" name="workload" value=""> </p>
 
   <p> Prefer Honors courses when possible: <input type="checkbox" name="aggressive" value="Aggressive"> </p>
 
