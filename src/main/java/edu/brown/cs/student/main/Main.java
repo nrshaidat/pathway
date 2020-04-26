@@ -175,9 +175,9 @@ public final class Main {
       List<Semester> result1 = pathwayProgram.getPath1();
       List<Semester> result2 = pathwayProgram.getPath2();
       List<Semester> result3 = pathwayProgram.getPath3();
-      Map<String, List<? extends Object>> variables =
-          ImmutableMap.of("title", titles, "content", concentrationList, "results1", result1,
-              "results2", result2, "results3", result3);
+      Map<String, List<? extends Object>> variables = ImmutableMap
+          .of("content", concentrationList, "results1", result1, "results2", result2, "results3",
+              result3);
       return new ModelAndView(variables, "pathway.ftl");
     }
   }
@@ -187,10 +187,29 @@ public final class Main {
     public ModelAndView handle(Request req, Response res) {
       QueryParamsMap qm = req.queryMap();
       String pathNum = req.params(":id");
+      Integer num = Integer.parseInt(pathNum);
+      List<Semester> path;
+      switch (num) {
+        case 1:
+          path = pathwayProgram.getPath1();
+          break;
+        case 2:
+          path = pathwayProgram.getPath2();
+          break;
+        case 3:
+          path = pathwayProgram.getPath3();
+          break;
+        default:
+          path = pathwayProgram.getPath1();
+          break;
+      }
+      List<String> pathnumlst = new ArrayList<>();
+      pathnumlst.add(pathNum);
       System.out.println("====================-=");
       System.out.println(pathNum);
       System.out.println("====================-=");
-      Map<String, Object> variables = ImmutableMap.of("title", "My Path", "id", pathNum);
+      Map<String, List<? extends Object>> variables =
+          ImmutableMap.of("id", pathnumlst, "results", path);
       return new ModelAndView(variables, "mypath.ftl");
 
     }
