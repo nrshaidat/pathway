@@ -4,6 +4,7 @@ import edu.brown.cs.student.pathway.Node;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -82,4 +83,13 @@ public interface DatabaseInterface {
    * @throws SQLException the sql exception
    */
   List<String> getAllCourseIDs() throws SQLException;
+
+  /**
+   * getConcentrationsMap gets the concentrations gui names mapped to their sql table names in the
+   * sql database for use in the GUI.
+   *
+   * @return a list of concentration names
+   * @throws SQLException the sql exception
+   */
+  Map<String, String> getConcentrationsMap() throws SQLException;
 }

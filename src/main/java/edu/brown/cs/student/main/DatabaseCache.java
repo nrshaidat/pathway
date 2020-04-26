@@ -6,6 +6,7 @@ import com.google.common.cache.LoadingCache;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import edu.brown.cs.student.pathway.Node;
 
@@ -186,6 +187,18 @@ public class DatabaseCache implements DatabaseInterface {
   @Override
   public List<String> getAllCourseIDs() throws SQLException {
     return realDB.getAllCourseIDs();
+  }
+
+  /**
+   * getConcentrationsMap gets the concentrations gui names mapped to their sql table names in the
+   * sql database for use in the GUI.
+   *
+   * @return a list of concentration names
+   * @throws SQLException the sql exception
+   */
+  @Override
+  public Map<String, String> getConcentrationsMap() throws SQLException {
+    return realDB.getConcentrationsMap();
   }
 
   /**

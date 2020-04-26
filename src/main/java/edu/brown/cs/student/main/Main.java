@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
-import java.util.*;
-
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import com.google.common.collect.ImmutableMap;
 import edu.brown.cs.student.pathway.Node;
-import edu.brown.cs.student.pathway.Pathway;
 import edu.brown.cs.student.pathway.Semester;
 import freemarker.template.Configuration;
 import joptsimple.OptionParser;
@@ -29,15 +29,17 @@ import spark.template.freemarker.FreeMarkerEngine;
 public final class Main {
 
   private static final int DEFAULT_PORT = 4567;
-  private static Database db;
+  private static final int HIGH = 40;
+  private static final int LOW = 30;
+  private static PathwayProgram pathwayProgram;
 
   /**
    * The initial method called when execution begins.
+   *
    * @param args An array of command line arguments
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws SQLException {
     new Main(args).run();
-    db = new Database("data/coursesDB.db");
   }
 
   private String[] args;
@@ -50,7 +52,7 @@ public final class Main {
   /**
    * Runs application on port. Launches gui if indicated. Starts the REPL.
    */
-  private void run() {
+  private void run() throws SQLException {
     // Parse command line arguments
     OptionParser parser = new OptionParser();
     parser.accepts("gui");
@@ -61,6 +63,7 @@ public final class Main {
     if (options.has("gui")) {
       runSparkServer((int) options.valueOf("port"));
     }
+    pathwayProgram = new PathwayProgram();
 
     // Process commands in a REPL
 
@@ -85,20 +88,21 @@ public final class Main {
     FreeMarkerEngine freeMarker = createEngine();
     // Setup Spark Routes
 
-    Spark.get("/login", new loginHandler(), freeMarker);
-    Spark.post("/generate", new myPathHandler(), freeMarker);
-    Spark.get("/faqs", new faqHandler(), freeMarker);
-    Spark.get("/signup", new signUpHandler(), freeMarker);
-    Spark.post("/mypath", new pathLandingHandler(), freeMarker);
-    Spark.get("/mypath/:id", new pathwayHandler(), freeMarker);
+    Spark.get("/login", new LoginHandler(), freeMarker);
+    Spark.post("/generate", new MyPathHandler(), freeMarker);
+    Spark.get("/faqs", new FaqHandler(), freeMarker);
+    Spark.get("/signup", new SignUpHandler(), freeMarker);
+    Spark.post("/mypath", new PathLandingHandler(), freeMarker);
+    Spark.get("/mypath/:id", new PathwayHandler(), freeMarker);
 
   }
 
-  private static class loginHandler implements TemplateViewRoute {
+  private static class LoginHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
 
-      //TODO: Implement some sort of uname/password check (put on hold to work on more important stuff)
+      // TODO: Implement some sort of uname/password check (put on hold to work on more important
+      //  stuff)
 //      QueryParamsMap qm = req.queryMap();
 //      System.out.println("=========================================");
 //      System.out.println(qm.hasKey("username"));
@@ -106,28 +110,28 @@ public final class Main {
 //      System.out.println("=========================================");
       String status = "";
 
-      Map<String, Object> variables = ImmutableMap.of("title", "Pathway", "loginStatus", status, "username", "");
+      Map<String, Object> variables =
+          ImmutableMap.of("title", "Pathway", "loginStatus", status, "username", "");
       return new ModelAndView(variables, "main.ftl");
     }
 
   }
 
-  private static class myPathHandler implements TemplateViewRoute {
+  private static class MyPathHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
 
-      List<String> concentrationList = db.getConcentrations();
+      List<String> concentrationList = pathwayProgram.getConcentrationsList();
 
-      Map<String, Object> variables = ImmutableMap.of("title", "Pathway",
-              "results", "", "courseList", concentrationList);
+      Map<String, Object> variables =
+          ImmutableMap.of("title", "Pathway", "results", "", "courseList", concentrationList);
       return new ModelAndView(variables, "generate.ftl");
     }
 
   }
 
 
-
-  private static class pathLandingHandler implements TemplateViewRoute {
+  private static class PathLandingHandler implements TemplateViewRoute {
 
     public void pathwayPrinter(List<Semester> path) {
       for (Semester list : path) {
@@ -144,80 +148,55 @@ public final class Main {
 
       QueryParamsMap qm = req.queryMap();
       String concentration = qm.value("concentration");
-      //TODO: Have error checks if the user enters in the wrong type for any of the number fields!!!
-
-      String concentration_id = db.getConcentrationID(qm.value("concentration"));
-      String semester_level = qm.value("semester");
+      // TODO: Have error checks if the user enters in the wrong type for any of the number fields
+      String concentrationId = pathwayProgram.getConcentrationMap().get(qm.value("concentration"));
+      String semesterLevel = qm.value("semester");
       Double workload = Double.parseDouble(qm.value("workload"));
       String workloadLevel = "";
       boolean aggressive = false;
-
       if (qm.value("aggressive") != null) {
         aggressive = true;
       }
-      if (workload > 40) {
+      if (workload > HIGH) {
         workloadLevel = "hi";
-      } else if (workload < 30) {
+      } else if (workload < LOW) {
         workloadLevel = "lo";
       } else {
         workloadLevel = "med";
       }
-
-      DatabaseCache cache = new DatabaseCache(new Database("data/coursesDB.db"));
-      List<Integer> reqsTmp = cache.getRequirements(concentration_id + "_rules");
-      int[] reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
-      Set<Node> courseSet = cache.getConcentrationCourses(concentration_id);
-      Pathway pathwayMaker = new Pathway(reqs, courseSet);
-      pathwayMaker.makePathway(new HashSet<Node>(), 1, aggressive, "med");
+      pathwayProgram.makePathway(concentrationId, new HashSet<Node>(), 1, aggressive, "med");
       System.out.println("Computational Biology Applied Math & Statistics Track B.S.");
       System.out.println("----");
-      this.pathwayPrinter(pathwayMaker.getPath());
-
+      this.pathwayPrinter(pathwayProgram.getPath());
       String display = "Pathways generated for the concentration: " + concentration;
-
-      Map<String, Object> variables = ImmutableMap.of("title", "Pathway",
-              "content", display);
+      Map<String, Object> variables = ImmutableMap.of("title", "Pathway", "content", display);
       return new ModelAndView(variables, "pathway.ftl");
     }
   }
 
-  /**
-   * List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
-   *     int[] reqs = reqsTmp.stream().mapToInt(i->i).toArray();
-   *
-   *     PathwayMaker pm = new PathwayMaker(tablename, reqs, new HashSet<>(), 1);
-   *     pm.makePathways();
-   */
-
-  private static class pathwayHandler implements TemplateViewRoute {
+  private static class PathwayHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
-
       QueryParamsMap qm = req.queryMap();
-
       String pathNum = req.params(":id");
-
       System.out.println("====================-=");
       System.out.println(pathNum);
       System.out.println("====================-=");
-
       Map<String, Object> variables = ImmutableMap.of("title", "My Path", "id", pathNum);
       return new ModelAndView(variables, "mypath.ftl");
 
     }
   }
 
-  private static class signUpHandler implements TemplateViewRoute {
+  private static class SignUpHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
-      Map<String, Object> variables = ImmutableMap.of("title", "Pathway Sign Up",
-              "results", "");
+      Map<String, Object> variables = ImmutableMap.of("title", "Pathway Sign Up", "results", "");
       return new ModelAndView(variables, "signup.ftl");
-
     }
   }
 
-  private static class faqHandler implements TemplateViewRoute {
+  private static class FaqHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
       Map<String, Object> variables = ImmutableMap.of("title", "Pathway FAQs", "results", "");

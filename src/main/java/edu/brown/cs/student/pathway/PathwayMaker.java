@@ -17,6 +17,7 @@ public class PathwayMaker {
   private int[] reqs;
   private Set<Node> coursesTaken;
   private int risingSemester;
+
   private class PathwayThread extends Thread {
     private DatabaseCache dbc;
     private int[] reqsClone;
@@ -34,13 +35,16 @@ public class PathwayMaker {
       this.aggressive = new Random().nextBoolean();
       this.pathway = new Pathway(reqsClone, courseSetClone);
     }
+
     @Override
     public void run() {
       pathway.makePathway(coursesTakenClone, risingSemester, aggressive, workload);
     }
+
     public void printPathway() {
-      System.out.println("Concentration: " + concentrationName + ", Workload: " + this.workload
-          + ", aggressive: " + this.aggressive);
+      System.out.println(
+          "Concentration: " + concentrationName + ", Workload: " + this.workload + ", aggressive: "
+              + this.aggressive);
       System.out.println("---------");
       List<Semester> path = pathway.getPath();
       for (Semester list : path) {
@@ -55,12 +59,13 @@ public class PathwayMaker {
 
     /**
      * A method that deep copies a set of nodes by iterating through and copying each node.
+     *
      * @param s A set of nodes
      * @return A deep copy of s
      */
     private Set<Node> copySet(Set<Node> s) {
       Set<Node> cp = new HashSet<>();
-      for (Node n: s) {
+      for (Node n : s) {
         cp.add(copyNode(n));
       }
       return cp;
@@ -68,6 +73,7 @@ public class PathwayMaker {
 
     /**
      * A method that deep copies a course node by retrieving its course id / data again from db.
+     *
      * @param n A node
      * @return A deep copy of n
      */

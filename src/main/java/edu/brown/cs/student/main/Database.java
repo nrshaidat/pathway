@@ -3,6 +3,7 @@ package edu.brown.cs.student.main;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.io.File;
@@ -11,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Map;
 import java.util.Set;
 
 import edu.brown.cs.student.pathway.Node;
@@ -578,6 +580,39 @@ public class Database implements DatabaseInterface {
     return reqs;
   }
 
+  /**
+   * getConcentrationsMap gets the concentrations gui names mapped to their sql table names in the
+   * sql database for use in the GUI.
+   *
+   * @return a list of concentration names
+   * @throws SQLException the sql exception
+   */
+  @Override
+  public Map<String, String> getConcentrationsMap() throws SQLException {
+    PreparedStatement prep = null;
+    ResultSet rs = null;
+    Map<String, String> concentrationMap = new HashMap<>();
+    try {
+      prep = conn.prepareStatement("SELECT * " + " FROM concentrations "
+          + " ORDER BY concentration_name ASC ");
+      rs = prep.executeQuery();
+      while (rs.next()) {
+        concentrationMap.put(rs.getString("concentration_name"), rs.getString("concentration_id"));
+      }
+    } catch (SQLException e) {
+      return null;
+    } finally {
+      if (rs != null) {
+        rs.close();
+      }
+      if (prep != null) {
+        prep.close();
+      }
+    }
+
+    return concentrationMap;
+
+  }
 
   /**
    * getConcentrations gets the concentrations in the sql database for use in the GUI.
