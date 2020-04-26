@@ -102,7 +102,7 @@ public final class Main {
     @Override
     public ModelAndView handle(Request req, Response res) {
 
-      // TODO: Implement some sort of uname/password check (put on hold to work on more important
+      //Implement some sort of uname/password check (put on hold to work on more important
       //  stuff)
 //      QueryParamsMap qm = req.queryMap();
 //      System.out.println("=========================================");
@@ -147,7 +147,7 @@ public final class Main {
     public ModelAndView handle(Request req, Response res) throws SQLException {
       QueryParamsMap qm = req.queryMap();
       String concentration = qm.value("concentration");
-      // TODO: Have error checks if the user enters in the wrong type for any of the number fields
+      //Have error checks if the user enters in the wrong type for any of the number fields
       String concentrationId = pathwayProgram.getConcentrationMap().get(qm.value("concentration"));
       String semesterLevel = qm.value("semester");
       Double workload = Double.parseDouble(qm.value("workload"));
@@ -163,7 +163,7 @@ public final class Main {
       } else {
         workloadLevel = "med";
       }
-      pathwayProgram.makePathway(concentrationId, new HashSet<Node>(), 1, aggressive);
+      pathwayProgram.makePathways(concentrationId, new HashSet<Node>(), 1, aggressive);
       String display = "Pathways generated for the concentration: " + concentration;
       pathwayPrinter(pathwayProgram.getPath1());
       pathwayPrinter(pathwayProgram.getPath2());

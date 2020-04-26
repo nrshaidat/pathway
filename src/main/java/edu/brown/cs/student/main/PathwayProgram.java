@@ -21,6 +21,10 @@ public class PathwayProgram {
   private List<Semester> path1;
   private List<Semester> path2;
   private List<Semester> path3;
+  private int[] reqs;
+  private Set<Node> courseSet;
+  private String concentration;
+  private int risingSem;
 
   /**
    * PathwayProgram constructor.
@@ -52,21 +56,25 @@ public class PathwayProgram {
     return concentrationMap;
   }
 
-  public void makePathway(String concentration, Set<Node> taken, int risingSem,
-                                   boolean aggressive) throws SQLException {
+  public void makePathways(String con, Set<Node> taken, int sem, boolean aggressive)
+      throws SQLException {
+    concentration = con;
+    risingSem = sem;
     List<Integer> reqsTmp = cache.getRequirements(concentration + "_rules");
-    int[] reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
-    Set<Node> courseSet = cache.getConcentrationCourses(concentration);
+    reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
+    courseSet = cache.getConcentrationCourses(concentration);
     PathwayMaker pm = new PathwayMaker(concentration, reqs, new HashSet<Node>(), risingSem);
-    //Pathway pathway1 = new Pathway(reqs, courseSet);
-    //pathway1.makePathway(new HashSet<Node>(), risingSem, aggressive, "lo");
     path1 = pm.getPath1();
-    //Pathway pathway2 = new Pathway(reqs, courseSet);
-    //pathway2.makePathway(new HashSet<Node>(), risingSem, aggressive, "med");
     path2 = pm.getPath2();
-    //Pathway pathway3 = new Pathway(reqs, courseSet);
-    //pathway3.makePathway(new HashSet<Node>(), risingSem, aggressive, "hi");
     path3 = pm.getPath3();
+  }
+
+  public void makeNewPathway() {
+    PathwayMaker pm = new PathwayMaker(concentration, reqs, new HashSet<Node>(), risingSem);
+    path1 = pm.getPath1();
+    path2 = pm.getPath2();
+    path3 = pm.getPath3();
+
   }
 
   public List<String> getConcentrationsList() {
