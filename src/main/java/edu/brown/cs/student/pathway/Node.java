@@ -7,13 +7,10 @@ import java.util.Set;
 import java.util.HashSet;
 
 /**
- * The Node class represents a course that 1) fulfills a concentration requirement or 2)
- * satisfies a prerequisite for
- * a course that fulfills a concentration requierement and 3) is still offered at Brown and has
- * data on CAB. The
- * database class is the only class that instantiates a node object and initializes all it's
- * values for the pathway class
- * and GUI.
+ * The Node Class represents a course that 1) fulfills a concentration requirement or
+ * 2) satisfies a prerequisite for a course that fulfills a concentration requirement and
+ * 3) is still offered at Brown and has data on CAB. The Database is the only class
+ * that instantiates Node and populates its attributes for the Pathway class and GUI.
  */
 public class Node {
   private String id;
@@ -22,7 +19,7 @@ public class Node {
   private String professor;
   private List<Set<Node>> prereqs;
   private Node next;
-  private String nextID; //used SOLELY for the cache database to get the info from the result set
+  private String nextID; // used only for the cache to get the info from the result set
   private Set<Integer> semestersOffered;
   private double avgHrs;
   private double maxHrs;
@@ -30,7 +27,18 @@ public class Node {
   private int classSize;
 
   /**
-   * Note: this constructor should be removed later on.
+   * Instantiates a new Node.
+   *
+   * @param courseID the course ID w/o its course name
+   */
+  public Node(String courseID) {
+    id = courseID;
+    prereqs = new ArrayList<Set<Node>>();
+    semestersOffered = new HashSet<Integer>();
+  }
+
+  /**
+   * This constructor is only for the brute force tests.
    *
    * @param courseID       course id
    * @param courseCategory course category
@@ -43,25 +51,11 @@ public class Node {
   }
 
   /**
-   * Instantiates a new Node.
-   *
-   * @param courseID the course ID w/out its course name so just the department code space and
-   *                 the course number
-   */
-  public Node(String courseID) {
-    id = courseID;
-    prereqs = new ArrayList<Set<Node>>();
-    semestersOffered = new HashSet<Integer>();
-  }
-
-  /**
-   * Instantiates a new Node and meant to be used EXCLUSIVELY in the database to store the values
-   * returned from the result set in getConcentrationCourses in the database class, so the cache
+   * Instantiates a new Node. Meant to be used only in the database to store the values
+   * returned from the resultSet in getConcentrationCourses in the Database class, so the cache
    * can use that information and the course data in the cache to make new nodes with all the
    * concentration specific info. This was needed to avoid having multiple result sets open at
-   * the same time. None of the arrays and hashmaps are initialized here because I don't actually
-   * end up using this an actual node, it is merely for the cache to know what was in the result
-   * set called in the database.
+   * the same time.
    *
    * @param courseID the course ID w/out its course name so just the department code space and
    *                 the course number
@@ -187,8 +181,7 @@ public class Node {
 
   /**
    * removePrereq removes a prereq set when a student has fulfilled that section of the prereqs
-   * .This is
-   * used in the pathway class.
+   * .This is used in the Pathway class.
    *
    * @param prereqSet the prereq set to remove
    */

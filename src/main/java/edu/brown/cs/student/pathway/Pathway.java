@@ -42,9 +42,9 @@ public class Pathway {
   }
 
   /**
-   * Generates valid Pathway that satisfies concentration requirements
-   * that best fits inputted preferences, with a bit of randomness
-   * (to provide variety as opposed to a one-size-fits-all)
+   * Generates a valid pathway that satisfies concentration requirements
+   * and best fits inputted preferences, with a bit of randomness
+   * to provide variety as opposed to a one-size-fits-all pathway.
    * @param coursesTaken courses already taken by student
    * @param risingSemester rising semester
    * @param aggressive pacing preference: fast or chilled
@@ -52,9 +52,9 @@ public class Pathway {
    */
   public void makePathway(Set<Node> coursesTaken, int risingSemester, boolean aggressive, String workload) {
     currSemester = risingSemester;
-    Set<Node> nextSet = new HashSet<>(); // used to handle sequences
+    Set<Node> nextSet = new HashSet<>();
 
-    // Update requirements and taken with courses taken
+    // Update requirements, taken and nextSet with coursesTaken
     for (Node course : coursesTaken) {
       int category = course.getCategory();
       if (requirements[category] == 0) {
@@ -70,14 +70,17 @@ public class Pathway {
 
     // While we have requirements left
     while (this.requirementsLeft()) {
-      if (currSemester > 1.5 * SEMESTER_COUNT) { // case to catch db errors
-        System.out.println("Invalid Pathway - 50% longer than intended. Please try again.");
+      // Case to catch db errors (bad prereqs, cycles, etc.)
+      if (currSemester > 1.5 * SEMESTER_COUNT) {
+        System.out.println("Invalid Pathway - 50% longer than intended.");
         break;
       }
+
       List<Node> thisSemester = new ArrayList<>();
+      // Get courses available this semester (sources in the DAG)
       Set<Node> sources = this.getAvailableCourses();
 
-      // Take "next" courses if available
+      // Take "next" courses (second leg of a sequence) if available
       Set<Node> toRemove = new HashSet<>();
       for (Node next : nextSet) {
         if (sources.contains(next)) {
@@ -102,22 +105,22 @@ public class Pathway {
       int[] coursesToTake =
           this.numCoursesToTake(coursesByCat, SEMESTER_SIZE - thisSemester.size(), aggressive);
 
-      double thisSemAvgHours = 0.0;
+      // For each category, take calculated number of courses
       for (int i = 0; i < numCategories; i++) {
         if (coursesToTake[i] == 0) {
           continue;
         }
 
-        int numCourses = coursesToTake[i];
-        requirements[i] -= numCourses;
+        // Update requirements
+        requirements[i] -= coursesToTake[i];
         List<Node> catCourses = coursesByCat[i];
         // Weighted shuffle the courses
         Node[] shuffledCatCourses = this.prioritizeAndWeightedShuffle(catCourses);
-        // Sort courses by avgHrs ascending order
+        // Sort courses by avgHrs, ascending order
         Collections.sort(catCourses, Comparator.comparingDouble(Node::getAvgHrs));
         // Choose courses to take
         this.chooseCourses(catCourses, shuffledCatCourses, nextSet, thisSemester,
-            workload, numCourses);
+            workload, coursesToTake[i]);
       }
       Semester semester = new Semester(currSemester, thisSemester);
       path.add(semester);
@@ -126,28 +129,27 @@ public class Pathway {
   }
 
   /**
-   * Returns boolean telling us if we have requirements left or not
+   * Returns boolean telling us if we have requirements left or not.
    * @return boolean representing whether we have reqs left or not
    */
   private boolean requirementsLeft() {
-    return !(Arrays.stream(requirements).
-        reduce(0, Integer::sum) == 0);
+    return !(Arrays.stream(requirements).reduce(0, Integer::sum) == 0);
   }
 
   /**
-   * Returns available courses this semester
+   * Returns available courses this semester.
    * @return set of available courses
    */
   private Set<Node> getAvailableCourses() {
     Set<Node> sources = new HashSet<>();
     int sem = currSemester % 2;
     for (Node course : courses) {
-      // continue if course is not offered this semester or we've taken the course
+      // Continue if course is not offered this semester or we've taken the course
       if (!course.getSemestersOffered().contains(sem) || taken.contains(course.getId())) {
         continue;
       }
 
-      // remove incoming edges from node
+      // Remove incoming edges from node
       Set<Set<Node>> satisfied = new HashSet<>();
       for (Set<Node> s : course.getPrereqs()) {
         for (Node c : s) {
@@ -157,10 +159,10 @@ public class Pathway {
           }
         }
       }
-
       for (Set<Node> s : satisfied) {
         course.removePrereq(s);
       }
+      // Add to sources if all prereqs are satisfied
       if (course.getPrereqs().size() == 0) {
         sources.add(course);
       }
@@ -186,11 +188,13 @@ public class Pathway {
   private void chooseCourses(List<Node> catCourses, Node[] shuffledCatCourses,
                              Set<Node> nextSet, List<Node> thisSemester,
                              String workload, int numCourses) {
-    double thisSemAvgHours = 0.0;
+    double thisSemAvgHours = 0.0; // workload this semester
+    // Take numCourses courses
     for (int j = 0; j < numCourses; j++) {
+      // If we are nearing the upper endpoint of our desired workload, switch
+      // selection from better rated courses to lower workload courses
       if (thisSemAvgHours > (workloads.get(workload).upperEndpoint() - 7.0)) {
-        int numLeft = numCourses - j;
-        for (int k = 0; k < numLeft; k++) {
+        for (int k = 0; k < numCourses - j; k++) {
           thisSemester.add(catCourses.get(k));
           taken.add(catCourses.get(k).getId());
           thisSemAvgHours += catCourses.get(k).getAvgHrs();
@@ -201,6 +205,8 @@ public class Pathway {
         }
         break;
       }
+      // Add course to thisSemester and taken, update average hours
+      // and put "next" course in nextSet, if there exists one
       thisSemester.add(shuffledCatCourses[j]);
       taken.add(shuffledCatCourses[j].getId());
       thisSemAvgHours += shuffledCatCourses[j].getAvgHrs();
@@ -231,9 +237,10 @@ public class Pathway {
       return res;
     }
 
-    // Finding how many courses are available per category
+    // tells us how many requirement fulfilling courses lie ahead of this category -
+    // helps us effectively take courses from different categories
     int[] reqsAhead = new int[numCategories];
-    int[] numCoursesPerCat = new int[numCategories];
+    int[] numCoursesPerCat = new int[numCategories]; // how many courses are available per category
     int count = 0;
     for (int i = numCategories - 1; i >= 0; i--) {
       int size = coursesByCat[i].size();
@@ -248,21 +255,24 @@ public class Pathway {
       reqsFracAvg += ((double) (initialRequirements[i] - requirements[i])) / initialRequirements[i];
     }
     reqsFracAvg /= numCategories;
-    double maxFrac = 0.625;
+    double maxFrac = 0.625; // by default, requirements take 62.5% of our schedule
+    // lag tells us if we are ahead or behind on our requirements, relative to semester level
     double lag = semFrac - reqsFracAvg;
-    if (aggressive) {
+    if (aggressive) { // if agressive, we fake being behind so that we take more courses earlier on
       lag += (2.0 / SEMESTER_COUNT);
     }
-    if (lag <= (-1.0 / SEMESTER_COUNT)) { // ahead by 2 semesters
+    if (lag <= (-1.0 / SEMESTER_COUNT)) { // ahead by 2 semesters, reduce maxFrac
       maxFrac -= (1.0 / SEMESTER_SIZE);
-    } else if (lag > (1.0 / SEMESTER_COUNT)) { // behind
+    } else if (lag > (1.0 / SEMESTER_COUNT)) { // behind, increase maxFrac
       maxFrac += (1.0 / SEMESTER_SIZE);
     }
 
+    // Math.ceil(maxFrac * max) is ideally how many courses we take; we Math.min with
+    // count to ensure that we can't take more courses than are currently offered
     int numCourses = Math.min((int) Math.ceil(maxFrac * max), count);
 
     for (int i = 0; i < numCategories; i++) {
-      if (numCourses == 0) {
+      if (numCourses == 0) { // no more room, break
         break;
       }
       if (numCoursesPerCat[i] == 0 || requirements[i] == 0) { // if no available courses or finished req
@@ -273,14 +283,14 @@ public class Pathway {
         res[i] = 1;
         numCourses -= 1;
       } else {
-        if (reqsAhead[i] >= numCourses) {
+        if (reqsAhead[i] >= numCourses) { // if there are a lot more reqs ahead, only take 1 course
           res[i] = 1;
           numCourses -= 1;
-        } else if (reqsAhead[i] > 0) {
+        } else if (reqsAhead[i] > 0) { // if not many reqs ahead, take as many courses as we need save 1
           int taking = Math.min(numCourses - 1, numCoursesPerCat[i]);
           res[i] = taking;
           numCourses -= taking;
-        } else {
+        } else { // if no reqs ahead, take as many as we need
           int taking = Math.min(numCourses, numCoursesPerCat[i]);
           res[i] = taking;
           numCourses -= taking;
@@ -327,14 +337,17 @@ public class Pathway {
       running.add(acc);
     }
 
+    // Fast Weighted Shuffle
     for (int i = 0; i < size; i++) {
+      // Generate random number and find where that number falls in running using binary search
       double target = Math.random() * running.get(running.size() - 1);
-      int index = Collections.binarySearch(running, target);
+      int index = Collections.binarySearch(running, target); // log n
       if (index < 0) {
         index *= -1;
         index--;
       }
       shuffledCatCourses[i] = catCourses.get(index);
+      // Update running so that we can never choose the same course twice
       for (int k = index; k < running.size(); k++) {
         running.set(k, running.get(k) - weights.get(index));
       }
