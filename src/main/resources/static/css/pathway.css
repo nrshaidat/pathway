@@ -7,7 +7,7 @@ body {
     margin-top: 100px;
 }
 
-#container {
+#results {
     display: inline-block;
     background-color: lightgray;
     padding: 14px 20px;

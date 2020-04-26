@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+
 import com.google.common.collect.ImmutableMap;
 import edu.brown.cs.student.pathway.Node;
 import edu.brown.cs.student.pathway.Semester;
@@ -87,7 +89,6 @@ public final class Main {
     Spark.exception(Exception.class, new ExceptionPrinter());
     FreeMarkerEngine freeMarker = createEngine();
     // Setup Spark Routes
-
     Spark.get("/login", new LoginHandler(), freeMarker);
     Spark.post("/generate", new MyPathHandler(), freeMarker);
     Spark.get("/faqs", new FaqHandler(), freeMarker);
@@ -130,12 +131,11 @@ public final class Main {
 
   }
 
-
   private static class PathLandingHandler implements TemplateViewRoute {
 
     public void pathwayPrinter(List<Semester> path) {
       for (Semester list : path) {
-        System.out.println("Semester: " + list.getSemester());
+        System.out.println("Semester: " + list.getSemnumber());
         for (Node course : list.getCourses()) {
           System.out.println(course.getId() + ": " + course.getName());
         }
@@ -145,7 +145,6 @@ public final class Main {
 
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
-
       QueryParamsMap qm = req.queryMap();
       String concentration = qm.value("concentration");
       // TODO: Have error checks if the user enters in the wrong type for any of the number fields
@@ -164,12 +163,21 @@ public final class Main {
       } else {
         workloadLevel = "med";
       }
-      pathwayProgram.makePathway(concentrationId, new HashSet<Node>(), 1, aggressive, "med");
-      System.out.println("Computational Biology Applied Math & Statistics Track B.S.");
-      System.out.println("----");
-      this.pathwayPrinter(pathwayProgram.getPath());
+      pathwayProgram.makePathway(concentrationId, new HashSet<Node>(), 1, aggressive);
       String display = "Pathways generated for the concentration: " + concentration;
-      Map<String, Object> variables = ImmutableMap.of("title", "Pathway", "content", display);
+      pathwayPrinter(pathwayProgram.getPath1());
+      pathwayPrinter(pathwayProgram.getPath2());
+      pathwayPrinter(pathwayProgram.getPath3());
+      List<Object> concentrationList = new ArrayList<>();
+      List<Object> titles = new ArrayList<>();
+      titles.add("Pathway");
+      concentrationList.add(display);
+      List<Semester> result1 = pathwayProgram.getPath1();
+      List<Semester> result2 = pathwayProgram.getPath2();
+      List<Semester> result3 = pathwayProgram.getPath3();
+      Map<String, List<? extends Object>> variables =
+          ImmutableMap.of("title", titles, "content", concentrationList, "results1", result1,
+              "results2", result2, "results3", result3);
       return new ModelAndView(variables, "pathway.ftl");
     }
   }

@@ -22,7 +22,7 @@ public class PathwayWithDatabaseTest {
 
   public void pathwayPrinter(List<Semester> path) {
     for (Semester list : path) {
-      System.out.println("Semester: " + list.getSemester());
+      System.out.println("Semester: " + list.getSemnumber());
       for (Node course : list.getCourses()) {
         System.out.println(course.getId() + ": " + course.getName());
       }

@@ -48,7 +48,7 @@ public class PathwayMaker {
       System.out.println("---------");
       List<Semester> path = pathway.getPath();
       for (Semester list : path) {
-        System.out.println("Semester: " + list.getSemester());
+        System.out.println("Semester: " + list.getSemnumber());
         for (Node course : list.getCourses()) {
           System.out.println(course.getId() + ": " + course.getCategory());
           //System.out.println(course.getId() + ": " + course.getName());
