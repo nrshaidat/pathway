@@ -25,60 +25,62 @@ public class REPL {
    */
   public REPL(Map<String, Command> commandManager, String regEx) {
     manager = commandManager;
-    regex = regEx;
+//    regex = regEx;
   }
+
+
 
   /**
    * Start the REPL loop.
    */
-  public void startLoop() {
-    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    System.out.print("");
-    try {
-      String command = null;
-      // While not EOF
-      while ((command = reader.readLine()) != null) {
-        // Check if command is just whitespace
-        if (command.isEmpty() || command.equals("\r") || command.equals("\n")
-            || command.equals("\r\n")) {
-          continue;
-        }
-
-        List<String> commandArgs = this.doRegex(command);
-
-        // Exit command
-        if (commandArgs.get(0).equals("exit")) {
-          System.out.println("Exiting REPL...");
-          break;
-        }
-
-        // Show list of commands
-        if (commandArgs.get(0).equals("commands")) {
-          System.out.println("Available commands:");
-          for (String name : manager.keySet()) {
-            System.out.println(name);
-          }
-          continue;
-        }
-
-        // Execute if valid command, else ERROR:
-        if (manager.containsKey(commandArgs.get(0))) {
-          List<String> args = commandArgs.subList(1, commandArgs.size());
-          String[] out = manager.get(commandArgs.get(0)).execute(args);
-          for (String str: out) {
-            System.out.println(str);
-          }
-        } else {
-          System.out.println("ERROR: " + "Unsupported command. "
-              + "Run 'commands' to get list of commands.");
-        }
-        System.out.print("");
-      }
-      reader.close();
-    } catch (IOException e) {
-      System.out.println("ERROR: IOException thrown.");
-    }
-  }
+//  public void startLoop() {
+//    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+//    System.out.print("");
+//    try {
+//      String command = null;
+//      // While not EOF
+//      while ((command = reader.readLine()) != null) {
+//        // Check if command is just whitespace
+//        if (command.isEmpty() || command.equals("\r") || command.equals("\n")
+//            || command.equals("\r\n")) {
+//          continue;
+//        }
+//
+//        List<String> commandArgs = this.doRegex(command);
+//
+//        // Exit command
+//        if (commandArgs.get(0).equals("exit")) {
+//          System.out.println("Exiting REPL...");
+//          break;
+//        }
+//
+//        // Show list of commands
+//        if (commandArgs.get(0).equals("commands")) {
+//          System.out.println("Available commands:");
+//          for (String name : manager.keySet()) {
+//            System.out.println(name);
+//          }
+//          continue;
+//        }
+//
+//        // Execute if valid command, else ERROR:
+//        if (manager.containsKey(commandArgs.get(0))) {
+//          List<String> args = commandArgs.subList(1, commandArgs.size());
+//          String[] out = manager.get(commandArgs.get(0)).execute(args);
+//          for (String str: out) {
+//            System.out.println(str);
+//          }
+//        } else {
+//          System.out.println("ERROR: " + "Unsupported command. "
+//              + "Run 'commands' to get list of commands.");
+//        }
+//        System.out.print("");
+//      }
+//      reader.close();
+//    } catch (IOException e) {
+//      System.out.println("ERROR: IOException thrown.");
+//    }
+//  }
 
   /**
    * Split string according to regex.

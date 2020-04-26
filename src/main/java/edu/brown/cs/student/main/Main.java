@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.*;
 
 import com.google.common.collect.ImmutableMap;
+import edu.brown.cs.student.pathway.Node;
+import edu.brown.cs.student.pathway.Pathway;
+import edu.brown.cs.student.pathway.Semester;
 import freemarker.template.Configuration;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -122,23 +125,53 @@ public final class Main {
 
   }
 
+
+
   private static class pathLandingHandler implements TemplateViewRoute {
+
+    public void pathwayPrinter(List<Semester> path) {
+      for (Semester list : path) {
+        System.out.println("Semester: " + list.getSemester());
+        for (Node course : list.getCourses()) {
+          System.out.println(course.getId() + ": " + course.getName());
+        }
+        System.out.println();
+      }
+    }
+
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
 
       QueryParamsMap qm = req.queryMap();
+      String concentration = qm.value("concentration");
+      //TODO: Have error checks if the user enters in the wrong type for any of the number fields!!!
 
       String concentration_id = db.getConcentrationID(qm.value("concentration"));
-      String concentration = qm.value("concentration");
       String semester_level = qm.value("semester");
-      String workload = qm.value("workload");
-      String aggressive;
+      Double workload = Double.parseDouble(qm.value("workload"));
+      String workloadLevel = "";
+      boolean aggressive = false;
 
       if (qm.value("aggressive") != null) {
-        aggressive = "aggressive";
-      } else {
-        aggressive = "normal";
+        aggressive = true;
       }
+      if (workload > 40) {
+        workloadLevel = "hi";
+      } else if (workload < 30) {
+        workloadLevel = "lo";
+      } else {
+        workloadLevel = "med";
+      }
+
+      DatabaseCache cache = new DatabaseCache(new Database("data/coursesDB.db"));
+      List<Integer> reqsTmp = cache.getRequirements(concentration_id + "_rules");
+      int[] reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
+      Set<Node> courseSet = cache.getConcentrationCourses(concentration_id);
+      Pathway pathwayMaker = new Pathway(reqs, courseSet);
+      pathwayMaker.makePathway(new HashSet<Node>(), 1, aggressive, "med");
+      System.out.println("Computational Biology Applied Math & Statistics Track B.S.");
+      System.out.println("----");
+      this.pathwayPrinter(pathwayMaker.getPath());
 
       String display = "Pathways generated for the concentration: " + concentration;
 
@@ -147,6 +180,14 @@ public final class Main {
       return new ModelAndView(variables, "pathway.ftl");
     }
   }
+
+  /**
+   * List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
+   *     int[] reqs = reqsTmp.stream().mapToInt(i->i).toArray();
+   *
+   *     PathwayMaker pm = new PathwayMaker(tablename, reqs, new HashSet<>(), 1);
+   *     pm.makePathways();
+   */
 
   private static class pathwayHandler implements TemplateViewRoute {
     @Override
