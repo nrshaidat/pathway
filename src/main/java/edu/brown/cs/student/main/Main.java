@@ -117,9 +117,18 @@ public final class Main {
     public ModelAndView handle(Request req, Response res) throws SQLException {
 
       List<String> concentrationList = pathwayProgram.getConcentrationsList();
+      List<String> courseList = new ArrayList<>();
+      courseList.add("ECON 0110");
+      courseList.add("MATH 0100");
+      courseList.add("ECON 0110");
+      courseList.add("MATH 0100");
+      courseList.add("ECON 0110");
+      courseList.add("MATH 0100");
+      courseList.add("ECON 0110");
+      courseList.add("MATH 0100");
 
       Map<String, Object> variables =
-          ImmutableMap.of("title", "Pathway", "results", "", "courseList", concentrationList);
+          ImmutableMap.of("title", "Pathway", "results", "", "concentrationList", concentrationList, "courseList", courseList);
       return new ModelAndView(variables, "generate.ftl");
     }
 

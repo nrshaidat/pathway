@@ -11,8 +11,10 @@
          avoid minification for clarity. -->
 
     <link rel="shortcut icon" href="/logo/t.png"/>
-  <link rel="stylesheet" href="/css/generate.css">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+
+  <link rel="stylesheet" href="/css/generate.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
   </head>
@@ -29,36 +31,41 @@
     <p> Choose a concentration: </p>
 
     <div class="ui container">
-      <select name="gender" id="gender-select" class = "ui selection dropdown">
-        <#list courseList as item>
+      <select name="gender" id="concentration-select" class = "ui selection dropdown">
+        <#list concentrationList as item>
           <option value="${item}">${item}</option>
         </#list>
       </select>
     </div>
     <script>
-      $('#gender-select').dropdown();
+      $('#concentration-select').dropdown();
     </script>
 
     <br>
-    <br>
 
   <p> Enter Rising semester number: </p>
-  <div class="ui right labeled input">
-    <input type="number" name="semester" value="">
-  </div>
+    <div class="ui input focus">
+      <input type="number" placeholder="Enter semester...">
+    </div>
 
     <br>
-  <p> Enter Preferred workload hours: </p>
-  <div class="ui right labeled input">
-    <input type="number" name="workload" value="">
-  </div>
-
     <br>
 
-  <div class="ui checkbox">
-    <input type="checkbox" name="example">
-    <label> Prefer aggressive pathways </label>
-  </div>
+    <p> Enter workload preferences: </p>
+    <div class="ui right labeled input">
+      <input type="number" placeholder="Enter workload">
+      <div class="ui basic label">
+        hours
+      </div>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="ui checkbox">
+      <input id="aggressive" type="checkbox">
+      <label for="aggressive"> Prefer Aggressive Pathways </label>
+    </div>
 
     <br>
 
@@ -68,90 +75,31 @@
   <p><note> (e.g. A comma-separated list like: ECON 0110, MATH 0100, APMA 350)</note> </p>
 
 
-  <textarea name="comments" rows="4" maxlength="200" cols="60"></textarea>
 
+<#--  <textarea name="comments" rows="4" maxlength="200" cols="60"></textarea>-->
 
-
-
-<#--    <select class="ui fluid search dropdown" multiple="">-->
-<#--      <option value="">State</option>-->
-<#--      <option value="AL">Alabama</option>-->
-<#--      <option value="AK">Alaska</option>-->
-<#--      <option value="AZ">Arizona</option>-->
-<#--      <option value="AR">Arkansas</option>-->
-<#--      <option value="CA">California</option>-->
-<#--      <option value="CO">Colorado</option>-->
-<#--      <option value="CT">Connecticut</option>-->
-<#--      <option value="DE">Delaware</option>-->
-<#--      <option value="DC">District Of Columbia</option>-->
-<#--      <option value="FL">Florida</option>-->
-<#--      <option value="GA">Georgia</option>-->
-<#--      <option value="HI">Hawaii</option>-->
-<#--      <option value="ID">Idaho</option>-->
-<#--      <option value="IL">Illinois</option>-->
-<#--      <option value="IN">Indiana</option>-->
-<#--      <option value="IA">Iowa</option>-->
-<#--      <option value="KS">Kansas</option>-->
-<#--      <option value="KY">Kentucky</option>-->
-<#--      <option value="LA">Louisiana</option>-->
-<#--      <option value="ME">Maine</option>-->
-<#--      <option value="MD">Maryland</option>-->
-<#--      <option value="MA">Massachusetts</option>-->
-<#--      <option value="MI">Michigan</option>-->
-<#--      <option value="MN">Minnesota</option>-->
-<#--      <option value="MS">Mississippi</option>-->
-<#--      <option value="MO">Missouri</option>-->
-<#--      <option value="MT">Montana</option>-->
-<#--      <option value="NE">Nebraska</option>-->
-<#--      <option value="NV">Nevada</option>-->
-<#--      <option value="NH">New Hampshire</option>-->
-<#--      <option value="NJ">New Jersey</option>-->
-<#--      <option value="NM">New Mexico</option>-->
-<#--      <option value="NY">New York</option>-->
-<#--      <option value="NC">North Carolina</option>-->
-<#--      <option value="ND">North Dakota</option>-->
-<#--      <option value="OH">Ohio</option>-->
-<#--      <option value="OK">Oklahoma</option>-->
-<#--      <option value="OR">Oregon</option>-->
-<#--      <option value="PA">Pennsylvania</option>-->
-<#--      <option value="RI">Rhode Island</option>-->
-<#--      <option value="SC">South Carolina</option>-->
-<#--      <option value="SD">South Dakota</option>-->
-<#--      <option value="TN">Tennessee</option>-->
-<#--      <option value="TX">Texas</option>-->
-<#--      <option value="UT">Utah</option>-->
-<#--      <option value="VT">Vermont</option>-->
-<#--      <option value="VA">Virginia</option>-->
-<#--      <option value="WA">Washington</option>-->
-<#--      <option value="WV">West Virginia</option>-->
-<#--      <option value="WI">Wisconsin</option>-->
-<#--      <option value="WY">Wyoming</option>-->
-<#--    </select>-->
-
-<#--    </div>-->
-
-<#--    <br><br>-->
-
-
-<#--    <div class="ui button">-->
-<#--      Clear Filters-->
-<#--    </div>-->
-
+    <form class="ui form segment">
+      <div class="field">
+        <label>Courses: </label>
+        <select name="courses" class="ui selection dropdown" multiple="" id="multi-select">
+          <#list courseList as item>
+            <option value="${item}">${item}</option>
+          </#list>
+        </select>
+      </div>
+    </form>
+    <script>
+      $('#multi-select').dropdown();
+    </script>
 
   <br>
-  <input type="submit">
+
+    <button class="ui button" type="submit">Submit</button>
   </form>
 
   <br>
   <br>
   <br>
-
-
-
-
-
-
-
 
   <!-- Again, we're serving up the unminified source for clarity. -->
 <#--     <script src="js/jquery-2.1.1.js"></script>-->
