@@ -1,7 +1,7 @@
 package edu.brown.cs.student.main;
 
 import edu.brown.cs.student.pathway.Node;
-import edu.brown.cs.student.pathway.Pathway;
+import edu.brown.cs.student.pathway.PathwayMaker;
 import edu.brown.cs.student.pathway.Semester;
 
 import java.sql.SQLException;
@@ -21,9 +21,6 @@ public class PathwayProgram {
   private List<Semester> path1;
   private List<Semester> path2;
   private List<Semester> path3;
-  private Pathway p1;
-  private Pathway p2;
-  private Pathway p3;
 
   /**
    * PathwayProgram constructor.
@@ -40,17 +37,14 @@ public class PathwayProgram {
   }
 
   public List<Semester> getPath1() {
-    path1 = p1.getPath();
     return path1;
   }
 
   public List<Semester> getPath2() {
-    path2 = p2.getPath();
     return path2;
   }
 
   public List<Semester> getPath3() {
-    path3 = p3.getPath();
     return path3;
   }
 
@@ -63,18 +57,16 @@ public class PathwayProgram {
     List<Integer> reqsTmp = cache.getRequirements(concentration + "_rules");
     int[] reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
     Set<Node> courseSet = cache.getConcentrationCourses(concentration);
-    Pathway pathway1 = new Pathway(reqs, courseSet);
-    pathway1.makePathway(new HashSet<Node>(), risingSem, aggressive, "lo");
-    path1 = pathway1.getPath();
-    p1 = pathway1;
-    Pathway pathway2 = new Pathway(reqs, courseSet);
-    pathway2.makePathway(new HashSet<Node>(), risingSem, aggressive, "med");
-    path2 = pathway2.getPath();
-    p2 = pathway2;
-    Pathway pathway3 = new Pathway(reqs, courseSet);
-    pathway3.makePathway(new HashSet<Node>(), risingSem, aggressive, "hi");
-    path3 = pathway3.getPath();
-    p3 = pathway3;
+    PathwayMaker pm = new PathwayMaker(concentration, reqs, new HashSet<Node>(), risingSem);
+    //Pathway pathway1 = new Pathway(reqs, courseSet);
+    //pathway1.makePathway(new HashSet<Node>(), risingSem, aggressive, "lo");
+    path1 = pm.getPath1();
+    //Pathway pathway2 = new Pathway(reqs, courseSet);
+    //pathway2.makePathway(new HashSet<Node>(), risingSem, aggressive, "med");
+    path2 = pm.getPath2();
+    //Pathway pathway3 = new Pathway(reqs, courseSet);
+    //pathway3.makePathway(new HashSet<Node>(), risingSem, aggressive, "hi");
+    path3 = pm.getPath3();
   }
 
   public List<String> getConcentrationsList() {

@@ -2,7 +2,6 @@ package edu.brown.cs.student.pathway;
 
 import edu.brown.cs.student.main.Database;
 import edu.brown.cs.student.main.DatabaseCache;
-
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +16,21 @@ public class PathwayMaker {
   private int[] reqs;
   private Set<Node> coursesTaken;
   private int risingSemester;
+  private List<Semester> path1;
+  private List<Semester> path2;
+  private List<Semester> path3;
+
+  public List<Semester> getPath1() {
+    return path1;
+  }
+
+  public List<Semester> getPath2() {
+    return path2;
+  }
+
+  public List<Semester> getPath3() {
+    return path3;
+  }
 
   private class PathwayThread extends Thread {
     private DatabaseCache dbc;
@@ -40,7 +54,6 @@ public class PathwayMaker {
     public void run() {
       pathway.makePathway(coursesTakenClone, risingSemester, aggressive, workload);
     }
-
     public void printPathway() {
       System.out.println(
           "Concentration: " + concentrationName + ", Workload: " + this.workload + ", aggressive: "
@@ -88,6 +101,7 @@ public class PathwayMaker {
     this.reqs = reqs;
     this.coursesTaken = coursesTaken;
     this.risingSemester = risingSemester;
+    makePathways();
   }
 
   /**
@@ -120,5 +134,8 @@ public class PathwayMaker {
     } catch (InterruptedException ie) {
       ie.printStackTrace();
     }
+    path1 = loPath.pathway.getPath();
+    path2 = medPath.pathway.getPath();
+    path3 = hiPath.pathway.getPath();
   }
 }
