@@ -31,21 +31,21 @@
     <p> Choose a concentration: </p>
 
     <div class="ui container">
-      <select name="gender" id="concentration-select" class = "ui selection dropdown">
+      <select name="concentration" id="concentration" class = "ui selection dropdown">
         <#list concentrationList as item>
           <option value="${item}">${item}</option>
         </#list>
       </select>
     </div>
     <script>
-      $('#concentration-select').dropdown();
+      $('#concentration').dropdown();
     </script>
 
     <br>
 
   <p> Enter Rising semester number: </p>
     <div class="ui input focus">
-      <input type="number" placeholder="Enter semester...">
+      <input type="number" name = "semester" id ="semester" placeholder="Enter semester...">
     </div>
 
     <br>
@@ -53,7 +53,7 @@
 
     <p> Enter workload preferences: </p>
     <div class="ui right labeled input">
-      <input type="number" placeholder="Enter workload">
+      <input type="number" name = "workload" id= "workload" placeholder="Enter workload">
       <div class="ui basic label">
         hours
       </div>
@@ -63,7 +63,7 @@
     <br>
 
     <div class="ui checkbox">
-      <input id="aggressive" type="checkbox">
+      <input id="aggressive" name="aggressive" value="Aggressive" type="checkbox">
       <label for="aggressive"> Prefer Aggressive Pathways </label>
     </div>
 
@@ -78,23 +78,42 @@
 
 <#--  <textarea name="comments" rows="4" maxlength="200" cols="60"></textarea>-->
 
-    <form class="ui form segment">
-      <div class="field">
-        <label>Courses: </label>
-        <select name="courses" class="ui selection dropdown" multiple="" id="multi-select">
-          <#list courseList as item>
-            <option value="${item}">${item}</option>
-          </#list>
-        </select>
-      </div>
-    </form>
+    <div class="field">
+      <label>Courses: </label>
+      <select name="courses" class="ui selection dropdown" multiple="" id="multi-select">
+        <#list courseList as item>
+          <option value="${item}">${item}</option>
+        </#list>
+      </select>
+    </div>
     <script>
       $('#multi-select').dropdown();
     </script>
 
   <br>
 
-    <button class="ui button" type="submit">Submit</button>
+    <input class = "ui button" id = "btnSubmit" type="submit" value="Release"/>
+<#--  <button class="ui button" type="submit":>Submit</button>-->
+    <script>
+      function submitForm() {
+
+        $("#btnSubmit").button().click(function(){
+          var formData = {
+            workload: getFieldValue('workload');
+
+          };
+          console.log("========================================");
+          console.log(formData);
+
+          $.ajax({ type: 'POST', url: '/api/someRestEndpoint', data: formData, success: onFormSubmitted });
+        });
+
+
+
+
+      }
+    </script>
+
   </form>
 
   <br>
@@ -102,10 +121,13 @@
   <br>
 
   <!-- Again, we're serving up the unminified source for clarity. -->
-<#--     <script src="js/jquery-2.1.1.js"></script>-->
-<#--     <script src="js/main.js"></script>-->
-<#--      <script src = "dropdown.js"></script>-->
+
+
   <script src ="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"></script>
+  <script src="js/jquery-2.1.1.js"></script>
+
+  <!-- TODO: BUTTON DOESNT SUBMIT!!!!!-->
+  <script src="js/main.js"></script>
 
 
 

@@ -117,15 +117,8 @@ public final class Main {
     public ModelAndView handle(Request req, Response res) throws SQLException {
 
       List<String> concentrationList = pathwayProgram.getConcentrationsList();
-      List<String> courseList = new ArrayList<>();
-      courseList.add("ECON 0110");
-      courseList.add("MATH 0100");
-      courseList.add("ECON 0110");
-      courseList.add("MATH 0100");
-      courseList.add("ECON 0110");
-      courseList.add("MATH 0100");
-      courseList.add("ECON 0110");
-      courseList.add("MATH 0100");
+      Database db = new Database("data/coursesDB.db");
+      List<String> courseList = db.getAllCourseIDs();
 
       Map<String, Object> variables =
           ImmutableMap.of("title", "Pathway", "results", "", "concentrationList", concentrationList, "courseList", courseList);
@@ -149,25 +142,35 @@ public final class Main {
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
       QueryParamsMap qm = req.queryMap();
+
       String concentration = qm.value("concentration");
       String concentrationId = pathwayProgram.getConcentrationMap().get(qm.value("concentration"));
       int semesterLevel = Integer.parseInt(qm.value("semester"));
 
-      //TODO: Currently not using user input workload
-//      Double workload = Double.parseDouble(qm.value("workload"));
-//      String workloadLevel = "";
+
+      Double workload = Double.parseDouble(qm.value("workload"));
+      String workloadLevel = "";
       boolean aggressive = false;
       if (qm.value("aggressive") != null) {
         aggressive = true;
       }
 
-//      if (workload > HIGH) {
-//        workloadLevel = "hi";
-//      } else if (workload < LOW) {
-//        workloadLevel = "lo";
-//      } else {
-//        workloadLevel = "med";
-//      }
+      if (workload > HIGH) {
+        workloadLevel = "hi";
+      } else if (workload < LOW) {
+        workloadLevel = "lo";
+      } else {
+        workloadLevel = "med";
+      }
+
+      System.out.println("============================================");
+      System.out.println(concentration);
+      System.out.println(concentrationId);
+      System.out.println(semesterLevel);
+      System.out.println(aggressive);
+      System.out.println("============================================");
+
+
       pathwayProgram.makePathways(concentrationId, new HashSet<Node>(), semesterLevel, aggressive);
       String display = "Pathways generated for the concentration: " + concentration;
       pathwayPrinter(pathwayProgram.getPath1());
