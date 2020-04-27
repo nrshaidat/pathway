@@ -57,20 +57,18 @@ public class CriticalReviewScrapingTest {
     assertTrue(krea0100.getRating() == 4.77);
     assertTrue(krea0100.getClassSize() == 14);
 
-
-    //TODO: Fix Stack OverFlow Error?? VISA 1520 not working
-//    Node visa1520 = db.getCourseData("VISA 1520");
-//    assertTrue(visa1520.getAvgHrs() == 4.75);
-//    assertTrue(visa1520.getMaxHrs() == 8.40);
-//    assertTrue(visa1520.getRating() == 4.7);
-//    assertTrue(visa1520.getClassSize() == 17);
+    Node visa1520 = db.getCourseData("VISA 1520");
+    assertTrue(visa1520.getAvgHrs() == 4.75);
+    assertTrue(visa1520.getMaxHrs() == 8.40);
+    assertTrue(visa1520.getRating() == 4.7);
+    assertTrue(visa1520.getClassSize() == 17);
 
     Node biol1290 = db.getCourseData("BIOL 1290");
     assertTrue(biol1290.getAvgHrs() == 5.54);
     assertTrue(biol1290.getMaxHrs() == 12.45);
     assertTrue(biol1290.getRating() == 4.61);
     assertTrue(biol1290.getClassSize() == 31);
-//
+
     Node educ0860 = db.getCourseData("EDUC 0860");
     assertTrue(educ0860.getAvgHrs() == 2.46);
     assertTrue(educ0860.getMaxHrs() == 5.4);

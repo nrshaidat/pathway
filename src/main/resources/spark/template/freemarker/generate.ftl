@@ -92,19 +92,11 @@
 
   <br>
 
-    <input class = "ui button" id = "btnSubmit" type="submit" value="Release"/>
-<#--  <button class="ui button" type="submit":>Submit</button>-->
+    <input class = "ui button" id = "btnSubmit" type="submit" value="Submit"/>
     <script>
       function submitForm() {
 
         $("#btnSubmit").button().click(function(){
-          var formData = {
-            workload: getFieldValue('workload');
-
-          };
-          console.log("========================================");
-          console.log(formData);
-
           $.ajax({ type: 'POST', url: '/api/someRestEndpoint', data: formData, success: onFormSubmitted });
         });
 
