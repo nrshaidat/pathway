@@ -5,10 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.google.common.collect.ImmutableMap;
 import edu.brown.cs.student.pathway.Node;
@@ -130,16 +127,6 @@ public final class Main {
 
   private static class PathLandingHandler implements TemplateViewRoute {
 
-    public void pathwayPrinter(List<Semester> path) {
-      for (Semester list : path) {
-        System.out.println("Semester: " + list.getSemnumber());
-        for (Node course : list.getCourses()) {
-          System.out.println(course.getId() + ": " + course.getName());
-        }
-        System.out.println();
-      }
-    }
-
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
       QueryParamsMap qm = req.queryMap();
@@ -147,7 +134,6 @@ public final class Main {
       String display = null;
       if (qm.value("semester")==null) {
         if (pathwayProgram.isSet()) {
-          concentration =pathwayProgram.getConcentration();
           pathway1 = pathwayProgram.getPath1();
           pathway2 = pathwayProgram.getPath2();
           pathway3 = pathwayProgram.getPath3();
@@ -162,23 +148,23 @@ public final class Main {
         if (qm.value("aggressive") != null) {
           aggressive = true;
         }
-        String coursestaken = qm.value("courses");
-        pathwayProgram.makePathways(concentrationId, new HashSet<Node>(), semesterLevel, aggressive);
+        String coursestaken = qm.value("results");
+        String[] courseList = coursestaken.split(",");
+
+        Set<Node> taken = new HashSet<>();
+        for (int i = 0; i < courseList.length; i++) {
+          taken.add(pathwayProgram.getCache().getCourseData(courseList[i]));
+        }
+
+        pathwayProgram.makePathways(concentrationId, taken, semesterLevel, aggressive);
         display = "Pathways generated for the concentration: " + concentration;
         pathway1 = pathwayProgram.getPath1();
         pathway2 = pathwayProgram.getPath2();
         pathway3 = pathwayProgram.getPath3();
       }
-      
 
-      System.out.println("============================================");
-      System.out.println(qm.value("courses"));
-      System.out.println("============================================");
-      
-      
       List<Object> titles = new ArrayList<>();
       titles.add("Pathway");
-      
 
       Map<String, Object> variables = ImmutableMap
           .of("header", display, "results1", "Pathway 1", "results2", "Pathway 2", "results3",

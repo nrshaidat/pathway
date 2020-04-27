@@ -41,7 +41,7 @@
 
   <p> Enter Rising semester number: </p>
     <div class="ui input focus">
-      <input type="number" name = "semester" id ="semester" placeholder="Enter semester...">
+      <input type="number" name ="semester" id ="semester" placeholder="Enter semester...">
     </div>
 
     <br>
@@ -80,23 +80,27 @@
         <#list courseList as item>
           <option value="${item}">${item}</option>
         </#list>
+
       </select>
+
     </div>
+
+    <input style="display:none" name="results" id="results" key="results">
+
+
     <script>
-      $('#multi-select').dropdown();
-      console.log($('#multi-select').find(":selected").val());
-      console.log($('#multi-select').dropdown('get values'));
-      console.log($('#multi-select').dropdown('get selected'));
+      window.onload = function() {
+        $('#multi-select').dropdown();
 
-      $('#multi-select').dropdown('setting', 'onChange', function(){
-        console.log($('#multi-select').dropdown('get values'));
-      });
+        $('#multi-select').dropdown('setting', 'onChange', function () {
+          var courses = $('#multi-select').dropdown('get values');
+          var courseString = courses.toString();
+          const results = document.getElementById("results");
+          results.value = courseString;
+        });
 
-      // console.log($('#multi-select').dropdown('get value'));
-      //   const self = this.coursesTaken;
-      //   for (let id of self.multi-select) {
-      //     console.log(id);
-      //   }
+      }
+
 
     </script>
 
