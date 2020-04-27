@@ -153,8 +153,9 @@
 
         }
         .ui-cards {
-            display:flex;
-            justify-content: center;
+            display:inline-flex;
+            flex-wrap: wrap;
+            flex-direction: row;
             margin: 6% auto;
         }
         .header-cc_pointer{
