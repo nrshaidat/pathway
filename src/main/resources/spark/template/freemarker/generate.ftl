@@ -96,9 +96,6 @@
           $.ajax({ type: 'POST', url: '/api/someRestEndpoint', data: formData, success: onFormSubmitted });
         });
 
-
-
-
       }
     </script>
 
