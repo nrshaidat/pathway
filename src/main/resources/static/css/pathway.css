@@ -7,17 +7,48 @@ body {
     margin-top: 100px;
 }
 
-#container {
+#container1 {
     display: inline-block;
-    background-color: lightgray;
+    background-color: ghostwhite;
     padding: 14px 20px;
     margin: 8px 10px;
-    border: none;
+    border: solid;
+    border-color: #4CAF50;
+    border-width: medium;
     cursor: pointer;
     width: 25%;
     height: 250px;
     border-radius: 10px;
 }
+
+#container2 {
+    display: inline-block;
+    background-color: ghostwhite;
+    padding: 14px 20px;
+    margin: 8px 10px;
+    border: solid;
+    border-color: #35adaf;
+    border-width: medium;
+    cursor: pointer;
+    width: 25%;
+    height: 250px;
+    border-radius: 10px;
+}
+
+#container3 {
+    display: inline-block;
+    background-color: ghostwhite;
+    padding: 14px 20px;
+    margin: 8px 10px;
+    border: solid;
+    border-color: #af3263;
+    border-width: medium;
+    cursor: pointer;
+    width: 25%;
+    height: 250px;
+    border-radius: 10px;
+}
+
 
 header {
     font-size: 20px;

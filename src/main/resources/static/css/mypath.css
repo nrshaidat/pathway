@@ -1,9 +1,8 @@
 body {
     background-color: whitesmoke;
-    text-align: center;
     font-family: 'Lato', sans-serif;
     font-weight: 100;
-    font-size: 16px;
+    font-size: 22px;
     margin-top: 75px;
 }
 
@@ -12,7 +11,6 @@ body {
     background-color: lightgray;
     padding: 14px 20px;
     margin: 8px 10px;
-    border: none;
     cursor: pointer;
     width: 25%;
     height: 250px;

@@ -120,9 +120,9 @@ public final class Main {
 
       List<String> concentrationList = pathwayProgram.getConcentrationsList();
 
-      Map<String, Object> variables =
-          ImmutableMap.of("title", "Pathway", "results", "",
-              "concentrationList", concentrationList, "courseList", courseList);
+      Map<String, Object> variables = ImmutableMap
+          .of("title", "Pathway", "results", "", "concentrationList", concentrationList,
+              "courseList", courseList);
       return new ModelAndView(variables, "generate.ftl");
     }
 
@@ -159,12 +159,8 @@ public final class Main {
       String coursestaken = qm.value("courses");
 
 
-
       pathwayProgram.makePathways(concentrationId, new HashSet<Node>(), semesterLevel, aggressive);
       String display = "Pathways generated for the concentration: " + concentration;
-//      pathwayPrinter(pathwayProgram.getPath1());
-//      pathwayPrinter(pathwayProgram.getPath2());
-//      pathwayPrinter(pathwayProgram.getPath3());
       List<Object> titles = new ArrayList<>();
       titles.add("Pathway");
       pathway1 = pathwayProgram.getPath1();
@@ -172,8 +168,8 @@ public final class Main {
       pathway3 = pathwayProgram.getPath3();
 
       Map<String, Object> variables = ImmutableMap
-              .of("header", display, "results1", "Pathway 1", "results2",
-                  "Pathway 2", "results3","Pathway 3");
+          .of("header", display, "results1", "Pathway 1", "results2", "Pathway 2", "results3",
+              "Pathway 3");
       return new ModelAndView(variables, "pathway.ftl");
     }
   }
