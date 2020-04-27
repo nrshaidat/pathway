@@ -1,6 +1,7 @@
 package edu.brown.cs.student.main;
 
 import edu.brown.cs.student.pathway.Node;
+import edu.brown.cs.student.pathway.Pathway;
 import edu.brown.cs.student.pathway.PathwayMaker;
 import edu.brown.cs.student.pathway.Semester;
 
@@ -73,10 +74,19 @@ public class PathwayProgram {
     risingSem = sem;
     List<Integer> reqsTmp = cache.getRequirements(concentration + "_rules");
     reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
+    /*
     PathwayMaker pm = new PathwayMaker(concentration, reqs, taken, risingSem);
     path1 = pm.getPath1();
     path2 = pm.getPath2();
     path3 = pm.getPath3();
+     */
+    Pathway pathway = new Pathway(reqs, courseSet);
+    pathway.makePathway(taken, sem, aggressive, "lo");
+    path1 = pathway.getPath();
+    pathway.makePathway(taken, sem, aggressive, "med");
+    path2 = pathway.getPath();
+    pathway.makePathway(taken, sem, aggressive, "hi");
+    path3 = pathway.getPath();
   }
   public boolean isSet() {
     return concentration == null;

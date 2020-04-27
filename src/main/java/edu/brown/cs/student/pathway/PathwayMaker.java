@@ -44,7 +44,9 @@ public class PathwayMaker {
       this.dbc = new DatabaseCache(new Database("data/coursesDB.db"));
       this.reqsClone = reqs.clone();
       this.courseSetClone = dbc.getConcentrationCourses(concentrationName);
-      this.coursesTakenClone = copySet(coursesTaken);
+      this.coursesTakenClone = copyCoursesTaken(coursesTaken);
+      //System.out.println(coursesTaken);
+      System.out.println(coursesTakenClone);
       this.workload = workload;
       this.aggressive = new Random().nextBoolean();
       this.pathway = new Pathway(reqsClone, courseSetClone);
@@ -76,9 +78,12 @@ public class PathwayMaker {
      * @param s A set of nodes
      * @return A deep copy of s
      */
-    private Set<Node> copySet(Set<Node> s) {
+    private Set<Node> copyCoursesTaken(Set<Node> ct) {
       Set<Node> cp = new HashSet<>();
-      for (Node n : s) {
+      for (Node n: ct) {
+        if (n == null) {
+          System.out.println("here");
+        }
         cp.add(copyNode(n));
       }
       return cp;
@@ -91,7 +96,18 @@ public class PathwayMaker {
      * @return A deep copy of n
      */
     private Node copyNode(Node n) {
-      return dbc.getCourseData(n.getId());
+      Node cp = new Node(n.getId());
+      cp.setNext(copyNode(n.getNext()));
+      cp.setName(n.getName());
+      cp.setAvgHrs(n.getAvgHrs());
+      cp.setCategory(n.getCategory());
+      cp.setClassSize(n.getClassSize());
+      cp.setMaxHrs(n.getMaxHrs());
+      cp.setPrereqs(n.getPrereqs());
+      cp.setProfessor(n.getProfessor());
+      cp.setRating(n.getRating());
+      cp.setSemesters(n.getSemestersOffered());
+      return cp;
     }
   }
 

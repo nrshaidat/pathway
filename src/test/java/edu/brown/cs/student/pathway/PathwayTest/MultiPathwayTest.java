@@ -2,6 +2,7 @@ package edu.brown.cs.student.pathway.PathwayTest;
 
 import edu.brown.cs.student.main.Database;
 import edu.brown.cs.student.main.DatabaseCache;
+import edu.brown.cs.student.pathway.Node;
 import edu.brown.cs.student.pathway.PathwayMaker;
 import org.junit.After;
 import org.junit.Before;
@@ -10,6 +11,7 @@ import org.junit.Test;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A class to test multithreading when creating pathways.
@@ -43,4 +45,16 @@ public class MultiPathwayTest {
     PathwayMaker pm = new PathwayMaker(tablename, reqs, new HashSet<>(), 1);
     pm.makePathways();
   }
+  /*@Test
+  public void testCoursesTaken() throws SQLException {
+    String tablename = "computerscienceba";
+    List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
+    int[] reqs = reqsTmp.stream().mapToInt(i->i).toArray();
+    Set<Node> coursesTaken = new HashSet<>();
+    coursesTaken.add(cache.getCourseData("CSCI 0170"));
+    coursesTaken.add(cache.getCourseData("MATH 0090"));
+
+    PathwayMaker pm = new PathwayMaker(tablename, reqs, coursesTaken, 1);
+    pm.makePathways();
+  }*/
 }
