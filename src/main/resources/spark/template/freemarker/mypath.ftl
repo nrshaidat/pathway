@@ -3,6 +3,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/logo/t.png"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/mypath.css">
     <#--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">-->
     <#--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>-->
@@ -178,6 +179,26 @@
             padding-left: 10px;
             padding-right: 10px;
         }
+        .redirect{
+            float: left;
+            padding-left: 15px;
+            padding-bottom: 15px;
+        }
+        .fa fa-arrow-circle-left{
+            font-size: xx-large;
+        }
+
+        #submit {
+            color: white;
+            background-color: green;
+            font-size: 50px;
+            border-radius: 13px;
+            margin-bottom: 15px;
+
+        }
+
+
+
 
 
 
@@ -191,6 +212,12 @@
         ${node}
     </#list>
 </h1>
+<div class="redirect">
+    <form method="POST" action="/mypath">
+        <button id="submit" type="submit" value="Go back"><i class="fa fa-arrow-circle-left"></i>
+        </button>
+    </form>
+</div>
 <div class="results">
     <div id="myModal" class="modal">
         <div class="modal-content">
