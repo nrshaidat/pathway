@@ -37,6 +37,8 @@ public final class Main {
   private static List<Semester> pathway1;
   private static List<Semester> pathway2;
   private static List<Semester> pathway3;
+  private Database db;
+  private static List<String> courseList;
 
   /**
    * The initial method called when execution begins.
@@ -69,8 +71,8 @@ public final class Main {
       runSparkServer((int) options.valueOf("port"));
     }
     pathwayProgram = new PathwayProgram();
-
-    // Process commands in a REPL
+    db = new Database("data/coursesDB.db");
+    courseList = db.getAllCourseIDs();
 
   }
 
@@ -117,11 +119,10 @@ public final class Main {
     public ModelAndView handle(Request req, Response res) throws SQLException {
 
       List<String> concentrationList = pathwayProgram.getConcentrationsList();
-      Database db = new Database("data/coursesDB.db");
-      List<String> courseList = db.getAllCourseIDs();
 
       Map<String, Object> variables =
-          ImmutableMap.of("title", "Pathway", "results", "", "concentrationList", concentrationList, "courseList", courseList);
+          ImmutableMap.of("title", "Pathway", "results", "",
+              "concentrationList", concentrationList, "courseList", courseList);
       return new ModelAndView(variables, "generate.ftl");
     }
 
@@ -171,8 +172,8 @@ public final class Main {
       pathway3 = pathwayProgram.getPath3();
 
       Map<String, Object> variables = ImmutableMap
-              .of("header", display, "results1", "Pathway 1", "results2", "Pathway 2", "results3",
-                      "Pathway 3");
+              .of("header", display, "results1", "Pathway 1", "results2",
+                  "Pathway 2", "results3","Pathway 3");
       return new ModelAndView(variables, "pathway.ftl");
     }
   }
@@ -201,7 +202,7 @@ public final class Main {
       List<String> pathnumlst = new ArrayList<>();
       pathnumlst.add(pathNum);
       Map<String, List<? extends Object>> variables =
-          ImmutableMap.of("id", pathnumlst, "results", path);
+          ImmutableMap.of("id", pathnumlst, "results", path, "courseList", courseList);
       return new ModelAndView(variables, "mypath.ftl");
 
     }

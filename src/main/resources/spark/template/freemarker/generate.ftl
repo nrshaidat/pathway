@@ -68,7 +68,7 @@
     <br>
 
   <p>Please enter courses you have received credit for: </p>
-  <p><note> (e.g. A comma-separated list like: ECON 0110, MATH 0100, APMA 350)</note> </p>
+  <p><note> (Select course ids from the dropdown e.g. ECON 0110, MATH 0100, APMA 350)</note> </p>
 
 
 

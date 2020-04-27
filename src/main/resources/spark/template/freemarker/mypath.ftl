@@ -4,13 +4,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/logo/t.png"/>
     <link rel="stylesheet" href="/css/mypath.css">
+<#--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">-->
+<#--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>-->
+<#--    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>-->
     <style>
         /* The Modal (background) */
         .modal {
             display: none; /* Hidden by default */
             position: fixed; /* Stay in place */
             z-index: 1; /* Sit on top */
-            padding-top: 100px; /* Location of the box */
+            padding-top: 10vh; /* Location of the box */
             left: 0;
             top: 0;
             width: 100%; /* Full width */
@@ -35,6 +38,7 @@
             float: right;
             font-size: 28px;
             font-weight: bold;
+            padding-right: 0.6em;
         }
 
         .close:hover,
@@ -75,6 +79,17 @@
             border-right: none; /* Prevent double borders */
         }
 
+        .add-course {
+            display: none; /* Hidden by default */
+            z-index: 1; /* Sit on top */
+            margin: 0 auto;
+            width: 50%;
+            height: 50%;
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(87, 149, 117, 0.7); /* Fallback color */
+        }
+
+
     </style>
   </head>
   <body>
@@ -86,17 +101,33 @@
       </h1>
       <div class="results">
           <div id="myModal" class="modal">
-              <!-- Modal content -->
               <div class="modal-content">
                   <span class="close">&times;</span>
                   <h2>Customize Your Pathway!</h2>
-                  <p id="this-sem">Edit This Semester: </p>
+                  <p id="this-sem"> </p>
                   <div class="btn-group">
                       <button id="btn1">Add Course</button>
                       <button id="btn2">Move Course</button>
                       <button id="btn3">Swap Course</button>
                   </div>
+                    <br>
+                    <br>
+                  <div class="add-course">
+                      <h4>Add A Course To This Semester</h4>
+                      <div class="field">
+                          <label>Courses: </label>
+                          <select name="courses" class="ui selection dropdown" multiple="" id="multi-select">
+                              <#list courseList as item>
+                                  <option value="${item}">${item}</option>
+                              </#list>
+                          </select>
+                      </div>
+                      <script>
+                          $('#multi-select').dropdown();
+                      </script>
+                  </div>
               </div>
+
           </div>
 
           <#list results as semester>
@@ -129,9 +160,20 @@
       <script>
           // Get the modal
           const modal = document.getElementById("myModal");
-
           // Get this semester text
           const sem = document.getElementById("this-sem");
+          // Get course adder
+          const adder = document.getElementsByClassName("add-course")[0];
+
+          const cont = document.getElementsByClassName("modal-content")[0];
+
+          // Get add button and make is show adder
+          const addbtn = document.getElementById("btn1");
+          addbtn.onclick = function() {
+              adder.style.display = "block";
+              cont.style.height = '70%';
+          }
+
 
           // Make all semester list items open the modal
           window.onload = function() {
@@ -158,13 +200,17 @@
                   modal.style.display = "none";
               }
           }
+
+
+
       </script>
 
 
       <br>
 
-<#--         <script src="js/jquery-2.1.1.js"></script>-->
-<#--         <script src="js/main.js"></script>-->
+      <script src="js/jquery-2.1.1.js"></script>
+      <script src="js/main.js"></script>
+
 
 
   </body>
