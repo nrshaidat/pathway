@@ -38,6 +38,12 @@
          </div>
 
      </form>
+     <br>
+     <form action="/generate" method="post">
+         <button type="submit">Login as Guest</button>
+     </form>
+
+
 
 
   <h3> <a href="/signup" class="link"> Sign Up </a> </h3>

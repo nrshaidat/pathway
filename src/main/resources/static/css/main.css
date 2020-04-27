@@ -69,6 +69,11 @@ a.link
     text-decoration: none;
 }
 
+#guest-login {
+    width: 40%;
+    align-content: center;
+}
+
 /* Change styles for span and cancel button on extra small screens */
 @media screen and (max-width: 300px) {
     span.psw {
