@@ -143,29 +143,42 @@ public final class Main {
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
       QueryParamsMap qm = req.queryMap();
-
-      String concentration = qm.value("concentration");
-      String concentrationId = pathwayProgram.getConcentrationMap().get(qm.value("concentration"));
-      int semesterLevel = Integer.parseInt(qm.value("semester"));
-      boolean aggressive = false;
-      if (qm.value("aggressive") != null) {
-        aggressive = true;
+      String concentration;
+      String display = null;
+      if (qm.value("semester")==null) {
+        if (pathwayProgram.isSet()) {
+          concentration =pathwayProgram.getConcentration();
+          pathway1 = pathwayProgram.getPath1();
+          pathway2 = pathwayProgram.getPath2();
+          pathway3 = pathwayProgram.getPath3();
+        } else {
+          display = "Please enter your rising semester";
+        }
+      } else {
+        concentration = qm.value("concentration");
+        String concentrationId = pathwayProgram.getConcentrationMap().get(qm.value("concentration"));
+        int semesterLevel = Integer.parseInt(qm.value("semester"));
+        boolean aggressive = false;
+        if (qm.value("aggressive") != null) {
+          aggressive = true;
+        }
+        String coursestaken = qm.value("courses");
+        pathwayProgram.makePathways(concentrationId, new HashSet<Node>(), semesterLevel, aggressive);
+        display = "Pathways generated for the concentration: " + concentration;
+        pathway1 = pathwayProgram.getPath1();
+        pathway2 = pathwayProgram.getPath2();
+        pathway3 = pathwayProgram.getPath3();
       }
+      
 
       System.out.println("============================================");
       System.out.println(qm.value("courses"));
       System.out.println("============================================");
-
-      String coursestaken = qm.value("courses");
-
-
-      pathwayProgram.makePathways(concentrationId, new HashSet<Node>(), semesterLevel, aggressive);
-      String display = "Pathways generated for the concentration: " + concentration;
+      
+      
       List<Object> titles = new ArrayList<>();
       titles.add("Pathway");
-      pathway1 = pathwayProgram.getPath1();
-      pathway2 = pathwayProgram.getPath2();
-      pathway3 = pathwayProgram.getPath3();
+      
 
       Map<String, Object> variables = ImmutableMap
           .of("header", display, "results1", "Pathway 1", "results2", "Pathway 2", "results3",

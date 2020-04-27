@@ -34,6 +34,8 @@ public class PathwayProgram {
     Database realDB = new Database(file); // real database that handles sql queries
     cache = new DatabaseCache(realDB);
     concentrationMap = cache.getConcentrationsMap();
+    concentration = null;
+    risingSem = 1;
   }
 
   public DatabaseInterface getCache() {
@@ -67,6 +69,13 @@ public class PathwayProgram {
     path1 = pm.getPath1();
     path2 = pm.getPath2();
     path3 = pm.getPath3();
+  }
+  public boolean isSet() {
+    return concentration == null;
+  }
+
+  public String getConcentration() {
+    return concentration;
   }
 
   public void makeNewPathway() {
