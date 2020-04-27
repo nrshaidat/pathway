@@ -146,40 +146,26 @@ public final class Main {
       String concentration = qm.value("concentration");
       String concentrationId = pathwayProgram.getConcentrationMap().get(qm.value("concentration"));
       int semesterLevel = Integer.parseInt(qm.value("semester"));
-
-
-      Double workload = Double.parseDouble(qm.value("workload"));
-      String workloadLevel = "";
       boolean aggressive = false;
       if (qm.value("aggressive") != null) {
         aggressive = true;
       }
 
-      if (workload > HIGH) {
-        workloadLevel = "hi";
-      } else if (workload < LOW) {
-        workloadLevel = "lo";
-      } else {
-        workloadLevel = "med";
-      }
+      System.out.println("============================================");
+      System.out.println(qm.value("courses"));
+      System.out.println("============================================");
 
-      System.out.println("============================================");
-      System.out.println(concentration);
-      System.out.println(concentrationId);
-      System.out.println(semesterLevel);
-      System.out.println(aggressive);
-      System.out.println("============================================");
+      String coursestaken = qm.value("courses");
+
 
 
       pathwayProgram.makePathways(concentrationId, new HashSet<Node>(), semesterLevel, aggressive);
       String display = "Pathways generated for the concentration: " + concentration;
-      pathwayPrinter(pathwayProgram.getPath1());
-      pathwayPrinter(pathwayProgram.getPath2());
-      pathwayPrinter(pathwayProgram.getPath3());
-      List<Object> concentrationList = new ArrayList<>();
+//      pathwayPrinter(pathwayProgram.getPath1());
+//      pathwayPrinter(pathwayProgram.getPath2());
+//      pathwayPrinter(pathwayProgram.getPath3());
       List<Object> titles = new ArrayList<>();
       titles.add("Pathway");
-//      concentrationList.add(display);
       pathway1 = pathwayProgram.getPath1();
       pathway2 = pathwayProgram.getPath2();
       pathway3 = pathwayProgram.getPath3();

@@ -76,7 +76,7 @@
 
     <div class="field">
       <label>Courses: </label>
-      <select name="courses" class="ui selection dropdown" multiple="" id="multi-select">
+      <select name="courses" key="courses" id="multi-select" class="ui selection dropdown" multiple="" value.bind="coursesTaken" >
         <#list courseList as item>
           <option value="${item}">${item}</option>
         </#list>
@@ -84,6 +84,20 @@
     </div>
     <script>
       $('#multi-select').dropdown();
+      console.log($('#multi-select').find(":selected").val());
+      console.log($('#multi-select').dropdown('get values'));
+      console.log($('#multi-select').dropdown('get selected'));
+
+      $('#multi-select').dropdown('setting', 'onChange', function(){
+        console.log($('#multi-select').dropdown('get values'));
+      });
+
+      // console.log($('#multi-select').dropdown('get value'));
+      //   const self = this.coursesTaken;
+      //   for (let id of self.multi-select) {
+      //     console.log(id);
+      //   }
+
     </script>
 
   <br>
