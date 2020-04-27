@@ -6,10 +6,6 @@
 
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- In real-world webapps, css is usually minified and
-         concatenated. Here, separate normalize from our code, and
-         avoid minification for clarity. -->
-
     <link rel="shortcut icon" href="/logo/t.png"/>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
@@ -112,18 +108,10 @@
   <br>
   <br>
 
-  <!-- Again, we're serving up the unminified source for clarity. -->
-
-
   <script src ="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"></script>
   <script src="js/jquery-2.1.1.js"></script>
-
-  <!-- TODO: BUTTON DOESNT SUBMIT!!!!!-->
   <script src="js/main.js"></script>
 
 
-
   </body>
-  <!-- See http://html5boilerplate.com/ for a good place to start
-       dealing with real world issues like old browsers.  -->
 </html>
