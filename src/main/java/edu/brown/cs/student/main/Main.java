@@ -36,6 +36,7 @@ public final class Main {
   private static List<Semester> pathway3;
   private Database db;
   private static List<String> courseList;
+  private static List<String> concentrationList;
 
   /**
    * The initial method called when execution begins.
@@ -67,9 +68,12 @@ public final class Main {
     if (options.has("gui")) {
       runSparkServer((int) options.valueOf("port"));
     }
-    pathwayProgram = new PathwayProgram();
+
     db = new Database("data/coursesDB.db");
     courseList = db.getAllCourseIDs();
+    concentrationList = db.getConcentrations();
+
+    pathwayProgram = new PathwayProgram();
 
   }
 
@@ -114,9 +118,6 @@ public final class Main {
   private static class MyPathHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
-
-      List<String> concentrationList = pathwayProgram.getConcentrationsList();
-
       Map<String, Object> variables = ImmutableMap
           .of("title", "Pathway", "results", "", "concentrationList", concentrationList,
               "courseList", courseList);
@@ -132,6 +133,7 @@ public final class Main {
       QueryParamsMap qm = req.queryMap();
       String concentration;
       String display = null;
+
       if (qm.value("semester")==null) {
         if (pathwayProgram.isSet()) {
           pathway1 = pathwayProgram.getPath1();
@@ -142,7 +144,10 @@ public final class Main {
         }
       } else {
         concentration = qm.value("concentration");
+
         String concentrationId = pathwayProgram.getConcentrationMap().get(qm.value("concentration"));
+        pathwayProgram.setConcentration(concentrationId);
+        
         int semesterLevel = Integer.parseInt(qm.value("semester"));
         boolean aggressive = false;
         if (qm.value("aggressive") != null) {
@@ -153,7 +158,11 @@ public final class Main {
 
         Set<Node> taken = new HashSet<>();
         for (int i = 0; i < courseList.length; i++) {
-          taken.add(pathwayProgram.getCache().getCourseData(courseList[i]));
+          for (Node c: pathwayProgram.getCourseSet()) {
+            if (c.getId().equals(courseList[i])) {
+              taken.add(c);
+            }
+          }
         }
 
         pathwayProgram.makePathways(concentrationId, taken, semesterLevel, aggressive);

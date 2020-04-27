@@ -34,7 +34,6 @@ public class PathwayProgram {
     Database realDB = new Database(file); // real database that handles sql queries
     cache = new DatabaseCache(realDB);
     concentrationMap = cache.getConcentrationsMap();
-    concentration = null;
     risingSem = 1;
   }
 
@@ -58,13 +57,22 @@ public class PathwayProgram {
     return concentrationMap;
   }
 
+  public Set<Node> getCourseSet() {
+    return courseSet;
+  }
+
+  public void setConcentration(String concentration) throws SQLException {
+    this.concentration = concentration;
+    courseSet = cache.getConcentrationCourses(concentration);
+  }
+
+
   public void makePathways(String con, Set<Node> taken, int sem, boolean aggressive)
       throws SQLException {
     concentration = con;
     risingSem = sem;
     List<Integer> reqsTmp = cache.getRequirements(concentration + "_rules");
     reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
-    courseSet = cache.getConcentrationCourses(concentration);
     PathwayMaker pm = new PathwayMaker(concentration, reqs, taken, risingSem);
     path1 = pm.getPath1();
     path2 = pm.getPath2();
