@@ -75,10 +75,6 @@
             border-right: none; /* Prevent double borders */
         }
 
-        /* Add a background color on hover */
-        .btn-group button:hover {
-            background-color: #3e8e41;
-        }
     </style>
   </head>
   <body>
@@ -94,7 +90,7 @@
               <div class="modal-content">
                   <span class="close">&times;</span>
                   <h2>Customize Your Pathway!</h2>
-                  <p>Edit This Semester: </p>
+                  <p id="this-sem">Edit This Semester: </p>
                   <div class="btn-group">
                       <button id="btn1">Add Course</button>
                       <button id="btn2">Move Course</button>
@@ -104,7 +100,7 @@
           </div>
 
           <#list results as semester>
-              <div class="myBtn" style="cursor:pointer">
+              <div class="myBtn" id="myBtn${semester.semnumber}" style="cursor:pointer">
                   Semester ${semester.semnumber}:
                   <#if semester.courses ? has_content>
                       <#if semester.courseid1 ? has_content>
@@ -134,6 +130,9 @@
           // Get the modal
           const modal = document.getElementById("myModal");
 
+          // Get this semester text
+          const sem = document.getElementById("this-sem");
+
           // Make all semester list items open the modal
           window.onload = function() {
               const btns = document.getElementsByClassName("myBtn");
@@ -141,6 +140,7 @@
                   const btn = btns[i];
                   btn.onclick = function() {
                       modal.style.display = "block";
+                      sem.innerHTML = "Edit Semester " + btn.id.charAt(btn.id.length-1) + ":";
                   }
               }
           }
