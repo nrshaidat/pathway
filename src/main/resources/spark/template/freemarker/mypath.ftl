@@ -3,11 +3,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/logo/t.png"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/mypath.css">
-    <#--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">-->
-    <#--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>-->
-    <#--    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
     <style>
         /* The Modal (background) */
         .modal {
@@ -56,6 +56,7 @@
             color: white; /* White text */
             padding: 10px 24px; /* Some padding */
             cursor: pointer; /* Pointer/hand icon */
+            font-family: Lato;
         }
 
         #btn1 {
@@ -86,9 +87,16 @@
             z-index: 1; /* Sit on top */
             margin: 0 auto;
             width: 50%;
-            height: 50%;
+            height: 70%;
             overflow: auto; /* Enable scroll if needed */
             background-color: rgb(87, 149, 117, 0.7); /* Fallback color */
+        }
+
+        .ui-cards {
+            display:inline-flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            margin: 5% auto;
         }
 
         .ui-raised-link-card {
@@ -102,63 +110,43 @@
             margin-right: 3%;
             color: #444;
             cursor: pointer;
-        }
-        .ui-raised-link-card:nth-child(1){
-            border-color: #af3263;
-        }
-
-        .ui-raised-link-card:nth-child(2) {
-            border-color: #4CAF50;
+            padding: 2em 3.7em;
+            height: 17em;
         }
 
-        .ui-raised-link-card:nth-child(3) {
-            border-color: indigo;
-        }
+        /*.ui-raised-link-card:nth-child(1){*/
+        /*    border-color: #af3263;*/
+        /*}*/
 
-        .ui-raised-link-card:nth-child(4) {
-            border-color: skyblue;
-        }
+        /*.ui-raised-link-card:nth-child(2) {*/
+        /*    border-color: #4CAF50;*/
+        /*}*/
 
-        .ui-raised-link-card:nth-child(5) {
-            border-color: #af3263;
-        }
+        /*.ui-raised-link-card:nth-child(3) {*/
+        /*    border-color: indigo;*/
+        /*}*/
 
-        .ui-raised-link-card:nth-child(6) {
-            border-color: #4CAF50;
-        }
+        /*.ui-raised-link-card:nth-child(4) {*/
+        /*    border-color: skyblue;*/
+        /*}*/
 
-        .ui-raised-link-card:nth-child(7) {
-            border-color: indigo;
-        }
+        /*.ui-raised-link-card:nth-child(5) {*/
+        /*    border-color: #af3263;*/
+        /*}*/
 
-        .ui-raised-link-card:nth-child(8) {
-            border-color: skyblue;
-        }
-        .ui-raised-link-card:before {
-            content: '';
-            display: flex;
-            background-color: #ccc;
-            left: 20px;
-            right: 20px;
-            bottom: 0;
-            top: 5%;
-            z-index: -1;
-            box-shadow: 0 0 40px lighten(#000, 60%);
-            transition: box-shadow .2s ease-in-out;
-        }
+        /*.ui-raised-link-card:nth-child(6) {*/
+        /*    border-color: #4CAF50;*/
+        /*}*/
 
-        .ui-raised-link-card:hover {
-                &:before {
-                    box-shadow: 0 0 80px lighten(#000, 60%);
-                }
+        /*.ui-raised-link-card:nth-child(7) {*/
+        /*    border-color: indigo;*/
+        /*}*/
 
-        }
-        .ui-cards {
-            display:inline-flex;
-            flex-wrap: wrap;
-            flex-direction: row;
-            margin: 6% auto;
-        }
+        /*.ui-raised-link-card:nth-child(8) {*/
+        /*    border-color: skyblue;*/
+        /*}*/
+
+
         .header-cc_pointer{
             text-align: center;
             color: black;
@@ -169,39 +157,31 @@
             padding-top: 10px;
             padding-bottom: 5px;
         }
+
         .meta-cc_pointer{
             color: grey;
             padding-top: 3px;
             font-size: small;
             text-align: center;
         }
+
         .description {
             padding-left: 10px;
             padding-right: 10px;
         }
+
         .redirect{
             float: left;
             padding-left: 15px;
-            padding-bottom: 15px;
-        }
-        .fa fa-arrow-circle-left{
-            font-size: xx-large;
         }
 
         #submit {
-            color: white;
-            background-color: green;
-            font-size: 50px;
-            border-radius: 13px;
-            margin-bottom: 15px;
-
+            color: slategrey;
+            background: none;
+            font-size: 40px;
+            border: none;
+            cursor: pointer;
         }
-
-
-
-
-
-
 
     </style>
 </head>
@@ -214,7 +194,8 @@
 </h1>
 <div class="redirect">
     <form method="POST" action="/mypath">
-        <button id="submit" type="submit" value="Go back"><i class="fa fa-arrow-circle-left"></i>
+        <button id="submit" type="submit" value="Go back">
+            <i class="fa fa-arrow-circle-left"></i>
         </button>
     </form>
 </div>
@@ -232,24 +213,34 @@
             <br>
             <br>
             <div class="add-course">
+                <br>
                 <h4>Add A Course To This Semester</h4>
                 <div class="field">
                     <label>Courses: </label>
-                    <select name="courses" class="ui selection dropdown" multiple="" id="multi-select">
+                    <select name="courses" key="courses" id="multi-select" class="ui selection dropdown" multiple="" >
                         <#list courseList as item>
                             <option value="${item}">${item}</option>
                         </#list>
                     </select>
+                    <input style="display:none" name="result" id="result" key="result">
+
                 </div>
                 <script>
                     $('#multi-select').dropdown();
+                    $('#multi-select').dropdown('setting', 'onChange', function () {
+                        const courses = $('#multi-select').dropdown('get values');
+                        const courseString = courses.toString();
+                        const results = document.getElementById("result");
+                        results.value = courseString;
+                    });
+
                 </script>
             </div>
         </div>
     </div>
     <div class="ui-cards">
         <#list results as semester>
-            <div class="ui-raised-link-card">
+            <div class="ui-raised-link-card" id="myBtn${semester.semnumber}">
                 <div class="myBtn" id="myBtn${semester.semnumber}" style="cursor:pointer">
                     <div class="header-cc_pointer">Semester ${semester.semnumber}:
                         <div class="meta-cc_pointer">${semester?item_cycle('Fall', 'Spring')}</div>
@@ -292,13 +283,13 @@
         const addbtn = document.getElementById("btn1");
         addbtn.onclick = function () {
             adder.style.display = "block";
-            cont.style.height = '70%';
+            cont.style.height = '100%';
         }
 
 
         // Make all semester list items open the modal
         window.onload = function () {
-            const btns = document.getElementsByClassName("myBtn");
+            const btns = document.getElementsByClassName("ui-raised-link-card");
             for (let i = 0; i < btns.length; i++) {
                 const btn = btns[i];
                 btn.onclick = function () {
@@ -313,12 +304,16 @@
         // When the user clicks on <span> (x), close the modal
         span.onclick = function () {
             modal.style.display = "none";
+            adder.style.display = "none";
+            cont.style.height = '40%';
         }
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
             if (event.target === modal) {
                 modal.style.display = "none";
+                adder.style.display = "none";
+                cont.style.height = '40%';
             }
         }
 

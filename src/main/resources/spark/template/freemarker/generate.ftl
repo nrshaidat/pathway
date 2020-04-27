@@ -80,7 +80,6 @@
         <#list courseList as item>
           <option value="${item}">${item}</option>
         </#list>
-
       </select>
 
     </div>
@@ -91,17 +90,13 @@
     <script>
       window.onload = function() {
         $('#multi-select').dropdown();
-
         $('#multi-select').dropdown('setting', 'onChange', function () {
           var courses = $('#multi-select').dropdown('get values');
           var courseString = courses.toString();
           const results = document.getElementById("results");
           results.value = courseString;
         });
-
       }
-
-
     </script>
 
   <br>
