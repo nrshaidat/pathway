@@ -59,29 +59,29 @@ public class PathwayWithDatabaseTest {
 //    this.pathwayPrinter(pathwayMaker.getPath());
 //  }
 //
-  //@Test
-  public void computationalbiologyappliedmathematicsandstatisticstrackbsConcentrationTest() throws SQLException {
-    String tablename = "computationalbiologyappliedmathematicsandstatisticstrackbs";
-    List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
-    int[] reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
-    Set<Node> courseSet = cache.getConcentrationCourses(tablename);
-
-    Set<Node> taken = new HashSet<>();
-    for (Node c : courseSet) {
-      if (c.getId().equals("CSCI 0170")) {
-        taken.add(c);
-      }
-      if (c.getId().equals("MATH 0100")) {
-        taken.add(c);
-      }
-    }
-
-    Pathway pathwayMaker = new Pathway(reqs, courseSet);
-    pathwayMaker.makePathway(taken, 2, false, "med");
-    System.out.println("Computational Biology Applied Math & Statistics Track B.S.");
-    System.out.println("----");
-    this.pathwayPrinter(pathwayMaker.getPath());
-  }
+//  @Test
+//  public void computationalbiologyappliedmathematicsandstatisticstrackbsConcentrationTest() throws SQLException {
+//    String tablename = "computationalbiologyappliedmathematicsandstatisticstrackbs";
+//    List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
+//    int[] reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
+//    Set<Node> courseSet = cache.getConcentrationCourses(tablename);
+//
+//    Set<Node> taken = new HashSet<>();
+//    for (Node c : courseSet) {
+//      if (c.getId().equals("CSCI 0170")) {
+//        taken.add(c);
+//      }
+//      if (c.getId().equals("MATH 0100")) {
+//        taken.add(c);
+//      }
+//    }
+//
+//    Pathway pathwayMaker = new Pathway(reqs, courseSet);
+//    pathwayMaker.makePathway(taken, 2, false, "med");
+//    System.out.println("Computational Biology Applied Math & Statistics Track B.S.");
+//    System.out.println("----");
+//    this.pathwayPrinter(pathwayMaker.getPath());
+//  }
 //
 //  @Test
 //  public void computationalbiologycomputersciencetrackbsConcentrationTest() throws SQLException {
