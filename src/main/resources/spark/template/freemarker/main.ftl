@@ -20,7 +20,7 @@
      <!-- Login form test -->
      <h2>Login</h2>
 
-     <form action="/generate" method="post">
+     <form action="/mypath" method="post">
 
          <div class="container">
              <label name="username" id="username" for="uname"><b>${username}</b></label>

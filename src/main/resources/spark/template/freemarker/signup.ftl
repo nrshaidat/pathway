@@ -17,7 +17,7 @@
 
   <h3> Welcome to Pathway! Please enter your information below. </h3>
 
-     <form action="/generate" method="post">
+     <form action="/mypath" method="post">
 
          <div class="container">
              <label for="name"><b>Name</b></label>
