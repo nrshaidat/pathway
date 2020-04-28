@@ -178,7 +178,9 @@ a.link {
     display: inline-flex;
     flex-wrap: wrap;
     flex-direction: row;
-    margin: 5% auto;
+    position: absolute;
+    top: 25%;
+    left: 6%;
 }
 
 .ui-raised-link-card {
@@ -261,7 +263,7 @@ a.link {
 }
 
 #submit {
-    color: forestgreen;
+    color: #575757;
     background: none;
     font-size: 40px;
     border: none;

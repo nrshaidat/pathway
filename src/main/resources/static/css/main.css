@@ -26,16 +26,16 @@ input[type=text], input[type=password] {
 }
 
 button {
-    background-color: forestgreen;
+    background-color: #4eb193;
     color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
+    padding: 10px 17px;
+    margin: 8px 0 4px;
     border: none;
     cursor: pointer;
-    width: 100%;
-    border-radius: 10px;
+    width: 50%;
+    border-radius: 6px;
     font-size: medium;
-
+    font-family: Lato;
 }
 
 form {
@@ -66,7 +66,7 @@ span.psw {
 
 /* unvisited link */
 a:link {
-    color: #0000FF;
+    color: #5d7cff;
 }
 
 /* visited link */
@@ -76,15 +76,16 @@ a:visited {
 
 /* mouse over link */
 a:hover {
-    color: #FF0000;
+    color: #ff588b;
 }
 
 /* selected link */
 a:active {
-    color: blue;
+    color: #5d7cff;
 }
+
 #guest {
-    font-size: medium;
+    font-size: 14px;
     width: 30%;
     align-content: center;
     color: #f5ffff;
