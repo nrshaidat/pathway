@@ -69,9 +69,10 @@ a.link
     text-decoration: none;
 }
 
-#guest-login {
-    width: 40%;
+#guest {
+    width: 30%;
     align-content: center;
+    color:darkgrey;
 }
 
 /* Change styles for span and cancel button on extra small screens */
