@@ -19,7 +19,6 @@
 
      <br>
 
-     <!-- Login form test -->
      <h2>Login</h2>
 
      <form action="/mypath" method="post">
@@ -38,8 +37,6 @@
 
      </form>
      <br>
-
-
 
      <form action="/generate" method="post">
          <button id="guest" type="submit">Login as Guest</button>

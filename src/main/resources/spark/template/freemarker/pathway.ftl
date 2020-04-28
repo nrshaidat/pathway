@@ -10,19 +10,12 @@
 
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- In real-world webapps, css is usually minified and
-         concatenated. Here, separate normalize from our code, and
-         avoid minification for clarity. -->
-
     <link rel="shortcut icon" href="/logo/t.png"/>
     <link rel="stylesheet" href="/css/pathway.css">
 </head>
 
-
-
 <br>
 
-<#--placeholder-->
 <a href="mypath/1" class="link" name="pathway" id="pathway" value="one">
     <div id="container1">
         <header> Pathway 1 </header>
@@ -63,7 +56,6 @@
 
 <script src="js/jquery-2.1.1.js"></script>
 <script src="js/main.js"></script>
-
 
 </body>
 <script>function js_Load() {

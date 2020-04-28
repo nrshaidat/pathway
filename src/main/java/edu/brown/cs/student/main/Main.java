@@ -142,7 +142,7 @@ public final class Main {
   }
 
   /**
-   * PathLandingHandler handles the landing page for the display of the user's three pathways. 
+   * PathLandingHandler handles the landing page for the display of the user's three pathways.
    */
   private static class PathLandingHandler implements TemplateViewRoute {
 
@@ -150,8 +150,7 @@ public final class Main {
     public ModelAndView handle(Request req, Response res) throws SQLException {
       QueryParamsMap qm = req.queryMap();
       String concentration;
-      String display = null;
-
+      String display;
 
       if (qm.value("semester") == null) {
         if (pathwayProgram.getPath1()!=null) { //going from each path page to all the paths so dont
@@ -206,8 +205,6 @@ public final class Main {
         pathway3 = pathwayProgram.getPath3();
       }
 
-
-
       List<Object> titles = new ArrayList<>();
       titles.add("Pathway");
 
@@ -221,7 +218,6 @@ public final class Main {
   private static class PathwayHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
-      QueryParamsMap qm = req.queryMap();
       String pathNum = req.params(":id");
       Integer num = Integer.parseInt(pathNum);
       List<Semester> path;
@@ -248,14 +244,20 @@ public final class Main {
     }
   }
 
+  /**
+   * SignUp Handler handles the sign up page, where the user hasn't used the pathway program before.
+   */
   private static class SignUpHandler implements TemplateViewRoute {
     @Override
-    public ModelAndView handle(Request req, Response res) throws SQLException {
+    public ModelAndView handle(Request req, Response res) {
       Map<String, Object> variables = ImmutableMap.of("title", "Pathway Sign Up", "results", "");
       return new ModelAndView(variables, "signup.ftl");
     }
   }
 
+  /**
+   * FaqHandler handles the /faq page. Currently not linked.
+   */
   private static class FaqHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {

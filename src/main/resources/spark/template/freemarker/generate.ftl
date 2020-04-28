@@ -17,7 +17,6 @@
   </head>
   <body onload="js_Load()">
 
-
   <p> To generate the most accurate pathway, please input as much information as possible!
     <br> For FAQs on how we design pathways, <a href="/faqs" class="link"> click here. </a> </p>
 
@@ -71,10 +70,6 @@
   <p>Please enter courses you have received credit for: </p>
   <p><note> (Select course ids from the dropdown e.g. ECON 0110, MATH 0100, APMA 350)</note> </p>
 
-
-
-<#--  <textarea name="comments" rows="4" maxlength="200" cols="60"></textarea>-->
-
     <div class="field">
       <label>Courses: </label>
       <select class="ui selection dropdown search" multiple="" id="multi-select" value.bind="coursesTaken" >
@@ -86,7 +81,6 @@
     </div>
 
     <input style="display:none" name="results" id="results" key="results">
-
 
     <script>
       window.onload = function() {

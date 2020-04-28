@@ -17,7 +17,6 @@
   <br>
   <br>
 
-
      <h1>Sign Up</h1>
      <h3> Welcome to Pathway! Please enter your information below. </h3>
      <div class="container">
@@ -30,11 +29,6 @@
          <label for="email"><b>Email</b></label>
          <input type="text" placeholder="elon_muskerton@hotmail.com" name="email" required>
 
-<#--         <label for="uname"><b>Username</b></label>-->
-<#--         <input type="text" placeholder="Enter Username" name="uname" required>-->
-
-<#--         <label for="psw"><b>Password</b></label>-->
-<#--         <input type="password" placeholder="Enter Password" name="psw" required>-->
          <form method="POST" action="/generate">
              <button id="submit" type="submit" value="Next">
                  <i class="fa fa-arrow-circle-right"></i>
