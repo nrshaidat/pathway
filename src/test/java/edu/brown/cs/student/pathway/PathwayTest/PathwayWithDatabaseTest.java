@@ -59,7 +59,7 @@ public class PathwayWithDatabaseTest {
 //    this.pathwayPrinter(pathwayMaker.getPath());
 //  }
 //
-  @Test
+  //@Test
   public void computationalbiologyappliedmathematicsandstatisticstrackbsConcentrationTest() throws SQLException {
     String tablename = "computationalbiologyappliedmathematicsandstatisticstrackbs";
     List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");

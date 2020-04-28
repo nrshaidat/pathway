@@ -236,7 +236,7 @@
         }
 
         #submit {
-            color: slategrey;
+            color: forestgreen;
             background: none;
             font-size: 40px;
             border: none;

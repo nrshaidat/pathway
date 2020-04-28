@@ -31,7 +31,7 @@ public final class Main {
   private static final int HIGH = 40;
   private static final int LOW = 30;
   private static PathwayProgram pathwayProgram;
-  private static List<Semester> pathway1;
+  private static List<Semester> pathway1; //why is this static if they can alter them in gui
   private static List<Semester> pathway2;
   private static List<Semester> pathway3;
   private Database db;
@@ -67,9 +67,10 @@ public final class Main {
     OptionSet options = parser.parse(args);
 
     // Launch gui
-    if (options.has("gui")) {
-      runSparkServer((int) options.valueOf("port"));
-    }
+    //if (options.has("gui")) {
+      //runSparkServer((int) options.valueOf("port"));
+    //}
+    runSparkServer((int) options.valueOf("port"));
 
     db = new Database("data/coursesDB.db");
     courseList = db.getAllCourseIDs();
@@ -138,23 +139,28 @@ public final class Main {
       String display = null;
 
       if (qm.value("semester") == null) {
-        if (pathwayProgram.isSet()) {
-          concentration = "Computer Science B.A";
-          pathwayProgram.setConcentration("computerscienceba");
-          pathwayProgram.makePathways("computerscienceba", new HashSet<>(), 1,
-              false);
+        if (pathwayProgram.getPath1()!=null) { //going from each path page to all the paths so dont
+          // remake
+          // them just show the last pathways made
+          concentration = pathwayProgram.getConcentrationName();
           display = "Pathways generated for the concentration: " + concentration;
           pathway1 = pathwayProgram.getPath1();
           pathway2 = pathwayProgram.getPath2();
           pathway3 = pathwayProgram.getPath3();
-        } else {
-          display = "Please enter your rising semester";
+        } else { //use default aka user signing in and should see premade pathways
+          concentration = "Computer Science B.A";
+          pathwayProgram.setConcentration("computerscienceba");
+          pathwayProgram.makePathways("computerscienceba", new HashSet<>(), 1,false);
+          display = "Pathways generated for the concentration: " + concentration;
+          pathway1 = pathwayProgram.getPath1();
+          pathway2 = pathwayProgram.getPath2();
+          pathway3 = pathwayProgram.getPath3();
         }
-      } else {
+      } else { //new user or guest user
         concentration = qm.value("concentration");
-
         String concentrationId = pathwayProgram.getConcentrationMap()
             .get(qm.value("concentration"));
+        pathwayProgram.setConcentrationName(concentration);
         pathwayProgram.setConcentration(concentrationId);
         int semesterLevel = Integer.parseInt(qm.value("semester"));
         boolean aggressive = false;
@@ -163,7 +169,6 @@ public final class Main {
         }
         String coursestaken = qm.value("results");
         String[] cList = coursestaken.split(",");
-
         Set<Node> taken = new HashSet<>();
         for (int i = 0; i < cList.length; i++) {
           for (Node c: pathwayProgram.getCourseSet()) {
@@ -184,8 +189,8 @@ public final class Main {
       titles.add("Pathway");
 
       Map<String, Object> variables = ImmutableMap
-          .of("header", display, "results1", "Pathway 1", "results2", "Pathway 2", "results3",
-              "Pathway 3");
+          .of("header", display, "results1", pathway1, "results2", pathway2, "results3",
+              pathway3, "stats", pathwayProgram);
       return new ModelAndView(variables, "pathway.ftl");
     }
   }

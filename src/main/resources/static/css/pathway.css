@@ -75,3 +75,11 @@ a.link {
     color: grey;
     text-decoration: none;
 }
+.regen {
+    border-radius: 4px;
+    background-color: forestgreen;
+    color:white;
+    font-size: larger;
+    padding:7px;
+    margin:2%;
+}

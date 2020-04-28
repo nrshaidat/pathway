@@ -26,7 +26,7 @@ input[type=text], input[type=password] {
 }
 
 button {
-    background-color: lightgray;
+    background-color: forestgreen;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -34,6 +34,7 @@ button {
     cursor: pointer;
     width: 100%;
     border-radius: 10px;
+    font-size: medium;
 
 }
 
@@ -63,16 +64,30 @@ span.psw {
     padding-top: 16px;
 }
 
-a.link
-{
-    color:grey;
-    text-decoration: none;
+/* unvisited link */
+a:link {
+    color: #0000FF;
 }
 
+/* visited link */
+a:visited {
+    color: #800080;
+}
+
+/* mouse over link */
+a:hover {
+    color: #FF0000;
+}
+
+/* selected link */
+a:active {
+    color: blue;
+}
 #guest {
+    font-size: medium;
     width: 30%;
     align-content: center;
-    color:darkgrey;
+    color: #f5ffff;
 }
 
 /* Change styles for span and cancel button on extra small screens */

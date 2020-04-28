@@ -25,8 +25,10 @@
     <div id="container1">
         <header> Pathway 1 </header>
 
-        <p> # Semesters: 6</p>
-        <p> Average Workload (hrs): 23.6 </p>
+        <p> Number of Semesters: ${stats.numsemesters1}</p>
+        <p> Number of Courses: ${stats.totalnumcourses1}</p>
+        <p> Average Workload Per Semester (hrs): ${stats.avgavghrs1sem} </p>
+        <p> Average Workload Per Course (hrs): ${stats.avgavghrs1path} </p>
     </div>
 </a>
 
@@ -34,8 +36,10 @@
     <div id="container2">
         <header> Pathway 2 </header>
 
-        <p> # Semesters: 6</p>
-        <p> Average Workload (hrs): 23.6 </p>
+        <p> Number of Semesters: ${stats.numsemesters2}</p>
+        <p> Number of Courses: ${stats.totalnumcourses2}</p>
+        <p> Average Workload Per Semester (hrs): ${stats.avgavghrs2sem}  </p>
+        <p> Average Workload Per Course (hrs): ${stats.avgavghrs2path} </p>
     </div>
 </a>
 
@@ -43,13 +47,15 @@
     <div id="container3">
         <header> Pathway 3 </header>
 
-        <p> # Semesters: 6</p>
-        <p> Average Workload (hrs): 23.6 </p>
+        <p> Number of Semesters: ${stats.numsemesters3}</p>
+        <p> Number of Courses: ${stats.totalnumcourses3}</p>
+        <p> Average Workload Per Semester (hrs): ${stats.avgavghrs3sem}  </p>
+        <p> Average Workload Per Course (hrs): ${stats.avgavghrs3path} </p>
     </div>
 </a>
-
+<br>
 <form action="/generate" method="post">
-    <button type="submit">Generate Another Pathway</button>
+    <button class="regen" type="submit">Generate New Pathways</button>
 </form>
 
 

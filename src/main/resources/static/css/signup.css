@@ -1,0 +1,26 @@
+
+#submit {
+    color: forestgreen;
+    background: none;
+    font-size: 40px;
+    border: none;
+    cursor: pointer;
+    float:right;
+}
+.button{
+    float:right
+}
+
+.container {
+    padding: 16px;
+    display: inline-flex;
+    flex-direction: column;
+    margin-left: 40%;
+}
+.label {
+    display:inline-grid;
+}
+.input {
+    display: inline-flex;
+    flex-direction: row;
+}

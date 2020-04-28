@@ -84,7 +84,7 @@ public class CriticalReviewScrapingTest {
    * correctly regardless if there is missing hour data or not. We use a set of default values if
    * CR doesn't contain data.
    */
-  @Test
+  //@Test
   public void testMissingData() throws SQLException {
     this.setUp();
 
@@ -143,7 +143,7 @@ public class CriticalReviewScrapingTest {
    * Tests the courses that CR has no data for. Some courses don't use Critical Review, so we
    * account for that by using default values, which are listed below.
    */
-  @Test
+  //@Test
   public void testNotCR() throws SQLException {
 
     this.setUp();

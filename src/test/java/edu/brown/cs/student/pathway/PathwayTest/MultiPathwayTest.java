@@ -27,7 +27,7 @@ public class MultiPathwayTest {
   public void tearDown() {
     cache = null;
   }
-  @Test
+  //@Test
   public void testCSPathways() throws SQLException {
     String tablename = "computerscienceba";
     List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");
@@ -36,7 +36,7 @@ public class MultiPathwayTest {
     PathwayMaker pm = new PathwayMaker(tablename, reqs, new HashSet<>(), 1);
     pm.makePathways();
   }
-  @Test
+  //@Test
   public void testChemPathways() throws SQLException {
     String tablename = "chemistryba";
     List<Integer> reqsTmp = cache.getRequirements(tablename + "_rules");

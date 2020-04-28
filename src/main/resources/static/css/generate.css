@@ -29,6 +29,8 @@ body {
 }
 
 .ui.button {
+    color:white;
+    background-color: forestgreen;
     width: 100px;
 }
 
@@ -69,7 +71,7 @@ note {
 }
 
 button {
-    background-color: lightgray;
+    background-color: forestgreen;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -86,7 +88,7 @@ button {
 }
 
 button {
-    background-color: lightgray;
+    background-color: forestgreen;
     color: white;
     justify-content: space-around;
     alignment: center;
