@@ -46,6 +46,7 @@ None.
         -Routing and various handling of user input
         -Styling and adding functionality to front end (pathway boxes and arrows)
         -Extensive debugging of all parts (db, algo & frontend)
+	    -Setting up login, login as guest, and sign up routing CORRECTLY
 
 	Mel:
         -Critical Review scraping
@@ -67,14 +68,12 @@ None.
          for all courses in CHEM, PHYS, HIAA.
         -Implementing customization functionality on the front and back end (add, move, swap)
         -Styling and adding functionality to front end (add, move & swap modal/capability, pathway boxes and arrows)
-         
-        
-        
         
     Nick:
         -CAB/self service scraping
-        -Manually fixing prereqs
+        -Manually fixing prereqs for CHEM
         -Unit testing CAB database outputs
+        -Exploring how to apply multithreaidng to pathway creation
 		
 
 #### Member: Melissa Cui
