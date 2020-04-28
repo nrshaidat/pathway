@@ -36,9 +36,10 @@
 
      </form>
      <br>
-     <form action="/generate" method="post">
-         <button type="submit">Login as Guest</button>
-     </form>
+
+
+
+  <h3> <a href="/generate" method="post" class="link"> Login as Guest </a> </h3>
 
   <h3> <a href="/signup" class="link"> Sign Up </a> </h3>
 

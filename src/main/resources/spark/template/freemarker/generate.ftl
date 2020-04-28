@@ -77,7 +77,7 @@
 
     <div class="field">
       <label>Courses: </label>
-      <select name="courses" key="courses" id="multi-select" class="ui selection dropdown" multiple="" value.bind="coursesTaken" >
+      <select class="ui selection dropdown search" multiple="" id="multi-select" value.bind="coursesTaken" >
         <#list courseList as item>
           <option value="${item}">${item}</option>
         </#list>
