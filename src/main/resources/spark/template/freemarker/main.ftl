@@ -25,7 +25,7 @@
      <form action="/mypath" method="post">
 
          <div class="container">
-             <label name="username" id="username" for="uname"><b>${username}</b></label>
+             <label name="username" id="username" for="uname"><b></b></label>
              <input name="username" id="username"
                     type="text" placeholder="Enter Username" name="uname" value="" required>
 

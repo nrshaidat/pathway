@@ -66,10 +66,6 @@ public final class Main {
     parser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(DEFAULT_PORT);
     OptionSet options = parser.parse(args);
 
-    // Launch gui
-    //if (options.has("gui")) {
-      //runSparkServer((int) options.valueOf("port"));
-    //}
     runSparkServer((int) options.valueOf("port"));
 
     db = new Database("data/coursesDB.db");
@@ -92,6 +88,10 @@ public final class Main {
     return new FreeMarkerEngine(config);
   }
 
+  /**
+   * Sets up the Spark server, with the 5 unique pages we have right now.
+   * @param port Default port is 4567.
+   */
   private void runSparkServer(int port) {
     Spark.port(port);
     Spark.externalStaticFileLocation("src/main/resources/static");
@@ -99,7 +99,7 @@ public final class Main {
     FreeMarkerEngine freeMarker = createEngine();
     // Setup Spark Routes
     Spark.get("/login", new LoginHandler(), freeMarker);
-    Spark.post("/generate", new MyPathHandler(), freeMarker);
+    Spark.post("/generate", new GenerateHandler(), freeMarker);
     Spark.get("/faqs", new FaqHandler(), freeMarker);
     Spark.get("/signup", new SignUpHandler(), freeMarker);
     Spark.post("/mypath", new PathLandingHandler(), freeMarker);
@@ -107,20 +107,31 @@ public final class Main {
 
   }
 
+  /**
+   * LoginHandler handles the main landing page, logging in at /login. On the main login
+   * page, the user has the option to log in as a user which gives them their already chosen pathway.
+   * They can also choose to create an account or login is a guest, which will directly take them to
+   * the generate page.
+   */
   private static class LoginHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
       Map<String, Object> variables =
-          ImmutableMap.of("title", "Pathway", "username", "");
+          ImmutableMap.of("title", "Pathway");
       return new ModelAndView(variables, "main.ftl");
     }
 
   }
 
-  private static class MyPathHandler implements TemplateViewRoute {
+  /**
+   * GenerateHandler handles the /generate page. The generate page is where the user puts in the
+   * necessary information in order to run the Pathway program. The ftl file uses two variables from the
+   * database, the concentrationList and the courseList. These two variables are used for the dropdown menus
+   * so the user can select a concentration and courses they've received credit for.
+   */
+  private static class GenerateHandler implements TemplateViewRoute {
     @Override
-    public ModelAndView handle(Request req, Response res) throws SQLException {
-      QueryParamsMap qm = req.queryMap();
+    public ModelAndView handle(Request req, Response res) {
 
       Map<String, Object> variables = ImmutableMap
           .of("title", "Pathway", "results", "", "concentrationList", concentrationList,
@@ -130,6 +141,9 @@ public final class Main {
 
   }
 
+  /**
+   * PathLandingHandler handles the landing page for the display of the user's three pathways. 
+   */
   private static class PathLandingHandler implements TemplateViewRoute {
 
     @Override
