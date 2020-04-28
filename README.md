@@ -46,7 +46,7 @@ None.
         -Routing and various handling of user input
         -Styling and adding functionality to front end (pathway boxes and arrows)
         -Extensive debugging of all parts (db, algo & frontend)
-	-Setting up login, login as guest, and sign up routing CORRECTLY
+	    -Setting up login, login as guest, and sign up routing CORRECTLY
 
 	Mel:
         -Critical Review scraping
