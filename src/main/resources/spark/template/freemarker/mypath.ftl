@@ -71,6 +71,16 @@
             background-color: #af3263; /* Magenta-pink background */
         }
 
+        #btn-add-confirm {
+            background-color: #4CAF50; /* Green background */
+            border: none;
+            border-radius: 4px;
+            color: white; /* White text */
+            padding: 10px 10px; /* Some padding */
+            cursor: pointer; /* Pointer/hand icon */
+            font-family: Lato;
+        }
+
         /* Clear floats (clearfix hack) */
         .btn-group:after {
             content: "";
@@ -92,6 +102,16 @@
             background-color: rgb(87, 149, 117, 0.7); /* Fallback color */
         }
 
+        .move-course {
+            display: none; /* Hidden by default */
+            z-index: 1; /* Sit on top */
+            margin: 0 auto;
+            width: 50%;
+            height: 70%;
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(38, 168, 180, 0.7); /* Fallback color */
+        }
+
         .ui-cards {
             display:inline-flex;
             flex-wrap: wrap;
@@ -103,15 +123,14 @@
             display:flex;
             background-color: #fff;
             border-radius: 4px;
-            border: solid;
-            border-width: medium;
+            border: medium solid;
             margin-bottom: 3%;
             margin-left: 3%;
             margin-right: 3%;
             color: #444;
             cursor: pointer;
             padding: 2em 3.7em;
-            height: 17em;
+            height: 21em;
         }
 
         /*.ui-raised-link-card:nth-child(1){*/
@@ -183,6 +202,11 @@
             cursor: pointer;
         }
 
+        .ui.fluid.search.selection.dropdown {
+            width: 70%;
+            margin: 2% auto 0;
+        }
+
     </style>
 </head>
 <body>
@@ -192,6 +216,7 @@
         ${node}
     </#list>
 </h1>
+<p>Click on a semester to customize it! Refresh the page if you wish to revert to the original pathway.</p>
 <div class="redirect">
     <form method="POST" action="/mypath">
         <button id="submit" type="submit" value="Go back">
@@ -217,25 +242,43 @@
                 <h4>Add A Course To This Semester</h4>
                 <div class="field">
                     <label>Courses: </label>
-                    <select name="courses" key="courses" id="multi-select" class="ui selection dropdown" multiple="" >
+                    <select name="courses" key="courses" id="multi-select" class="ui fluid search selection dropdown" multiple="">
                         <#list courseList as item>
                             <option value="${item}">${item}</option>
                         </#list>
                     </select>
-                    <input style="display:none" name="result" id="result" key="result">
+                    <br>
+                    <button id="btn-add-confirm">Confirm Changes</button>
+                    <br>
+                    <br>
+                    <br>
+                    <p id="add-confirm" style="display:none">Semester Updated!</p>
 
                 </div>
                 <script>
                     $('#multi-select').dropdown();
-                    $('#multi-select').dropdown('setting', 'onChange', function () {
-                        const courses = $('#multi-select').dropdown('get values');
-                        const courseString = courses.toString();
-                        const results = document.getElementById("result");
-                        results.value = courseString;
-                    });
-
                 </script>
             </div>
+
+            <div class="move-course">
+                <br>
+                <h4>Move A Course From This Semester To Another Semester</h4>
+                <div class="field">
+<#--                    <label>Courses: </label>-->
+<#--                    <select name="courses" key="courses" id="multi-select" class="ui fluid search selection dropdown" multiple="">-->
+<#--                        <#list courseList as item>-->
+<#--                            <option value="${item}">${item}</option>-->
+<#--                        </#list>-->
+<#--                    </select>-->
+<#--                    <br>-->
+<#--                    <button id="btn-add-confirm">Confirm Changes</button>-->
+<#--                    <br>-->
+<#--                    <br>-->
+<#--                    <br>-->
+<#--                    <p id="add-confirm" style="display:none">Semester Updated!</p>-->
+                </div>
+            </div>
+
         </div>
     </div>
     <div class="ui-cards">
@@ -246,6 +289,7 @@
                         <div class="meta-cc_pointer">${semester?item_cycle('Fall', 'Spring')}</div>
                     </div>
                     <div class="description">
+                        <br>
                         <#if semester.courses ? has_content>
                             <#if semester.courseid1 ? has_content>
                                 <p>${semester.courseid1}</p>
@@ -276,14 +320,48 @@
         const sem = document.getElementById("this-sem");
         // Get course adder
         const adder = document.getElementsByClassName("add-course")[0];
-
+        // Get course adder
+        const mover = document.getElementsByClassName("move-course")[0];
+        // Get modal content
         const cont = document.getElementsByClassName("modal-content")[0];
+        // Get confrim add message
+        const addconfirm = document.getElementById("add-confirm");
 
         // Get add button and make is show adder
         const addbtn = document.getElementById("btn1");
         addbtn.onclick = function () {
             adder.style.display = "block";
+            
+            mover.style.display = "none";
             cont.style.height = '100%';
+        }
+
+        // Get add button and make is show adder
+        const movbtn = document.getElementById("btn2");
+        movbtn.onclick = function () {
+            mover.style.display = "block";
+
+            adder.style.display = "none";
+            cont.style.height = '100%';
+        }
+
+        // Get add confirm button and it add courses
+        const addconfirmbtn = document.getElementById("btn-add-confirm");
+        addconfirmbtn.onclick = function () {
+            const courses = $('#multi-select').dropdown('get values');
+            const sem = document.getElementById("this-sem");
+            const text = sem.innerText.trim();
+            const lastCharacter = text[text.length - 2];
+            const parent = document.getElementById("myBtn"+lastCharacter);
+            const child = parent.querySelectorAll(".description")[0];
+
+            for (let i = 0; i < courses.length; i++) {
+                const node = document.createElement("P");
+                node.innerHTML = courses[i];
+                child.appendChild(node);
+            }
+
+            addconfirm.style.display = "block";
         }
 
 
@@ -305,6 +383,7 @@
         span.onclick = function () {
             modal.style.display = "none";
             adder.style.display = "none";
+            addconfirm.style.display = "none";
             cont.style.height = '40%';
         }
 
@@ -313,6 +392,7 @@
             if (event.target === modal) {
                 modal.style.display = "none";
                 adder.style.display = "none";
+                addconfirm.style.display = "none";
                 cont.style.height = '40%';
             }
         }
