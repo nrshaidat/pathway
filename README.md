@@ -36,37 +36,50 @@ None.
 ## Partner division of labor:
 
     Natalie:
-        -Database and its unit tests
+        -Database and comprehensive unit tests
         -Integrating CAB scraping to main sql database
-        -Manually double checking, fixing inaccurate prereqs, and entering missing prereqs for all courses in MATH, APMA, BIOL, CSCI.
+        -Manually double checking, fixing inaccurate prereqs, and entering missing prereqs 
+         for all courses in MATH, APMA, BIOL, CSCI.
         -Figured shibboleth authentication for all scraping
-        -Cleaning CAB parsing data (removing nulls, extra commas, numbers), debugging cab scraping, and 
-	figuring out CAB/self service scraping 
+        -Cleaning CAB parsing data (removing nulls, extra commas, numbers), debugging cab 
+         scraping, and figuring out CAB / Self Service scraping 
+        -Routing and various handling of user input
+        -Styling and adding functionality to front end (pathway boxes and arrows)
+        -Extensive debugging of all parts (db, algo & frontend)
 
 	Mel:
-        -Critical review scraping
-        -Login setup 
-        -Concentration table in the database
-        -Connecting spark to java 
-        -REPL
+        -Critical Review scraping
         -Manually double checking, fixing inaccurate prereqs, and entering missing prereqs for all courses in ECON
-    
+        -Concentrations table in the database
+        -Connecting Spark to our Java code
+        -Setting up the entire front end framework
+        -Routing, alerting and comprehensive handling of user input
+        -Styling and adding functionality to front end (login, faq, main form, 3-pathway display)
+        -Transitioned styling to semantic ui to improve user experience
+       
 	Ifechi:
+        -Developing and optimizing fundamental makePathway algorithm
+        -Layering complexity onto the algorithm: weighting courses based on different Bayesian stastical 
+         measures, fast weighted shuffle using binary search, and tracking lag for pacing of pathways
         -Pathway package
-        -Pathway algorithm
-        -Optimizations in the algorithm 
-        -Shuffling and weights addition to the courses
-        -Junit testing for pathway
+        -Junit testing for makePathway algorithm (by-hand and with the database)
+        -Manually double checking, fixing inaccurate prereqs, and entering missing prereqs 
+         for all courses in CHEM, PHYS, HIAA.
+        -Implementing customization functionality on the front and back end (add, move, swap)
+        -Styling and adding functionality to front end (add, move & swap modal/capability, pathway boxes and arrows)
+         
+        
+        
         
     Nick:
-        -Courses at Brown / Self Service scraping
-        -Manually fixing prereqs for various departments
+        -CAB/self service scraping
+        -Manually fixing prereqs
         -Unit testing CAB database outputs
 		
 
 #### Member: Melissa Cui
 ##### Strengths
-- Writing comments and System/JUnit tests
+- Writing comments and system/JUnit tests
 - Good logical structure when thinking about project design 
 - Starts projects way ahead of time 
 - Familiar with SQL, Pandas, Matplotlib
@@ -83,7 +96,7 @@ None.
 - Profiling 
 - Familiar with SQL, MATLAB
 - Hard workers, starts projects early 
-
+- Debugging 
 ##### Weaknesses: 
 - Takes longer to do non-stimulating tasks
 - Unit Tests & Commenting 
@@ -93,24 +106,21 @@ None.
 
 #### Member: Ifechi Ilozor
 ##### Strengths
-- Modular Code
-- Testing before Integrating 
-- Front End 
+- Algorithm design & Testing
+- Front End (functionality & styling)
 - Math & Statistics 
-
+- Debugging 
+- Hard worker, good organizer
 ##### Weaknesses: 
 - Commenting code fully
-- SQL statements 
 - Package Structure 
-- Workloads accross weeks can vary
+- Workloads across weeks can vary
 
 
 #### Member: Nicholas Keirstead
 ##### Strengths
 - Java & IntelliJ Features 
 - Optimizing Code 
-- Debugging 
-- Writing and Communication with Team members
 
 ##### Weaknesses: 
 - Time Management 
