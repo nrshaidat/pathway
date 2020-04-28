@@ -109,9 +109,8 @@ public final class Main {
   private static class LoginHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
-      String status = "";
       Map<String, Object> variables =
-          ImmutableMap.of("title", "Pathway", "loginStatus", status, "username", "");
+          ImmutableMap.of("title", "Pathway", "username", "");
       return new ModelAndView(variables, "main.ftl");
     }
 
@@ -121,20 +120,10 @@ public final class Main {
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
       QueryParamsMap qm = req.queryMap();
-      /* If the user signed up, set username to their first name. If the user only signed in,
-      set the username to their username. If the user signed in as guest, set the username to
-      "Guest"
-       */
-      if (qm.value("name") != null) {
-        username = qm.value("name");
-      } else if (qm.value("username") != null) {
-        username = qm.value("username");
-      } else {
-        username = "Guest";
-      }
+
       Map<String, Object> variables = ImmutableMap
           .of("title", "Pathway", "results", "", "concentrationList", concentrationList,
-              "courseList", courseList, "username", username);
+              "courseList", courseList);
       return new ModelAndView(variables, "generate.ftl");
     }
 

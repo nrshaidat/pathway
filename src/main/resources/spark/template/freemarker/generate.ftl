@@ -2,7 +2,6 @@
   <head>
     <meta charset="utf-8">
     <title>${title}</title>
-      <h3>Welcome, ${username}!</h3>
       <h1>Generate a Pathway</h1>
 
 

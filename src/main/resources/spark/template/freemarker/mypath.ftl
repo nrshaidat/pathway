@@ -133,39 +133,6 @@
             height: 21em;
         }
 
-        /*.ui-raised-link-card:nth-child(1){*/
-        /*    border-color: #af3263;*/
-        /*}*/
-
-        /*.ui-raised-link-card:nth-child(2) {*/
-        /*    border-color: #4CAF50;*/
-        /*}*/
-
-        /*.ui-raised-link-card:nth-child(3) {*/
-        /*    border-color: indigo;*/
-        /*}*/
-
-        /*.ui-raised-link-card:nth-child(4) {*/
-        /*    border-color: skyblue;*/
-        /*}*/
-
-        /*.ui-raised-link-card:nth-child(5) {*/
-        /*    border-color: #af3263;*/
-        /*}*/
-
-        /*.ui-raised-link-card:nth-child(6) {*/
-        /*    border-color: #4CAF50;*/
-        /*}*/
-
-        /*.ui-raised-link-card:nth-child(7) {*/
-        /*    border-color: indigo;*/
-        /*}*/
-
-        /*.ui-raised-link-card:nth-child(8) {*/
-        /*    border-color: skyblue;*/
-        /*}*/
-
-
         .header-cc_pointer{
             text-align: center;
             color: black;

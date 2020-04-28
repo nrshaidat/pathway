@@ -17,9 +17,6 @@
 
      <br>
 
-     <!-- Informing the user if they logged in incorrectly -->
-     ${loginStatus}
-
      <!-- Login form test -->
      <h2>Login</h2>
 
@@ -28,7 +25,7 @@
          <div class="container">
              <label name="username" id="username" for="uname"><b>${username}</b></label>
              <input name="username" id="username"
-                    type="text" placeholder="Enter Username" name="uname" value="${username}" required>
+                    type="text" placeholder="Enter Username" name="uname" value="" required>
 
              <label name="password" id="password" for="psw"><b>Password</b></label>
              <input name="password" id="password"
@@ -42,9 +39,6 @@
      <form action="/generate" method="post">
          <button type="submit">Login as Guest</button>
      </form>
-
-
-
 
   <h3> <a href="/signup" class="link"> Sign Up </a> </h3>
 
