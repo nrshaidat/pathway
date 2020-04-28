@@ -38,7 +38,7 @@ public final class Main {
   private static List<String> courseList;
   private static List<String> concentrationList;
   private static String username;
-  private static String sampleConcentration;
+
 
   /**
    * The initial method called when execution begins.
@@ -150,6 +150,11 @@ public final class Main {
 
       if (qm.value("semester") == null) {
         if (pathwayProgram.isSet()) {
+          concentration = "Computer Science B.A";
+          pathwayProgram.setConcentration("computerscienceba");
+          pathwayProgram.makePathways("computerscienceba", new HashSet<>(), 1,
+              false);
+          display = "Pathways generated for the concentration: " + concentration;
           pathway1 = pathwayProgram.getPath1();
           pathway2 = pathwayProgram.getPath2();
           pathway3 = pathwayProgram.getPath3();
