@@ -285,4 +285,9 @@
     }
 </script>
 </body>
+<script>function js_Load() {
+        document.body.style.visibility='visible';
+    }
+</script>
+<noscript><style> body { visibility: visible; }</style></noscript>
 </html>

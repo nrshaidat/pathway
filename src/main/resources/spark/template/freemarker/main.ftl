@@ -3,7 +3,9 @@
     <meta charset="utf-8">
 
     <title>${title}</title>
-    <h1>Welcome to Pathway</h1>
+
+    <body style="visibility: hidden;" onload= "js_Load()">
+    <h1 >Welcome to Pathway</h1>
 
     <p>Your personalized concentration pathway generator for Brown University.</p>
     <title></title>
@@ -11,7 +13,7 @@
     <link rel="shortcut icon" href="/logo/t.png"/>
     <link rel="stylesheet" href="/css/main.css">
   </head>
-  <body>
+
      <script src="js/jquery-2.1.1.js"></script>
      <script src="js/main.js"></script>
 
@@ -53,5 +55,10 @@
   </p>
 
   </body>
+<script>function js_Load() {
+        document.body.style.visibility='visible';
+    }
+</script>
+<noscript><style> body { visibility: visible; }</style></noscript>
 
 </html>

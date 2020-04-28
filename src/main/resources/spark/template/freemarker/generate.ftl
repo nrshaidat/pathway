@@ -15,7 +15,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
   </head>
-  <body>
+  <body onload="js_Load()">
 
 
   <p> To generate the most accurate pathway, please input as much information as possible!
@@ -123,6 +123,12 @@
   <script src="js/jquery-2.1.1.js"></script>
   <script src="js/main.js"></script>
 
+  <script>function js_Load() {
+      document.body.style.visibility='visible';
+    }
+  </script>
+  <noscript><style> body { visibility: visible; }</style></noscript>
 
   </body>
+
 </html>

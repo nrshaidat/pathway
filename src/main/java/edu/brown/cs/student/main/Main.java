@@ -138,11 +138,15 @@ public final class Main {
       String concentration;
       String display = null;
 
+
       if (qm.value("semester") == null) {
         if (pathwayProgram.getPath1()!=null) { //going from each path page to all the paths so dont
           // remake
           // them just show the last pathways made
           concentration = pathwayProgram.getConcentrationName();
+          if (concentration == null) {
+            concentration = "Computer Science B.A";
+          }
           display = "Pathways generated for the concentration: " + concentration;
           pathway1 = pathwayProgram.getPath1();
           pathway2 = pathwayProgram.getPath2();
@@ -158,6 +162,9 @@ public final class Main {
         }
       } else { //new user or guest user
         concentration = qm.value("concentration");
+        if (concentration == null) {
+          concentration = "Computer Science B.A";
+        }
         String concentrationId = pathwayProgram.getConcentrationMap()
             .get(qm.value("concentration"));
         pathwayProgram.setConcentrationName(concentration);
@@ -184,6 +191,8 @@ public final class Main {
         pathway2 = pathwayProgram.getPath2();
         pathway3 = pathwayProgram.getPath3();
       }
+
+
 
       List<Object> titles = new ArrayList<>();
       titles.add("Pathway");
