@@ -11,7 +11,12 @@
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/main.js"></script>
   </head>
-  <body>
+  <body style="visibility: hidden;" onload= "js_Load()">
+
+  <br>
+  <br>
+  <br>
+
 
      <h1>Sign Up</h1>
      <h3> Welcome to Pathway! Please enter your information below. </h3>
@@ -25,11 +30,11 @@
          <label for="email"><b>Email</b></label>
          <input type="text" placeholder="elon_muskerton@hotmail.com" name="email" required>
 
-         <label for="uname"><b>Username</b></label>
-         <input type="text" placeholder="Enter Username" name="uname" required>
+<#--         <label for="uname"><b>Username</b></label>-->
+<#--         <input type="text" placeholder="Enter Username" name="uname" required>-->
 
-         <label for="psw"><b>Password</b></label>
-         <input type="password" placeholder="Enter Password" name="psw" required>
+<#--         <label for="psw"><b>Password</b></label>-->
+<#--         <input type="password" placeholder="Enter Password" name="psw" required>-->
          <form method="POST" action="/generate">
              <button id="submit" type="submit" value="Next">
                  <i class="fa fa-arrow-circle-right"></i>
@@ -38,4 +43,9 @@
      </div>
 
   </body>
+<script>function js_Load() {
+        document.body.style.visibility='visible';
+    }
+</script>
+<noscript><style> body { visibility: visible; }</style></noscript>
 </html>

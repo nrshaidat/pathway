@@ -2,6 +2,8 @@
 <head>
     <meta charset="utf-8">
     <title>Pathway</title>
+
+    <body style="visibility: hidden;" onload= "js_Load()">
     <h1>My Pathways</h1>
 
     <p>${header}</p>
@@ -15,7 +17,7 @@
     <link rel="shortcut icon" href="/logo/t.png"/>
     <link rel="stylesheet" href="/css/pathway.css">
 </head>
-<body>
+
 
 
 <br>
@@ -64,5 +66,10 @@
 
 
 </body>
+<script>function js_Load() {
+        document.body.style.visibility='visible';
+    }
+</script>
+<noscript><style> body { visibility: visible; }</style></noscript>
 
 </html>
