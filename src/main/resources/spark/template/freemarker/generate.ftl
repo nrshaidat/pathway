@@ -102,7 +102,7 @@
 
   <br>
 
-    <input class = "ui button" id = "btnSubmit" type="submit" value="Submit"/>
+    <input class = "ui button" id = "btnSubmit" type="submit" value="Generate"/>
     <script>
       function submitForm() {
 

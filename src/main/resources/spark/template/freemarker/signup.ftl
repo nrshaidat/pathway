@@ -4,7 +4,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/logo/t.png"/>
     <link rel="stylesheet" href="/css/signup.css">
-    <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -31,12 +30,12 @@
 
          <label for="psw"><b>Password</b></label>
          <input type="password" placeholder="Enter Password" name="psw" required>
+         <form method="POST" action="/generate">
+             <button id="submit" type="submit" value="Next">
+                 <i class="fa fa-arrow-circle-right"></i>
+             </button>
+         </form>
      </div>
-     <form method="POST" action="/generate">
-         <button id="submit" type="submit" value="Next">
-             <i class="fa fa-arrow-circle-right"></i>
-         </button>
-     </form>
 
   </body>
 </html>
