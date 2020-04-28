@@ -37,6 +37,8 @@ public final class Main {
   private Database db;
   private static List<String> courseList;
   private static List<String> concentrationList;
+  private static String username;
+
 
   /**
    * The initial method called when execution begins.
@@ -107,9 +109,8 @@ public final class Main {
   private static class LoginHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
-      String status = "";
       Map<String, Object> variables =
-          ImmutableMap.of("title", "Pathway", "loginStatus", status, "username", "");
+          ImmutableMap.of("title", "Pathway", "username", "");
       return new ModelAndView(variables, "main.ftl");
     }
 
@@ -118,6 +119,8 @@ public final class Main {
   private static class MyPathHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
+      QueryParamsMap qm = req.queryMap();
+
       Map<String, Object> variables = ImmutableMap
           .of("title", "Pathway", "results", "", "concentrationList", concentrationList,
               "courseList", courseList);
@@ -134,8 +137,13 @@ public final class Main {
       String concentration;
       String display = null;
 
-      if (qm.value("semester")==null) {
+      if (qm.value("semester") == null) {
         if (pathwayProgram.isSet()) {
+          concentration = "Computer Science B.A";
+          pathwayProgram.setConcentration("computerscienceba");
+          pathwayProgram.makePathways("computerscienceba", new HashSet<>(), 1,
+              false);
+          display = "Pathways generated for the concentration: " + concentration;
           pathway1 = pathwayProgram.getPath1();
           pathway2 = pathwayProgram.getPath2();
           pathway3 = pathwayProgram.getPath3();
@@ -145,21 +153,21 @@ public final class Main {
       } else {
         concentration = qm.value("concentration");
 
-        String concentrationId = pathwayProgram.getConcentrationMap().get(qm.value("concentration"));
+        String concentrationId = pathwayProgram.getConcentrationMap()
+            .get(qm.value("concentration"));
         pathwayProgram.setConcentration(concentrationId);
-        
         int semesterLevel = Integer.parseInt(qm.value("semester"));
         boolean aggressive = false;
         if (qm.value("aggressive") != null) {
           aggressive = true;
         }
         String coursestaken = qm.value("results");
-        String[] courseList = coursestaken.split(",");
+        String[] cList = coursestaken.split(",");
 
         Set<Node> taken = new HashSet<>();
-        for (int i = 0; i < courseList.length; i++) {
+        for (int i = 0; i < cList.length; i++) {
           for (Node c: pathwayProgram.getCourseSet()) {
-            if (c.getId().equals(courseList[i])) {
+            if (c.getId().equals(cList[i])) {
               taken.add(c);
             }
           }

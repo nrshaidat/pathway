@@ -7,7 +7,6 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.Collections;
 import java.util.Comparator;
-import java.lang.Math;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Range;
 

@@ -1,4 +1,6 @@
-
+h3 {
+    text-align: right;
+}
 body {
     background-color: whitesmoke;
     text-align: center;

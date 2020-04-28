@@ -2,7 +2,8 @@
   <head>
     <meta charset="utf-8">
     <title>${title}</title>
-    <h1>Generate a Pathway</h1>
+      <h1>Generate a Pathway</h1>
+
 
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,7 +42,7 @@
 
   <p> Enter Rising semester number: </p>
     <div class="ui input focus">
-      <input type="number" name ="semester" id ="semester" placeholder="Enter semester...">
+      <input type="number" name ="semester" id ="semester" placeholder="Enter semester..." required>
     </div>
 
     <br>
@@ -49,7 +50,7 @@
 
     <p> Enter workload preferences: </p>
     <div class="ui right labeled input">
-      <input type="number" name = "workload" id= "workload" placeholder="Enter workload">
+      <input type="number" name = "workload" id= "workload" placeholder="Enter workload" required>
       <div class="ui basic label">
         hours
       </div>
@@ -76,7 +77,7 @@
 
     <div class="field">
       <label>Courses: </label>
-      <select name="courses" key="courses" id="multi-select" class="ui selection dropdown" multiple="" value.bind="coursesTaken" >
+      <select class="ui selection dropdown search" multiple="" id="multi-select" value.bind="coursesTaken" >
         <#list courseList as item>
           <option value="${item}">${item}</option>
         </#list>
