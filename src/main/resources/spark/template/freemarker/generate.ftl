@@ -2,7 +2,9 @@
   <head>
     <meta charset="utf-8">
     <title>${title}</title>
-    <h1>Generate a Pathway</h1>
+      <h3>Welcome, ${username}!</h3>
+      <h1>Generate a Pathway</h1>
+
 
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,7 +43,7 @@
 
   <p> Enter Rising semester number: </p>
     <div class="ui input focus">
-      <input type="number" name ="semester" id ="semester" placeholder="Enter semester...">
+      <input type="number" name ="semester" id ="semester" placeholder="Enter semester..." required>
     </div>
 
     <br>
@@ -49,7 +51,7 @@
 
     <p> Enter workload preferences: </p>
     <div class="ui right labeled input">
-      <input type="number" name = "workload" id= "workload" placeholder="Enter workload">
+      <input type="number" name = "workload" id= "workload" placeholder="Enter workload" required>
       <div class="ui basic label">
         hours
       </div>
