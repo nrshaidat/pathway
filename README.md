@@ -74,6 +74,7 @@ None.
         -Manually fixing prereqs for CHEM
         -Unit testing CAB database outputs
         -Exploring how to apply multithreaidng to pathway creation
+	-Made the name username and password fieid in the sign up page and made the sign in as guest button in the login page 
 		
 
 #### Member: Melissa Cui
