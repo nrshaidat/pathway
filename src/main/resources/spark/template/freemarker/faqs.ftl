@@ -58,6 +58,8 @@
      <div class="content" style="margin-left:23em;" align="left">  We take into account each student's workload preferences,
          whether they want their pathway to be aggressively completed (in the least number of semesters) or not,
          as well as the courses they have received credit for in the past to generate the most optimal concentration!
+
+         Algorithm description:
      </div>
 
      <p style="margin-left:20em;" align="left"> 2. Where do we get course information? </p>

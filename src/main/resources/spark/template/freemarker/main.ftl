@@ -8,10 +8,10 @@
     <script src="js/main.js"></script>
 <body style="visibility: hidden;" onload="js_Load()">
 </head>
-<!--Start: Nav  -->
+
 <div class="ui fixed borderless huge menu">
     <div class="ui container grid">
-        <!--Start: Desktop Nav-->
+
         <div class="computer only row">
             <a class="header item">Pathway</a>
             <a class="active item">Home</a>
@@ -19,9 +19,7 @@
                 <a href="/faqs" class="item">FAQ</a>
             </form>
         </div>
-        <!--End: Desktop Nav-->
 
-        <!--Start: Mobile Nav-->
         <div class="tablet mobile only row">
             <div class="right menu">
                 <a class="menu item">
@@ -31,8 +29,6 @@
                 </a>
             </div>
             <div class="ui vertical accordion borderless fluid menu">
-                <!-- Start: Search -->
-                <!-- End: Search -->
                 <a class="active item"> Home</a>
                 <form action="/faqs" method="post">
                     <a class="item">FAQ</a>
@@ -44,13 +40,14 @@
                 <a class="active item" href="#">Fixed top</a>
             </div>
         </div>
-        <!--End: Mobile Nav-->
+
     </div>
 </div>
 <br>
 <h1>Welcome to Pathway</h1>
 
-<p>Your personalized concentration pathway generator for Brown University.</p>
+<p>Your personalized concentration pathway generator for Brown University. <p>
+    <p> Pathway generates courses within your specified concentration to help you plan out your next years at Brown. </p>
 <h2>Login</h2>
 
 <form action="/mypath" method="post">

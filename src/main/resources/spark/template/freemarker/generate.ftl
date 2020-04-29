@@ -40,6 +40,10 @@
       <!--End: Mobile Nav-->
     </div>
   </div>
+
+  <br>
+  <br>
+
       <h1>Generate a Pathway</h1>
 
 
@@ -52,7 +56,8 @@
   <link rel="stylesheet" href="/css/generate.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-  </head>
+
+</head>
   <body onload="js_Load()">
 
   <p> To generate the most accurate pathway, please input as much information as possible!
@@ -77,32 +82,40 @@
 
     <br>
 
-  <p> Enter Rising semester number: </p>
-    <div class="ui input focus">
-      <input type="number" name ="semester" id ="semester" placeholder="Enter semester..." required>
+  <p> Enter Rising Semester: </p>
+    <div class="ui container">
+      <select name="grade" id="grade" class = "ui selection dropdown">
+
+          <option value="freshman"> Freshman </option>
+        <option value="sophomore"> Sophomore </option>
+        <option value="junior"> Junior </option>
+        <option value="senior"> Senior </option>
+      </select>
     </div>
+    <div class="ui container">
+      <select name="year" id="year" class = "ui selection dropdown">
+
+        <option value="spring"> Spring </option>
+        <option value="fall"> Fall </option>
+      </select>
+    </div>
+    <script>
+      $('#grade').dropdown();
+      $('#year').dropdown();
+    </script>
 
     <br>
     <br>
 
     <p> Enter workload preferences: </p>
-    <div class="ui right labeled input">
-      <input type="number" name = "workload" id= "workload" placeholder="Enter workload" required>
-      <div class="ui basic label">
-        hours
-      </div>
-    </div>
+
+    <form>
+      <input type="range" id="vol" name="vol" min="0" max="100">
+    </form>
+
+    <small>low  &emsp; medium  &emsp;  high</small>
 
     <br>
-    <br>
-
-    <div class="ui checkbox">
-      <input id="aggressive" name="aggressive" value="Aggressive" type="checkbox">
-      <label for="aggressive"> Prefer Aggressive Pathways </label>
-    </div>
-
-    <br>
-
     <br>
 
   <p>Please enter courses you have received credit for: </p>
@@ -147,6 +160,7 @@
 
   </form>
 
+  <br>
   <br>
   <br>
   <br>

@@ -10,6 +10,13 @@ body {
     margin:0px;
 }
 
+#slider {
+    width: 300px;
+    height: 300px;
+    display: flex;
+    overflow-x: auto;
+}
+
 a.header.item {
     text-align: left;
     float: left;
