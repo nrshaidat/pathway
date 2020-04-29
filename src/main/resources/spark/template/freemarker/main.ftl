@@ -1,24 +1,65 @@
 <!DOCTYPE html>
   <head>
     <meta charset="utf-8">
-
-    <title>${title}</title>
-
-    <body style="visibility: hidden;" onload= "js_Load()">
-    <h1 >Welcome to Pathway</h1>
-
-    <p>Your personalized concentration pathway generator for Brown University.</p>
-    <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/logo/t.png"/>
     <link rel="stylesheet" href="/css/main.css">
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/main.js"></script>
+
+    <body style="visibility: hidden;" onload= "js_Load()">
   </head>
+    <!--Start: Nav  -->
+    <div class="ui fixed borderless huge menu">
+        <div class="ui container grid">
+            <!--Start: Desktop Nav-->
+            <div class="computer only row">
+                <a class="header item">Pathway</a>
+                <a class="active item">Home</a>
+                <a class="item">FAQ</a>
+                <a class="item">Login</a>
+                <a class="ui dropdown item">Dropdown<i class="dropdown icon"></i></a>
+                <!-- Start: Popup -->
+                <div class="ui fluid popup bottom left transition hidden"
+                     style="top: 553px; left: 1px; bottom: auto; right: auto; width: 657px;">
+                </div>
+                <!-- End: Popup -->
+            </div>
+            <!--End: Desktop Nav-->
 
-     <script src="js/jquery-2.1.1.js"></script>
-     <script src="js/main.js"></script>
-
+            <!--Start: Mobile Nav-->
+            <div class="tablet mobile only row">
+                <div class="right menu">
+                    <a class="menu item">
+                        <div class="ui basic icon toggle button">
+                            <i class="content icon"></i>
+                        </div>
+                    </a>
+                </div>
+                <div class="ui vertical accordion borderless fluid menu">
+                    <!-- Start: Search -->
+                    <!-- End: Search -->
+                    <a class="active item"> Home</a>
+                    <a class="item"> FAQ</a>
+                    <a class="item"> Login</a>
+                    <div class="item">
+                        <div class="title">
+                            Dropdown<i class="dropdown icon"></i>
+                        </div>
+                    </div>
+                    <div class="ui divider"></div>
+                    <a class="item" href="#">Default</a>
+                    <a class="item" href="#">Static top</a>
+                    <a class="active item" href="#">Fixed top</a>
+                </div>
+            </div>
+            <!--End: Mobile Nav-->
+        </div>
+    </div>
      <br>
+  <h1>Welcome to Pathway</h1>
 
+  <p>Your personalized concentration pathway generator for Brown University.</p>
      <h2>Login</h2>
 
      <form action="/mypath" method="post">
@@ -55,6 +96,28 @@
 <script>function js_Load() {
         document.body.style.visibility='visible';
     }
+</script>
+<script>
+    $(document).ready(function () {
+        $('.computer.only .dropdown.item')
+            .popup({
+                inline: true,
+                hoverable: true,
+                position: 'bottom left',
+                delay: {
+                    show: 300,
+                    hide: 800
+                }
+            })
+        ;
+        $('.ui.dropdown').dropdown();
+        $('.ui.accordion').accordion();
+
+        // bind "hide and show vertical menu" event to top right icon button
+        $('.ui.toggle.button').click(function () {
+            $('.ui.vertical.menu').toggle("250", "linear")
+        });
+    });
 </script>
 <noscript><style> body { visibility: visible; }</style></noscript>
 
