@@ -11,6 +11,45 @@
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/main.js"></script>
   </head>
+<!--Start: Nav  -->
+<div class="ui fixed borderless huge menu">
+    <div class="ui container grid">
+        <!--Start: Desktop Nav-->
+        <div class="computer only row">
+            <a class="header item">Pathway</a>
+            <a class="active item">Home</a>
+            <form action="/faqs" method="post">
+                <a href="/faqs" class="item">FAQ</a>
+            </form>
+        </div>
+        <!--End: Desktop Nav-->
+
+        <!--Start: Mobile Nav-->
+        <div class="tablet mobile only row">
+            <div class="right menu">
+                <a class="menu item">
+                    <div class="ui basic icon toggle button">
+                        <i class="content icon"></i>
+                    </div>
+                </a>
+            </div>
+            <div class="ui vertical accordion borderless fluid menu">
+                <!-- Start: Search -->
+                <!-- End: Search -->
+                <a class="active item"> Home</a>
+                <form action="/faqs" method="post">
+                    <a class="item">FAQ</a>
+                </form>
+                <a class="item"> Login</a>
+                <div class="ui divider"></div>
+                <a class="item" href="#">Default</a>
+                <a class="item" href="#">Static top</a>
+                <a class="active item" href="#">Fixed top</a>
+            </div>
+        </div>
+        <!--End: Mobile Nav-->
+    </div>
+</div>
   <body style="visibility: hidden;" onload= "js_Load()">
 
   <br>

@@ -7,8 +7,109 @@ body {
     font-family: 'Lato', sans-serif;
     font-weight: 100;
     font-size: 16px;
-    margin-top: 20px;
+    margin:0px;
 }
+
+a.header.item {
+    text-align: left;
+    float: left;
+    font-size: xx-large;
+}
+
+.flags a {
+    padding: .012em;
+}
+
+a.item {
+    padding-right: 5%;
+    float: right;
+    text-align: right;
+}
+
+/* Nav */
+.ui.fixed.borderless.menu {
+    background-color: #4a008a;
+    text-align: right;
+}
+
+.ui .computer.only .item {
+    color: #fff;
+}
+
+.ui .computer.only .item:hover {
+    background: #6311aa !important;
+    color: #fff !important;
+    border-bottom: 1px solid #fff;
+}
+
+.ui .computer .item.active {
+    background: #00ba49;
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    padding-left: 5%;
+}
+
+.ui.dropdown.item .menu {
+    background-color: #4a008a !important;
+}
+
+.ui.menu .ui.dropdown .menu > .item {
+    color: #fff !important;
+}
+
+.ui.menu .ui.dropdown .menu > .item.active {
+    background-color: #00ba49 !important;
+    color: #fff !important;
+    border-bottom: 1px solid #fff;
+    text-align: center;
+}
+
+.ui.menu .ui.dropdown .menu > .item:hover {
+    background-color: #6311aa !important;
+    color: #fff !important;
+    border-bottom: 1px solid #fff;
+}
+
+.ui.fixed.borderless.menu .row > a.header.item {
+    font-size: 1.2em;
+}
+
+/* Mobile */
+.tablet.mobile.only .header, .ui.icon.button > .icon {
+    color: #fff;
+}
+
+.tablet.mobile.only .header:hover {
+    background-color: #6311aa !important;
+    color: #fff !important;
+    border-bottom: 1px solid #fff;
+}
+
+.ui.basic.button:hover {
+    background: #6311aa !important;
+    color: #fff !important;
+    border-bottom: 1px solid #fff;
+}
+
+.ui.vertical.menu {
+    display: none;
+    border: none;
+    box-shadow: none;
+    background-color: #4a008a;
+}
+
+.ui.vertical.menu > .item {
+    padding-left: 1.428em;
+    color: #fff;
+}
+
+.ui.vertical.menu > .item.active {
+    padding-left: 1.428em;
+    background-color: #00ba49 !important;
+    color: #fff !important;
+    border-bottom: 1px solid #fff;
+}
+
 
 label {
     font-size: 18px;

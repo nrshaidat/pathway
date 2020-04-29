@@ -15,10 +15,16 @@ a.header.item{
 .flags a {
     padding: .012em;
 }
+a.item{
+    padding-right: 5%;
+    float: right;
+    text-align: right;
+}
 
 /* Nav */
 .ui.fixed.borderless.menu {
     background-color: #4a008a;
+    text-align: right;
 }
 
 .ui .computer.only .item {
@@ -35,6 +41,7 @@ a.header.item{
     background: #00ba49;
     color: #fff;
     border-bottom: 1px solid #fff;
+    padding-left:5%;
 }
 
 .ui.dropdown.item .menu {
@@ -49,6 +56,7 @@ a.header.item{
     background-color: #00ba49 !important;
     color: #fff !important;
     border-bottom: 1px solid #fff;
+    text-align: center;
 }
 
 .ui.menu .ui.dropdown .menu > .item:hover {

@@ -1,100 +1,91 @@
 <!DOCTYPE html>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/logo/t.png"/>
     <link rel="stylesheet" href="/css/main.css">
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/main.js"></script>
-
-    <body style="visibility: hidden;" onload= "js_Load()">
-  </head>
-    <!--Start: Nav  -->
-    <div class="ui fixed borderless huge menu">
-        <div class="ui container grid">
-            <!--Start: Desktop Nav-->
-            <div class="computer only row">
-                <a class="header item">Pathway</a>
-                <a class="active item">Home</a>
-                <a class="item">FAQ</a>
-                <a class="item">Login</a>
-                <a class="ui dropdown item">Dropdown<i class="dropdown icon"></i></a>
-                <!-- Start: Popup -->
-                <div class="ui fluid popup bottom left transition hidden"
-                     style="top: 553px; left: 1px; bottom: auto; right: auto; width: 657px;">
-                </div>
-                <!-- End: Popup -->
-            </div>
-            <!--End: Desktop Nav-->
-
-            <!--Start: Mobile Nav-->
-            <div class="tablet mobile only row">
-                <div class="right menu">
-                    <a class="menu item">
-                        <div class="ui basic icon toggle button">
-                            <i class="content icon"></i>
-                        </div>
-                    </a>
-                </div>
-                <div class="ui vertical accordion borderless fluid menu">
-                    <!-- Start: Search -->
-                    <!-- End: Search -->
-                    <a class="active item"> Home</a>
-                    <a class="item"> FAQ</a>
-                    <a class="item"> Login</a>
-                    <div class="item">
-                        <div class="title">
-                            Dropdown<i class="dropdown icon"></i>
-                        </div>
-                    </div>
-                    <div class="ui divider"></div>
-                    <a class="item" href="#">Default</a>
-                    <a class="item" href="#">Static top</a>
-                    <a class="active item" href="#">Fixed top</a>
-                </div>
-            </div>
-            <!--End: Mobile Nav-->
+<body style="visibility: hidden;" onload="js_Load()">
+</head>
+<!--Start: Nav  -->
+<div class="ui fixed borderless huge menu">
+    <div class="ui container grid">
+        <!--Start: Desktop Nav-->
+        <div class="computer only row">
+            <a class="header item">Pathway</a>
+            <a class="active item">Home</a>
+            <form action="/faqs" method="post">
+                <a href="/faqs" class="item">FAQ</a>
+            </form>
         </div>
+        <!--End: Desktop Nav-->
+
+        <!--Start: Mobile Nav-->
+        <div class="tablet mobile only row">
+            <div class="right menu">
+                <a class="menu item">
+                    <div class="ui basic icon toggle button">
+                        <i class="content icon"></i>
+                    </div>
+                </a>
+            </div>
+            <div class="ui vertical accordion borderless fluid menu">
+                <!-- Start: Search -->
+                <!-- End: Search -->
+                <a class="active item"> Home</a>
+                <form action="/faqs" method="post">
+                    <a class="item">FAQ</a>
+                </form>
+                <a class="item"> Login</a>
+                <div class="ui divider"></div>
+                <a class="item" href="#">Default</a>
+                <a class="item" href="#">Static top</a>
+                <a class="active item" href="#">Fixed top</a>
+            </div>
+        </div>
+        <!--End: Mobile Nav-->
     </div>
-     <br>
-  <h1>Welcome to Pathway</h1>
+</div>
+<br>
+<h1>Welcome to Pathway</h1>
 
-  <p>Your personalized concentration pathway generator for Brown University.</p>
-     <h2>Login</h2>
+<p>Your personalized concentration pathway generator for Brown University.</p>
+<h2>Login</h2>
 
-     <form action="/mypath" method="post">
+<form action="/mypath" method="post">
 
-         <div class="container">
-             <label name="username" id="username" for="uname"><b></b></label>
-             <input name="username" id="username"
-                    type="text" placeholder="Enter Username" name="uname" value="" required>
+    <div class="container">
+        <label name="username" id="username" for="uname"><b></b></label>
+        <input name="username" id="username"
+               type="text" placeholder="Enter Username" name="uname" value="" required>
 
-             <label name="password" id="password" for="psw"><b>Password</b></label>
-             <input name="password" id="password"
-                    type="password" placeholder="Enter Password" name="psw" required>
+        <label name="password" id="password" for="psw"><b>Password</b></label>
+        <input name="password" id="password"
+               type="password" placeholder="Enter Password" name="psw" required>
 
-             <button type="submit">Login</button>
-         </div>
+        <button type="submit">Login</button>
+    </div>
 
-     </form>
-     <br>
+</form>
+<br>
 
-     <form action="/generate" method="post">
-         <button id="guest" type="submit">Login as Guest</button>
-     </form>
+<form action="/generate" method="post">
+    <button id="guest" type="submit">Login as Guest</button>
+</form>
 
-  <h3> <a href="/signup" class="link" > Sign Up </a> </h3>
+<h3><a href="/signup" class="link"> Sign Up </a></h3>
 
-     <br>
+<br>
 
-  <p> <small> For any questions or ideas about how Pathway can be improved, please
-          <a href = "mailto: melissa_cui@brown.edu" class = "link"> send us an email! </a>
-      </small>
-  </p>
+<p><small> For any questions or ideas about how Pathway can be improved, please
+        <a href="mailto: melissa_cui@brown.edu" class="link"> send us an email! </a>
+    </small>
+</p>
 
-  </body>
+</body>
 <script>function js_Load() {
-        document.body.style.visibility='visible';
+        document.body.style.visibility = 'visible';
     }
 </script>
 <script>
@@ -119,6 +110,10 @@
         });
     });
 </script>
-<noscript><style> body { visibility: visible; }</style></noscript>
+<noscript>
+    <style> body {
+            visibility: visible;
+        }</style>
+</noscript>
 
 </html>
