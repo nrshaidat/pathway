@@ -31,13 +31,6 @@ public final class Main {
   private static final int HIGH = 40;
   private static final int LOW = 30;
   private static PathwayProgram pathwayProgram;
-  private static List<Semester> pathway1; //why is this static if they can alter them in gui
-  private static List<Semester> pathway2;
-  private static List<Semester> pathway3;
-  private Database db;
-  private static List<String> courseList;
-  private static List<String> concentrationList;
-  private static String username;
 
 
   /**
@@ -67,11 +60,6 @@ public final class Main {
     OptionSet options = parser.parse(args);
 
     runSparkServer((int) options.valueOf("port"));
-
-    db = new Database("data/coursesDB.db");
-    courseList = db.getAllCourseIDs();
-    concentrationList = db.getConcentrations();
-
     pathwayProgram = new PathwayProgram();
 
   }
@@ -134,8 +122,9 @@ public final class Main {
     public ModelAndView handle(Request req, Response res) {
 
       Map<String, Object> variables = ImmutableMap
-          .of("title", "Pathway", "results", "", "concentrationList", concentrationList,
-              "courseList", courseList);
+          .of("title", "Pathway", "results", "", "concentrationList",
+              pathwayProgram.getConcentrationsList(),
+              "courseList", pathwayProgram.getCourseList());
       return new ModelAndView(variables, "generate.ftl");
     }
 
@@ -151,7 +140,9 @@ public final class Main {
       QueryParamsMap qm = req.queryMap();
       String concentration;
       String display;
-
+      List<Semester> pathway1;
+      List<Semester> pathway2;
+      List<Semester> pathway3;
       if (qm.value("semester") == null) {
         if (pathwayProgram.getPath1()!=null) { //going from each path page to all the paths so dont
           // remake
@@ -223,22 +214,23 @@ public final class Main {
       List<Semester> path;
       switch (num) {
         case 1:
-          path = pathway1;
+          path = pathwayProgram.getPath1();
           break;
         case 2:
-          path = pathway2;
+          path = pathwayProgram.getPath2();
           break;
         case 3:
-          path = pathway3;
+          path = pathwayProgram.getPath3();
           break;
         default:
-          path = pathway1;
+          path = pathwayProgram.getPath1();
           break;
       }
       List<String> pathnumlst = new ArrayList<>();
       pathnumlst.add(pathNum);
       Map<String, List<? extends Object>> variables =
-          ImmutableMap.of("id", pathnumlst, "results", path, "courseList", courseList);
+          ImmutableMap.of("id", pathnumlst, "results", path, "courseList",
+              pathwayProgram.getCourseList());
       return new ModelAndView(variables, "mypath.ftl");
 
     }

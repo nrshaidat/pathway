@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * PathwayProgram.
@@ -59,6 +60,8 @@ public class PathwayProgram {
   private int numsemesters2;
   private int numsemesters3;
   private int[] reqs;
+  private int[] reqs2;
+  private int[] reqs3;
   private Set<Node> courseSet;
   private String concentration;
   private String concentrationName;
@@ -112,6 +115,10 @@ public class PathwayProgram {
     avgmaxhrs1path = 0.0;
     avgmaxhrs2path = 0.0;
     avgmaxhrs3path = 0.0;
+  }
+
+  public List<String> getCourseList() {
+    return courseList;
   }
 
   public double getAvgrating1sem() {
@@ -317,21 +324,32 @@ public class PathwayProgram {
     this.concentrationName = concentrationName;
   }
 
+  public static <T> Set<T> clone(Set<T> original) {
+    Set<T> copy = original.stream().collect(Collectors.toSet());
+    return copy;
+  }
+
   public void makePathways(String con, Set<Node> taken, int sem, boolean aggressive)
       throws SQLException {
     concentration = con;
     risingSem = sem;
+    Set<Node> taken2 = clone(taken);
+    Set<Node> taken3 = clone(taken);
     List<Integer> reqsTmp = cache.getRequirements(concentration + "_rules");
     reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
-    Pathway pathway = new Pathway(reqs, courseSet);
-    pathway.makePathway(taken, sem, aggressive, "lo");
-    path1 = pathway.getPath();
+    reqs2 = reqs.clone();
+    reqs3 = reqs.clone();
+    Pathway pathway1 = new Pathway(reqs, courseSet);
+    pathway1.makePathway(taken, sem, aggressive, "lo");
+    path1 = pathway1.getPath();
     this.setPathStats1();
-    pathway.makePathway(taken, sem, aggressive, "med");
-    path2 = pathway.getPath();
+    Pathway pathway2 = new Pathway(reqs2, courseSet);
+    pathway2.makePathway(taken2, sem, aggressive, "med");
+    path2 = pathway2.getPath();
     this.setPathStats2();
-    pathway.makePathway(taken, sem, aggressive, "hi");
-    path3 = pathway.getPath();
+    Pathway pathway3 = new Pathway(reqs3, courseSet);
+    pathway3.makePathway(taken3, sem, aggressive, "hi");
+    path3 = pathway3.getPath();
     this.setPathStats3();
   }
   public boolean isSet() {
