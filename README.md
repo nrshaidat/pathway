@@ -47,6 +47,7 @@ None.
         -Styling and adding functionality to front end (pathway boxes and arrows)
         -Extensive debugging of all parts (db, algo & frontend)
 	    -Setting up login, login as guest, and sign up routing CORRECTLY
+	    -Made the three unique pathways in pathway program
 
 	Mel:
         -Critical Review scraping
