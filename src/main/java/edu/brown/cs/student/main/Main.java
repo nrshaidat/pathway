@@ -5,7 +5,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
 
 import com.google.common.collect.ImmutableMap;
 import edu.brown.cs.student.pathway.Node;
@@ -29,19 +33,16 @@ public final class Main {
 
   private static final int DEFAULT_PORT = 4567;
   private static PathwayProgram pathwayProgram;
-
+  private String[] args;
 
   /**
-   * The initial method called when execution begins.
-   *
+   * Main is called when execution begins.
    * @param args An array of command line arguments
+   * @throws SQLException If encountering a SQL Exception
    */
   public static void main(String[] args) throws SQLException {
     new Main(args).run();
   }
-
-  private String[] args;
-
 
   private Main(String[] args) {
     this.args = args;
@@ -95,9 +96,9 @@ public final class Main {
 
   /**
    * LoginHandler handles the main landing page, logging in at /login. On the main login
-   * page, the user has the option to log in as a user which gives them their already chosen pathway.
-   * They can also choose to create an account or login is a guest, which will directly take them to
-   * the generate page.
+   * page, the user has the option to log in as a user which gives them their already
+   * chosen pathway. They can also choose to create an account or login as a guest,
+   * which directly takes them to the generate page.
    */
   private static class LoginHandler implements TemplateViewRoute {
     @Override
@@ -110,10 +111,13 @@ public final class Main {
   }
 
   /**
-   * GenerateHandler handles the /generate page. The generate page is where the user puts in the
-   * necessary information in order to run the Pathway program. The ftl file uses two variables from the
-   * database, the concentrationList and the courseList. These two variables are used for the dropdown menus
-   * so the user can select a concentration and courses they've received credit for.
+   * GenerateHandler handles the /generate page. The generate page is where the user adds
+   * necessary information in order to run Pathway. The ftl file uses variables from the
+   * database, concentrationList and courseList. These two variables are used for the dropdowns
+   * so the user can select a concentration and courses they've received credit for. We
+   * originally had the user input a number of hours for their workload, but decided on
+   * generating three pathways with differing workloads. Thus, by removing some options
+   * from the user choice, we are able to make our program more clear and intuitive.
    */
   private static class GenerateHandler implements TemplateViewRoute {
     @Override
@@ -129,7 +133,8 @@ public final class Main {
       yearList.add("Spring");
 
       Map<String, Object> variables = ImmutableMap
-          .of("concentrationList", pathwayProgram.getConcentrationsList(), "gradeList", gradeList, "yearList", yearList,
+          .of("concentrationList", pathwayProgram.getConcentrationsList(), "gradeList",
+                  gradeList, "yearList", yearList,
               "courseList", pathwayProgram.getCourseList());
       return new ModelAndView(variables, "generate.ftl");
     }
@@ -140,6 +145,8 @@ public final class Main {
    * PathLandingHandler handles the landing page for the display of the user's three pathways.
    */
   private static class PathLandingHandler implements TemplateViewRoute {
+
+    private final int magicNum7 = 7;
 
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
@@ -155,9 +162,8 @@ public final class Main {
       String semesterLevel = qm.value("year");
 
       if (gradeLevel == null || semesterLevel  == null) {
-        if (pathwayProgram.getPath1()!=null) { //going from each path page to all the paths so dont
-          // remake
-          // them just show the last pathways made
+        if (pathwayProgram.getPath1() != null) {
+          //not remaking paths, just showing last pathways made
           concentration = pathwayProgram.getConcentrationName();
           if (concentration == null) {
             concentration = "Computer Science B.A";
@@ -169,7 +175,7 @@ public final class Main {
         } else { //use default aka user signing in and should see premade pathways
           concentration = "Computer Science B.A";
           pathwayProgram.setConcentration("computerscienceba");
-          pathwayProgram.makePathways("computerscienceba", new HashSet<>(), 1,false);
+          pathwayProgram.makePathways("computerscienceba", new HashSet<>(), 1, false);
           display = "Pathways generated for the concentration: " + concentration;
           pathway1 = pathwayProgram.getPath1();
           pathway2 = pathwayProgram.getPath2();
@@ -194,7 +200,7 @@ public final class Main {
         } else if (gradeLevel.equals("Junior")) {
           semester  = 5;
         } else {
-          semester = 7;
+          semester = magicNum7;
         }
 
         if (semesterLevel.equals("Spring")) {
@@ -233,6 +239,13 @@ public final class Main {
     }
   }
 
+  /**
+   * PathwayHandler handles the individual pathways generated. This is the page
+   * that the user clicks after shown their three pathways on the landing page.
+   * On this page, the user can modify their pathway by using one of three
+   * functionality: the add, remove, or swap of courses. They can also see information
+   * about each pathway like the number of semesters, courses, and average hours.
+   */
   private static class PathwayHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {

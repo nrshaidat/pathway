@@ -9,7 +9,9 @@ import java.util.Set;
 import java.util.Random;
 
 /**
- * A class to test multithreading in generating multiple pathways for a concentration request.
+ * The PathwayMaker creates three pathways for a user by using multi-threading.
+ * It creates three PathwayThreads that represent each semester, then creates them using copies
+ * of the data from the database, which then display three unique pathways on the front-end.
  */
 public class PathwayMaker {
   private String concentrationName;
@@ -20,18 +22,26 @@ public class PathwayMaker {
   private List<Semester> path2;
   private List<Semester> path3;
 
-  public List<Semester> getPath1() {
-    return path1;
-  }
+//  public List<Semester> getPath1() {
+//    return path1;
+//  }
+//
+//  public List<Semester> getPath2() {
+//    return path2;
+//  }
+//
+//  public List<Semester> getPath3() {
+//    return path3;
+//  }
 
-  public List<Semester> getPath2() {
-    return path2;
-  }
-
-  public List<Semester> getPath3() {
-    return path3;
-  }
-
+  /**
+   * The PathwayThread class is a thread-based solution to display pathways on the GUI.
+   * When the user clicks the generate button on the /generate page, the PathwayThread class
+   * creates three threads representing each of three pathways to display on the front end.
+   * This is done by creating deep copies of the needed information from the databases, for example
+   * the concentration courses requirements as well as the user's courses taken. Then, it generates
+   * three unique pathways for the user to access.
+   */
   private class PathwayThread extends Thread {
     private DatabaseCache dbc;
     private int[] reqsClone;
@@ -45,38 +55,44 @@ public class PathwayMaker {
       this.reqsClone = reqs.clone();
       this.courseSetClone = dbc.getConcentrationCourses(concentrationName);
       this.coursesTakenClone = copyCoursesTaken(coursesTaken);
-      //System.out.println(coursesTaken);
       System.out.println(coursesTakenClone);
       this.workload = workload;
       this.aggressive = new Random().nextBoolean();
       this.pathway = new Pathway(reqsClone, courseSetClone);
     }
 
+    /**
+     * The run method creates a pathway given the required parameters by calling the Pathway class.
+     */
     @Override
     public void run() {
       pathway.makePathway(coursesTakenClone, risingSemester, aggressive, workload);
     }
-    public void printPathway() {
-      System.out.println(
-          "Concentration: " + concentrationName + ", Workload: " + this.workload + ", aggressive: "
-              + this.aggressive);
-      System.out.println("---------");
-      List<Semester> path = pathway.getPath();
-      for (Semester list : path) {
-        System.out.println("Semester: " + list.getSemnumber());
-        for (Node course : list.getCourses()) {
-          System.out.println(course.getId() + ": " + course.getCategory());
-          //System.out.println(course.getId() + ": " + course.getName());
-        }
-        System.out.println();
-      }
-    }
+
+//    /**
+//     * Print Pathway is used to print out the User's pathway in the Back-end. (not quite sure if this is
+//     * necessary for the GUI, commenting out for now)
+//     */
+//    public void printPathway() {
+//      System.out.println(
+//          "Concentration: " + concentrationName + ", Workload: " + this.workload + ", aggressive: "
+//              + this.aggressive);
+//      System.out.println("---------");
+//      List<Semester> path = pathway.getPath();
+//      for (Semester list : path) {
+//        System.out.println("Semester: " + list.getSemnumber());
+//        for (Node course : list.getCourses()) {
+//          System.out.println(course.getId() + ": " + course.getCategory());
+//        }
+//        System.out.println();
+//      }
+//    }
 
     /**
      * A method that deep copies a set of nodes by iterating through and copying each node.
      *
-     * @param s A set of nodes
-     * @return A deep copy of s
+     * @param ct A set of nodes
+     * @return A deep copy of ct
      */
     private Set<Node> copyCoursesTaken(Set<Node> ct) {
       Set<Node> cp = new HashSet<>();
@@ -111,6 +127,17 @@ public class PathwayMaker {
     }
   }
 
+  /**
+   * Pathway maker takes in four parameters to make pathways. This method is used to
+   * make pathways to be displayed in the front end. It takes in the concentration name,
+   * the requirements of a concentration, the user's semester level, and the courses the user
+   * has received credit for. It then calls the makePathways method to create three pathways.
+   *
+   * @param concentrationName String representing the concentration name
+   * @param reqs Requirements of a concentration
+   * @param coursesTaken User-specified set of courses taken
+   * @param risingSemester User-specified integer representing their rising Semester
+   */
   public PathwayMaker(String concentrationName, int[] reqs, Set<Node> coursesTaken,
                       int risingSemester) {
     this.concentrationName = concentrationName;
@@ -144,9 +171,9 @@ public class PathwayMaker {
       loPath.join();
       medPath.join();
       hiPath.join();
-      loPath.printPathway();
-      medPath.printPathway();
-      hiPath.printPathway();
+//      loPath.printPathway();
+//      medPath.printPathway();
+//      hiPath.printPathway();
     } catch (InterruptedException ie) {
       ie.printStackTrace();
     }
