@@ -82,41 +82,58 @@
 
     <br>
 
-  <p> Enter Rising Semester: </p>
+    <p> Enter Rising Semester: </p>
     <div class="ui container">
       <select name="grade" id="grade" class = "ui selection dropdown">
-
-          <option value="freshman"> Freshman </option>
-        <option value="sophomore"> Sophomore </option>
-        <option value="junior"> Junior </option>
-        <option value="senior"> Senior </option>
-      </select>
-    </div>
-    <div class="ui container">
-      <select name="year" id="year" class = "ui selection dropdown">
-
-        <option value="spring"> Spring </option>
-        <option value="fall"> Fall </option>
+        <#list gradeList as item>
+          <option value="${item}">${item}</option>
+        </#list>
       </select>
     </div>
     <script>
       $('#grade').dropdown();
-      $('#year').dropdown();
+      $('#grade').dropdown('setting', 'onChange', function () {
+        var year = $('#grade').dropdown('get values');
+        console.log(year);
+      });
+
     </script>
 
+    <div class="ui container">
+      <select name="year" id="year" key="year" class = "ui selection dropdown">
+        <#list yearList as item>
+          <option value="${item}">${item}</option>
+        </#list>
+      </select>
+    </div>
+
+    <script>
+      $('#year').dropdown();
+      $('#year').dropdown('setting', 'onChange', function () {
+        var year = $('#year').dropdown('get values');
+        console.log(year);
+      });
+    </script>
+
+<#--    <form>-->
+<#--      <input type="range" id="workload" name="workload" key="workload" min="0" max="100">-->
+<#--    </form>-->
+
+<#--    <small>low  &emsp; medium  &emsp;  high</small>-->
+
     <br>
     <br>
 
-    <p> Enter workload preferences: </p>
-
-    <form>
-      <input type="range" id="vol" name="vol" min="0" max="100">
-    </form>
-
-    <small>low  &emsp; medium  &emsp;  high</small>
+    <p> Complete concentration as fast as possible (prefer lower number of semesters): </p>
+    <div class="ui checkbox">
+      <input id="aggressive" name="aggressive" value="Aggressive" type="checkbox">
+      <label for="aggressive"> Prefer Faster Pathways </label>
+    </div>
 
     <br>
     <br>
+
+
 
   <p>Please enter courses you have received credit for: </p>
   <p><note> (Select course ids from the dropdown e.g. ECON 0110, MATH 0100, APMA 350)</note> </p>

@@ -120,10 +120,18 @@ public final class Main {
   private static class GenerateHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
+      List<String> gradeList = new ArrayList<>();
+      gradeList.add("Freshman");
+      gradeList.add("Sophomore");
+      gradeList.add("Junior");
+      gradeList.add("Senior");
+
+      List<String> yearList = new ArrayList<>();
+      yearList.add("Fall");
+      yearList.add("Spring");
 
       Map<String, Object> variables = ImmutableMap
-          .of("title", "Pathway", "results", "", "concentrationList",
-              pathwayProgram.getConcentrationsList(),
+          .of("concentrationList", pathwayProgram.getConcentrationsList(), "gradeList", gradeList, "yearList", yearList,
               "courseList", pathwayProgram.getCourseList());
       return new ModelAndView(variables, "generate.ftl");
     }
@@ -137,13 +145,18 @@ public final class Main {
 
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
+      System.out.println("gets here");
       QueryParamsMap qm = req.queryMap();
       String concentration;
       String display;
       List<Semester> pathway1;
       List<Semester> pathway2;
       List<Semester> pathway3;
-      if (qm.value("semester") == null) {
+
+      String gradeLevel = qm.value("grade");
+      String semesterLevel = qm.value("year");
+
+      if (gradeLevel == null || semesterLevel  == null) {
         if (pathwayProgram.getPath1()!=null) { //going from each path page to all the paths so dont
           // remake
           // them just show the last pathways made
@@ -173,7 +186,23 @@ public final class Main {
             .get(qm.value("concentration"));
         pathwayProgram.setConcentrationName(concentration);
         pathwayProgram.setConcentration(concentrationId);
-        int semesterLevel = Integer.parseInt(qm.value("semester"));
+
+        int semester;
+
+        if (gradeLevel.equals("Freshman"))  {
+          semester = 1;
+        } else if (gradeLevel.equals("Sophomore")) {
+          semester = 3;
+        } else if (gradeLevel.equals("Junior")) {
+          semester  = 5;
+        } else {
+          semester = 7;
+        }
+
+        if (semesterLevel.equals("Spring")) {
+          semester += 1;
+        }
+
         boolean aggressive = false;
         if (qm.value("aggressive") != null) {
           aggressive = true;
@@ -189,7 +218,7 @@ public final class Main {
           }
         }
 
-        pathwayProgram.makePathways(concentrationId, taken, semesterLevel, aggressive);
+        pathwayProgram.makePathways(concentrationId, taken, semester, aggressive);
         display = "Pathways generated for the concentration: " + concentration;
         pathway1 = pathwayProgram.getPath1();
         pathway2 = pathwayProgram.getPath2();
