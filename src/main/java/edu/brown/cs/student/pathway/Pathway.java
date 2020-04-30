@@ -30,7 +30,6 @@ public class Pathway {
     numCategories = reqs.length;
     initialRequirements = Arrays.copyOf(reqs, numCategories);
     courses = courseSet;
-    path = new ArrayList<>();
     workloads = ImmutableMap.of("lo", Range.closedOpen(1.0, 25.0),
             "med", Range.closedOpen(25.0, 40.0),
             "hi", Range.closedOpen(40.0, 80.0));
@@ -38,6 +37,22 @@ public class Pathway {
 
   public List<Semester> getPath() {
     return path;
+  }
+
+  /**
+   * Helper needed because of courseSet copying.
+   * We use this in place of the Set's contains.
+   * @param sources sources
+   * @param node node to check
+   * @return boolean
+   */
+  private boolean sourcesContains(Set<Node> sources, Node node) {
+    for (Node source : sources) {
+      if (source.getId().equals(node.getId())) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
@@ -50,6 +65,7 @@ public class Pathway {
    * @param workload workload preference
    */
   public void makePathway(Set<Node> coursesTaken, int risingSemester, boolean aggressive, String workload) {
+    path = new ArrayList<>();
     currSemester = risingSemester;
     Set<Node> nextSet = new HashSet<>();
 
@@ -69,7 +85,7 @@ public class Pathway {
 
     // While we have requirements left
     while (this.requirementsLeft()) {
-      // Case to catch db errors (bad prereqs, cycles, etc.)
+      // Case to catch db anr/or bad input errors (bad prereqs, cycles, etc.)
       if (currSemester > 1.5 * SEMESTER_COUNT) {
         System.out.println("Invalid Pathway - 50% longer than intended.");
         break;
@@ -82,7 +98,7 @@ public class Pathway {
       // Take "next" courses (second leg of a sequence) if available
       Set<Node> toRemove = new HashSet<>();
       for (Node next : nextSet) {
-        if (sources.contains(next)) {
+        if (this.sourcesContains(sources, next)) {
           thisSemester.add(next);
           taken.add(next.getId());
           toRemove.add(next);
@@ -260,9 +276,11 @@ public class Pathway {
     if (aggressive) { // if agressive, we fake being behind so that we take more courses earlier on
       lag += (2.0 / SEMESTER_COUNT);
     }
+
     if (lag <= (-1.0 / SEMESTER_COUNT)) { // ahead by 2 semesters, reduce maxFrac
       maxFrac -= (1.0 / SEMESTER_SIZE);
-    } else if (lag > (1.0 / SEMESTER_COUNT)) { // behind, increase maxFrac
+    }
+    if (lag > (1.0 / SEMESTER_COUNT)) { // behind, increase maxFrac
       maxFrac += (1.0 / SEMESTER_SIZE);
     }
 

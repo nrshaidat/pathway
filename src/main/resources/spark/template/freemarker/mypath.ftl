@@ -50,6 +50,9 @@
     </div>
 </div>
 <title style="text-align: center;">My Pathway:</title>
+<br>
+<br>
+<br>
 <h1 style="text-align: center;"> Pathway
     <#list id as node>
         ${node}
@@ -65,6 +68,7 @@
 </div>
 <div class="results">
     <div id="myModal" class="modal">
+        <br>
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Customize Your Pathway!</h2>
