@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.util.*;
 
 /**
- * Testing the main algorithm, independent of the db.
+ * Testing the Pathway algorithm, independent of the db.
  */
 public class PathwayTest {
   private Set<Node> csCourseSetLarger;
@@ -26,6 +26,14 @@ public class PathwayTest {
     }
   }
 
+  /**
+   * These tests were used to test the algorithm before
+   * the database was populated. These tests will
+   * occasionally print the "Invalid Pathway" message
+   * because the size of the brute forced courseSet is too small,
+   * hence why they are commented out.
+   */
+
 //  @Test
 //  public void csConcentrationLargerTest() {
 //    int[] reqs = {1, 3, 6, 2};
@@ -33,7 +41,7 @@ public class PathwayTest {
 //    pathwayMaker.makePathway(new HashSet<Node>(), 1, false, "med");
 //    this.pathwayPrinter(pathwayMaker.getPath());
 //  }
-
+//
 //  @Test
 //  public void csConcentrationLargerWithTakenTest() {
 //    int[] reqs = {1, 3, 6, 2};
