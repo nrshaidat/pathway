@@ -8,6 +8,8 @@
     <script src="js/main.js"></script>
 <body style="visibility: hidden;" onload="js_Load()">
 </head>
+
+
 <!--Start: Nav  -->
 <div class="ui fixed borderless huge menu">
     <div class="ui container grid">
@@ -44,11 +46,14 @@
                 <a class="active item" href="#">Fixed top</a>
             </div>
         </div>
-        <!--End: Mobile Nav-->
+
     </div>
 </div>
 <br>
+<br>
+<h1>My Pathways</h1>
 <p>${header}</p>
+
 <br>
 
 <a href="mypath/1" class="link" name="pathway" id="pathway" value="one">

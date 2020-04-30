@@ -296,6 +296,7 @@
                 sem.innerHTML = "Edit Semester " + btn.id.charAt(btn.id.length - 1) + ":";
             }
         }
+
     }
 
 
@@ -323,6 +324,33 @@
         }
     }
 </script>
+
+<!-- Script for hovering-->
+<#--console.log( btn.id.charAt(btn.id.length - 1));-->
+<script>
+    // $('#ui-raised-link-card').hover(function() {
+    //     console.log("hovering!!!!");
+    // });
+
+    // $("ui-raised-link-card").mouseenter(function() {
+    //     console.log("hovering!!!!");
+    // });
+
+    $(".ui-raised-link-card").hover(
+        function() {
+            // item is being hovered over
+            $(this).addClass('hover');
+            console.log("hovering!!!!!")
+        }, function() {
+            // item is no longer being hovered over
+            $(this).removeClass('hover');
+            console.log("not hovering..")
+        }
+    );
+</script>
+
+
+
 </body>
 <script>function js_Load() {
         document.body.style.visibility='visible';
