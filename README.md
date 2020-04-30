@@ -47,7 +47,6 @@ None.
         -Styling and adding functionality to front end (navbar)
         -Extensive debugging of all parts (db, algo & frontend)
 	    -Setting up login, login as guest, and sign up routing correctly
-	    -Made the three unique pathways in pathway program
 
 	Mel:
         -Critical Review scraping
@@ -64,11 +63,12 @@ None.
         -Layering complexity onto the algorithm: weighting courses based on different Bayesian stastical 
          measures, fast weighted shuffle using binary search, and tracking lag for pacing of pathways
         -Pathway package
-        -Junit testing for makePathway algorithm (by-hand and with the database)
+        -JUnit testing for makePathway algorithm (by-hand and with the database)
         -Manually double checking, fixing inaccurate prereqs, and entering missing prereqs 
          for all courses in CHEM, PHYS, HIAA.
-        -Implementing customization functionality on the front and back end (add, move, swap)
-        -Styling and adding functionality to front end (pathway boxes and arrows, sign-in page)
+        -Implementing customization functionality on the front end (add, move, swap)
+        -Styling front end (pathway boxes, grid and responsive, arrows, sign-in page)
+        -Solving deep copy of course set to make multiple unique and valid pathways
         
     Nick:
         -CAB/self service scraping
