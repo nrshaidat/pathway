@@ -28,8 +28,6 @@ import spark.template.freemarker.FreeMarkerEngine;
 public final class Main {
 
   private static final int DEFAULT_PORT = 4567;
-  private static final int HIGH = 40;
-  private static final int LOW = 30;
   private static PathwayProgram pathwayProgram;
 
 
@@ -50,7 +48,7 @@ public final class Main {
   }
 
   /**
-   * Runs application on port. Launches gui if indicated. Starts the REPL.
+   * Runs application on port. Launches gui if indicated.
    */
   private void run() throws SQLException {
     // Parse command line arguments

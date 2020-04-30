@@ -276,28 +276,22 @@ a.link {
 }
 
 .ui-cards {
-    display: inline-flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    position: absolute;
-    top: 25%;
-    left: 6%;
+    display: inline-grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 2vw;
 }
 
 .ui-raised-link-card {
-    display: flex;
+    text-align: center;
     background-color: #fff;
     border-radius: 4px;
     border: medium solid;
-    margin-bottom: 3%;
-    margin-left: 7.3%;
-    margin-right: 3%;
     color: #444;
     cursor: pointer;
     padding-top: 2em;
     padding-bottom: 2em;
-    padding-left: 4.8em;
-    width: 17em;
+    margin-bottom: 5em;
+    width: 21em;
     height: 21em;
 }
 
@@ -360,7 +354,7 @@ a.link {
 
 .redirect {
     float: left;
-    padding-left: 15px;
+    position: absolute;
 }
 
 #submit {

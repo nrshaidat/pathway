@@ -597,7 +597,8 @@ public class Database implements DatabaseInterface {
           + " ORDER BY concentration_name ASC ");
       rs = prep.executeQuery();
       while (rs.next()) {
-        concentrationMap.put(rs.getString("concentration_name"), rs.getString("concentration_id"));
+        concentrationMap.put(rs.getString("concentration_name"),
+            rs.getString("concentration_id"));
       }
     } catch (SQLException e) {
       return null;

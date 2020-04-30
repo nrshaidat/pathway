@@ -114,9 +114,8 @@ public class DatabaseCache implements DatabaseInterface {
       Set<Node> courseSet = new HashSet<>();
       Set<Node> unfilledNodes = realDB.getConcentrationCourses(tableName);
       for (Node nody : unfilledNodes) {
-        if (this.cacheLoaderCourses.getIfPresent(nody.getId()) == null) { // course is not offered
-          // anymore so
-          // don't add it
+        if (this.cacheLoaderCourses.getIfPresent(nody.getId()) == null) {
+          // course is not offered anymore, so don't add it
           continue;
         } else { // course is in our courses table and is offered
           Node cachetmp = this.getCourseData(nody.getId());

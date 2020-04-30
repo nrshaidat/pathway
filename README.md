@@ -44,9 +44,9 @@ None.
         -Cleaning CAB parsing data (removing nulls, extra commas, numbers), debugging cab 
          scraping, and figuring out CAB / Self Service scraping 
         -Routing and various handling of user input
-        -Styling and adding functionality to front end (pathway boxes and arrows)
+        -Styling and adding functionality to front end (navbar)
         -Extensive debugging of all parts (db, algo & frontend)
-	    -Setting up login, login as guest, and sign up routing CORRECTLY
+	    -Setting up login, login as guest, and sign up routing correctly
 	    -Made the three unique pathways in pathway program
 
 	Mel:
@@ -68,14 +68,13 @@ None.
         -Manually double checking, fixing inaccurate prereqs, and entering missing prereqs 
          for all courses in CHEM, PHYS, HIAA.
         -Implementing customization functionality on the front and back end (add, move, swap)
-        -Styling and adding functionality to front end (add, move & swap modal/capability, pathway boxes and arrows)
+        -Styling and adding functionality to front end (pathway boxes and arrows, sign-in page)
         
     Nick:
         -CAB/self service scraping
         -Manually fixing prereqs for CHEM
         -Unit testing CAB database outputs
-        -Exploring how to apply multithreaidng to pathway creation
-	-Made the name username and password fieid in the sign up page and made the sign in as guest button in the login page 
+	    -Username/password fields on sign up page, guest button in the login page 
 		
 
 #### Member: Melissa Cui
