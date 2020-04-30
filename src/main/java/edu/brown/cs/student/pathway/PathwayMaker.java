@@ -70,12 +70,13 @@ public class PathwayMaker {
     }
 
 //    /**
-//     * Print Pathway is used to print out the User's pathway in the Back-end. (not quite sure if this is
+//     * Print Pathway is used to print out the User's pathway in the Back-end. (not sure if
 //     * necessary for the GUI, commenting out for now)
 //     */
 //    public void printPathway() {
 //      System.out.println(
-//          "Concentration: " + concentrationName + ", Workload: " + this.workload + ", aggressive: "
+//          "Concentration: " + concentrationName + ", Workload: " +
+//          this.workload + ", aggressive: "
 //              + this.aggressive);
 //      System.out.println("---------");
 //      List<Semester> path = pathway.getPath();

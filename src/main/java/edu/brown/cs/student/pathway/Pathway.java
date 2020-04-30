@@ -10,31 +10,63 @@ import java.util.Comparator;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Range;
 
+/**
+ * Pathway class. This class is used to create individual pathways. Each pathway takes
+ * in information like each category of requirements, the number of categories, and initial
+ * requirements used for pacing. It then generates a pathway based on an individual user's
+ * preferences and settings, for example which courses they have received credits for, and what
+ * their rising semester number is.
+ */
 public class Pathway {
   private static final int SEMESTER_SIZE = 4;
   private static final int SEMESTER_COUNT = 8;
 
-  private int[] requirements; // indices are categories, values are # of credits to satisfy the category
+  // indices are categories, values are # of credits to satisfy the category
+  private int[] requirements;
   private int numCategories; // size of requirements array
   private int[] initialRequirements; // original requirements - used for pacing
-  private ImmutableMap<String, Range<Double>> workloads; // hours ranges for lo, med and hi workloads
+  // hours ranges for lo, med and hi workloads
+  private ImmutableMap<String, Range<Double>> workloads;
 
   private Set<Node> courses; // courses that can be taken for credit for that concentration
   private Set<String> taken; // courses the student has already taken
   private List<Semester> path; // path to be returned
   private int currSemester;
 
+  //Creating public static final ints for the numbers that cause Maven issues
+  //These numbers cause Magic Number errors, so we assign them to variables instead.
+  private static final double MEDLOWBOUNDHRS = 25.0;
+  private static final double MEDHIGHBOUNDHRS = 40.0;
+  private static final double HIHIGHBOUNDHRS = 80.0;
+  private static final double INVALIDLENGTH = 1.5;
+  private static final double MAGICNUMBER7 = 7.0;
+  private static final double MAGICNUMBERTHREEFOURTH = 0.75;
+  private static final double MAGICNUMBERFOURTH = 0.25;
+  private static final double DEFAULTPERCENTSCHEDULE = 0.625;
+
+  /**
+   * The Constructor of the pathway class. It takes in the required information to generate a
+   * Pathway, like the requirements, set of taken courses, the user information like workload or
+   * course credits.
+   *
+   * @param reqs an integer array of the requirements for a concentration.
+   * @param courseSet the Node Set.
+   */
   public Pathway(int[] reqs, Set<Node> courseSet) {
     taken = new HashSet<>();
     requirements = reqs;
     numCategories = reqs.length;
     initialRequirements = Arrays.copyOf(reqs, numCategories);
     courses = courseSet;
-    workloads = ImmutableMap.of("lo", Range.closedOpen(1.0, 25.0),
-            "med", Range.closedOpen(25.0, 40.0),
-            "hi", Range.closedOpen(40.0, 80.0));
+    workloads = ImmutableMap.of("lo", Range.closedOpen(1.0, MEDLOWBOUNDHRS),
+            "med", Range.closedOpen(MEDLOWBOUNDHRS, MEDHIGHBOUNDHRS),
+            "hi", Range.closedOpen(MEDHIGHBOUNDHRS, HIHIGHBOUNDHRS));
   }
 
+  /**
+   * Returns a list of semesters that is the pathway.
+   * @return A semester list
+   */
   public List<Semester> getPath() {
     return path;
   }
@@ -64,7 +96,8 @@ public class Pathway {
    * @param aggressive pacing preference: fast or chilled
    * @param workload workload preference
    */
-  public void makePathway(Set<Node> coursesTaken, int risingSemester, boolean aggressive, String workload) {
+  public void makePathway(Set<Node> coursesTaken, int risingSemester,
+                          boolean aggressive, String workload) {
     path = new ArrayList<>();
     currSemester = risingSemester;
     Set<Node> nextSet = new HashSet<>();
@@ -86,7 +119,7 @@ public class Pathway {
     // While we have requirements left
     while (this.requirementsLeft()) {
       // Case to catch db anr/or bad input errors (bad prereqs, cycles, etc.)
-      if (currSemester > 1.5 * SEMESTER_COUNT) {
+      if (currSemester > INVALIDLENGTH * SEMESTER_COUNT) {
         System.out.println("Invalid Pathway - 50% longer than intended.");
         break;
       }
@@ -208,7 +241,7 @@ public class Pathway {
     for (int j = 0; j < numCourses; j++) {
       // If we are nearing the upper endpoint of our desired workload, switch
       // selection from better rated courses to lower workload courses
-      if (thisSemAvgHours > (workloads.get(workload).upperEndpoint() - 7.0)) {
+      if (thisSemAvgHours > (workloads.get(workload).upperEndpoint() - MAGICNUMBER7)) {
         for (int k = 0; k < numCourses - j; k++) {
           thisSemester.add(catCourses.get(k));
           taken.add(catCourses.get(k).getId());
@@ -234,7 +267,7 @@ public class Pathway {
   }
 
   /**
-   * Choose # of courses to take in a category
+   * Choose # of courses to take in a category.
    * Factors to consider:
    *  - SEMESTER_COUNT & currSemester
    *  - aggressive vs. laid-back
@@ -270,7 +303,7 @@ public class Pathway {
       reqsFracAvg += ((double) (initialRequirements[i] - requirements[i])) / initialRequirements[i];
     }
     reqsFracAvg /= numCategories;
-    double maxFrac = 0.625; // by default, requirements take 62.5% of our schedule
+    double maxFrac = DEFAULTPERCENTSCHEDULE; // by default, requirements take 62.5% of our schedule
     // lag tells us if we are ahead or behind on our requirements, relative to semester level
     double lag = semFrac - reqsFracAvg;
     if (aggressive) { // if agressive, we fake being behind so that we take more courses earlier on
@@ -292,7 +325,8 @@ public class Pathway {
       if (numCourses == 0) { // no more room, break
         break;
       }
-      if (numCoursesPerCat[i] == 0 || requirements[i] == 0) { // if no available courses or finished req
+      // if no available courses or finished req
+      if (numCoursesPerCat[i] == 0 || requirements[i] == 0) {
         res[i] = 0;
         continue;
       }
@@ -300,10 +334,12 @@ public class Pathway {
         res[i] = 1;
         numCourses -= 1;
       } else {
-        if (reqsAhead[i] >= numCourses) { // if there are a lot more reqs ahead, only take 1 course
+        // if there are a lot more reqs ahead, only take 1 course
+        if (reqsAhead[i] >= numCourses) {
           res[i] = 1;
           numCourses -= 1;
-        } else if (reqsAhead[i] > 0) { // if not many reqs ahead, take as many courses as we need save 1
+        } else if (reqsAhead[i] > 0) {
+          // if not many reqs ahead, take as many courses as we need save 1
           int taking = Math.min(numCourses - 1, numCoursesPerCat[i]);
           res[i] = taking;
           numCourses -= taking;
@@ -318,7 +354,7 @@ public class Pathway {
   }
 
   /**
-   * Add weights/priorities to courses:
+   * Add weights/priorities to courses by using a weighted shuffle.
    *  - courseRating & class_size --> Laplace's Rule of Succession
    *  - avg_hrs, max_hrs --> variance of max from avg
    *
@@ -348,7 +384,7 @@ public class Pathway {
       // Avg vs. max hours priority
       double avgOverMax = course.getAvgHrs() / course.getMaxHrs();
       // Rating has bigger impact on priority than hours variance
-      double priority = (0.75 * trueRating) + (0.25 * avgOverMax);
+      double priority = (MAGICNUMBERTHREEFOURTH * trueRating) + (MAGICNUMBERFOURTH * avgOverMax);
       weights.add(priority);
       acc += priority;
       running.add(acc);

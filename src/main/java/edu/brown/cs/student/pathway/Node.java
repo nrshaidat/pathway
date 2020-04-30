@@ -75,29 +75,29 @@ public class Node {
     category = cat;
   }
 
-  public void setPrereqspathlist() {
-    prereqspathlist = new ArrayList<>();
-    prereqspathlist.addAll(prereqspath);
-  }
-
-  public void setPrereqsforpathlist() {
-    prereqsforpathlist = new ArrayList<>();
-    this.prereqsforpathlist.addAll(prereqsforpath);
-  }
-
-  public List<Node> getPrereqspathlist() {
-    if (prereqspathlist == null) {
-      this.setPrereqspathlist();
-    }
-    return prereqspathlist;
-  }
-
-  public List<Node> getPrereqsforpathlist() {
-    if (prereqsforpathlist == null) {
-      this.setPrereqsforpathlist();
-    }
-    return prereqsforpathlist;
-  }
+//  public void setPrereqspathlist() {
+//    prereqspathlist = new ArrayList<>();
+//    prereqspathlist.addAll(prereqspath);
+//  }
+//
+//  public void setPrereqsforpathlist() {
+//    prereqsforpathlist = new ArrayList<>();
+//    this.prereqsforpathlist.addAll(prereqsforpath);
+//  }
+//
+//  public List<Node> getPrereqspathlist() {
+//    if (prereqspathlist == null) {
+//      this.setPrereqspathlist();
+//    }
+//    return prereqspathlist;
+//  }
+//
+//  public List<Node> getPrereqsforpathlist() {
+//    if (prereqsforpathlist == null) {
+//      this.setPrereqsforpathlist();
+//    }
+//    return prereqsforpathlist;
+//  }
 
   /**
    * getNextID gets next id as a string, this is only used for the cache database to build the
@@ -229,17 +229,17 @@ public class Node {
     return prereqs;
   }
 
-  public Set<Node> getPrereqspath() {
-    return prereqspath;
-  }
-
-  public void addPrereqspath(Node course) {
-    prereqspath.add(course);
-  }
-
-  public void addPrereqsforpath(Node course) {
-    prereqsforpath.add(course);
-  }
+//  public Set<Node> getPrereqspath() {
+//    return prereqspath;
+//  }
+//
+//  public void addPrereqspath(Node course) {
+//    prereqspath.add(course);
+//  }
+//
+//  public void addPrereqsforpath(Node course) {
+//    prereqsforpath.add(course);
+//  }
 
   /**
    * setNext sets the next course in a sequence (CS15's next field would be CS16).

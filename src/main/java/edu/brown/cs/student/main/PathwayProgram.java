@@ -64,19 +64,25 @@ public class PathwayProgram {
   private String concentration;
   private String concentrationName;
   private int risingSem;
+
+
+  //TODO Rising Sem and other variables not used; Resolve
   private List<String> courseList;
 
   /**
-   * PathwayProgram constructor.
+   * The PathwayProgram constructor that sets all of the necessary variables. It
+   * sets the dummy values for the number of semesters, the number of flexcourses,
+   * and information about each semester like the average and maxmimum number of hours.
+   * @throws SQLException for problems with querying db.
    */
   public PathwayProgram() throws SQLException {
     String file = "data/coursesDB.db";
     Database realDB = new Database(file); // real database that handles sql queries
     cache = new DatabaseCache(realDB);
     concentrationMap = cache.getConcentrationsMap();
-    concentrationsList = new ArrayList<String>(this.concentrationMap.keySet());
+    concentrationsList = new ArrayList<>(this.concentrationMap.keySet());
     risingSem = 1;
-    courseList=cache.getAllCourseIDs();
+    courseList = cache.getAllCourseIDs();
     numsemesters1 = 0;
     numsemesters2 = 0;
     numsemesters3 = 0;
@@ -115,10 +121,15 @@ public class PathwayProgram {
     avgmaxhrs3path = 0.0;
   }
 
+  /**
+   * Returns a list of Strings representing the courseList.
+   * @return a list of Strings.
+   */
   public List<String> getCourseList() {
     return courseList;
   }
 
+  //Note: commented out all the unused getter and setter methods for now.
 //  public double getAvgrating1sem() {
 //    avgrating1sem = (avgrating1sem / numsemesters1);
 //    return avgrating1sem;
@@ -289,44 +300,99 @@ public class PathwayProgram {
 //    return cache;
 //  }
 
+  /**
+   * Getter method that gets the first pathway, Pathway 1.
+   * @return a List of Semesters for the first pathway.
+   */
   public List<Semester> getPath1() {
     return path1;
   }
 
+  /**
+   * Getter method that gets the second pathway, Pathway 2.
+   * @return a List of Semesters for the second pathway.
+   */
   public List<Semester> getPath2() {
     return path2;
   }
 
+  /**
+   * Getter method that gets the third pathway, Pathway 3.
+   * @return a List of Semesters for the third pathway.
+   */
   public List<Semester> getPath3() {
     return path3;
   }
 
+  /**
+   * Returns a Map of the concentration.
+   * @return a Map of key and value String pairs.
+   */
   public Map<String, String> getConcentrationMap() {
     return concentrationMap;
   }
 
+  /**
+   * Returns a Set of nodes representing the courseSet.
+   * @return a Node Set.
+   */
   public Set<Node> getCourseSet() {
     return courseSet;
   }
 
+  /**
+   * A setter method that sets the concentration in this class to the user-specified value.
+   * @param concentration the specified concentration as a String.
+   * @throws SQLException if there are problems accessing the database.
+   */
   public void setConcentration(String concentration) throws SQLException {
     this.concentration = concentration;
     courseSet = cache.getConcentrationCourses(concentration);
   }
 
+  /**
+   * Returns the concentration name that the user has specified.
+   * @return a String representing the concentration Name.
+   */
   public String getConcentrationName() {
     return concentrationName;
   }
 
+  /**
+   * Getter method to set the concentration name.
+   * @param concentrationName A String representing the user-chosen concentration.
+   */
   public void setConcentrationName(String concentrationName) {
     this.concentrationName = concentrationName;
   }
 
+  /**
+   * Creates a clone of sets. This method is used to create copies of the set of
+   * taken courses to create pathways 2 and 3.
+   * @param original The original set of nodes. (taken)
+   * @param <T> A generic type T.
+   * @return Returns a copy of the original set of nodes.
+   */
   public static <T> Set<T> clone(Set<T> original) {
     Set<T> copy = original.stream().collect(Collectors.toSet());
     return copy;
   }
 
+  /**
+   * The makePathway method takes in params to create a pathway given user input. It
+   * uses the concentration String, the set of courses a student has gotten credit for,
+   * their rising semester number, and whether they prefer a faster pathway or not. After
+   * generating three pathways, this information is displayed on the GUI.
+   *
+   * @param con String representing the user choice of concentration.
+   * @param taken The set of nodes representing the courses a user has obtained credit for.
+   *              In the front end, if left empty this set of nodes is length 0.
+   * @param sem The rising semester of a student.
+   * @param aggressive A boolean representing if a student wants to complete their
+   *                   specified concentration as fast as possible (in the least number
+   *                   of semesters).
+   * @throws SQLException if there are errors with querying the database.
+   */
   public void makePathways(String con, Set<Node> taken, int sem, boolean aggressive)
       throws SQLException {
     concentration = con;
@@ -350,17 +416,40 @@ public class PathwayProgram {
     path3 = pathway3.getPath();
     this.setPathStats3();
   }
+
+  /**
+   * A method to return if the concentration has been set of not.
+   * @return a boolean checking if concentration is null.
+   */
   public boolean isSet() {
     return concentration == null;
   }
 
+  /**
+   * Returns the concentration name.
+   *
+   * @return a String representing the pathways generated for a certain concentration.
+   */
   public String getConcentration() {
     return concentration;
   }
 
+  /**
+   * Returns the concentration list, a list of strings.
+   *
+   * @return a List of Strings
+   */
   public List<String> getConcentrationsList() {
     return concentrationsList;
   }
+
+  /**
+   This method sets the statistics of Pathway1, the lowest workload pathway.
+   * It calcualtes the average rating, hours, and maximum hours by averaging the
+   * rating, average hours and maximum hours of each class in the semester. After
+   * generating this information, these parameters can be used in the front-end to
+   * display a semester summary.
+   */
   public void setPathStats1() {
     totalnumcourses1 = 0;
     totalflexcourses1 = 0;
@@ -370,7 +459,7 @@ public class PathwayProgram {
     avgrating1sem = 0.0;
     avgavghrs1sem = 0.0;
     avgmaxhrs1sem = 0.0;
-    for(Semester sem: getPath1()) {
+    for (Semester sem: getPath1()) {
       sem.setStats();
       totalnumcourses1 += sem.getCourses().size();
       totalflexcourses1 += sem.getNumflex();
@@ -383,6 +472,13 @@ public class PathwayProgram {
     }
   }
 
+  /**
+   * This method sets the statistics of Pathway2, the medium workload pathway.
+   * It calcualtes the average rating, hours, and maximum hours by averaging the
+   * rating, average hours and maximum hours of each class in the semester. After
+   * generating this information, these parameters can be used in the front-end to
+   * display a semester summary.
+   */
   public void setPathStats2() {
     totalnumcourses2 = 0;
     totalflexcourses2 = 0;
@@ -405,6 +501,13 @@ public class PathwayProgram {
     }
   }
 
+  /**
+   * This method sets the statistics of Pathway3, the most workload intensive pathway.
+   * It calcualtes the average rating, hours, and maximum hours by averaging the
+   * rating, average hours and maximum hours of each class in the semester. After
+   * generating this information, these parameters can be used in the front-end to
+   * display a semester summary.
+   */
   public void setPathStats3() {
     totalnumcourses3 = 0;
     totalflexcourses3 = 0;
