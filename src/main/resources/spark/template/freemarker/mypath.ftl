@@ -158,6 +158,13 @@
     <div class="ui-cards">
         <#list results as semester>
             <div class="ui-raised-link-card" id="myBtn${semester.semnumber}">
+
+                <div class="year" id="freshman${semester.semnumber}" style="display: none">Freshman Year</div>
+                <div class="year" id="sophomore${semester.semnumber}" style="display: none">Sophomore Year</div>
+                <div class="year" id="junior${semester.semnumber}" style="display: none">Junior Year</div>
+                <div class="year" id="senior${semester.semnumber}" style="display: none">Senior Year</div>
+                <div class="year" id="supersenior${semester.semnumber}" style="display: none">Super Senior Year</div>
+
                 <div class="myBtn" id="myBtn${semester.semnumber}" style="cursor:pointer">
                     <div class="header-cc_pointer">Semester ${semester.semnumber}:
                         <div class="meta-cc_pointer">${["Spring", "Fall"][semester.semnumber%2]}</div>
@@ -187,6 +194,45 @@
     </div>
 </div>
 <script>
+    $('.header-cc_pointer').each(function() {
+        if ($(this).text().includes("1") || $(this).text().includes("2")) {
+            $('#freshman1').css("display", "block");
+            $('#freshman2').css("display", "block");
+        } else if ($(this).text().includes("3") || $(this).text().includes("4")) {
+            $('#sophomore3').css("display", "block");
+            $('#sophomore4').css("display", "block");
+        } else if ($(this).text().includes("5") || $(this).text().includes("6")) {
+            $('#junior5').css("display", "block");
+            $('#junior6').css("display", "block");
+        } else if ($(this).text().includes("7") || $(this).text().includes("8")) {
+            $('#senior7').css("display", "block");
+            $('#senior8').css("display", "block");
+        } else {
+            $('#supersenior9').css("display", "block");
+            $('#supersenior10').css("display", "block");
+            $('#supersenior11').css("display", "block");
+            $('#supersenior12').css("display", "block");
+        }
+    });
+
+    $('.ui-raised-link-card').each(function() {
+        $(this).children('div.year').each(function() {
+            if ($(this).css('display') === 'block') {
+                if ($(this).text().includes("Freshman")) {
+                    $(this).parent().addClass("blue");
+                } else if ($(this).text().includes("Sophomore")) {
+                    $(this).parent().addClass("bluegreen");
+                } else if ($(this).text().includes("Junior")) {
+                    $(this).parent().addClass("lavender");
+                } else if ($(this).text().includes("Senior")) {
+                    $(this).parent().addClass("pink");
+                } else {
+                    $(this).parent().addClass("terracotta");
+                }
+            }
+        });
+    });
+
     // Get the modal
     const modal = document.getElementById("myModal");
     // Get this semester text
