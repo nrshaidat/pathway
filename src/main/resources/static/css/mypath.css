@@ -27,6 +27,7 @@ a.item {
 .ui.fixed.borderless.menu {
     background-color: #4a008a;
     text-align: right;
+    float:right;
 }
 
 .ui .computer.only .item {

@@ -7,9 +7,12 @@
       <!--Start: Desktop Nav-->
       <div class="computer only row">
         <a class="header item">Pathway</a>
-        <a class="active item">Log out</a>
+        <a class="active item">Generate</a>
         <form action="/faqs" method="post">
           <a href="/faqs" class="item">FAQ</a>
+        </form>
+        <form action="/login" method="post">
+          <a href="/login" class="item">Login</a>
         </form>
       </div>
       <!--End: Desktop Nav-->

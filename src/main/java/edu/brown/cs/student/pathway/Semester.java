@@ -66,6 +66,7 @@ public class Semester {
 
   /**
    * Public getter method to return the maximum hours of a semester.
+   *
    * @return a double representing maxhrs variable.
    */
   public double getMaxhrs() {
@@ -88,6 +89,7 @@ public class Semester {
 
   /**
    * Getter method for the rating of a semester.
+   *
    * @return a double variable, rating.
    */
   public double getRating() {
@@ -96,6 +98,7 @@ public class Semester {
 
   /**
    * Getter to return # of flexible courses that can be taken in both semesters.
+   *
    * @return an integer, numflex.
    */
   public int getNumflex() {
@@ -104,6 +107,7 @@ public class Semester {
 
   /**
    * Getter to return a double representing the average hours in a semester.
+   *
    * @return double, avghrs variable.
    */
   public double getAvghrs() {

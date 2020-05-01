@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.Collections;
 import java.util.Comparator;
+
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Range;
 
@@ -49,7 +50,7 @@ public class Pathway {
    * Pathway, like the requirements, set of taken courses, the user information like workload or
    * course credits.
    *
-   * @param reqs an integer array of the requirements for a concentration.
+   * @param reqs      an integer array of the requirements for a concentration.
    * @param courseSet the Node Set.
    */
   public Pathway(int[] reqs, Set<Node> courseSet) {
@@ -58,13 +59,14 @@ public class Pathway {
     numCategories = reqs.length;
     initialRequirements = Arrays.copyOf(reqs, numCategories);
     courses = courseSet;
-    workloads = ImmutableMap.of("lo", Range.closedOpen(1.0, MEDLOWBOUNDHRS),
-            "med", Range.closedOpen(MEDLOWBOUNDHRS, MEDHIGHBOUNDHRS),
-            "hi", Range.closedOpen(MEDHIGHBOUNDHRS, HIHIGHBOUNDHRS));
+    workloads = ImmutableMap.of("lo", Range.closedOpen(1.0, MEDLOWBOUNDHRS), "med",
+        Range.closedOpen(MEDLOWBOUNDHRS, MEDHIGHBOUNDHRS), "hi",
+        Range.closedOpen(MEDHIGHBOUNDHRS, HIHIGHBOUNDHRS));
   }
 
   /**
    * Returns a list of semesters that is the pathway.
+   *
    * @return A semester list
    */
   public List<Semester> getPath() {
@@ -74,8 +76,9 @@ public class Pathway {
   /**
    * Helper needed because of courseSet copying.
    * We use this in place of the Set's contains.
+   *
    * @param sources sources
-   * @param node node to check
+   * @param node    node to check
    * @return boolean
    */
   private boolean sourcesContains(Set<Node> sources, Node node) {
@@ -91,13 +94,14 @@ public class Pathway {
    * Generates a valid pathway that satisfies concentration requirements
    * and best fits inputted preferences, with a bit of randomness
    * to provide variety as opposed to a one-size-fits-all pathway.
-   * @param coursesTaken courses already taken by student
+   *
+   * @param coursesTaken   courses already taken by student
    * @param risingSemester rising semester
-   * @param aggressive pacing preference: fast or chilled
-   * @param workload workload preference
+   * @param aggressive     pacing preference: fast or chilled
+   * @param workload       workload preference
    */
-  public void makePathway(Set<Node> coursesTaken, int risingSemester,
-                          boolean aggressive, String workload) {
+  public void makePathway(Set<Node> coursesTaken, int risingSemester, boolean aggressive,
+                          String workload) {
     path = new ArrayList<>();
     currSemester = risingSemester;
     Set<Node> nextSet = new HashSet<>();
@@ -167,8 +171,8 @@ public class Pathway {
         // Sort courses by avgHrs, ascending order
         Collections.sort(catCourses, Comparator.comparingDouble(Node::getAvgHrs));
         // Choose courses to take
-        this.chooseCourses(catCourses, shuffledCatCourses, nextSet, thisSemester,
-            workload, coursesToTake[i]);
+        this.chooseCourses(catCourses, shuffledCatCourses, nextSet, thisSemester, workload,
+            coursesToTake[i]);
       }
       Semester semester = new Semester(currSemester, thisSemester);
       path.add(semester);
@@ -178,6 +182,7 @@ public class Pathway {
 
   /**
    * Returns boolean telling us if we have requirements left or not.
+   *
    * @return boolean representing whether we have reqs left or not
    */
   private boolean requirementsLeft() {
@@ -186,6 +191,7 @@ public class Pathway {
 
   /**
    * Returns available courses this semester.
+   *
    * @return set of available courses
    */
   private Set<Node> getAvailableCourses() {
@@ -222,20 +228,20 @@ public class Pathway {
   /**
    * Need to take numCourses courses, prioritizing courses that come first
    * in shuffledCatCourses, trying to stay within the workload range:
-   *  If thisSemAvgHours is less than the lowerEndpoint or well
-   *  within the workload range, we will choose from the first courses in
-   *  shuffledCatCourses. Only if the workload nears the upperEndpoint
-   *  do we choose lower workload courses over better rated courses.
-   * @param catCourses courses to take, ordered ASC by workload
+   * If thisSemAvgHours is less than the lowerEndpoint or well
+   * within the workload range, we will choose from the first courses in
+   * shuffledCatCourses. Only if the workload nears the upperEndpoint
+   * do we choose lower workload courses over better rated courses.
+   *
+   * @param catCourses         courses to take, ordered ASC by workload
    * @param shuffledCatCourses courses to take, ordered DESC by rating
-   * @param nextSet nextSet, to handle sequences
-   * @param thisSemester courses taking this semester
-   * @param workload desired workload
-   * @param numCourses # of courses to take this semester
+   * @param nextSet            nextSet, to handle sequences
+   * @param thisSemester       courses taking this semester
+   * @param workload           desired workload
+   * @param numCourses         # of courses to take this semester
    */
-  private void chooseCourses(List<Node> catCourses, Node[] shuffledCatCourses,
-                             Set<Node> nextSet, List<Node> thisSemester,
-                             String workload, int numCourses) {
+  private void chooseCourses(List<Node> catCourses, Node[] shuffledCatCourses, Set<Node> nextSet,
+                             List<Node> thisSemester, String workload, int numCourses) {
     double thisSemAvgHours = 0.0; // workload this semester
     // Take numCourses courses
     for (int j = 0; j < numCourses; j++) {
@@ -269,14 +275,15 @@ public class Pathway {
   /**
    * Choose # of courses to take in a category.
    * Factors to consider:
-   *  - SEMESTER_COUNT & currSemester
-   *  - aggressive vs. laid-back
-   *  - # of courses available in categories, # of requirements left in categories
-   *  - taking many courses from one category at the same time
-   *  - finishing one category at a time vs taking courses from many categories
+   * - SEMESTER_COUNT & currSemester
+   * - aggressive vs. laid-back
+   * - # of courses available in categories, # of requirements left in categories
+   * - taking many courses from one category at the same time
+   * - finishing one category at a time vs taking courses from many categories
+   *
    * @param coursesByCat available courses sorted by category
-   * @param max maximum number of courses we can take
-   * @param aggressive boolean representing accelerated schedule
+   * @param max          maximum number of courses we can take
+   * @param aggressive   boolean representing accelerated schedule
    * @return int[] telling us how many courses to take in each category
    */
   private int[] numCoursesToTake(List<Node>[] coursesByCat, int max, boolean aggressive) {
@@ -355,16 +362,16 @@ public class Pathway {
 
   /**
    * Add weights/priorities to courses by using a weighted shuffle.
-   *  - courseRating & class_size --> Laplace's Rule of Succession
-   *  - avg_hrs, max_hrs --> variance of max from avg
-   *
+   * - courseRating & class_size --> Laplace's Rule of Succession
+   * - avg_hrs, max_hrs --> variance of max from avg
+   * <p>
    * Approaches to weighted random selection/shuffle:
-   *  - Collections.shuffle() (no weights) --> O(nlogn)
-   *  - Random Interval Selection/Linear Scan (possible duplicates) --> O(n * numCourses)
-   *  - Random Binary Search (possible duplicates) --> O(logn)
-   *  - Weighted Randomized Ordering --> O(W * n),
-   *      W is sum of weights as integers, W > 1500
-   *  - Fast Weighted Shuffle --> Amortized O(nlogn)
+   * - Collections.shuffle() (no weights) --> O(nlogn)
+   * - Random Interval Selection/Linear Scan (possible duplicates) --> O(n * numCourses)
+   * - Random Binary Search (possible duplicates) --> O(logn)
+   * - Weighted Randomized Ordering --> O(W * n),
+   * W is sum of weights as integers, W > 1500
+   * - Fast Weighted Shuffle --> Amortized O(nlogn)
    *
    * @param catCourses courses to prioritize and shuffle
    * @return shuffled courses

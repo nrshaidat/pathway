@@ -22,6 +22,7 @@ import edu.brown.cs.student.pathway.Node;
  */
 public class Database implements DatabaseInterface {
   private static final int COURSE = 13; //courses table number of columns
+  private static final int SSLINK = 12;
   private static final int COURSECODEIDX = 0;
   private static final int COURSENAMEIDX = 1;
   private static final int PREREQIDX = 2;
@@ -340,7 +341,7 @@ public class Database implements DatabaseInterface {
       if (!names.get(CLASSSIZEIDX).equals("class_size")) {
         return false;
       }
-      if (!names.get(12).equals("ss_link")) {
+      if (!names.get(SSLINK).equals("ss_link")) {
         return false;
       }
     } catch (SQLException e) {
@@ -434,7 +435,7 @@ public class Database implements DatabaseInterface {
         newCourse.setClassSize(DEFAULTCLASSSIZE);
       }
       String cabLink = rs.getString("ss_link");
-      newCourse.setCABurl(cabLink);
+      newCourse.setSsurl(cabLink);
     } catch (SQLException e) {
       return null;
     } finally {
@@ -558,8 +559,8 @@ public class Database implements DatabaseInterface {
     ResultSet rs = null;
     List<Integer> reqs = new ArrayList<>();
     try {
-      String strQuery = " SELECT * " + " FROM $tableName "
-          + " ORDER BY cast(category as unsigned) ASC ";
+      String strQuery =
+          " SELECT * " + " FROM $tableName " + " ORDER BY cast(category as unsigned) ASC ";
       String query = strQuery.replace("$tableName", tableName);
       prep = conn.prepareStatement(query);
       rs = prep.executeQuery();
@@ -598,12 +599,11 @@ public class Database implements DatabaseInterface {
     ResultSet rs = null;
     Map<String, String> concentrationMap = new HashMap<>();
     try {
-      prep = conn.prepareStatement("SELECT * " + " FROM concentrations "
-          + " ORDER BY concentration_name ASC ");
+      prep = conn.prepareStatement(
+          "SELECT * " + " FROM concentrations " + " ORDER BY concentration_name ASC ");
       rs = prep.executeQuery();
       while (rs.next()) {
-        concentrationMap.put(rs.getString("concentration_name"),
-            rs.getString("concentration_id"));
+        concentrationMap.put(rs.getString("concentration_name"), rs.getString("concentration_id"));
       }
     } catch (SQLException e) {
       return null;

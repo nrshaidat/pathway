@@ -73,6 +73,7 @@ public class PathwayProgram {
    * The PathwayProgram constructor that sets all of the necessary variables. It
    * sets the dummy values for the number of semesters, the number of flexcourses,
    * and information about each semester like the average and maxmimum number of hours.
+   *
    * @throws SQLException for problems with querying db.
    */
   public PathwayProgram() throws SQLException {
@@ -123,6 +124,7 @@ public class PathwayProgram {
 
   /**
    * Returns a list of Strings representing the courseList.
+   *
    * @return a list of Strings.
    */
   public List<String> getCourseList() {
@@ -295,13 +297,10 @@ public class PathwayProgram {
     numsemesters3 = this.path3.size();
     return numsemesters3;
   }
-//
-//  public DatabaseInterface getCache() {
-//    return cache;
-//  }
 
   /**
    * Getter method that gets the first pathway, Pathway 1.
+   *
    * @return a List of Semesters for the first pathway.
    */
   public List<Semester> getPath1() {
@@ -310,6 +309,7 @@ public class PathwayProgram {
 
   /**
    * Getter method that gets the second pathway, Pathway 2.
+   *
    * @return a List of Semesters for the second pathway.
    */
   public List<Semester> getPath2() {
@@ -318,6 +318,7 @@ public class PathwayProgram {
 
   /**
    * Getter method that gets the third pathway, Pathway 3.
+   *
    * @return a List of Semesters for the third pathway.
    */
   public List<Semester> getPath3() {
@@ -326,6 +327,7 @@ public class PathwayProgram {
 
   /**
    * Returns a Map of the concentration.
+   *
    * @return a Map of key and value String pairs.
    */
   public Map<String, String> getConcentrationMap() {
@@ -334,6 +336,7 @@ public class PathwayProgram {
 
   /**
    * Returns a Set of nodes representing the courseSet.
+   *
    * @return a Node Set.
    */
   public Set<Node> getCourseSet() {
@@ -342,6 +345,7 @@ public class PathwayProgram {
 
   /**
    * A setter method that sets the concentration in this class to the user-specified value.
+   *
    * @param concentration the specified concentration as a String.
    * @throws SQLException if there are problems accessing the database.
    */
@@ -352,6 +356,7 @@ public class PathwayProgram {
 
   /**
    * Returns the concentration name that the user has specified.
+   *
    * @return a String representing the concentration Name.
    */
   public String getConcentrationName() {
@@ -360,6 +365,7 @@ public class PathwayProgram {
 
   /**
    * Getter method to set the concentration name.
+   *
    * @param concentrationName A String representing the user-chosen concentration.
    */
   public void setConcentrationName(String concentrationName) {
@@ -369,8 +375,9 @@ public class PathwayProgram {
   /**
    * Creates a clone of sets. This method is used to create copies of the set of
    * taken courses to create pathways 2 and 3.
+   *
    * @param original The original set of nodes. (taken)
-   * @param <T> A generic type T.
+   * @param <T>      A generic type T.
    * @return Returns a copy of the original set of nodes.
    */
   public static <T> Set<T> clone(Set<T> original) {
@@ -384,10 +391,10 @@ public class PathwayProgram {
    * their rising semester number, and whether they prefer a faster pathway or not. After
    * generating three pathways, this information is displayed on the GUI.
    *
-   * @param con String representing the user choice of concentration.
-   * @param taken The set of nodes representing the courses a user has obtained credit for.
-   *              In the front end, if left empty this set of nodes is length 0.
-   * @param sem The rising semester of a student.
+   * @param con        String representing the user choice of concentration.
+   * @param taken      The set of nodes representing the courses a user has obtained credit for.
+   *                   In the front end, if left empty this set of nodes is length 0.
+   * @param sem        The rising semester of a student.
    * @param aggressive A boolean representing if a student wants to complete their
    *                   specified concentration as fast as possible (in the least number
    *                   of semesters).
@@ -419,6 +426,7 @@ public class PathwayProgram {
 
   /**
    * A method to return if the concentration has been set of not.
+   *
    * @return a boolean checking if concentration is null.
    */
   public boolean isSet() {
@@ -426,7 +434,8 @@ public class PathwayProgram {
   }
 
   /**
-   * Returns the concentration name.
+   * Returns the last concentration used for when the user returns back to the page showing all
+   * three pathways from each pathway page.
    *
    * @return a String representing the pathways generated for a certain concentration.
    */
@@ -444,7 +453,7 @@ public class PathwayProgram {
   }
 
   /**
-   This method sets the statistics of Pathway1, the lowest workload pathway.
+   * This method sets the statistics of Pathway1, the lowest workload pathway.
    * It calcualtes the average rating, hours, and maximum hours by averaging the
    * rating, average hours and maximum hours of each class in the semester. After
    * generating this information, these parameters can be used in the front-end to
@@ -459,7 +468,7 @@ public class PathwayProgram {
     avgrating1sem = 0.0;
     avgavghrs1sem = 0.0;
     avgmaxhrs1sem = 0.0;
-    for (Semester sem: getPath1()) {
+    for (Semester sem : getPath1()) {
       sem.setStats();
       totalnumcourses1 += sem.getCourses().size();
       totalflexcourses1 += sem.getNumflex();
