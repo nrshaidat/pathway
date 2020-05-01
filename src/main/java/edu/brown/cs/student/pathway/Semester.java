@@ -110,51 +110,51 @@ public class Semester {
     return avghrs;
   }
 
-//  public int getNumcourses() {
-//    numcourses = this.courses.size();
-//    return numcourses;
-//  }
+  public int getNumcourses() {
+    numcourses = this.courses.size();
+    return numcourses;
+  }
 
-//  public void setCourses() {
-//    for (int i = 0; i < courses.size(); i++) {
-//      switch (i) {
-//        case 0:
-//          courseid1 = courses.get(0).getId();
-//          break;
-//        case 1:
-//          courseid2 = courses.get(1).getId();
-//          break;
-//        case 2:
-//          courseid3 = courses.get(2).getId();
-//          break;
-//        case 3:
-//          courseid4 = courses.get(3).getId();
-//          break;
-//        default:
-//          break;
-//      }
-//    }
-//  }
+  public void setCourses() {
+    for (int i = 0; i < courses.size(); i++) {
+      switch (i) {
+        case 0:
+          courseid1 = courses.get(0).getId();
+          break;
+        case 1:
+          courseid2 = courses.get(1).getId();
+          break;
+        case 2:
+          courseid3 = courses.get(2).getId();
+          break;
+        case 3:
+          courseid4 = courses.get(3).getId();
+          break;
+        default:
+          break;
+      }
+    }
+  }
 
-//  public String getCourseid1() {
-//    setCourses();
-//    return courseid1;
-//  }
-//
-//  public String getCourseid2() {
-//    setCourses();
-//    return courseid2;
-//  }
-//
-//  public String getCourseid3() {
-//    setCourses();
-//    return courseid3;
-//  }
-//
-//  public String getCourseid4() {
-//    setCourses();
-//    return courseid4;
-//  }
+  public String getCourseid1() {
+    setCourses();
+    return courseid1;
+  }
+
+  public String getCourseid2() {
+    setCourses();
+    return courseid2;
+  }
+
+  public String getCourseid3() {
+    setCourses();
+    return courseid3;
+  }
+
+  public String getCourseid4() {
+    setCourses();
+    return courseid4;
+  }
 
   /**
    * getSemester gets the semester's integer representation.

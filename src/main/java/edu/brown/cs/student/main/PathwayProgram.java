@@ -130,171 +130,171 @@ public class PathwayProgram {
   }
 
   //Note: commented out all the unused getter and setter methods for now.
-//  public double getAvgrating1sem() {
-//    avgrating1sem = (avgrating1sem / numsemesters1);
-//    return avgrating1sem;
-//  }
-//
-//  public double getAvgrating2sem() {
-//    avgrating2sem = (avgrating1sem / numsemesters2);
-//    return avgrating2sem;
-//  }
-//
-//  public double getAvgrating3sem() {
-//    avgrating3sem = (avgrating3sem / numsemesters3);
-//    return avgrating3sem;
-//  }
-//
-//  public double getAvgavghrs1sem() {
-//    avgavghrs1sem = (totalavg1 / numsemesters1);
-//    return avgavghrs1sem;
-//  }
-//
-//  public double getAvgavghrs2sem() {
-//    avgavghrs2sem = (totalavg2 / numsemesters2);
-//    return avgavghrs2sem;
-//  }
-//
-//  public double getAvgavghrs3sem() {
-//    avgavghrs3sem = (totalavg3 / numsemesters3);
-//    return avgavghrs3sem;
-//  }
-//
-//  public double getAvgmaxhrs1sem() {
-//    avgmaxhrs1sem = (avgmaxhrs1sem / numsemesters1);
-//    return avgmaxhrs1sem;
-//  }
-//
-//  public double getAvgmaxhrs2sem() {
-//    avgmaxhrs2sem = (avgmaxhrs2sem / numsemesters2);
-//    return avgmaxhrs2sem;
-//  }
-//
-//  public double getAvgmaxhrs3sem() {
-//    avgmaxhrs3sem = (avgmaxhrs3sem / numsemesters3);
-//    return avgmaxhrs3sem;
-//  }
-//
-//  public double getAvgrating1path() {
-//    avgrating1path = (totalrating1 / totalnumcourses1);
-//    return avgrating1path;
-//  }
-//
-//  public double getAvgrating2path() {
-//    avgrating2path = (totalrating2 / totalnumcourses2);
-//    return avgrating2path;
-//  }
-//
-//  public double getAvgrating3path() {
-//    avgrating3path = (totalrating3 / totalnumcourses3);
-//    return avgrating3path;
-//  }
-//
-//  public double getAvgavghrs1path() {
-//    avgavghrs1path = (totalavg1 / totalnumcourses1);
-//    return avgavghrs1path;
-//  }
-//
-//  public double getAvgavghrs2path() {
-//    avgavghrs2path = (totalavg2 / totalnumcourses2);
-//    return avgavghrs2path;
-//  }
-//
-//  public double getAvgavghrs3path() {
-//    avgavghrs3path = (totalavg3 / totalnumcourses3);
-//    return avgavghrs3path;
-//  }
-//
-//  public double getAvgmaxhrs1path() {
-//    avgmaxhrs1path = (totalmax1 / totalnumcourses1);
-//    return avgmaxhrs1path;
-//  }
-//
-//  public double getAvgmaxhrs2path() {
-//    avgmaxhrs2path = (totalmax2 / totalnumcourses2);
-//    return avgmaxhrs2path;
-//  }
-//
-//  public double getAvgmaxhrs3path() {
-//    avgmaxhrs3path = (totalmax3 / totalnumcourses3);
-//    return avgmaxhrs3path;
-//  }
-//
-//  public int getTotalnumcourses1() {
-//    return totalnumcourses1;
-//  }
-//
-//  public int getTotalnumcourses2() {
-//    return totalnumcourses2;
-//  }
-//
-//  public int getTotalnumcourses3() {
-//    return totalnumcourses3;
-//  }
-//
-//  public int getTotalflexcourses1() {
-//    return totalflexcourses1;
-//  }
-//
-//  public int getTotalflexcourses2() {
-//    return totalflexcourses2;
-//  }
-//
-//  public int getTotalflexcourses3() {
-//    return totalflexcourses3;
-//  }
-//
-//  public double getTotalavg1() {
-//    return totalavg1;
-//  }
-//
-//  public double getTotalavg2() {
-//    return totalavg2;
-//  }
-//
-//  public double getTotalavg3() {
-//    return totalavg3;
-//  }
-//
-//  public double getTotalmax1() {
-//    return totalmax1;
-//  }
-//
-//  public double getTotalmax2() {
-//    return totalmax2;
-//  }
-//
-//  public double getTotalmax3() {
-//    return totalmax3;
-//  }
-//
-//  public double getTotalrating1() {
-//    return totalrating1;
-//  }
-//
-//  public double getTotalrating2() {
-//    return totalrating2;
-//  }
-//
-//  public double getTotalrating3() {
-//    return totalrating3;
-//  }
-//
-//
-//  public int getNumsemesters1() {
-//    numsemesters1 = this.path1.size();
-//    return numsemesters1;
-//  }
-//
-//  public int getNumsemesters2() {
-//    numsemesters2 = this.path2.size();
-//    return numsemesters2;
-//  }
-//
-//  public int getNumsemesters3() {
-//    numsemesters3 = this.path3.size();
-//    return numsemesters3;
-//  }
+  public double getAvgrating1sem() {
+    avgrating1sem = (avgrating1sem / numsemesters1);
+    return avgrating1sem;
+  }
+
+  public double getAvgrating2sem() {
+    avgrating2sem = (avgrating1sem / numsemesters2);
+    return avgrating2sem;
+  }
+
+  public double getAvgrating3sem() {
+    avgrating3sem = (avgrating3sem / numsemesters3);
+    return avgrating3sem;
+  }
+
+  public double getAvgavghrs1sem() {
+    avgavghrs1sem = (totalavg1 / numsemesters1);
+    return avgavghrs1sem;
+  }
+
+  public double getAvgavghrs2sem() {
+    avgavghrs2sem = (totalavg2 / numsemesters2);
+    return avgavghrs2sem;
+  }
+
+  public double getAvgavghrs3sem() {
+    avgavghrs3sem = (totalavg3 / numsemesters3);
+    return avgavghrs3sem;
+  }
+
+  public double getAvgmaxhrs1sem() {
+    avgmaxhrs1sem = (avgmaxhrs1sem / numsemesters1);
+    return avgmaxhrs1sem;
+  }
+
+  public double getAvgmaxhrs2sem() {
+    avgmaxhrs2sem = (avgmaxhrs2sem / numsemesters2);
+    return avgmaxhrs2sem;
+  }
+
+  public double getAvgmaxhrs3sem() {
+    avgmaxhrs3sem = (avgmaxhrs3sem / numsemesters3);
+    return avgmaxhrs3sem;
+  }
+
+  public double getAvgrating1path() {
+    avgrating1path = (totalrating1 / totalnumcourses1);
+    return avgrating1path;
+  }
+
+  public double getAvgrating2path() {
+    avgrating2path = (totalrating2 / totalnumcourses2);
+    return avgrating2path;
+  }
+
+  public double getAvgrating3path() {
+    avgrating3path = (totalrating3 / totalnumcourses3);
+    return avgrating3path;
+  }
+
+  public double getAvgavghrs1path() {
+    avgavghrs1path = (totalavg1 / totalnumcourses1);
+    return avgavghrs1path;
+  }
+
+  public double getAvgavghrs2path() {
+    avgavghrs2path = (totalavg2 / totalnumcourses2);
+    return avgavghrs2path;
+  }
+
+  public double getAvgavghrs3path() {
+    avgavghrs3path = (totalavg3 / totalnumcourses3);
+    return avgavghrs3path;
+  }
+
+  public double getAvgmaxhrs1path() {
+    avgmaxhrs1path = (totalmax1 / totalnumcourses1);
+    return avgmaxhrs1path;
+  }
+
+  public double getAvgmaxhrs2path() {
+    avgmaxhrs2path = (totalmax2 / totalnumcourses2);
+    return avgmaxhrs2path;
+  }
+
+  public double getAvgmaxhrs3path() {
+    avgmaxhrs3path = (totalmax3 / totalnumcourses3);
+    return avgmaxhrs3path;
+  }
+
+  public int getTotalnumcourses1() {
+    return totalnumcourses1;
+  }
+
+  public int getTotalnumcourses2() {
+    return totalnumcourses2;
+  }
+
+  public int getTotalnumcourses3() {
+    return totalnumcourses3;
+  }
+
+  public int getTotalflexcourses1() {
+    return totalflexcourses1;
+  }
+
+  public int getTotalflexcourses2() {
+    return totalflexcourses2;
+  }
+
+  public int getTotalflexcourses3() {
+    return totalflexcourses3;
+  }
+
+  public double getTotalavg1() {
+    return totalavg1;
+  }
+
+  public double getTotalavg2() {
+    return totalavg2;
+  }
+
+  public double getTotalavg3() {
+    return totalavg3;
+  }
+
+  public double getTotalmax1() {
+    return totalmax1;
+  }
+
+  public double getTotalmax2() {
+    return totalmax2;
+  }
+
+  public double getTotalmax3() {
+    return totalmax3;
+  }
+
+  public double getTotalrating1() {
+    return totalrating1;
+  }
+
+  public double getTotalrating2() {
+    return totalrating2;
+  }
+
+  public double getTotalrating3() {
+    return totalrating3;
+  }
+
+
+  public int getNumsemesters1() {
+    numsemesters1 = this.path1.size();
+    return numsemesters1;
+  }
+
+  public int getNumsemesters2() {
+    numsemesters2 = this.path2.size();
+    return numsemesters2;
+  }
+
+  public int getNumsemesters3() {
+    numsemesters3 = this.path3.size();
+    return numsemesters3;
+  }
 //
 //  public DatabaseInterface getCache() {
 //    return cache;

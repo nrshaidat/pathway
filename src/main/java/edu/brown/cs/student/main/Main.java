@@ -250,12 +250,9 @@ public final class Main {
     @Override
     public ModelAndView handle(Request req, Response res) {
       String pathNum = req.params(":id");
-      Integer num = Integer.parseInt(pathNum);
+      int num = Integer.parseInt(pathNum);
       List<Semester> path;
       switch (num) {
-        case 1:
-          path = pathwayProgram.getPath1();
-          break;
         case 2:
           path = pathwayProgram.getPath2();
           break;
@@ -268,7 +265,7 @@ public final class Main {
       }
       List<String> pathnumlst = new ArrayList<>();
       pathnumlst.add(pathNum);
-      Map<String, List<? extends Object>> variables =
+      Map<String, List<?>> variables =
           ImmutableMap.of("id", pathnumlst, "results", path, "courseList",
               pathwayProgram.getCourseList());
       return new ModelAndView(variables, "mypath.ftl");
