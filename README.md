@@ -6,14 +6,25 @@ Members: Melissa Cui, Natalie Rshaidat, Ifechi Ilozor, Nicholas Keirstead
 ## Known bugs:
 None
 ## Design details:
-- Main Package:
-  -Database Design:
-  -GUI Design
-- REPL Package:
-- Pathway Package   
-- SQL Database Design:
-
+#### Main Package:  
+ Database Design:  
+ (Natalie) I used the proxy pattern to abstract away the interactions between the sql database and any class that wants data from it. It also allowed me to use the Guava cache to store all the courses in the courses table when the cache is first initialized. This not only optimized times needed to get data from sql database, but it also allowed for me to populate each course's data when I get the courses associated with a concentration and avoid having the result set opened to query the concentration table and the courses table. 
+ 
+  * DatabaseInterface:  Contains all the methods that the Database class and DatabaseCache share. 
+	
+  * Database Class:  The class that connects to the sql database, error checks concentration tables since we manually inputted their values, and convert what is returned from sql queries into Nodes for the pathway class to use. 
+	
+  * DatabaseCache Class:  The class that has the cache of all courses and calls on the Database class to query the sql database. 
+	
+ -PathwayProgram class:  A class that contains all the information needed from the GUI and executes making pathways for the main class.  
+ -GUI Design:  
+ 
+#### Pathway Package:  
+ Node class:  
+ Semester class:  
+ Pathway class:  
 ## Runtime/Space optimizations:
+ Time optimizations were made by using the guava cache to load in all of the courses upon initialization of the databaseCache class. This optimization made queries runtime cut in half. Since there were only 1900 courses we felt it was not that immense of a burden on space compared to the runtime burden of each sql query. It takes 5 seconds on average to load in all of the courses which is done while the user is inputing their user preferences. 
 
 
 ## How to build and run our program:
@@ -29,6 +40,38 @@ don't fail when building.
 	- To run unit tests: "mvn test", or using one of the build commands (mvn package)
 ## Tests we wrote:
 	
+## Data files:
+	-coursesDB.db:
+		-courses table: contains all courses from Fall 2020 and Spring 2020
+			-course_id: Deptartment code +space+ course number  (CSCI 0150) from CAB
+			-course_name: Name of the course (Intro to Object Oriented Programming) from CAB
+			-prereqs: courseID's of the prereqs for this course where a ',' represents AND and '=' represents OR from CAB
+			-semester_offered: 0 is spring, 1 is fall, and 2 is both semesters from CAB
+			-professor: the course's professor from CAB
+			-courseRating: the most recent course rating from critical review (0-5)
+			-avg_hrs: the most recent record of average hours listed on critical review (hrs)
+			-max_hrs: the most recent record of maximum hours listed on critical review (hrs)
+			-CR_link: the critical review link for the course 
+			-class_size: the most recent record of the class size from critical review
+			-department: the 3-4 letter code of the department the course is in (CSCI 0150-> CSCI)
+			-number: the course number listed after the department code in the course id (CSCI 0150-> 0150)
+			-ss_link: the self service link for the course
+		-concentrations table:
+			-concentration_id: the table name associated with the concentration name 
+			-concentration_name: the name of the concentration for displaying on the GUI
+		-Each concentration has one table for its rules and one for the course options that satisfy credits for the concentration
+			-Naming of concentration courses tables: concentration name in all lowercase with no spaces with ba or bs in the end to specify if the courses listed are for the bachelor of sciences or just bachelors degree.
+			-Naming of concentration rules tables: same table name as teh concentrations course list but with '_rules' on the end
+		-cognitiveneuroscienceba table: sample concentration courses table
+			-course_id: the course id used in the courses table
+			-next: course id of the next course in a sequence (CS15 would have CS16 as its next)
+			-category: the category that the course is credit for
+		-cognitiveneuroscienceba_rules table: sample concentration rules table
+			-category: 0-20+ we organized concentration rules into categories where one has to take a specified number of courses from one category to satisfy a certain number of credits for the concentration
+			-num_credits: the number of course one must take to satisfy the categories requierements 
+	-coursesDBColErr.db:has wrong column names and number of columns for a multitude of tables for testing
+	-coursesDBempty.db: has an empty courses table for testing
+	-coursesDBInvalid.db: has wrong type fields in multiple tables for testing
 ## Checkstyle appeals:
 
 None.
