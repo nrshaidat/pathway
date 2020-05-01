@@ -47,7 +47,7 @@ public class DatabaseCacheTest {
    * Tests the getConcentrationCourses method returns the correct course data
    * the current db.
    */
-  //@Test
+  @Test
   public void validGetConcentrationData() throws SQLException {
     setUp();
     String validCon = "computationalbiologyba";

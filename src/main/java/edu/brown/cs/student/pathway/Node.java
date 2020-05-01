@@ -25,6 +25,7 @@ public class Node {
   private double maxHrs;
   private double rating;
   private int classSize;
+  private String CABurl;
   private Set<Node> prereqspath; //prereqs taken in the path
   private Set<Node> prereqsforpath; //courses in the path that list it as a prereq
   private List<Node> prereqspathlist; //prereqs taken in the path
@@ -75,7 +76,14 @@ public class Node {
     category = cat;
   }
 
-//  public void setPrereqspathlist() {
+  public String getCABurl() {
+    return CABurl;
+  }
+
+  public void setCABurl(String CABurl) {
+    this.CABurl = CABurl;
+  }
+  //  public void setPrereqspathlist() {
 //    prereqspathlist = new ArrayList<>();
 //    prereqspathlist.addAll(prereqspath);
 //  }

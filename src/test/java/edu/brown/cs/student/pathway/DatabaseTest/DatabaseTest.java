@@ -43,7 +43,7 @@ public class DatabaseTest {
   /**
    * Tests the checkCoursesTable method returns true for the current db.
    */
-  //@Test
+  @Test
   public void validCheckCoursesTable() throws SQLException {
     setUp();
     assertTrue(realDB.checkCoursesTable());
@@ -53,7 +53,7 @@ public class DatabaseTest {
   /**
    * Tests the checkCoursesColNames method returns true for the current db.
    */
-  //@Test
+  @Test
   public void validCoursesColNames() throws SQLException {
     setUp();
     assertTrue(realDB.checkCoursesColNames());
@@ -63,7 +63,7 @@ public class DatabaseTest {
   /**
    * Tests the checkTableExists method returns true for the courses table in the current db.
    */
-  //@Test
+  @Test
   public void validCheckTableExists() throws SQLException {
     setUp();
     assertTrue(realDB.checkTableExists("courses"));
@@ -73,7 +73,7 @@ public class DatabaseTest {
   /**
    * Tests the isEmptyCourses method returns false for the current db.
    */
-  //@Test
+  @Test
   public void validisEmptyCourses() throws SQLException {
     setUp();
     assertFalse(realDB.isEmptyCourses());
@@ -83,7 +83,7 @@ public class DatabaseTest {
   /**
    * Tests the hasConnection method returns true for the current db.
    */
-  //@Test
+  @Test
   public void validhasConnection() {
     setUp();
     assertTrue(realDB.hasConnection());
@@ -94,7 +94,7 @@ public class DatabaseTest {
    * Tests the checkConcentration method returns true for a valid concentration in the the current
    * db.
    */
-  //@Test
+  @Test
   public void validCheckConcentration() throws SQLException {
     setUp();
     String validCon = "computationalbiologyba";
@@ -106,7 +106,7 @@ public class DatabaseTest {
    * Tests the checkConcentration method returns false for an invalid concentration not in the the
    * current db.
    */
-  //@Test
+  @Test
   public void invalidCheckConcentration() throws SQLException {
     setUp();
     String invalidCon = "PERIODTcocentration";
@@ -118,7 +118,7 @@ public class DatabaseTest {
    * Tests the checkConcentrationColNames method returns true for a valid concentration in the the
    * current db.
    */
-  //@Test
+  @Test
   public void validCheckConcentrationColNames() throws SQLException {
     setUp();
     String validCon = "computationalbiologyba";
@@ -130,7 +130,7 @@ public class DatabaseTest {
    * Tests the checkConcentrationRulesColNames method returns true for a valid concentration in the
    * the current db.
    */
-  //@Test
+  @Test
   public void validCheckConcentrationRulesColNames() throws SQLException {
     setUp();
     String validCon = "computationalbiologyba";
@@ -144,7 +144,7 @@ public class DatabaseTest {
    * Tests the getRequirements method returns the valid list for a valid concentration in the
    * the current db.
    */
-  //@Test
+  @Test
   public void validGetRequirements() throws SQLException {
     setUp();
     String validCon = "computationalbiologyba";
@@ -176,7 +176,7 @@ public class DatabaseTest {
    * Tests the getRequirements method returns null an invalid concentration in the
    * the current db.
    */
-  //@Test
+  @Test
   public void invalidGetRequirements() throws SQLException {
     setUp();
     String validCon = "PERIODTTT";
@@ -189,7 +189,7 @@ public class DatabaseTest {
   /**
    * Tests the parseSemestersOffered method returns the correct values for valid input.
    */
-  //@Test
+  @Test
   public void validParseSemestersOffered() {
     setUp();
     String valid0 = "0";
@@ -211,7 +211,7 @@ public class DatabaseTest {
   /**
    * Tests the parseSemestersOffered method returns null for invalid input.
    */
-  //@Test
+  @Test
   public void invalidParseSemestersOffered() {
     setUp();
     String invalid0 = "";
@@ -223,7 +223,7 @@ public class DatabaseTest {
   /**
    * Tests the parsePrereqs method returns the correct values for a multitude of variations of prereqs.
    */
-  //@Test
+  @Test
   public void validParsePrereqs() throws SQLException {
     setUp();
     String oddNumOrs = "CSCI 0150=CSCI 0170=CSCI 0190,MATH 0100"; //2
@@ -287,7 +287,7 @@ public class DatabaseTest {
    * Tests the parsePrereqs method returns the correct values for prereqs with courses that are
    * not offered at Brown anymore aka not in the courses table.
    */
-  //@Test
+  @Test
   public void invalidParsePrereqs() throws SQLException {
     setUp();
     String notOfferedAnd = "CSCI 0150=CSCI 0170=CSCI 0190,MATH 0170"; //1
@@ -315,7 +315,7 @@ public class DatabaseTest {
    * Tests the getCourseData method returns the correct course data for valid input
    * the current db.
    */
-  //@Test
+  @Test
   public void validGetCourseData() throws SQLException {
     setUp();
     //course that has everything filled in the db
@@ -332,6 +332,9 @@ public class DatabaseTest {
     assertTrue(27 == math10.getClassSize());
     assertTrue(math10.getSemestersOffered().contains(0));
     assertTrue(math10.getSemestersOffered().contains(1));
+    assertEquals("https://selfservice.brown.edu/ss/bwckctlg"
+            + ".p_disp_course_detail?cat_term_in=201920&subj_code_in=MATH&crse_numb_in=0100",
+        math10.getCABurl());
 
     //math90
     assertEquals("MATH 0090", math9.getId());
@@ -379,7 +382,7 @@ public class DatabaseTest {
   /**
    * Tests the getCourseData method returns null for invalid input.
    */
-  //@Test
+  @Test
   public void invalidGetCourseData() throws SQLException {
     setUp();
     String invalid0 = "PERIODT 101";
@@ -392,7 +395,7 @@ public class DatabaseTest {
    * Tests the getConcentrationCourses method returns the correct course data
    * the current db.
    */
-  //@Test
+  @Test
   public void validGetConcentrationData() throws SQLException {
     setUp();
     String validCon = "computationalbiologyba";
@@ -443,7 +446,7 @@ public class DatabaseTest {
    * Tests the getConcentrationCourses method returns the null for an invalid table name in
    * the current db.
    */
-  //@Test
+  @Test
   public void invalidGetConcentrationData() throws SQLException {
     setUp();
     String invalidCon = "PERIODT CONCENTRATION";
@@ -457,11 +460,81 @@ public class DatabaseTest {
    * a prereq and VISA 1530 has VISA 1520 as a prereq.
    * the current db.
    */
-  //@Test
+  @Test
   public void validCourseNoLoops() throws SQLException {
     setUp();
     assertTrue(realDB.hasLoop());
 
+    tearDown();
+  }
+
+
+
+  /**
+   * Tests the multiple db methods on an invalid db with wrong data types.
+   */
+  @Test
+  public void invalidDBType() throws SQLException {
+    String file = "data/coursesDBInvalid.db";
+    realDB = new Database(file); // real database that handles sql queries
+    assertFalse(realDB.checkCoursesColNames());
+    String conc = "computationalbiologyba";
+    String concr = "computationalbiologyba_rules";
+    assertFalse(realDB.checkConcentration(conc));
+    assertFalse(realDB.checkConcentrationColNames(conc));
+    assertFalse(realDB.checkConcentrationRulesColNames(concr));
+    tearDown();
+  }
+
+  /**
+   * Tests the multiple db methods on an invalid db with wrong data types.
+   */
+  @Test
+  public void invalidDBCols() throws SQLException {
+    String file = "data/coursesDBColErr.db";
+    realDB = new Database(file); // real database that handles sql queries
+    assertFalse(realDB.checkCoursesColNames());
+    String conc = "businesseconomicsba"; // has wrong num of cols
+    String concr1 = "computationalbiologyba_rules"; //has wrong name of cols
+    String concr2 = "cognitiveneuroscienceba_rules"; //has wrong num of cols
+    assertFalse(realDB.checkConcentration(conc));
+    assertFalse(realDB.checkConcentrationRulesColNames(concr2));
+    assertFalse(realDB.checkConcentrationRulesColNames(concr1));
+    tearDown();
+  }
+  /**
+   * Tests that the courses data does not have a loop for example VISA 1520 says it has VISA 1530 as
+   * a prereq and VISA 1530 has VISA 1520 as a prereq.
+   * the current db.
+   */
+  @Test
+  public void validgetConcentrationsMap() throws SQLException {
+    setUp();
+    Map<String, String> mapy = realDB.getConcentrationsMap();
+    assertEquals(9,mapy.size());
+    //gui names is key
+    //table names is value
+    assertTrue(mapy.containsKey("Economics B.A."));
+    assertEquals("economicsba", mapy.get("Economics B.A."));
+    assertTrue(mapy.containsKey("Economics (Business Track) B.A."));
+    assertEquals("businesseconomicsba", mapy.get("Economics (Business Track) B.A."));
+    assertTrue(mapy.containsKey("Cognitive Neuroscience B.A."));
+    assertEquals("cognitiveneuroscienceba", mapy.get("Cognitive Neuroscience B.A."));
+    assertTrue(mapy.containsKey("Cognitive Neuroscience B.S."));
+    assertEquals("cognitiveneurosciencebs", mapy.get("Cognitive Neuroscience B.S."));
+    assertTrue(mapy.containsKey("Computational Biology (Applied Mathematics and Statistics Track)"
+        + " B.S."));
+    assertEquals("computationalbiologyappliedmathematicsandstatisticstrackbs", mapy.get(
+        "Computational Biology (Applied Mathematics and Statistics Track) B.S."));
+    assertTrue(mapy.containsKey("Computational Biology B.A."));
+    assertEquals("computationalbiologyba", mapy.get("Computational Biology B.A."));
+    assertTrue(mapy.containsKey("Computer Science B.A."));
+    assertEquals("computerscienceba", mapy.get("Computer Science B.A."));
+    assertTrue(mapy.containsKey("History of Art and Architecture B.A."));
+    assertEquals("historyofartandarchitectureba", mapy.get("History of Art and Architecture B.A."));
+    assertTrue(mapy.containsKey("Computational Biology (Computer Science Track) B.S."));
+    assertEquals("computationalbiologycomputersciencetrackbs", mapy.get("Computational Biology "
+        + "(Computer Science Track) B.S."));
     tearDown();
   }
 

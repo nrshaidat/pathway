@@ -42,7 +42,7 @@ public class CABScrapingTest {
    * Check if all course_id's are in the form of 2-4 capital letters, a space, and 4 numbers w/
    * an optional letter (e.g. CSCI 1450 or BE 1500 or BEO 1930B or VISA 1210G).
    */
-  //@Test
+  @Test
   public void testValidCourseCodes() {
     List<String> allCodes = getAllCourseInfo("course_id");
     for (String code: allCodes) {
@@ -53,7 +53,7 @@ public class CABScrapingTest {
   /**
    * Check that all course names are non-empty and don't contain double quotes.
    */
-  //@Test
+  @Test
   public void testValidNames() {
     List<String> allNames = getAllCourseInfo("course_name");
     for (String name: allNames) {
@@ -65,7 +65,7 @@ public class CABScrapingTest {
   /**
    * Check that all prereqs follow the correct coded format (with = and ,).
    */
-  //@Test
+  @Test
   public void testWellFormedPrereqs() {
     List<String> allPrereqs = getAllCourseInfo("prereqs");
     for (String p: allPrereqs) {
@@ -74,7 +74,7 @@ public class CABScrapingTest {
     }
   }
 
-  //@Test
+  @Test
   public void testValidSemesters() {
     List<String> allSems = getAllCourseInfo("semester_offered");
     for (String s: allSems) {
@@ -82,7 +82,7 @@ public class CABScrapingTest {
     }
   }
 
-  //@Test
+  @Test
   public void testValidProfs() {
     List<String> allProfs = getAllCourseInfo("professor");
     for (String p: allProfs) {
@@ -90,7 +90,7 @@ public class CABScrapingTest {
     }
   }
 
-  //@Test
+  @Test
   public void testSpecificClasses() throws SQLException {
     setUp();
 

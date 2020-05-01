@@ -340,6 +340,9 @@ public class Database implements DatabaseInterface {
       if (!names.get(CLASSSIZEIDX).equals("class_size")) {
         return false;
       }
+      if (!names.get(COURSE-1).equals("CAB_link")) {
+        return false;
+      }
     } catch (SQLException e) {
       return false;
     } finally {
@@ -430,6 +433,8 @@ public class Database implements DatabaseInterface {
       } else { //set default
         newCourse.setClassSize(DEFAULTCLASSSIZE);
       }
+      String cabLink = rs.getString("CAB_link");
+      newCourse.setCABurl(cabLink);
     } catch (SQLException e) {
       return null;
     } finally {
@@ -615,69 +620,6 @@ public class Database implements DatabaseInterface {
 
   }
 
-  /**
-   * getConcentrations gets the concentrations in the sql database for use in the GUI.
-   *
-   * @return a list of concentration names
-   * @throws SQLException the sql exception
-   */
-  public List<String> getConcentrations() throws SQLException {
-    PreparedStatement prep = null;
-    ResultSet rs = null;
-    List<String> concentrationList = new ArrayList<>();
-    try {
-      prep = conn.prepareStatement("SELECT concentration_name " + " FROM concentrations "
-          + " ORDER BY concentration_name ASC ");
-      rs = prep.executeQuery();
-      while (rs.next()) {
-        concentrationList.add(rs.getString("concentration_name"));
-      }
-    } catch (SQLException e) {
-      return null;
-    } finally {
-      if (rs != null) {
-        rs.close();
-      }
-      if (prep != null) {
-        prep.close();
-      }
-    }
-
-    return concentrationList;
-
-  }
-
-  /**
-   * getConcentrationID gets the concentration id associated with the concentration name from GUI.
-   *
-   * @param concName the conc name
-   * @return the concentration id
-   * @throws SQLException the sql exception
-   */
-  public String getConcentrationID(String concName) throws SQLException {
-    PreparedStatement prep = null;
-    ResultSet rs = null;
-    String concentrationId = "";
-    try {
-      prep = conn.prepareStatement(
-          "SELECT concentration_id FROM concentrations WHERE concentration_name = ?");
-      prep.setString(1, concName);
-      rs = prep.executeQuery();
-      while (rs.next()) {
-        concentrationId = rs.getString("concentration_id");
-      }
-    } catch (SQLException e) {
-      return null;
-    } finally {
-      if (rs != null) {
-        rs.close();
-      }
-      if (prep != null) {
-        prep.close();
-      }
-    }
-    return concentrationId;
-  }
 
   /**
    * hasLoop checks that all the courses in the courses db don't have a loop between prereqs
