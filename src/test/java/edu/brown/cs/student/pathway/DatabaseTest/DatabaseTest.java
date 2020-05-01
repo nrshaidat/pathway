@@ -457,8 +457,7 @@ public class DatabaseTest {
 
   /**
    * Tests that the courses data does not have a loop for example VISA 1520 says it has VISA 1530 as
-   * a prereq and VISA 1530 has VISA 1520 as a prereq.
-   * the current db.
+   * a prereq and VISA 1530 has VISA 1520 as a prereq in the current db.
    */
   @Test
   public void validCourseNoLoops() throws SQLException {
@@ -503,9 +502,7 @@ public class DatabaseTest {
     tearDown();
   }
   /**
-   * Tests that the courses data does not have a loop for example VISA 1520 says it has VISA 1530 as
-   * a prereq and VISA 1530 has VISA 1520 as a prereq.
-   * the current db.
+   * Tests that the concentration map is valid.
    */
   @Test
   public void validgetConcentrationsMap() throws SQLException {

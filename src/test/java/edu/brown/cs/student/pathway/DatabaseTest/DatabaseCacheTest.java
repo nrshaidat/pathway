@@ -99,6 +99,85 @@ public class DatabaseCacheTest {
   }
 
   /**
+   * Tests invalid input on getters in the cache.
+   */
+  @Test
+  public void invalidInput() throws SQLException {
+    setUp();
+    assertNull(cache.getCourseData(null));
+    assertNull(cache.getConcentrationCourses(null));
+    assertNull(cache.getRequirements(null));
+    tearDown();
+  }
+
+  /**
+   * Tests invalid input on getters in the cache.
+   */
+  @Test
+  public void invaliddb() throws SQLException {
+    String file = "data/coursesDBempty.db";
+    Database realDB = new Database(file); // real database that handles sql queries
+    cache = new DatabaseCache(realDB);
+    assertTrue(cache.isEmptyCourses());
+    tearDown();
+  }
+
+  /**
+   * Tests invalid input on getters in the cache.
+   */
+  @Test
+  public void invalidcol() throws SQLException {
+    String file = "data/coursesDBColErr.db";
+    Database realDB = new Database(file); // real database that handles sql queries
+    cache = new DatabaseCache(realDB);
+    assertFalse(cache.checkCoursesTable());
+    tearDown();
+  }
+
+  /**
+   * Tests valid input on getters in the cache.
+   */
+  @Test
+  public void validdb() throws SQLException {
+    setUp();
+    String con = "cognitiveneuroscienceba";
+    assertTrue(cache.hasConnection());
+    assertTrue(cache.checkConcentration(con));
+    tearDown();
+  }
+
+  /**
+   * Tests getConcentrationsMap method in cache.
+   */
+  @Test
+  public void validgetConcentrationsMap() throws SQLException {
+    setUp();
+    Map<String, String> mapy = cache.getConcentrationsMap();
+    assertEquals(9, mapy.size());
+    //gui names is key
+    //table names is value
+    assertTrue(mapy.containsKey("Economics B.A."));
+    assertEquals("economicsba", mapy.get("Economics B.A."));
+    assertTrue(mapy.containsKey("Economics (Business Track) B.A."));
+    assertEquals("businesseconomicsba", mapy.get("Economics (Business Track) B.A."));
+    assertTrue(mapy.containsKey("Cognitive Neuroscience B.A."));
+    assertEquals("cognitiveneuroscienceba", mapy.get("Cognitive Neuroscience B.A."));
+    assertTrue(mapy.containsKey("Cognitive Neuroscience B.S."));
+    assertEquals("cognitiveneurosciencebs", mapy.get("Cognitive Neuroscience B.S."));
+    assertTrue(mapy.containsKey("Computational Biology (Applied Mathematics and Statistics Track)" + " B.S."));
+    assertEquals("computationalbiologyappliedmathematicsandstatisticstrackbs", mapy.get("Computational Biology (Applied Mathematics and Statistics Track) B.S."));
+    assertTrue(mapy.containsKey("Computational Biology B.A."));
+    assertEquals("computationalbiologyba", mapy.get("Computational Biology B.A."));
+    assertTrue(mapy.containsKey("Computer Science B.A."));
+    assertEquals("computerscienceba", mapy.get("Computer Science B.A."));
+    assertTrue(mapy.containsKey("History of Art and Architecture B.A."));
+    assertEquals("historyofartandarchitectureba", mapy.get("History of Art and Architecture B.A."));
+    assertTrue(mapy.containsKey("Computational Biology (Computer Science Track) B.S."));
+    assertEquals("computationalbiologycomputersciencetrackbs", mapy.get("Computational Biology " + "(Computer Science Track) B.S."));
+    tearDown();
+  }
+
+  /**
    * CovertDict is a helper method that converts the set of nodes to a dictionary for
    * testing getConcentrationCourses.
    *
