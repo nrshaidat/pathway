@@ -277,3 +277,23 @@ ps = c.fetchall()
 for p in ps:
   if (p[0] and p[0][0].isdigit()):
     print(p[0])
+    
+c.execute('SELECT course_id FROM courses;')
+course_codes = c.fetchall()
+print(course_codes)
+for course in course_codes:
+  split = course[0].split(' ')
+  link = ss_url + "subj_code_in=" + split[0] + '&crse_numb_in=' + split[1]
+  c.execute('UPDATE courses SET CAB_link="' + str(link) + '" WHERE course_id="' + course[0] + '";')
+conn.commit()
+
+c.execute('SELECT course_id, CAB_link FROM courses')
+pairs = c.fetchall()
+for p in pairs:
+  dept = p[0].split(' ')[0]
+  num = p[0].split(' ')[1]
+  dept_link = re.search('subj_code_in=[A-Z][A-Z][A-Z]?[A-Z]?', p[1])
+  num_link = re.search('crse_numb_in=\d\d\d\d[A-Z]?', p[1])
+  dl = re.search('[A-Z][A-Z][A-Z]?[A-Z]?', dept_link.group())
+  nl = re.search('\d\d\d\d[A-Z]?', num_link.group())
+  assert dept == dl.group() and num == nl.group()
