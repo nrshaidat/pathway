@@ -158,6 +158,11 @@
         </div>
     </div>
     <div class="ui-cards">
+
+<#--        Displays the results by semester cards in the /mypath/:id pages. The display results in two-->
+<#--        side by side semester "cards", that users can click on and modify. If there is no content in a particular-->
+<#--        semester, the semester is defined as a "Free Semester," which is the else condition in the following statement.-->
+<#--        If there is content for each of the possible courses, then the course ID is displayed. -->
         <#list results as semester>
             <div class="ui-raised-link-card" id="myBtn${semester.semnumber}">
 
@@ -378,16 +383,7 @@
 </script>
 
 <!-- Script for hovering-->
-<#--console.log( btn.id.charAt(btn.id.length - 1));-->
 <script>
-    // $('#ui-raised-link-card').hover(function() {
-    //     console.log("hovering!!!!");
-    // });
-
-    // $("ui-raised-link-card").mouseenter(function() {
-    //     console.log("hovering!!!!");
-    // });
-
     $(".ui-raised-link-card").hover(
         function() {
             // item is being hovered over
@@ -404,7 +400,9 @@
 
 
 </body>
-<script>function js_Load() {
+<script>
+<#--    Script for fixing the flash of unstyled content problem-->
+    function js_Load() {
         document.body.style.visibility='visible';
     }
 </script>

@@ -59,7 +59,10 @@
          whether they want their pathway to be aggressively completed (in the least number of semesters) or not,
          as well as the courses they have received credit for in the past to generate the most optimal concentration!
 
-         Algorithm description:
+         We use a weighted shuffle algorithm that takes the course requirements in a concentration, and finds the best courses to take
+         depending on information you put in, like how fast you prefer your concentration to be finished, semester level, and courses you have received
+         credit for! This information then is used to weight each course in the department, then the algorithm chooses the optimal pathways in three
+         different workload amounts.
      </div>
 
      <p style="margin-left:20em;" align="left"> 2. Where do we get course information? </p>
@@ -72,8 +75,8 @@
 
      <p style="margin-left:20em;" align="left"> 3. Can I edit my pathway? </p>
 
-     <div class="content" style="margin-left:23em;" align="left"> We are currently working on implementing pathway edit functionality!
-         Stay tuned for more progress on Pathway! </div>
+     <div class="content" style="margin-left:23em;" align="left"> Yes! If you click on a semester, you can edit your pathway by adding, removing,
+     or swapping a course. </div>
 
      <br>
      <br>

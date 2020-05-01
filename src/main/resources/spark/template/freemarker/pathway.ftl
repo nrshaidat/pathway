@@ -58,6 +58,8 @@
 
 <a href="mypath/1" class="link" name="pathway" id="pathway" value="one">
     <div id="container1">
+
+<#--        Displays the statistics for Pathway 1-->
         <header> Pathway 1</header>
 
         <p> Number of Semesters: ${stats.numsemesters1}</p>
@@ -69,6 +71,8 @@
 
 <a href="mypath/2" class="link">
     <div id="container2">
+
+        <#--        Displays the statistics for Pathway 2-->
         <header> Pathway 2</header>
 
         <p> Number of Semesters: ${stats.numsemesters2}</p>
@@ -80,6 +84,8 @@
 
 <a href="mypath/3" class="link">
     <div id="container3">
+
+        <#--        Displays the statistics for Pathway 3-->
         <header> Pathway 3</header>
 
         <p> Number of Semesters: ${stats.numsemesters3}</p>
@@ -94,12 +100,16 @@
 </form>
 
 </body>
-<script>function js_Load() {
+<script>
+
+<#--    Script to fix the flash of unstyled content problem-->
+    function js_Load() {
         document.body.style.visibility = 'visible';
     }
 </script>
 <noscript>
-    <style> body {
+    <style>
+        body {
             visibility: visible;
         }</style>
 </noscript>

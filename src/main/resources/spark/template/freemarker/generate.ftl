@@ -1,6 +1,7 @@
 <!DOCTYPE html>
   <head>
     <meta charset="utf-8">
+
   <!--Start: Nav  -->
   <div class="ui fixed borderless huge menu">
     <div class="ui container grid">
@@ -85,6 +86,8 @@
 
     <br>
 
+    <#--    Using an ftl loop, we use the gradeList passed into
+    the ImmutableMap to display a Dropdown of grade level-->
     <p> Enter Rising Semester: </p>
     <div class="ui container">
       <select name="grade" id="grade" class = "ui selection dropdown">
@@ -94,14 +97,12 @@
       </select>
     </div>
     <script>
+      // Activates the dropdown using jQuery
       $('#grade').dropdown();
-      $('#grade').dropdown('setting', 'onChange', function () {
-        var year = $('#grade').dropdown('get values');
-        console.log(year);
-      });
-
     </script>
 
+    <#--    Using an ftl loop, we use the gradeList passed into
+    the ImmutableMap to display a Dropdown of semester level-->
     <div class="ui container">
       <select name="year" id="year" key="year" class = "ui selection dropdown">
         <#list yearList as item>
@@ -111,18 +112,9 @@
     </div>
 
     <script>
+      // Activates the dropdown using jQuery
       $('#year').dropdown();
-      $('#year').dropdown('setting', 'onChange', function () {
-        var year = $('#year').dropdown('get values');
-        console.log(year);
-      });
     </script>
-
-<#--    <form>-->
-<#--      <input type="range" id="workload" name="workload" key="workload" min="0" max="100">-->
-<#--    </form>-->
-
-<#--    <small>low  &emsp; medium  &emsp;  high</small>-->
 
     <br>
     <br>
@@ -136,11 +128,11 @@
     <br>
     <br>
 
-
-
   <p>Please enter courses you have received credit for: </p>
   <p><note> (Select course ids from the dropdown e.g. ECON 0110, MATH 0100, APMA 350)</note> </p>
 
+    <#--    Using an ftl loop, we use the courseList passed into
+    the ImmutableMap to display a Dropdown of all the courses we have in our database-->
     <div class="field">
       <label>Courses: </label>
       <select class="ui selection dropdown search" multiple="" id="multi-select" value.bind="coursesTaken" >
@@ -151,9 +143,16 @@
 
     </div>
 
+<#--    We use an input with display none to get information from the html to the backend-->
     <input style="display:none" name="results" id="results" key="results">
 
     <script>
+      // This script is written to activate the multiple select dropdown menu on loading the program.
+      // After activating the dropdown, we get the user input from the select by finding the element from
+      // the ID, "results", which is the input tag shown above. By doing this, we are able to assign the
+      // input to the result of the dropdown menu, and access the value of results in our QueryMap
+      // after the user presses submit.
+
       window.onload = function() {
         $('#multi-select').dropdown();
         $('#multi-select').dropdown('setting', 'onChange', function () {
@@ -171,6 +170,7 @@
     <script>
       function submitForm() {
 
+        //On clicking the submit button, we post the form data to the new page.
         $("#btnSubmit").button().click(function(){
           $.ajax({ type: 'POST', url: '/api/someRestEndpoint', data: formData, success: onFormSubmitted });
         });
@@ -189,6 +189,7 @@
   <script src="js/jquery-2.1.1.js"></script>
   <script src="js/main.js"></script>
 
+<#--  Resolving the flash of unstyled content using jquery-->
   <script>function js_Load() {
       document.body.style.visibility='visible';
     }

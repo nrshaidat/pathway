@@ -143,6 +143,10 @@ public final class Main {
 
   /**
    * PathLandingHandler handles the landing page for the display of the user's three pathways.
+   * After successfully submitting the pathway information and generating a pathway, a user
+   * is shown three pathways: a low workload, medium workload, and high workload pathway. The
+   * user then can individually click on each pathway to modify the contents of each semester
+   * by adding, swapping, or removing a course.
    */
   private static class PathLandingHandler implements TemplateViewRoute {
 
@@ -275,6 +279,10 @@ public final class Main {
 
   /**
    * SignUp Handler handles the sign up page, where the user hasn't used the pathway program before.
+   * After the user enters their name, username and password, they are directed to the generate page,
+   * similar to a user hwo signed in as a guest. Note that since we don't implement any database for
+   * the user information, this is currently a dummy sign in, which means that we don't actually use
+   * the information the user enters for anything.
    */
   private static class SignUpHandler implements TemplateViewRoute {
     @Override
@@ -285,7 +293,9 @@ public final class Main {
   }
 
   /**
-   * FaqHandler handles the /faq page. Currently not linked.
+   * FaqHandler handles the /faq page. The FAQ Page returns a Spark POST list of commonly
+   * asked questions about Pathway. We obtained the questions from user research and demo-ing to
+   * other people we knew.
    */
   private static class FaqHandler implements TemplateViewRoute {
     @Override

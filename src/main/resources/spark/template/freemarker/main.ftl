@@ -81,11 +81,15 @@
 </p>
 
 </body>
-<script>function js_Load() {
+
+<script>
+<#--    Fixing the flash of unstyled content problem with jquery -->
+    function js_Load() {
         document.body.style.visibility = 'visible';
     }
 </script>
 <script>
+<#--    When the document is ready, the dropdown menu is instantiated-->
     $(document).ready(function () {
         $('.computer.only .dropdown.item')
             .popup({
