@@ -5,10 +5,7 @@ import edu.brown.cs.student.pathway.Pathway;
 import edu.brown.cs.student.pathway.Semester;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -84,42 +81,6 @@ public class PathwayProgram {
     concentrationsList = new ArrayList<>(this.concentrationMap.keySet());
     risingSem = 1;
     courseList = cache.getAllCourseIDs();
-    numsemesters1 = 0;
-    numsemesters2 = 0;
-    numsemesters3 = 0;
-    totalnumcourses1 = 0;
-    totalnumcourses2 = 0;
-    totalnumcourses3 = 0;
-    totalflexcourses1 = 0;
-    totalflexcourses2 = 0;
-    totalflexcourses3 = 0;
-    totalavg1 = 0.0;
-    totalavg2 = 0.0;
-    totalavg3 = 0.0;
-    totalmax1 = 0.0;
-    totalmax2 = 0.0;
-    totalmax3 = 0.0;
-    totalrating1 = 0.0;
-    totalrating2 = 0.0;
-    totalrating3 = 0.0;
-    avgrating1sem = 0.0;
-    avgrating2sem = 0.0;
-    avgrating3sem = 0.0;
-    avgavghrs1sem = 0.0;
-    avgavghrs2sem = 0.0;
-    avgavghrs3sem = 0.0;
-    avgmaxhrs1sem = 0.0;
-    avgmaxhrs2sem = 0.0;
-    avgmaxhrs3sem = 0.0;
-    avgrating1path = 0.0;
-    avgrating2path = 0.0;
-    avgrating3path = 0.0;
-    avgavghrs1path = 0.0;
-    avgavghrs2path = 0.0;
-    avgavghrs3path = 0.0;
-    avgmaxhrs1path = 0.0;
-    avgmaxhrs2path = 0.0;
-    avgmaxhrs3path = 0.0;
   }
 
   /**
@@ -131,7 +92,7 @@ public class PathwayProgram {
     return courseList;
   }
 
-  //Note: commented out all the unused getter and setter methods for now.
+  // Getter and setter methods for Apache Spark
   public double getAvgrating1sem() {
     avgrating1sem = (avgrating1sem / numsemesters1);
     return avgrating1sem;
@@ -404,22 +365,24 @@ public class PathwayProgram {
       throws SQLException {
     concentration = con;
     risingSem = sem;
-    Set<Node> taken2 = clone(taken);
-    Set<Node> taken3 = clone(taken);
+
     List<Integer> reqsTmp = cache.getRequirements(concentration + "_rules");
     reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
-    reqs2 = reqs.clone();
-    reqs3 = reqs.clone();
+    reqs2 = Arrays.copyOf(reqs, reqs.length);
+    reqs3 = Arrays.copyOf(reqs, reqs.length);
+
     Pathway pathway1 = new Pathway(reqs, courseSet);
     pathway1.makePathway(taken, sem, aggressive, "lo");
     path1 = pathway1.getPath();
     this.setPathStats1();
+
     Pathway pathway2 = new Pathway(reqs2, courseSet);
-    pathway2.makePathway(taken2, sem, aggressive, "med");
+    pathway2.makePathway(taken, sem, aggressive, "med");
     path2 = pathway2.getPath();
     this.setPathStats2();
+
     Pathway pathway3 = new Pathway(reqs3, courseSet);
-    pathway3.makePathway(taken3, sem, aggressive, "hi");
+    pathway3.makePathway(taken, sem, aggressive, "hi");
     path3 = pathway3.getPath();
     this.setPathStats3();
   }

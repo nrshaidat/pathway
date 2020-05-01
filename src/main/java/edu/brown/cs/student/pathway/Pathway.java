@@ -10,6 +10,7 @@ import java.util.Comparator;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Range;
+import com.google.gson.Gson;
 
 /**
  * Pathway class. This class is used to create individual pathways. Each pathway takes
@@ -58,7 +59,15 @@ public class Pathway {
     requirements = reqs;
     numCategories = reqs.length;
     initialRequirements = Arrays.copyOf(reqs, numCategories);
-    courses = courseSet;
+
+    Gson gson = new Gson();
+    Set<Node> deepCopy = new HashSet<>();
+    for (Node c : courseSet) {
+      Node deep = gson.fromJson(gson.toJson(c), Node.class);
+      deepCopy.add(deep);
+    }
+    courses = deepCopy;
+
     workloads = ImmutableMap.of("lo", Range.closedOpen(1.0, MEDLOWBOUNDHRS), "med",
         Range.closedOpen(MEDLOWBOUNDHRS, MEDHIGHBOUNDHRS), "hi",
         Range.closedOpen(MEDHIGHBOUNDHRS, HIHIGHBOUNDHRS));
