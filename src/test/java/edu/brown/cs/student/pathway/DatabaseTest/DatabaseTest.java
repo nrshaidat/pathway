@@ -491,15 +491,15 @@ public class DatabaseTest {
   @Test
   public void invalidDBCols() throws SQLException {
     String file = "data/coursesDBColErr.db";
-    realDB = new Database(file); // real database that handles sql queries
-    assertFalse(realDB.checkCoursesColNames());
+    Database realdb = new Database(file); // real database that handles sql queries
+    assertFalse(realdb.checkCoursesColNames());
     String conc = "businesseconomicsba"; // has wrong num of cols
     String concr1 = "computationalbiologyba_rules"; //has wrong name of cols
     String concr2 = "cognitiveneuroscienceba_rules"; //has wrong num of cols
-    assertFalse(realDB.checkConcentration(conc));
-    assertFalse(realDB.checkConcentrationRulesColNames(concr2));
-    assertFalse(realDB.checkConcentrationRulesColNames(concr1));
-    tearDown();
+    assertFalse(realdb.checkConcentration(conc));
+    assertFalse(realdb.checkConcentrationRulesColNames(concr2));
+    assertFalse(realdb.checkConcentrationRulesColNames(concr1));
+    realdb = null;
   }
   /**
    * Tests that the concentration map is valid.

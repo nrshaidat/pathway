@@ -340,7 +340,7 @@ public class Database implements DatabaseInterface {
       if (!names.get(CLASSSIZEIDX).equals("class_size")) {
         return false;
       }
-      if (!names.get(COURSE-1).equals("CAB_link")) {
+      if (!names.get(12).equals("ss_link")) {
         return false;
       }
     } catch (SQLException e) {
@@ -396,7 +396,7 @@ public class Database implements DatabaseInterface {
     ResultSet rs = null;
     Node newCourse = new Node(courseID);
     try {
-      prep = conn.prepareStatement(" SELECT * " + " FROM courses " + " WHERE course_id = ?");
+      prep = conn.prepareStatement(" SELECT * " + " FROM courses " + " WHERE course_id = ? ");
       prep.setString(1, courseID);
       rs = prep.executeQuery();
       String name = rs.getString("course_name");
@@ -433,7 +433,7 @@ public class Database implements DatabaseInterface {
       } else { //set default
         newCourse.setClassSize(DEFAULTCLASSSIZE);
       }
-      String cabLink = rs.getString("CAB_link");
+      String cabLink = rs.getString("ss_link");
       newCourse.setCABurl(cabLink);
     } catch (SQLException e) {
       return null;
