@@ -1,7 +1,16 @@
 <!DOCTYPE html>
-  <head>
+<head>
     <meta charset="utf-8">
-
+    <title>Pathway FAQs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/logo/t.png"/>
+    <link rel="stylesheet" href="/css/faqs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+</head>
+<body>
     <!--Start: Nav  -->
     <div class="ui fixed borderless huge menu">
         <div class="ui container grid">
@@ -9,12 +18,6 @@
             <div class="computer only row">
                 <form action="/login" method="post">
                     <a class="header item">Pathway</a>
-                </form>
-                <form action="/login" method="post">
-                    <a class="item">Log in</a>
-                </form>
-                <form action="/faqs" method="post">
-                    <a href="/faqs" class="active item">FAQ</a>
                 </form>
             </div>
             <!--End: Desktop Nav-->
@@ -28,39 +31,16 @@
                         </div>
                     </a>
                 </div>
-                <div class="ui vertical accordion borderless fluid menu">
-                    <!-- Start: Search -->
-                    <!-- End: Search -->
-                    <a class="active item"> Home</a>
-                    <form action="/faqs" method="post">
-                        <a class="item">FAQ</a>
-                    </form>
-                    <a class="item"> Login</a>
-                    <div class="ui divider"></div>
-                    <a class="item" href="#">Default</a>
-                    <a class="item" href="#">Static top</a>
-                    <a class="active item" href="#">Fixed top</a>
-                </div>
             </div>
             <!--End: Mobile Nav-->
         </div>
     </div>
 
-
     <br>
-
+    <br>
     <h1>Frequently Asked Questions</h1>
 
-    <div class="no-fouc">
-
-    <title></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="/logo/t.png"/>
-    <link rel="stylesheet" href="/css/faqs.css">
-  </div>
-  <body>
-     <script src="js/jquery-2.1.1.js"></script>
-     <script src="js/main.js"></script>
+    <div class="no-fouc"></div>
 
      <br>
 
@@ -95,21 +75,17 @@
      <br>
 
 
-  <p> <small> For any questions or ideas about how Pathway can be improved, please
-          <a href = "mailto: melissa_cui@brown.edu" class = "link"> send us an email! </a>
-      </small>
-  </p>
+      <p> <small> For any questions or ideas about how Pathway can be improved, please
+              <a href = "mailto: melissa_cui@brown.edu" class = "link"> send us an email! </a>
+          </small>
+      </p>
 
-  </body>
-
-    </div>
-    <script>
-
-        $(function() {
-            $('.no-fouc').removeClass('no-fouc');
-            $('#dialog').dialog();
-        });
-    </script>
-
+</body>
+<script>
+    $(function() {
+        $('.no-fouc').removeClass('no-fouc');
+        $('#dialog').dialog();
+    });
+</script>
 
 </html>
