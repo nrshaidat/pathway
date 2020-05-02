@@ -8,7 +8,7 @@
       <!--Start: Desktop Nav-->
       <div class="computer only row">
         <form action="/login" method="post">
-          <a class="header item">Pathway</a>
+          <a class="header item">Pathway - ${uniNameShort}</a>
         </form>
         <a class="active item">Generate</a>
 

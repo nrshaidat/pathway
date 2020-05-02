@@ -13,7 +13,7 @@
     <div class="ui container grid">
 
         <div class="computer only row">
-            <a class="header item">Pathway</a>
+            <a class="header item">Pathway - ${uniNameShort}</a>
             <a class="active item">Log in</a>
             <form action="/faqs" method="post">
                 <a href="/faqs" class="item">FAQ</a>
@@ -46,8 +46,8 @@
 <br>
 <h1>Welcome to Pathway</h1>
 
-<p>Your personalized concentration pathway generator for Brown University. <p>
-    <p> Pathway generates courses within your specified concentration to help you plan out your next years at Brown. </p>
+<p>Your personalized concentration pathway generator for ${uniName}. <p>
+    <p> Pathway generates courses within your specified concentration to help you plan out your next years at ${uniNameShort}. </p>
 <h2>Login</h2>
 
 <form action="/mypath" method="post">

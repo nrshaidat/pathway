@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import com.google.common.collect.ImmutableMap;
 import edu.brown.cs.student.pathway.Node;
 import edu.brown.cs.student.pathway.Semester;
@@ -33,7 +34,10 @@ public final class Main {
   private static final int DEFAULT_PORT = 4567;
   private static PathwayProgram pathwayProgram;
   private String[] args;
-  private static final List<String> universityList = new ArrayList<>();
+  private static final List<String> UNI = new ArrayList<>();
+  private static String uniName;
+  private static String uniNameShort;
+  private static boolean firstLogin = true;
 
   /**
    * Main is called when execution begins.
@@ -43,8 +47,8 @@ public final class Main {
    */
   public static void main(String[] args) throws SQLException {
     new Main(args).run();
-    universityList.add("Brown University");
-    universityList.add("Cornell University");
+    UNI.add("Brown University");
+    UNI.add("Cornell University");
   }
 
   private Main(String[] args) {
@@ -98,10 +102,15 @@ public final class Main {
 
   }
 
+  /**
+   * Home Handler lets the user choose the University they're attending. We currently support
+   * Brown University and Cornell University.
+   */
   private static class HomeHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
-      Map<String, Object> variables = ImmutableMap.of("universityList", universityList);
+      firstLogin = true;
+      Map<String, Object> variables = ImmutableMap.of("universityList", UNI);
       return new ModelAndView(variables, "home.ftl");
     }
   }
@@ -115,7 +124,16 @@ public final class Main {
   private static class LoginHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
-      Map<String, Object> variables = ImmutableMap.of("title", "Pathway");
+
+      if (firstLogin) {
+        QueryParamsMap qm = req.queryMap();
+        uniName = qm.value("university");
+        uniNameShort = uniName.split(" ")[0];
+        firstLogin = false;
+      }
+
+      Map<String, Object> variables =
+          ImmutableMap.of("uniName", uniName, "uniNameShort", uniNameShort);
       return new ModelAndView(variables, "main.ftl");
     }
 
@@ -136,8 +154,9 @@ public final class Main {
       List<String> gradeList = pathwayProgram.getGradeList();
       List<String> yearList = pathwayProgram.getYearList();
       Map<String, Object> variables = ImmutableMap
-          .of("concentrationList", pathwayProgram.getConcentrationsList(), "gradeList", gradeList,
-              "yearList", yearList, "courseList", pathwayProgram.getCourseList());
+          .of("uniNameShort", uniNameShort, "concentrationList",
+              pathwayProgram.getConcentrationsList(), "gradeList", gradeList, "yearList", yearList,
+              "courseList", pathwayProgram.getCourseList());
       return new ModelAndView(variables, "generate.ftl");
     }
 
@@ -234,7 +253,8 @@ public final class Main {
   private static class SignUpHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
-      Map<String, Object> variables = ImmutableMap.of("title", "Pathway Sign Up", "results", "");
+      Map<String, Object> variables =
+          ImmutableMap.of("title", "Pathway Sign Up", "uniName", uniName);
       return new ModelAndView(variables, "signup.ftl");
     }
   }

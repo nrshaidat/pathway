@@ -69,6 +69,9 @@ public class PathwayProgram {
     concentrationsList = new ArrayList<>(this.concentrationMap.keySet());
     courseList = cache.getAllCourseIDs();
     this.setConcentrationName("Computer Science B.A.");
+    totalnumcourses1 = 0;
+    totalnumcourses2 = 0;
+    totalnumcourses3 = 0;
   }
 
   /**
@@ -208,8 +211,12 @@ public class PathwayProgram {
    * @return the numsemesters 1
    */
   public int getNumsemesters1() {
-    numsemesters1 = this.path1.size();
-    return numsemesters1;
+    if (path1 != null) {
+      numsemesters1 = this.path1.size();
+      return numsemesters1;
+    } else {
+      return 0;
+    }
   }
 
   /**
@@ -218,8 +225,12 @@ public class PathwayProgram {
    * @return the numsemesters 2
    */
   public int getNumsemesters2() {
-    numsemesters2 = this.path2.size();
-    return numsemesters2;
+    if (path2 !=  null) {
+      numsemesters2 = this.path2.size();
+      return numsemesters2;
+    } else {
+      return 0;
+    }
   }
 
   /**
@@ -228,8 +239,12 @@ public class PathwayProgram {
    * @return the numsemesters 3
    */
   public int getNumsemesters3() {
-    numsemesters3 = this.path3.size();
-    return numsemesters3;
+    if (path3 != null) {
+      numsemesters3 = this.path3.size();
+      return numsemesters3;
+    } else {
+      return 0;
+    }
   }
 
   /**
