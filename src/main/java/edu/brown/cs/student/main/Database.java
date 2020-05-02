@@ -665,7 +665,7 @@ public class Database implements DatabaseInterface {
     try {
 
       if (!cornell) {
-        prep = conn.prepareStatement("SELECT course_id " + " FROM courses WHERE course_id asc");
+        prep = conn.prepareStatement("SELECT course_id " + " FROM courses ORDER BY course_id asc");
         rs = prep.executeQuery();
         while (rs.next()) {
           courseIDs.add(rs.getString("course_id"));
@@ -675,7 +675,7 @@ public class Database implements DatabaseInterface {
         return courseIDs;
       } else {
         //if cornell
-        prep = conn.prepareStatement("SELECT course_id " + " FROM cornellcourses WHERE course_id asc");
+        prep = conn.prepareStatement("SELECT course_id " + " FROM cornellcourses ORDER BY course_id asc");
         rs = prep.executeQuery();
         while (rs.next()) {
           courseIDs.add(rs.getString("course_id"));
