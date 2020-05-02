@@ -60,7 +60,9 @@
         ${node}
     </#list>
 </h1>
-<p>Click on a semester to customize it! Refresh the page if you wish to revert to the original pathway.</p>
+<p>
+    Customize your pathway here! Refresh the page if you wish to revert to the original pathway.
+</p>
 <div class="redirect">
     <form method="POST" action="/mypath">
         <button id="submit" type="submit" value="Go back">
@@ -188,16 +190,92 @@
                         <br>
                         <#if semester.courses ? has_content>
                             <#if semester.courseid1 ? has_content>
-                                <p id="${semester.courseid1}" style="cursor:pointer;">${semester.courseid1}</p>
+                                <div class="course" id="${semester.courseid1}" style="cursor:pointer;">
+                                    ${semester.courseid1}
+                                    <div class="more-info">
+                                        ${semester.coursename1}
+                                        <br>
+                                        <br>
+                                        Professor: ${semester.prof1}
+                                        <br>
+                                        <br>
+                                        <#if semester.sems1 == 2>
+                                            Offered: Fall & Spring
+                                        </#if>
+                                        <#if semester.sems1 == 1>
+                                            Offered: Fall
+                                        </#if>
+                                        <#if semester.sems1 == 0>
+                                            Offered: Spring
+                                        </#if>
+                                    </div>
+                                </div>
                             </#if>
                             <#if semester.courseid2 ? has_content>
-                                <p id="${semester.courseid2}" style="cursor:pointer;">${semester.courseid2}</p>
+                                <div class="course" id="${semester.courseid2}" style="cursor:pointer;">
+                                    ${semester.courseid2}
+                                    <div class="more-info">
+                                        ${semester.coursename2}
+                                        <br>
+                                        <br>
+                                        Professor: ${semester.prof2}
+                                        <br>
+                                        <br>
+                                        <#if semester.sems2 == 2>
+                                            Offered: Fall & Spring
+                                        </#if>
+                                        <#if semester.sems2 == 1>
+                                            Offered: Fall
+                                        </#if>
+                                        <#if semester.sems2 == 0>
+                                            Offered: Spring
+                                        </#if>
+                                    </div>
+                                </div>
                             </#if>
                             <#if semester.courseid3 ? has_content>
-                                <p id="${semester.courseid3}" style="cursor:pointer;">${semester.courseid3}</p>
+                                <div class="course" id="${semester.courseid3}" style="cursor:pointer;">
+                                    ${semester.courseid3}
+                                    <div class="more-info">
+                                        ${semester.coursename3}
+                                        <br>
+                                        <br>
+                                        Professor: ${semester.prof3}
+                                        <br>
+                                        <br>
+                                        <#if semester.sems3 == 2>
+                                            Offered: Fall & Spring
+                                        </#if>
+                                        <#if semester.sems3 == 1>
+                                            Offered: Fall
+                                        </#if>
+                                        <#if semester.sems3 == 0>
+                                            Offered: Spring
+                                        </#if>
+                                    </div>
+                                </div>
                             </#if>
                             <#if semester.courseid4 ? has_content>
-                                <p id="${semester.courseid4}" style="cursor:pointer;">${semester.courseid4}</p>
+                                <div class="course" id="${semester.courseid4}" style="cursor:pointer;">
+                                    ${semester.courseid4}
+                                    <div class="more-info">
+                                        ${semester.coursename4}
+                                        <br>
+                                        <br>
+                                        Professor: ${semester.prof4}
+                                        <br>
+                                        <br>
+                                        <#if semester.sems4 == 2>
+                                            Offered: Fall & Spring
+                                        </#if>
+                                        <#if semester.sems4 == 1>
+                                            Offered: Fall
+                                        </#if>
+                                        <#if semester.sems4 == 0>
+                                            Offered: Spring
+                                        </#if>
+                                    </div>
+                                </div>
                             </#if>
                         <#else>
                             Free Semester
@@ -431,28 +509,11 @@
     }
 </script>
 
-<!-- Script for hovering-->
-<script>
-    $(".ui-raised-link-card").hover(
-        function() {
-            // item is being hovered over
-            $(this).addClass('hover');
-            console.log("hovering!!!!!")
-        }, function() {
-            // item is no longer being hovered over
-            $(this).removeClass('hover');
-            console.log("not hovering..")
-        }
-    );
-</script>
-
-
-
 </body>
 <script>
-<#--    Script for fixing the flash of unstyled content problem-->
+    // Script for fixing the flash of unstyled content problem
     function js_Load() {
-        document.body.style.visibility='visible';
+        document.body.style.visibility= 'visible';
     }
 </script>
 <noscript><style> body { visibility: visible; }</style></noscript>

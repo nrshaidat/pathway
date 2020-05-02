@@ -299,6 +299,32 @@ a.link {
     position:relative;
 }
 
+.course {
+    font-size: 1.1em;
+    margin-bottom: 1em;
+    position: relative;
+}
+
+.more-info {
+    display: none;
+}
+
+.course:hover .more-info {
+    display: block;
+    position: absolute;
+    right: -6em;
+    top: -1em;
+    z-index: 2;
+    background-color: rgba(158, 191, 250, 0.96); /* Black w/ opacity */
+    padding: 0.6em;
+    border-radius: 2px;
+    text-align: center;
+    height: fit-content;
+    width: 15em;
+    border: 3px solid #4337b6;
+    box-shadow: 1px 1px 2px #888;
+}
+
 .blue {
     border-color: #54defa;
 }
