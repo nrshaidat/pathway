@@ -4,21 +4,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/logo/t.png"/>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/main.js"></script>
-<body style="visibility: hidden;" onload="js_Load()">
 </head>
+<body style="visibility: hidden;" onload="js_Load()">
 
 <div class="ui fixed borderless huge menu">
     <div class="ui container grid">
-
         <div class="computer only row">
-            <a class="header item">Pathway</a>
+            <a id="defunct" class="header item">Pathway</a>
             <form action="/faqs" method="post">
                 <a href="/faqs" class="item">FAQ</a>
             </form>
         </div>
 
+        <!--Start: Mobile Nav-->
         <div class="tablet mobile only row">
             <div class="right menu">
                 <a class="menu item">
@@ -27,28 +31,14 @@
                     </div>
                 </a>
             </div>
-            <div class="ui vertical accordion borderless fluid menu">
-                <a class="active item"> Home</a>
-                <form action="/faqs" method="post">
-                    <a class="item">FAQ</a>
-                </form>
-                <div class="ui divider"></div>
-                <a class="item" href="#">Default</a>
-                <a class="item" href="#">Static top</a>
-                <a class="active item" href="#">Fixed top</a>
-            </div>
         </div>
-
+        <!--End: Mobile Nav-->
     </div>
 </div>
 <br>
 <br>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-
 <link rel="stylesheet" href="/css/generate.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 
 <br>
 <br>

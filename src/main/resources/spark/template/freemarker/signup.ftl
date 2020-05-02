@@ -14,17 +14,12 @@
 <!--Start: Nav  -->
 <div class="ui fixed borderless huge menu">
     <div class="ui container grid">
-        <!--Start: Desktop Nav-->
         <div class="computer only row">
-            <form action="/login" method="post">
-                <a class="header item">Pathway</a>
-            </form>
-            <a class="active item">Sign Up</a>
+            <a id="defunct" class="header item">Pathway</a>
             <form action="/faqs" method="post">
                 <a href="/faqs" class="item">FAQ</a>
             </form>
         </div>
-        <!--End: Desktop Nav-->
 
         <!--Start: Mobile Nav-->
         <div class="tablet mobile only row">
@@ -34,19 +29,6 @@
                         <i class="content icon"></i>
                     </div>
                 </a>
-            </div>
-            <div class="ui vertical accordion borderless fluid menu">
-                <!-- Start: Search -->
-                <!-- End: Search -->
-                <a class="active item"> Home</a>
-                <form action="/faqs" method="post">
-                    <a class="item">FAQ</a>
-                </form>
-                <a class="item"> Login</a>
-                <div class="ui divider"></div>
-                <a class="item" href="#">Default</a>
-                <a class="item" href="#">Static top</a>
-                <a class="active item" href="#">Fixed top</a>
             </div>
         </div>
         <!--End: Mobile Nav-->
