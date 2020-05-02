@@ -3,7 +3,7 @@
     <meta charset="utf-8">
 
   <!--Start: Nav  -->
-  <div class="ui fixed borderless huge menu">
+  <div class="ui fixed borderless huge menu" onload="js_Load()">
     <div class="ui container grid">
       <!--Start: Desktop Nav-->
       <div class="computer only row">
@@ -50,7 +50,6 @@
 
       <h1>Generate a Pathway</h1>
 
-
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/logo/t.png"/>
@@ -61,8 +60,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 
+
 </head>
-  <body onload="js_Load()">
+  <body >
 
   <p> To generate the most accurate pathway, please input as much information as possible!
     <br> For FAQs on how we design pathways, <a href="/faqs" class="link"> click here. </a> </p>
@@ -185,16 +185,15 @@
   <br>
   <br>
 
-  <script src ="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"></script>
-  <script src="js/jquery-2.1.1.js"></script>
-  <script src="js/main.js"></script>
-
-<#--  Resolving the flash of unstyled content using jquery-->
+<#--  RESOLVE FLASH OF UNSTYLED CONTENT -->
   <script>function js_Load() {
-      document.body.style.visibility='visible';
+      $(window).on("load", function() {
+        document.body.style.visibility = 'visible';
+      });
     }
   </script>
   <noscript><style> body { visibility: visible; }</style></noscript>
+
 
   </body>
 

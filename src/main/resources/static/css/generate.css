@@ -220,3 +220,7 @@ a.link
         width: 100%;
     }
 }
+
+.no-fouc {
+    display: none;
+}

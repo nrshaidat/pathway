@@ -1,6 +1,7 @@
 <!DOCTYPE html>
   <head>
     <meta charset="utf-8">
+
     <!--Start: Nav  -->
     <div class="ui fixed borderless huge menu">
         <div class="ui container grid">
@@ -40,13 +41,19 @@
             <!--End: Mobile Nav-->
         </div>
     </div>
+
+
+    <br>
+
     <h1>Frequently Asked Questions</h1>
+
+    <div class="no-fouc">
 
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/logo/t.png"/>
     <link rel="stylesheet" href="/css/faqs.css">
-  </head>
+  </div>
   <body>
      <script src="js/jquery-2.1.1.js"></script>
      <script src="js/main.js"></script>
@@ -90,5 +97,15 @@
   </p>
 
   </body>
+
+    </div>
+    <script>
+
+        $(function() {
+            $('.no-fouc').removeClass('no-fouc');
+            $('#dialog').dialog();
+        });
+    </script>
+
 
 </html>

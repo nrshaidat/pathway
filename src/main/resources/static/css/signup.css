@@ -154,3 +154,7 @@ form {
     display: inline-flex;
     flex-direction: row;
 }
+
+.no-fouc {
+    display: none;
+}

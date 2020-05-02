@@ -200,3 +200,7 @@ a:active {
         width: 100%;
     }
 }
+
+.no-fouc {
+    display: none;
+}

@@ -159,18 +159,6 @@ header {
     font-size: 20px;
 }
 
-/*#results {*/
-/*    display: inline-block;*/
-/*    background-color: lightgray;*/
-/*    padding: 14px 20px;*/
-/*    margin: 8px 10px;*/
-/*    border: none;*/
-/*    cursor: pointer;*/
-/*    width: 20%;*/
-/*    height: 150px;*/
-/*    border-radius: 10px;*/
-/*}*/
-
 span.psw {
     float: right;
     padding-top: 16px;
@@ -188,4 +176,7 @@ a.link {
     font-size: medium;
     padding:7px;
     margin:2%;
+}
+.no-fouc {
+    display: none;
 }

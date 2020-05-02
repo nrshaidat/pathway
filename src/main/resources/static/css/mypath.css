@@ -436,3 +436,7 @@ a.link {
     width: 70%;
     margin: 2% auto 0;
 }
+
+.no-fouc {
+    display: none;
+}
