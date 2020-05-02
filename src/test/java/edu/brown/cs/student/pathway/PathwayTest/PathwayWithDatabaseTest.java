@@ -70,33 +70,34 @@ public class PathwayWithDatabaseTest {
     }
   }
 
-//  @Test
-//  public void computerScienceBaConcentrationTest() throws SQLException {
-//    String tableName = "computerscienceba";
-//    List<Integer> reqsTmp = cache.getRequirements(tableName + "_rules");
-//    int[] reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
-//    Set<Node> courseSet = cache.getConcentrationCourses(tableName);
-//    Pathway pathwayMaker = new Pathway(reqs, courseSet);
-//    String workload = "med";
-//    pathwayMaker.makePathway(new HashSet<>(), 1, false, workload);
-//    List<Semester> path = pathwayMaker.getPath();
-//    this.validPathSatisfiesPreferences(path, workload);
-//    this.pathwayPrinter(path, "Computer Science B.A.");
-//  }
-//
-//  @Test
-//  public void computationalBiologyBaConcentrationTest() throws SQLException {
-//    String tableName = "computationalbiologyba";
-//    List<Integer> reqsTmp = cache.getRequirements(tableName + "_rules");
-//    int[] reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
-//    Set<Node> courseSet = cache.getConcentrationCourses(tableName);
-//    Pathway pathwayMaker = new Pathway(reqs, courseSet);
-//    String workload = "med";
-//    pathwayMaker.makePathway(new HashSet<>(), 1, false, workload);
-//    List<Semester> path = pathwayMaker.getPath();
-//    this.validPathSatisfiesPreferences(path, workload);
-//    this.pathwayPrinter(path, "Computational Biology B.A.");
-//  }
+  @Test
+  public void computerScienceBaConcentrationTest() throws SQLException {
+    String tableName = "computerscienceba";
+    List<Integer> reqsTmp = cache.getRequirements(tableName + "_rules");
+    int[] reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
+    Set<Node> courseSet = cache.getConcentrationCourses(tableName);
+    Pathway pathwayMaker = new Pathway(reqs, courseSet);
+    String workload = "med";
+    pathwayMaker.makePathway(new HashSet<>(), 1, false, workload);
+    List<Semester> path = pathwayMaker.getPath();
+    this.validPathSatisfiesPreferences(path, workload);
+    this.pathwayPrinter(path, "Computer Science B.A.");
+  }
+
+  @Test
+  public void computationalBiologyBaConcentrationTest() throws SQLException {
+    String tableName = "computationalbiologyba";
+    List<Integer> reqsTmp = cache.getRequirements(tableName + "_rules");
+    int[] reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
+    Set<Node> courseSet = cache.getConcentrationCourses(tableName);
+    Pathway pathwayMaker = new Pathway(reqs, courseSet);
+    String workload = "med";
+    pathwayMaker.makePathway(new HashSet<>(), 1, false, workload);
+    List<Semester> path = pathwayMaker.getPath();
+    this.validPathSatisfiesPreferences(path, workload);
+    this.pathwayPrinter(path, "Computational Biology B.A.");
+  }
+
 //
 //  @Test
 //  public void computationalBiologyAppliedMathematicsAndStatisticsTrackBsWithTakenConcentrationTest()
