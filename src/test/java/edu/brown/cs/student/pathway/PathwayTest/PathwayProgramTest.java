@@ -122,25 +122,38 @@ public class PathwayProgramTest {
   }
 
   /**
-   * Tests getavgavghrssem.
-   *
-   * @throws Exception the exception
-   */
-  //@Test
-  public void getAvgavghrssem() throws Exception {
-    setUp();
-    tearDown();
-  }
-
-  /**
    * Tests getavgavghrspath.
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getAvgavghrspath() throws Exception {
-    setUp();
+    setUpStats();
+    assertEquals(7, pp.getAvgavghrs1path());
+    tearDown();
+  }
 
+  /**
+   * Tests getavgmaxhrspath.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void getAvgmaxhrspath() throws Exception {
+    setUpStats();
+    assertEquals(12, pp.getAvgmaxhrs1path());
+    tearDown();
+  }
+
+  /**
+   * Tests getavgratingpath.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void getAvgratingpath() throws Exception {
+    setUpStats();
+    assertTrue(3.9775 == pp.getAvgrating1path());
     tearDown();
   }
 
@@ -150,12 +163,10 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getTotalnumcourses() throws Exception {
-    setUp();
-    pp.getTotalnumcourses1();
-    pp.getTotalnumcourses2();
-    pp.getTotalnumcourses3();
+    setUpStats();
+    assertEquals(4,pp.getTotalnumcourses1());
     tearDown();
   }
 
@@ -165,12 +176,10 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getNumsemesters() throws Exception {
-    setUp();
-    pp.getNumsemesters1();
-    pp.getNumsemesters2();
-    pp.getNumsemesters3();
+    setUpStats();
+    assertEquals(2, pp.getNumsemesters1());
     tearDown();
   }
 
@@ -183,6 +192,8 @@ public class PathwayProgramTest {
   //@Test
   public void getPath() throws Exception {
     setUp();
+    //test default
+    //test setting new
     pp.getPath1();
     pp.getPath2();
     pp.getPath3();
@@ -195,7 +206,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getConcentrationMap() throws Exception {
     setUp();
     Map<String, String> mapy = pp.getConcentrationMap();
@@ -211,7 +222,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void setConcentration() throws Exception {
     setUp();
     pp.setConcentration("cognitiveneuroscienceba");
@@ -229,6 +240,8 @@ public class PathwayProgramTest {
   //@Test
   public void getConcentrationName() throws Exception {
     setUp();
+    //test default
+    //test new
     tearDown();
   }
 
@@ -237,7 +250,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void validsetConcentrationName() throws Exception {
     setUp();
     pp.setConcentrationName("Cognitive Neuroscience B.A.");
@@ -250,7 +263,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void invalidsetConcentrationName() throws Exception {
     setUp();
     pp.setConcentrationName("Cognitive Neuroscience B.T.");
@@ -258,16 +271,6 @@ public class PathwayProgramTest {
     tearDown();
   }
 
-  /**
-   * Test clone.
-   *
-   * @throws Exception the exception
-   */
-  //@Test
-  public void testClone() throws Exception {
-    setUp();
-    tearDown();
-  }
 
   /**
    * Tests makePathways.
@@ -288,6 +291,8 @@ public class PathwayProgramTest {
   //@Test
   public void isSet() throws Exception {
     setUp();
+    //default
+    //new set
     tearDown();
   }
 
@@ -310,6 +315,7 @@ public class PathwayProgramTest {
   //@Test
   public void getConcentrationsList() throws Exception {
     setUp();
+
     tearDown();
   }
 

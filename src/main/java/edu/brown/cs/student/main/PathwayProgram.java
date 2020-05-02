@@ -85,14 +85,17 @@ public class PathwayProgram {
 
   public void setPath1(List<Semester> path1) {
     this.path1 = path1;
+    this.setPathStats1();
   }
 
   public void setPath2(List<Semester> path2) {
     this.path2 = path2;
+    this.setPathStats2();
   }
 
   public void setPath3(List<Semester> path3) {
     this.path3 = path3;
+    this.setPathStats3();
   }
 
   public Set<Node> parseTaken(String coursestaken) {
@@ -285,17 +288,17 @@ public class PathwayProgram {
     Pathway pathway1 = new Pathway(reqs, courseSet);
     pathway1.makePathway(taken, sem, aggressive, "lo");
     path1 = pathway1.getPath();
-    this.setPathStats1();
+    this.setPath1(path1);
 
     Pathway pathway2 = new Pathway(reqs2, courseSet);
     pathway2.makePathway(taken, sem, aggressive, "med");
     path2 = pathway2.getPath();
-    this.setPathStats2();
+    this.setPath2(path2);
 
     Pathway pathway3 = new Pathway(reqs3, courseSet);
     pathway3.makePathway(taken, sem, aggressive, "hi");
     path3 = pathway3.getPath();
-    this.setPathStats3();
+    this.setPath3(path3);
 
     setPathUniques();
   }
