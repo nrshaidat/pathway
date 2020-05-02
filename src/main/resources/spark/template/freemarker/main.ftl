@@ -16,9 +16,15 @@
     <div class="ui container grid">
         <div class="computer only row">
             <a id="defunct" class="header item">Pathway</a>
+
+            <div style="float: right;"
             <form action="/faqs" method="post">
                 <a href="/faqs" class="item">FAQ</a>
             </form>
+            <form action="/home" method="post">
+                <a href="/home" class="item">Home</a>
+            </form>
+            </div>
         </div>
 
         <!--Start: Mobile Nav-->

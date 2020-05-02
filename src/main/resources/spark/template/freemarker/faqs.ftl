@@ -19,6 +19,9 @@
                 <form action="/login" method="post">
                     <a class="header item">Pathway</a>
                 </form>
+                <form action="/home" method="post">
+                    <a href="/home" class="item">Back to Home</a>
+                </form>
             </div>
             <!--End: Desktop Nav-->
 

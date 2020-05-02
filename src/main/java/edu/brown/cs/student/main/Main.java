@@ -131,6 +131,10 @@ public final class Main {
       if (firstLogin) {
         QueryParamsMap qm = req.queryMap();
         uniName = qm.value("university");
+
+        if (uniName == null) {
+          uniName = "Brown University";
+        }
         uniNameShort = uniName.split(" ")[0];
         firstLogin = false;
 

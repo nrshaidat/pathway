@@ -23,6 +23,9 @@
         <form action="/login" method="post">
           <a href="/login" class="item">Log in</a>
         </form>
+        <form action="/home" method="get">
+          <a href="/home" class="item"> Home </a>
+        </form>
       </div>
       <!--End: Desktop Nav-->
 

@@ -17,7 +17,12 @@
     <div class="ui container grid">
         <div class="computer only row">
             <a id="defunct" class="header item">Pathway</a>
-            <form action="/faqs" method="post">
+
+<#--            Putting this here moves FAQ to right!-->
+            <form id="defunct" action="/faqs" method="post">
+                <a href="/faqs" class="item"></a>
+            </form>
+            <form style="text-align: right" action="/faqs" method="post">
                 <a href="/faqs" class="item">FAQ</a>
             </form>
         </div>
