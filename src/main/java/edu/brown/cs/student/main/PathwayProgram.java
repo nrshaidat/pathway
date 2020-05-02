@@ -42,15 +42,15 @@ public class PathwayProgram {
   private String concentration;
   private String concentrationName;
   private static List<String> yearList = new ArrayList<String>() {{
-      add("Fall");
-      add("Spring");
-    }};
+    add("Fall");
+    add("Spring");
+  }};
   private static List<String> gradeList = new ArrayList<String>() {{
-      add("Freshman");
-      add("Sophomore");
-      add("Junior");
-      add("Senior");
-    }};
+    add("Freshman");
+    add("Sophomore");
+    add("Junior");
+    add("Senior");
+  }};
   private List<String> courseList;
 
   /**
@@ -146,7 +146,8 @@ public class PathwayProgram {
    *
    * @return a list of Strings.
    */
-  public List<String> getCourseList() {
+  public List<String> getCourseList(boolean cornell) throws SQLException {
+    courseList = cache.getAllCourseIDs(cornell);
     return courseList;
   }
 
@@ -342,7 +343,7 @@ public class PathwayProgram {
    * @throws SQLException if there are errors with querying the database.
    */
   public void makePathways(String con, Set<Node> taken, int sem, boolean aggressive)
-      throws SQLException {
+          throws SQLException {
     this.setConcentrationName(con);
     List<Integer> reqsTmp = cache.getRequirements(concentration + "_rules");
     reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
@@ -491,11 +492,11 @@ public class PathwayProgram {
         path3Courses.addAll(s.getCourses());
       }
       Set<Node> path1UniqueNodes =
-          Sets.difference(path1Courses, Sets.union(path2Courses, path3Courses));
+              Sets.difference(path1Courses, Sets.union(path2Courses, path3Courses));
       Set<Node> path2UniqueNodes =
-          Sets.difference(path2Courses, Sets.union(path1Courses, path3Courses));
+              Sets.difference(path2Courses, Sets.union(path1Courses, path3Courses));
       Set<Node> path3UniqueNodes =
-          Sets.difference(path3Courses, Sets.union(path1Courses, path2Courses));
+              Sets.difference(path3Courses, Sets.union(path1Courses, path2Courses));
       path1Uniques = new ArrayList<>();
       path2Uniques = new ArrayList<>();
       path3Uniques = new ArrayList<>();

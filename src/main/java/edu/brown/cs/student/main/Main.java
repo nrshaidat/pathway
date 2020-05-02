@@ -66,7 +66,6 @@ public final class Main {
     parser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(DEFAULT_PORT);
     OptionSet options = parser.parse(args);
     runSparkServer((int) options.valueOf("port"));
-    pathwayProgram = new PathwayProgram(cornell);
 
   }
 
@@ -124,7 +123,10 @@ public final class Main {
    */
   private static class LoginHandler implements TemplateViewRoute {
     @Override
-    public ModelAndView handle(Request req, Response res) {
+    public ModelAndView handle(Request req, Response res) throws SQLException {
+
+      pathwayProgram = new PathwayProgram(cornell);
+      pathwayProgram.getCourseList(cornell);
 
       if (firstLogin) {
         QueryParamsMap qm = req.queryMap();
@@ -138,7 +140,7 @@ public final class Main {
       }
 
       Map<String, Object> variables =
-          ImmutableMap.of("uniName", uniName, "uniNameShort", uniNameShort);
+              ImmutableMap.of("uniName", uniName, "uniNameShort", uniNameShort);
       return new ModelAndView(variables, "main.ftl");
     }
 
@@ -155,7 +157,7 @@ public final class Main {
    */
   private static class GenerateHandler implements TemplateViewRoute {
     @Override
-    public ModelAndView handle(Request req, Response res) {
+    public ModelAndView handle(Request req, Response res) throws SQLException {
       List<String> gradeList = pathwayProgram.getGradeList();
       List<String> yearList = pathwayProgram.getYearList();
 
@@ -169,9 +171,9 @@ public final class Main {
       }
 
       Map<String, Object> variables = ImmutableMap
-          .of("uniNameShort", uniNameShort, "concentrationList",
-              concentrationList, "gradeList", gradeList, "yearList", yearList,
-              "courseList", pathwayProgram.getCourseList());
+              .of("uniNameShort", uniNameShort, "concentrationList",
+                      concentrationList, "gradeList", gradeList, "yearList", yearList,
+                      "courseList", pathwayProgram.getCourseList(cornell));
       return new ModelAndView(variables, "generate.ftl");
     }
 
@@ -216,10 +218,10 @@ public final class Main {
       List<String> uniques2 = pathwayProgram.getPath2Uniques();
       List<String> uniques3 = pathwayProgram.getPath3Uniques();
       Map<String, Object> variables =
-          ImmutableMap.<String, Object>builder().put("header", display).put("results1", pathway1)
-              .put("results2", pathway2).put("results3", pathway3).put("stats", pathwayProgram)
-              .put("uniques1", uniques1).put("uniques2", uniques2).put("uniques3", uniques3)
-              .build();
+              ImmutableMap.<String, Object>builder().put("header", display).put("results1", pathway1)
+                      .put("results2", pathway2).put("results3", pathway3).put("stats", pathwayProgram)
+                      .put("uniques1", uniques1).put("uniques2", uniques2).put("uniques3", uniques3)
+                      .build();
       return new ModelAndView(variables, "pathway.ftl");
     }
   }
@@ -233,7 +235,7 @@ public final class Main {
    */
   private static class PathwayHandler implements TemplateViewRoute {
     @Override
-    public ModelAndView handle(Request req, Response res) {
+    public ModelAndView handle(Request req, Response res) throws SQLException {
       String pathNum = req.params(":id");
       int num = Integer.parseInt(pathNum);
       List<Semester> path;
@@ -251,8 +253,8 @@ public final class Main {
       List<String> pathnumlst = new ArrayList<>();
       pathnumlst.add(pathNum);
       Map<String, Object> variables = ImmutableMap
-          .of("id", pathnumlst, "results", path, "courseList", pathwayProgram.getCourseList(),
-              "stats", pathwayProgram);
+              .of("id", pathnumlst, "results", path, "courseList", pathwayProgram.getCourseList(cornell),
+                      "stats", pathwayProgram);
       return new ModelAndView(variables, "mypath.ftl");
 
     }
@@ -269,7 +271,7 @@ public final class Main {
     @Override
     public ModelAndView handle(Request req, Response res) {
       Map<String, Object> variables =
-          ImmutableMap.of("title", "Pathway Sign Up", "uniName", uniName);
+              ImmutableMap.of("title", "Pathway Sign Up", "uniName", uniName);
       return new ModelAndView(variables, "signup.ftl");
     }
   }

@@ -93,7 +93,7 @@ public class Database implements DatabaseInterface {
     try {
       //query the concentrationName table to populate its array of
       String strQuery = "SELECT category, COUNT(*) AS 'available_courses' " + " FROM $tableName "
-          + " GROUP BY category " + " ORDER BY category ASC ";
+              + " GROUP BY category " + " ORDER BY category ASC ";
       String query = strQuery.replace("$tableName", concentrationName);
       prep = conn.prepareStatement(query);
       rs = prep.executeQuery();
@@ -256,7 +256,7 @@ public class Database implements DatabaseInterface {
    * @throws SQLException the sql exception
    */
   public boolean checkConcentrationRulesColNames(String concentrationNameRules)
-      throws SQLException {
+          throws SQLException {
     ResultSet rs = null;
     try {
       DatabaseMetaData metadata = conn.getMetaData();
@@ -560,7 +560,7 @@ public class Database implements DatabaseInterface {
     List<Integer> reqs = new ArrayList<>();
     try {
       String strQuery =
-          " SELECT * " + " FROM $tableName " + " ORDER BY cast(category as unsigned) ASC ";
+              " SELECT * " + " FROM $tableName " + " ORDER BY cast(category as unsigned) ASC ";
       String query = strQuery.replace("$tableName", tableName);
       prep = conn.prepareStatement(query);
       rs = prep.executeQuery();
@@ -600,7 +600,7 @@ public class Database implements DatabaseInterface {
     Map<String, String> concentrationMap = new HashMap<>();
     try {
       prep = conn.prepareStatement(
-          "SELECT * " + " FROM concentrations " + " ORDER BY concentration_name ASC ");
+              "SELECT * " + " FROM concentrations " + " ORDER BY concentration_name ASC ");
       rs = prep.executeQuery();
       while (rs.next()) {
         concentrationMap.put(rs.getString("concentration_name"), rs.getString("concentration_id"));

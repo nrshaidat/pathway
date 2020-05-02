@@ -121,7 +121,7 @@ public class PathwayProgramTest {
   //@Test
   public void getCourseList() throws Exception {
     setUp();
-    List<String> cl = pp.getCourseList();
+    List<String> cl = pp.getCourseList(false);
     List<String> cl2 = cache.getAllCourseIDs(false);
     assertEquals(cl2, cl);
     tearDown();
