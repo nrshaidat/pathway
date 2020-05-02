@@ -4,6 +4,7 @@ import edu.brown.cs.student.pathway.Node;
 import edu.brown.cs.student.pathway.Pathway;
 import edu.brown.cs.student.pathway.Semester;
 import com.google.common.collect.Sets;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,15 +30,15 @@ public class PathwayProgram {
   private int totalnumcourses1;
   private int totalnumcourses2;
   private int totalnumcourses3;
-  private double totalavg1;
-  private double totalavg2;
-  private double totalavg3;
-  private double avgavghrs1sem;
-  private double avgavghrs2sem;
-  private double avgavghrs3sem;
   private double avgavghrs1path;
   private double avgavghrs2path;
   private double avgavghrs3path;
+  private double avgmaxhrs1path;
+  private double avgmaxhrs2path;
+  private double avgmaxhrs3path;
+  private double avgrating1path;
+  private double avgrating2path;
+  private double avgrating3path;
   private int numsemesters1;
   private int numsemesters2;
   private int numsemesters3;
@@ -57,9 +58,6 @@ public class PathwayProgram {
       add("Junior");
       add("Senior");
     }};
-
-
-  //TODO Rising Sem and other variables not used; Resolve
   private List<String> courseList;
 
   /**
@@ -78,14 +76,25 @@ public class PathwayProgram {
     courseList = cache.getAllCourseIDs();
     this.setConcentrationName("Computer Science B.A.");
   }
-
   public static List<String> getYearList() {
     return yearList;
   }
-
   public static List<String> getGradeList() {
     return gradeList;
   }
+
+  public void setPath1(List<Semester> path1) {
+    this.path1 = path1;
+  }
+
+  public void setPath2(List<Semester> path2) {
+    this.path2 = path2;
+  }
+
+  public void setPath3(List<Semester> path3) {
+    this.path3 = path3;
+  }
+
   public Set<Node> parseTaken(String coursestaken) {
     String[] cList = coursestaken.split(",");
     Set<Node> taken = new HashSet<>();
@@ -109,38 +118,41 @@ public class PathwayProgram {
   }
 
   // Getter and setter methods for Apache Spark
-
-  public int getAvgavghrs1sem() {
-    avgavghrs1sem = Math.round(totalavg1 / numsemesters1);
-    return ((int) avgavghrs1sem);
-  }
-
-  public int getAvgavghrs2sem() {
-    avgavghrs2sem = Math.round(totalavg2 / numsemesters2);
-    return ((int) avgavghrs2sem);
-  }
-
-  public int getAvgavghrs3sem() {
-    avgavghrs3sem = Math.round(totalavg3 / numsemesters3);
-    return ((int) avgavghrs3sem);
-  }
-
-
   public int getAvgavghrs1path() {
-    avgavghrs1path = Math.round(totalavg1 / totalnumcourses1);
     return ((int) avgavghrs1path);
   }
 
   public int getAvgavghrs2path() {
-    avgavghrs2path = Math.round(totalavg2 / totalnumcourses2);
     return ((int) avgavghrs2path);
   }
 
   public int getAvgavghrs3path() {
-    avgavghrs3path = Math.round(totalavg3 / totalnumcourses3);
     return ((int) avgavghrs3path);
   }
 
+  public int getAvgmaxhrs1path() {
+    return ((int) avgmaxhrs1path);
+  }
+
+  public int getAvgmaxhrs2path() {
+    return ((int) avgmaxhrs2path);
+  }
+
+  public int getAvgmaxhrs3path() {
+    return ((int) avgmaxhrs3path);
+  }
+
+  public double getAvgrating1path() {
+    return avgrating1path;
+  }
+
+  public double getAvgrating2path() {
+    return avgrating2path;
+  }
+
+  public double getAvgrating3path() {
+    return avgrating3path;
+  }
 
   public int getTotalnumcourses1() {
     return totalnumcourses1;
@@ -152,18 +164,6 @@ public class PathwayProgram {
 
   public int getTotalnumcourses3() {
     return totalnumcourses3;
-  }
-
-  public double getTotalavg1() {
-    return totalavg1;
-  }
-
-  public double getTotalavg2() {
-    return totalavg2;
-  }
-
-  public double getTotalavg3() {
-    return totalavg3;
   }
 
   public int getNumsemesters1() {
@@ -299,6 +299,7 @@ public class PathwayProgram {
 
     setPathUniques();
   }
+
   public static int parseGradeLevel(String gradeL, String semesterL) {
     int semester;
     if (gradeL.equals("Freshman")) {
@@ -353,14 +354,20 @@ public class PathwayProgram {
    */
   public void setPathStats1() {
     totalnumcourses1 = 0;
-    totalavg1 = 0.0;
-    avgavghrs1sem = 0.0;
+    avgavghrs1path = 0.0;
+    avgmaxhrs1path = 0.0;
+    avgrating1path = 0.0;
     for (Semester sem : getPath1()) {
       sem.setStats();
       totalnumcourses1 += sem.getCourses().size();
-      totalavg1 += sem.getAvghrs();
-      avgavghrs1sem += (sem.getAvghrs() / totalnumcourses1);
+      avgavghrs1path += sem.getAvghrs();
+      avgmaxhrs1path += sem.getMaxhrs();
+      avgrating1path += sem.getRating();
     }
+    avgavghrs1path = Math.round(avgavghrs1path / totalnumcourses1);
+    avgmaxhrs1path = Math.round(avgmaxhrs1path / totalnumcourses1);
+    avgrating1path = avgrating1path / totalnumcourses1;
+
   }
 
   /**
@@ -372,14 +379,19 @@ public class PathwayProgram {
    */
   public void setPathStats2() {
     totalnumcourses2 = 0;
-    totalavg2 = 0.0;
-    avgavghrs2sem = 0.0;
+    avgavghrs2path = 0.0;
+    avgmaxhrs2path = 0.0;
+    avgrating2path = 0.0;
     for (Semester sem : getPath2()) {
       sem.setStats();
       totalnumcourses2 += sem.getCourses().size();
-      totalavg2 += sem.getAvghrs();
-      avgavghrs2sem += (sem.getAvghrs() / totalnumcourses2);
+      avgavghrs2path += sem.getAvghrs();
+      avgmaxhrs2path += sem.getMaxhrs();
+      avgrating2path += sem.getRating();
     }
+    avgavghrs2path = Math.round(avgavghrs2path / totalnumcourses2);
+    avgmaxhrs2path = Math.round(avgmaxhrs2path / totalnumcourses2);
+    avgrating2path = avgrating2path / totalnumcourses2;
   }
 
   /**
@@ -391,14 +403,19 @@ public class PathwayProgram {
    */
   public void setPathStats3() {
     totalnumcourses3 = 0;
-    totalavg3 = 0.0;
-    avgavghrs3sem = 0.0;
+    avgavghrs3path = 0.0;
+    avgmaxhrs3path = 0.0;
+    avgrating3path = 0.0;
     for (Semester sem : getPath3()) {
       sem.setStats();
       totalnumcourses3 += sem.getCourses().size();
-      totalavg3 += sem.getAvghrs();
-      avgavghrs3sem += (sem.getAvghrs() / totalnumcourses3);
+      avgavghrs3path += sem.getAvghrs();
+      avgmaxhrs3path += sem.getMaxhrs();
+      avgrating3path += sem.getRating();
     }
+    avgavghrs3path = Math.round(avgavghrs3path / totalnumcourses3);
+    avgmaxhrs3path = Math.round(avgmaxhrs3path / totalnumcourses3);
+    avgrating3path = avgrating3path / totalnumcourses3;
   }
 
   public void setPathUniques() {

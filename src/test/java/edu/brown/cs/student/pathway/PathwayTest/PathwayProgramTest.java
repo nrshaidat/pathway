@@ -6,10 +6,13 @@ import edu.brown.cs.student.main.DatabaseCache;
 import edu.brown.cs.student.main.DatabaseInterface;
 import edu.brown.cs.student.main.PathwayProgram;
 import edu.brown.cs.student.pathway.Node;
+import edu.brown.cs.student.pathway.Semester;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,6 +41,63 @@ public class PathwayProgramTest {
   }
 
   /**
+   * Sets up pathway program and static pathways for stats testing.
+   *
+   * @throws Exception the exception
+   */
+  @Before
+  public void setUpStats() throws Exception {
+    pp = new PathwayProgram();
+    cache = new DatabaseCache(new Database("data/coursesDB.db"));
+    //path 1
+    List<Semester> p1 = new ArrayList<>();
+    //fall 1
+    List<Node> tak1 = new ArrayList<>();
+    tak1.add(cache.getCourseData("MATH 0090"));
+    tak1.add(cache.getCourseData("CSCI 0150"));
+    Semester fall1 = new Semester(1, tak1);
+    p1.add(fall1);
+    //spring 2
+    List<Node> tak2 = new ArrayList<>();
+    tak2.add(cache.getCourseData("MATH 0100"));
+    tak2.add(cache.getCourseData("CSCI 0160"));
+    Semester spring2 = new Semester(2, tak2);
+    p1.add(spring2);
+    //path 2
+    List<Semester> p2 = new ArrayList<>();
+    //fall 1
+    List<Node> tak12 = new ArrayList<>();
+    tak12.add(cache.getCourseData("MATH 0090"));
+    tak12.add(cache.getCourseData("CSCI 0170"));
+    Semester fall12 = new Semester(1, tak12);
+    p2.add(fall12);
+    //spring 2
+    List<Node> tak22 = new ArrayList<>();
+    tak22.add(cache.getCourseData("MATH 0100"));
+    tak22.add(cache.getCourseData("CSCI 0180"));
+    Semester spring22 = new Semester(2, tak22);
+    p2.add(spring22);
+    //path 3
+    //path 2
+    List<Semester> p3 = new ArrayList<>();
+    //fall 1
+    List<Node> tak13 = new ArrayList<>();
+    tak13.add(cache.getCourseData("MATH 0090"));
+    tak13.add(cache.getCourseData("CSCI 0190"));
+    Semester fall13 = new Semester(1, tak13);
+    p3.add(fall13);
+    //spring 2
+    List<Node> tak23 = new ArrayList<>();
+    tak23.add(cache.getCourseData("MATH 0100"));
+    tak23.add(cache.getCourseData("CSCI 0180"));
+    Semester spring23 = new Semester(2, tak23);
+    p3.add(spring23);
+    pp.setPath1(p1);
+    pp.setPath2(p2);
+    pp.setPath3(p3);
+  }
+
+  /**
    * Tear down.
    *
    * @throws Exception the exception
@@ -52,7 +112,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getCourseList() throws Exception {
     setUp();
     List<String> cl = pp.getCourseList();
@@ -66,7 +126,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getAvgavghrssem() throws Exception {
     setUp();
     pp.getAvgavghrs1sem();
