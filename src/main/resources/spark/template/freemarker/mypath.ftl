@@ -62,24 +62,30 @@
 </h1>
 
 <p>Customize your pathway here! Refresh the page if you wish to revert to the original pathway.</p>
-<#list id as node>
-    <#if node=="1">
-        <p> Number of Semesters: ${stats.numsemesters1}</p>
-        <p> Number of Courses: ${stats.totalnumcourses1}</p>
-        <p> Average Workload Per Semester (hrs): ${stats.avgavghrs1sem} </p>
-        <p> Average Workload Per Course (hrs): ${stats.avgavghrs1path} </p>
-    <#elseif node=="2">
-        <p> Number of Semesters: ${stats.numsemesters2}</p>
-        <p> Number of Courses: ${stats.totalnumcourses2}</p>
-        <p> Average Workload Per Semester (hrs): ${stats.avgavghrs2sem} </p>
-        <p> Average Workload Per Course (hrs): ${stats.avgavghrs2path} </p>
-    <#elseif node=="3">
-        <p> Number of Semesters: ${stats.numsemesters3}</p>
-        <p> Number of Courses: ${stats.totalnumcourses3}</p>
-        <p> Average Workload Per Semester (hrs): ${stats.avgavghrs3sem} </p>
-        <p> Average Workload Per Course (hrs): ${stats.avgavghrs3path} </p>
-    </#if>
-</#list>
+<div style="position: absolute; right:1.16em; top:14.5em;
+    border-radius: 2px; border: solid darkslategrey; padding: 0.5em;">
+<#--    <h3 style="color:gray">This Pathway's Stats:</h3>-->
+    <#list id as node>
+        <#if node=="1">
+            <p> Number of Semesters: ${stats.numsemesters1}</p>
+            <p> Number of Courses: ${stats.totalnumcourses1}</p>
+            <p> Average Workload Per Semester (hrs/wk): ${stats.avgavghrs1sem} </p>
+            <p> Average Workload Per Course (hrs/wk): ${stats.avgavghrs1path} </p>
+        <#elseif node=="2">
+            <p> Number of Semesters: ${stats.numsemesters2}</p>
+            <p> Number of Courses: ${stats.totalnumcourses2}</p>
+            <p> Average Workload Per Semester (hrs/wk): ${stats.avgavghrs2sem} </p>
+            <p> Average Workload Per Course (hrs/wk): ${stats.avgavghrs2path} </p>
+        <#elseif node=="3">
+            <p> Number of Semesters: ${stats.numsemesters3}</p>
+            <p> Number of Courses: ${stats.totalnumcourses3}</p>
+            <p> Average Workload Per Semester (hrs/wk): ${stats.avgavghrs3sem} </p>
+            <p> Average Workload Per Course (hrs/wk): ${stats.avgavghrs3path} </p>
+        </#if>
+    </#list>
+</div>
+<br>
+<br>
 
 <div class="redirect">
     <form method="POST" action="/mypath">
@@ -211,7 +217,7 @@
                                 <div class="course" id="${semester.courseid1}" style="cursor:pointer;">
                                     ${semester.courseid1}
                                     <div class="more-info">
-                                        ${semester.coursename1}
+                                        ${semester.courseid1} - ${semester.coursename1}
                                         <br>
                                         <br>
                                         Professor: ${semester.prof1}
@@ -233,7 +239,7 @@
                                 <div class="course" id="${semester.courseid2}" style="cursor:pointer;">
                                     ${semester.courseid2}
                                     <div class="more-info">
-                                        ${semester.coursename2}
+                                        ${semester.courseid2} - ${semester.coursename2}
                                         <br>
                                         <br>
                                         Professor: ${semester.prof2}
@@ -255,7 +261,7 @@
                                 <div class="course" id="${semester.courseid3}" style="cursor:pointer;">
                                     ${semester.courseid3}
                                     <div class="more-info">
-                                        ${semester.coursename3}
+                                        ${semester.courseid3} - ${semester.coursename3}
                                         <br>
                                         <br>
                                         Professor: ${semester.prof3}
@@ -275,7 +281,7 @@
                             </#if>
                             <#if semester.courseid4 ? has_content>
                                 <div class="course" id="${semester.courseid4}" style="cursor:pointer;">
-                                    ${semester.courseid4}
+                                    ${semester.courseid4} - ${semester.courseid4}
                                     <div class="more-info">
                                         ${semester.coursename4}
                                         <br>
