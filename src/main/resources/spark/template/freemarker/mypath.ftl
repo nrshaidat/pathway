@@ -62,25 +62,25 @@
 </h1>
 
 <p>Customize your pathway here! Refresh the page if you wish to revert to the original pathway.</p>
-<div style="position: absolute; right:1.16em; top:14.5em;
-    border-radius: 2px; border: solid darkslategrey; padding: 0.5em;">
-<#--    <h3 style="color:gray">This Pathway's Stats:</h3>-->
+<div style="position: absolute; right:2.4vw; top:14.5em;
+    border-radius: 2px; border: solid darkslategrey; padding: 0.5em; width: 20vw;">
+    <h3 style="color:rgba(59,59,90,0.93)">Pathway Summary</h3>
     <#list id as node>
         <#if node=="1">
-            <p> Number of Semesters: ${stats.numsemesters1}</p>
-            <p> Number of Courses: ${stats.totalnumcourses1}</p>
-            <p> Average Workload Per Semester (hrs/wk): ${stats.avgavghrs1sem} </p>
-            <p> Average Workload Per Course (hrs/wk): ${stats.avgavghrs1path} </p>
+            <div> Number of Semesters: ${stats.numsemesters1}</div>
+            <div> Number of Courses: ${stats.totalnumcourses1}</div>
+            <div> Average Semester Workload: ${stats.avgavghrs1sem} hrs/wk</div>
+            <div> Average Course Workload: ${stats.avgavghrs1path} hrs/wk</div>
         <#elseif node=="2">
-            <p> Number of Semesters: ${stats.numsemesters2}</p>
-            <p> Number of Courses: ${stats.totalnumcourses2}</p>
-            <p> Average Workload Per Semester (hrs/wk): ${stats.avgavghrs2sem} </p>
-            <p> Average Workload Per Course (hrs/wk): ${stats.avgavghrs2path} </p>
+            <div> Number of Semesters: ${stats.numsemesters2}</div>
+            <div> Number of Courses: ${stats.totalnumcourses2}</div>
+            <div> Average Semester Workload: ${stats.avgavghrs2sem} hrs/wk</div>
+            <div> Average Course Workload: ${stats.avgavghrs2path} hrs/wk</div>
         <#elseif node=="3">
-            <p> Number of Semesters: ${stats.numsemesters3}</p>
-            <p> Number of Courses: ${stats.totalnumcourses3}</p>
-            <p> Average Workload Per Semester (hrs/wk): ${stats.avgavghrs3sem} </p>
-            <p> Average Workload Per Course (hrs/wk): ${stats.avgavghrs3path} </p>
+            <div> Number of Semesters: ${stats.numsemesters3}</div>
+            <div> Number of Courses: ${stats.totalnumcourses3}</div>
+            <div> Average Semester Workload: ${stats.avgavghrs3sem} hrs/wk</div>
+            <div> Average Course Workload: ${stats.avgavghrs3path} hrs/wk</div>
         </#if>
     </#list>
 </div>
