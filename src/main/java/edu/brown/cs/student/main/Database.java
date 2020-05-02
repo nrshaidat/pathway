@@ -611,16 +611,12 @@ public class Database implements DatabaseInterface {
         prep.close();
         return concentrationMap;
       } else {
-        System.out.println("entering");
         prep = conn.prepareStatement(
                 "SELECT * FROM cornellconcentrations");
         rs = prep.executeQuery();
-
         while (rs.next()) {
           concentrationMap.put(rs.getString("concentration_name"), rs.getString("concentration_id"));
         }
-
-
         rs.close();
         prep.close();
         return concentrationMap;

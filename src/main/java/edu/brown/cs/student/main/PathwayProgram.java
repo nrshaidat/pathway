@@ -71,12 +71,6 @@ public class PathwayProgram {
     concentrationsList = new ArrayList<>(this.concentrationMap.keySet());
 
 
-    System.out.println("====!=!!!!!=!!!!!!!!!!=!=!=====");
-    System.out.println(cache.getConcentrationsMap(true));
-    System.out.println("====!=!!!!!=!!!!!!!!!!=!=!======");
-
-
-
     courseList = cache.getAllCourseIDs(cornell);
     if (!cornell) {
       this.setConcentrationName("Computer Science B.A.");
@@ -296,6 +290,7 @@ public class PathwayProgram {
    * @return a Map of key and value String pairs.
    */
   public Map<String, String> getConcentrationMap() throws SQLException {
+    System.out.println(cornell);
     concentrationMap = cache.getConcentrationsMap(cornell);
     return concentrationMap;
   }
@@ -432,10 +427,7 @@ public class PathwayProgram {
    *
    * @return a List of Strings
    */
-  public List<String> getConcentrationsList(boolean cornell) {
-    if (cornell) {
-      concentrationsList = new ArrayList<>(this.concentrationMap.keySet());
-    }
+  public List<String> getConcentrationsList() {
     return concentrationsList;
   }
 

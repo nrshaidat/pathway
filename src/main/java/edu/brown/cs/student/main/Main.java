@@ -165,22 +165,27 @@ public final class Main {
       List<String> gradeList = pathwayProgram.getGradeList();
       List<String> yearList = pathwayProgram.getYearList();
 
-      List<String> concentrationList;
+//      List<String> concentrationList;
 
-      if (cornell) {
-        System.out.println("===================================");
+      if (cornell == true) {
         System.out.println("cornell mode");
-        System.out.println("===================================");
-        concentrationList = pathwayProgram.getConcentrationsList(true);
-        System.out.println(concentrationList);
-      } else {
-        //not cornell, Brown pathway
-        concentrationList = pathwayProgram.getConcentrationsList(false);
       }
+
+
+//      if (cornell) {
+//        System.out.println("===================================");
+//        System.out.println("cornell mode");
+//        System.out.println("===================================");
+//        concentrationList = pathwayProgram.getConcentrationsList(true);
+//        System.out.println(concentrationList);
+//      } else {
+//        //not cornell, Brown pathway
+//        concentrationList = pathwayProgram.getConcentrationsList(false);
+//      }
 
       Map<String, Object> variables = ImmutableMap
               .of("uniNameShort", uniNameShort, "concentrationList",
-                      concentrationList, "gradeList", gradeList, "yearList", yearList,
+                      pathwayProgram.getConcentrationsList(), "gradeList", gradeList, "yearList", yearList,
                       "courseList", pathwayProgram.getCourseList(cornell));
       return new ModelAndView(variables, "generate.ftl");
     }

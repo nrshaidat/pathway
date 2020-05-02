@@ -303,7 +303,7 @@ public class PathwayProgramTest {
   public void getConcentrationsList() throws Exception {
     setUp();
     assertEquals(new ArrayList<>(cache.getConcentrationsMap(false).keySet()),
-        pp.getConcentrationsList(false));
+        pp.getConcentrationsList());
     tearDown();
   }
 
