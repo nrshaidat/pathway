@@ -38,15 +38,17 @@
 
     <br>
     <br>
+    <br>
     <h1>Frequently Asked Questions</h1>
 
     <div class="no-fouc"></div>
 
      <br>
 
-     <p style="margin-left:20em;" align="left"> 1. How do we generate concentrations? </p>
+    <div style="margin: 0 auto;">
+     <p style="margin-left:25vw; font-size:1.3em;" align="left"> 1. How do we generate concentrations? </p>
 
-     <div class="content" style="margin-left:23em;" align="left">  We take into account each student's workload preferences,
+     <div class="content" style="margin-left:25vw;" align="left">  We take into account each student's workload preferences,
          whether they want their pathway to be aggressively completed (in the least number of semesters) or not,
          as well as the courses they have received credit for in the past to generate the most optimal concentration!
 
@@ -56,18 +58,22 @@
          different workload amounts.
      </div>
 
-     <p style="margin-left:20em;" align="left"> 2. Where do we get course information? </p>
+     <br>
+     <p style="margin-left:25vw; font-size:1.3em;" align="left"> 2. Where do we get course information? </p>
 
-     <div class="content" style="margin-left:23em;" align="left"> For Brown students we generate pathways by using data
+     <div class="content" style="margin-left:25vw;" align="left"> For Brown students we generate pathways by using data
          from <a href = "https://thecriticalreview.org/" class="link"> Critical Review </a> and
          <a href = "https://cab.brown.edu/" class="link"> Courses@Brown. </a> We currently support all
          undergraduate courses!
      </div>
 
-     <p style="margin-left:20em;" align="left"> 3. Can I edit my pathway? </p>
+     <br>
+     <p style="margin-left:25vw; font-size:1.3em;" align="left"> 3. Can I edit my pathway? </p>
 
-     <div class="content" style="margin-left:23em;" align="left"> Yes! If you click on a semester, you can edit your pathway by adding, removing,
+     <div class="content" style="margin-left:25vw;" align="left"> Yes! If you click on a semester, you can edit your pathway by adding, removing,
      or swapping a course. </div>
+
+    </div>
 
      <br>
      <br>
