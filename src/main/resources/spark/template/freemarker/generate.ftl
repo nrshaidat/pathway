@@ -11,6 +11,7 @@
           <a class="header item">Pathway</a>
         </form>
         <a class="active item">Generate</a>
+
         <form action="/faqs" method="post">
           <a href="/faqs" class="item">FAQ</a>
         </form>
@@ -50,7 +51,7 @@
   <br>
   <br>
 
-      <h1>Generate a Pathway</h1>
+   <h1>Generate a Pathway</h1>
 
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">

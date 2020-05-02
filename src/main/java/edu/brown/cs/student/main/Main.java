@@ -5,11 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 import com.google.common.collect.ImmutableMap;
 import edu.brown.cs.student.pathway.Node;
@@ -34,6 +30,7 @@ public final class Main {
   private static final int DEFAULT_PORT = 4567;
   private static PathwayProgram pathwayProgram;
   private String[] args;
+  private static final List<String> universityList = new ArrayList<>();
 
   /**
    * Main is called when execution begins.
@@ -43,6 +40,8 @@ public final class Main {
    */
   public static void main(String[] args) throws SQLException {
     new Main(args).run();
+    universityList.add("Brown University");
+    universityList.add("Cornell University");
   }
 
   private Main(String[] args) {
@@ -86,6 +85,7 @@ public final class Main {
     Spark.exception(Exception.class, new ExceptionPrinter());
     FreeMarkerEngine freeMarker = createEngine();
     // Setup Spark Routes
+    Spark.get("/home", new HomeHandler(), freeMarker);
     Spark.get("/login", new LoginHandler(), freeMarker);
     Spark.post("/generate", new GenerateHandler(), freeMarker);
     Spark.get("/faqs", new FaqHandler(), freeMarker);
@@ -93,6 +93,14 @@ public final class Main {
     Spark.post("/mypath", new PathLandingHandler(), freeMarker);
     Spark.get("/mypath/:id", new PathwayHandler(), freeMarker);
 
+  }
+
+  private static class HomeHandler implements TemplateViewRoute {
+    @Override
+    public ModelAndView handle(Request req, Response res) {
+      Map<String, Object> variables = ImmutableMap.of("universityList", universityList);
+      return new ModelAndView(variables, "home.ftl");
+    }
   }
 
   /**
