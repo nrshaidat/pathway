@@ -37,6 +37,7 @@ public final class Main {
 
   /**
    * Main is called when execution begins.
+   *
    * @param args An array of command line arguments
    * @throws SQLException If encountering a SQL Exception
    */
@@ -77,6 +78,7 @@ public final class Main {
 
   /**
    * Sets up the Spark server, with the 5 unique pages we have right now.
+   *
    * @param port Default port is 4567.
    */
   private void runSparkServer(int port) {
@@ -103,8 +105,7 @@ public final class Main {
   private static class LoginHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
-      Map<String, Object> variables =
-          ImmutableMap.of("title", "Pathway");
+      Map<String, Object> variables = ImmutableMap.of("title", "Pathway");
       return new ModelAndView(variables, "main.ftl");
     }
 
@@ -122,20 +123,13 @@ public final class Main {
   private static class GenerateHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
-      List<String> gradeList = new ArrayList<>();
-      gradeList.add("Freshman");
-      gradeList.add("Sophomore");
-      gradeList.add("Junior");
-      gradeList.add("Senior");
+      List<String> gradeList = pathwayProgram.getGradeList();
 
-      List<String> yearList = new ArrayList<>();
-      yearList.add("Fall");
-      yearList.add("Spring");
+      List<String> yearList = pathwayProgram.getYearList();
 
       Map<String, Object> variables = ImmutableMap
-          .of("concentrationList", pathwayProgram.getConcentrationsList(), "gradeList",
-                  gradeList, "yearList", yearList,
-              "courseList", pathwayProgram.getCourseList());
+          .of("concentrationList", pathwayProgram.getConcentrationsList(), "gradeList", gradeList,
+              "yearList", yearList, "courseList", pathwayProgram.getCourseList());
       return new ModelAndView(variables, "generate.ftl");
     }
 
@@ -154,102 +148,43 @@ public final class Main {
 
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
-      System.out.println("gets here");
       QueryParamsMap qm = req.queryMap();
-      String concentration;
-      String display;
-      List<Semester> pathway1;
-      List<Semester> pathway2;
-      List<Semester> pathway3;
-
-      String gradeLevel = qm.value("grade");
-      String semesterLevel = qm.value("year");
-
-      if (gradeLevel == null || semesterLevel  == null) {
-        if (pathwayProgram.getPath1() != null) {
-          //not remaking paths, just showing last pathways made
-          concentration = pathwayProgram.getConcentrationName();
-          if (concentration == null) {
-            concentration = "Computer Science B.A";
-          }
-          display = "Pathways generated for the concentration: " + concentration;
-          pathway1 = pathwayProgram.getPath1();
-          pathway2 = pathwayProgram.getPath2();
-          pathway3 = pathwayProgram.getPath3();
-        } else { //use default aka user signing in and should see premade pathways
-          concentration = "Computer Science B.A";
-          pathwayProgram.setConcentration("computerscienceba");
-          pathwayProgram.makePathways("computerscienceba", new HashSet<>(), 1, false);
-          display = "Pathways generated for the concentration: " + concentration;
-          pathway1 = pathwayProgram.getPath1();
-          pathway2 = pathwayProgram.getPath2();
-          pathway3 = pathwayProgram.getPath3();
+      String concentration; //gui name
+      String gradeLev = qm.value("grade");
+      String semesterLev = qm.value("year");
+      if (gradeLev == null || semesterLev == null) {
+        concentration = pathwayProgram.getConcentrationName();
+        if (pathwayProgram.getPath1() == null) {
+          //user defaults when signing in
+          pathwayProgram.makePathways(concentration, new HashSet<>(), 1, false);
         }
       } else { //new user or guest user
         concentration = qm.value("concentration");
         if (concentration == null) {
-          concentration = "Computer Science B.A";
+          concentration = pathwayProgram.getConcentrationName();
         }
-        String concentrationId = pathwayProgram.getConcentrationMap()
-            .get(qm.value("concentration"));
-        pathwayProgram.setConcentrationName(concentration);
-        pathwayProgram.setConcentration(concentrationId);
-
-        int semester;
-
-        if (gradeLevel.equals("Freshman"))  {
-          semester = 1;
-        } else if (gradeLevel.equals("Sophomore")) {
-          semester = 3;
-        } else if (gradeLevel.equals("Junior")) {
-          semester  = 5;
-        } else {
-          semester = magicNum7;
-        }
-
-        if (semesterLevel.equals("Spring")) {
-          semester += 1;
-        }
-
+        int semester = PathwayProgram.parseGradeLevel(gradeLev, semesterLev);
         boolean aggressive = false;
         if (qm.value("aggressive") != null) {
           aggressive = true;
         }
         String coursestaken = qm.value("results");
-        String[] cList = coursestaken.split(",");
-        Set<Node> taken = new HashSet<>();
-        for (int i = 0; i < cList.length; i++) {
-          for (Node c: pathwayProgram.getCourseSet()) {
-            if (c.getId().equals(cList[i])) {
-              taken.add(c);
-            }
-          }
-        }
-
-        pathwayProgram.makePathways(concentrationId, taken, semester, aggressive);
-        display = "Pathways generated for the concentration: " + concentration;
-        pathway1 = pathwayProgram.getPath1();
-        pathway2 = pathwayProgram.getPath2();
-        pathway3 = pathwayProgram.getPath3();
+        Set<Node> taken = pathwayProgram.parseTaken(coursestaken);
+        pathwayProgram.makePathways(concentration, taken, semester, aggressive);
       }
-
-      List<Object> titles = new ArrayList<>();
-      titles.add("Pathway");
-
+      String display = "Pathways generated for the concentration: " + concentration;
+      List<Semester> pathway1 = pathwayProgram.getPath1();
+      List<Semester> pathway2 = pathwayProgram.getPath2();
+      List<Semester> pathway3 = pathwayProgram.getPath3();
       List<String> uniques1 = pathwayProgram.getPath1Uniques();
       List<String> uniques2 = pathwayProgram.getPath2Uniques();
       List<String> uniques3 = pathwayProgram.getPath3Uniques();
 
-      Map<String, Object> variables = ImmutableMap.<String, Object>builder()
-          .put("header", display)
-          .put("results1", pathway1)
-          .put("results2", pathway2)
-          .put("results3", pathway3)
-          .put("stats", pathwayProgram)
-          .put("uniques1", uniques1)
-          .put("uniques2", uniques2)
-          .put("uniques3", uniques3)
-          .build();
+      Map<String, Object> variables =
+          ImmutableMap.<String, Object>builder().put("header", display).put("results1", pathway1)
+              .put("results2", pathway2).put("results3", pathway3).put("stats", pathwayProgram)
+              .put("uniques1", uniques1).put("uniques2", uniques2).put("uniques3", uniques3)
+              .build();
       return new ModelAndView(variables, "pathway.ftl");
     }
   }
@@ -280,9 +215,9 @@ public final class Main {
       }
       List<String> pathnumlst = new ArrayList<>();
       pathnumlst.add(pathNum);
-      Map<String, Object> variables =
-          ImmutableMap.of("id", pathnumlst, "results", path, "courseList",
-              pathwayProgram.getCourseList(), "stats", pathwayProgram);
+      Map<String, Object> variables = ImmutableMap
+          .of("id", pathnumlst, "results", path, "courseList", pathwayProgram.getCourseList(),
+              "stats", pathwayProgram);
       return new ModelAndView(variables, "mypath.ftl");
 
     }
@@ -290,7 +225,7 @@ public final class Main {
 
   /**
    * SignUp Handler handles the sign up page, where the user hasn't used the pathway program before.
-   * After the user enters their name, username and password, they are directed to the generate page,
+   * After the user enters their name, username and password, they are directed to the generate page
    * similar to a user hwo signed in as a guest. Note that since we don't implement any database for
    * the user information, this is currently a dummy sign in, which means that we don't actually use
    * the information the user enters for anything.
