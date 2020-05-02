@@ -71,17 +71,14 @@
         <#if node=="1">
             <div> Number of Semesters: ${stats.numsemesters1}</div>
             <div> Number of Courses: ${stats.totalnumcourses1}</div>
-            <div> Average Semester Workload: ${stats.avgavghrs1sem} hrs/wk</div>
             <div> Average Course Workload: ${stats.avgavghrs1path} hrs/wk</div>
         <#elseif node=="2">
             <div> Number of Semesters: ${stats.numsemesters2}</div>
             <div> Number of Courses: ${stats.totalnumcourses2}</div>
-            <div> Average Semester Workload: ${stats.avgavghrs2sem} hrs/wk</div>
             <div> Average Course Workload: ${stats.avgavghrs2path} hrs/wk</div>
         <#elseif node=="3">
             <div> Number of Semesters: ${stats.numsemesters3}</div>
             <div> Number of Courses: ${stats.totalnumcourses3}</div>
-            <div> Average Semester Workload: ${stats.avgavghrs3sem} hrs/wk</div>
             <div> Average Course Workload: ${stats.avgavghrs3path} hrs/wk</div>
         </#if>
     </#list>
