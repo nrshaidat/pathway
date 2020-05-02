@@ -34,6 +34,7 @@ public final class Main {
   private static String uniName;
   private static String uniNameShort;
   private static boolean firstLogin = true;
+  private static boolean cornell = false;
 
   /**
    * Main is called when execution begins.
@@ -127,6 +128,10 @@ public final class Main {
         uniName = qm.value("university");
         uniNameShort = uniName.split(" ")[0];
         firstLogin = false;
+
+        if (uniNameShort.equals("Cornell")) {
+          cornell = true;
+        }
       }
 
       Map<String, Object> variables = ImmutableMap.of("uniName", uniName,
