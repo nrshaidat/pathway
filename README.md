@@ -102,16 +102,19 @@ None.
         -Transitioned styling to semantic ui to improve user experience
        
 	Ifechi:
-        -Developing and optimizing fundamental makePathway algorithm
+        -Developing and optimizing the fundamental makePathway algorithm
         -Layering complexity onto the algorithm: weighting courses based on different Bayesian stastical 
          measures, fast weighted shuffle using binary search, and tracking lag for pacing of pathways
         -Pathway package
-        -JUnit testing for makePathway algorithm (by-hand and with the database)
+        -JUnit testing for makePathway algorithm (by-hand and with the database, covering all scenarios)
         -Manually double checking, fixing inaccurate prereqs, and entering missing prereqs 
          for all courses in CHEM, PHYS, HIAA.
-        -Implementing customization functionality on the front end (add, move, swap)
-        -Styling front end (pathway boxes, grid and responsive, arrows, sign-in page)
-        -Solving deep copy of course set to make multiple unique and valid pathways
+        -Solving deep copy of the course set to make multiple unique and valid pathways
+        -mypath.ftl & mypath.css
+        -Implementing and styling customization functionality on the front end (add, move, swap),
+         mapping out and handling all edge cases 
+        -Implementing and styling hover to show course details
+        -Styling semester boxes, arrows, navigation bar, and pathway statistics (everything responsive)
         
     Nick:
         -CAB/self service scraping
