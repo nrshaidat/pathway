@@ -594,16 +594,36 @@ public class Database implements DatabaseInterface {
    * @throws SQLException the sql exception
    */
   @Override
-  public Map<String, String> getConcentrationsMap() throws SQLException {
+  public Map<String, String> getConcentrationsMap(boolean cornell) throws SQLException {
+
     PreparedStatement prep = null;
     ResultSet rs = null;
     Map<String, String> concentrationMap = new HashMap<>();
     try {
-      prep = conn.prepareStatement(
-              "SELECT * " + " FROM concentrations " + " ORDER BY concentration_name ASC ");
-      rs = prep.executeQuery();
-      while (rs.next()) {
-        concentrationMap.put(rs.getString("concentration_name"), rs.getString("concentration_id"));
+      if (!cornell) {
+        prep = conn.prepareStatement(
+                "SELECT * FROM concentrations ORDER BY concentration_name ASC ");
+        rs = prep.executeQuery();
+        while (rs.next()) {
+          concentrationMap.put(rs.getString("concentration_name"), rs.getString("concentration_id"));
+        }
+        rs.close();
+        prep.close();
+        return concentrationMap;
+      } else {
+        System.out.println("entering");
+        prep = conn.prepareStatement(
+                "SELECT * FROM cornellconcentrations");
+        rs = prep.executeQuery();
+
+        while (rs.next()) {
+          concentrationMap.put(rs.getString("concentration_name"), rs.getString("concentration_id"));
+        }
+
+
+        rs.close();
+        prep.close();
+        return concentrationMap;
       }
     } catch (SQLException e) {
       return null;
@@ -615,8 +635,6 @@ public class Database implements DatabaseInterface {
         prep.close();
       }
     }
-
-    return concentrationMap;
 
   }
 

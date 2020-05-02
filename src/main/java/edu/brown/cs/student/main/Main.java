@@ -165,13 +165,17 @@ public final class Main {
       List<String> gradeList = pathwayProgram.getGradeList();
       List<String> yearList = pathwayProgram.getYearList();
 
-      List<String> concentrationList = new ArrayList<>();
+      List<String> concentrationList;
 
       if (cornell) {
-        concentrationList.add("Economics B.A.");
+        System.out.println("===================================");
+        System.out.println("cornell mode");
+        System.out.println("===================================");
+        concentrationList = pathwayProgram.getConcentrationsList(true);
+        System.out.println(concentrationList);
       } else {
         //not cornell, Brown pathway
-        concentrationList = pathwayProgram.getConcentrationsList();
+        concentrationList = pathwayProgram.getConcentrationsList(false);
       }
 
       Map<String, Object> variables = ImmutableMap

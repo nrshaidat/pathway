@@ -207,7 +207,7 @@ public class PathwayProgramTest {
   public void getConcentrationMap() throws Exception {
     setUp();
     Map<String, String> mapy = pp.getConcentrationMap();
-    Map<String, String> mapycache = cache.getConcentrationsMap();
+    Map<String, String> mapycache = cache.getConcentrationsMap(false);
     assertEquals(mapycache, mapy);
     tearDown();
   }
@@ -302,8 +302,8 @@ public class PathwayProgramTest {
   //@Test
   public void getConcentrationsList() throws Exception {
     setUp();
-    assertEquals(new ArrayList<>(cache.getConcentrationsMap().keySet()),
-        pp.getConcentrationsList());
+    assertEquals(new ArrayList<>(cache.getConcentrationsMap(false).keySet()),
+        pp.getConcentrationsList(false));
     tearDown();
   }
 

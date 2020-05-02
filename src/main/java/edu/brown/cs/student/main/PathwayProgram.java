@@ -41,17 +41,18 @@ public class PathwayProgram {
   private Set<Node> courseSet;
   private String concentration;
   private String concentrationName;
-  private static List<String> yearList = new ArrayList<String>() {{
+  private static List<String> yearList = new ArrayList<>() {{
     add("Fall");
     add("Spring");
   }};
-  private static List<String> gradeList = new ArrayList<String>() {{
+  private static List<String> gradeList = new ArrayList<>() {{
     add("Freshman");
     add("Sophomore");
     add("Junior");
     add("Senior");
   }};
   private List<String> courseList;
+  private boolean cornell;
 
   /**
    * The PathwayProgram constructor that sets all of the necessary variables. It
@@ -61,14 +62,28 @@ public class PathwayProgram {
    *
    * @throws SQLException for problems with querying db.
    */
-  public PathwayProgram(boolean cornell) throws SQLException {
+  public PathwayProgram(boolean cornellUniv) throws SQLException {
+    cornell = cornellUniv;
     String file = "data/coursesDB.db";
     Database realDB = new Database(file); // real database that handles sql queries
     cache = new DatabaseCache(realDB, cornell);
-    concentrationMap = cache.getConcentrationsMap();
+    concentrationMap = cache.getConcentrationsMap(cornell);
     concentrationsList = new ArrayList<>(this.concentrationMap.keySet());
+
+
+    System.out.println("====!=!!!!!=!!!!!!!!!!=!=!=====");
+    System.out.println(cache.getConcentrationsMap(true));
+    System.out.println("====!=!!!!!=!!!!!!!!!!=!=!======");
+
+
+
     courseList = cache.getAllCourseIDs(cornell);
-    this.setConcentrationName("Computer Science B.A.");
+    if (!cornell) {
+      this.setConcentrationName("Computer Science B.A.");
+    } else {
+      this.setConcentrationName("Economics B.A.");
+    }
+
     totalnumcourses1 = 0;
     totalnumcourses2 = 0;
     totalnumcourses3 = 0;
@@ -151,7 +166,7 @@ public class PathwayProgram {
     return courseList;
   }
 
-  /**
+  /**i
    * Gets avgavghrs 1 path.
    *
    * @return the avgavghrs 1 path
@@ -280,7 +295,8 @@ public class PathwayProgram {
    *
    * @return a Map of key and value String pairs.
    */
-  public Map<String, String> getConcentrationMap() {
+  public Map<String, String> getConcentrationMap() throws SQLException {
+    concentrationMap = cache.getConcentrationsMap(cornell);
     return concentrationMap;
   }
 
@@ -416,7 +432,10 @@ public class PathwayProgram {
    *
    * @return a List of Strings
    */
-  public List<String> getConcentrationsList() {
+  public List<String> getConcentrationsList(boolean cornell) {
+    if (cornell) {
+      concentrationsList = new ArrayList<>(this.concentrationMap.keySet());
+    }
     return concentrationsList;
   }
 

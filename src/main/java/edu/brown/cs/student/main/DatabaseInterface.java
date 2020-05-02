@@ -92,5 +92,5 @@ public interface DatabaseInterface {
    * @return a list of concentration names
    * @throws SQLException the sql exception
    */
-  Map<String, String> getConcentrationsMap() throws SQLException;
+  Map<String, String> getConcentrationsMap(boolean cornell) throws SQLException;
 }

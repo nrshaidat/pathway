@@ -507,7 +507,7 @@ public class DatabaseTest {
   @Test
   public void validgetConcentrationsMap() throws SQLException {
     setUp();
-    Map<String, String> mapy = realDB.getConcentrationsMap();
+    Map<String, String> mapy = realDB.getConcentrationsMap(false);
     assertEquals(9,mapy.size());
     //gui names is key
     //table names is value

@@ -197,8 +197,8 @@ public class DatabaseCache implements DatabaseInterface {
    * @throws SQLException the sql exception
    */
   @Override
-  public Map<String, String> getConcentrationsMap() throws SQLException {
-    return realDB.getConcentrationsMap();
+  public Map<String, String> getConcentrationsMap(boolean cornell) throws SQLException {
+    return realDB.getConcentrationsMap(cornell);
   }
 
   /**
