@@ -68,7 +68,7 @@
     <#--    Using an ftl loop, we use the universityList passed into
         the ImmutableMap to display a Dropdown of universities offered-->
     <div class="ui container">
-        <select name="year" id="university" key="university" class="ui selection dropdown">
+        <select name="university" id="university" key="university" class="ui selection dropdown">
             <#list universityList as item>
                 <option value="${item}">${item}</option>
             </#list>

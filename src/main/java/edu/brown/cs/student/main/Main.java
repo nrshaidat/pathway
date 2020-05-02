@@ -31,6 +31,8 @@ public final class Main {
   private static PathwayProgram pathwayProgram;
   private String[] args;
   private static final List<String> universityList = new ArrayList<>();
+  private static String uniName;
+  private static String uniNameShort;
 
   /**
    * Main is called when execution begins.
@@ -112,7 +114,15 @@ public final class Main {
   private static class LoginHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
-      Map<String, Object> variables = ImmutableMap.of("title", "Pathway");
+
+      QueryParamsMap qm = req.queryMap();
+      System.out.println(qm.value("university"));
+
+      uniName = qm.value("university");
+      uniNameShort = uniName.split(" ")[0];
+
+      Map<String, Object> variables = ImmutableMap.of("uniName", uniName,
+              "uniNameShort", uniNameShort);
       return new ModelAndView(variables, "main.ftl");
     }
 
@@ -133,7 +143,7 @@ public final class Main {
       List<String> gradeList = pathwayProgram.getGradeList();
       List<String> yearList = pathwayProgram.getYearList();
       Map<String, Object> variables = ImmutableMap
-          .of("concentrationList", pathwayProgram.getConcentrationsList(), "gradeList", gradeList,
+          .of("uniNameShort", uniNameShort, "concentrationList", pathwayProgram.getConcentrationsList(), "gradeList", gradeList,
               "yearList", yearList, "courseList", pathwayProgram.getCourseList());
       return new ModelAndView(variables, "generate.ftl");
     }
@@ -231,7 +241,7 @@ public final class Main {
   private static class SignUpHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
-      Map<String, Object> variables = ImmutableMap.of("title", "Pathway Sign Up", "results", "");
+      Map<String, Object> variables = ImmutableMap.of("title", "Pathway Sign Up", "uniName", uniName);
       return new ModelAndView(variables, "signup.ftl");
     }
   }
