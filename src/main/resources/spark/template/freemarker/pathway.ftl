@@ -58,12 +58,13 @@
 
 <a href="mypath/1" class="link" name="pathway" id="pathway" value="one">
     <div id="container1">
+        <#--Displays the workload and unique courses for pathway 1-->
         <header> Pathway 1</header>
         <p> Low Workload </p>
         <p> Unique classes: </p>
-            <#list uniques1 as u>
-                <p> ${u} </p>
-            </#list>
+        <#list uniques1 as u>
+            <p> ${u} </p>
+        </#list>
 
     </div>
 </a>
@@ -71,11 +72,10 @@
 <a href="mypath/2" class="link">
     <div id="container2">
 
-        <#--        Displays the statistics for Pathway 2-->
+        <#--Displays the workload and unique courses for pathway 2-->
         <header> Pathway 2</header>
         <p> Medium Workload </p>
         <p> Unique classes: </p>
-
         <#list uniques2 as u>
             <p> ${u} </p>
         </#list>
@@ -86,12 +86,11 @@
 <a href="mypath/3" class="link">
     <div id="container3">
 
-        <#--        Displays the statistics for Pathway 3-->
+        <#--Displays the workload and unique courses for pathway 3-->
         <header> Pathway 3</header>
 
         <p> High Workload </p>
         <p> Unique classes: </p>
-
         <#list uniques3 as u>
             <p> ${u} </p>
         </#list>

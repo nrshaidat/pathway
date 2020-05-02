@@ -517,12 +517,12 @@ public class PathwayProgram {
     }
   }
   public List<String> getPath1Uniques() {
-    return path1Uniques;
+    return path1Uniques.size() > 3 ? path1Uniques.subList(0, 3) : path1Uniques;
   }
   public List<String> getPath2Uniques() {
-    return path2Uniques;
+    return path2Uniques.size() > 3 ? path2Uniques.subList(0, 3) : path2Uniques;
   }
   public List<String> getPath3Uniques() {
-    return path3Uniques;
+    return path3Uniques.size() > 3 ? path3Uniques.subList(0, 3) : path3Uniques;
   }
 }
