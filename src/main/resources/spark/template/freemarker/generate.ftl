@@ -7,13 +7,15 @@
     <div class="ui container grid">
       <!--Start: Desktop Nav-->
       <div class="computer only row">
-        <a class="header item">Pathway</a>
+        <form action="/login" method="post">
+          <a class="header item">Pathway</a>
+        </form>
         <a class="active item">Generate</a>
         <form action="/faqs" method="post">
           <a href="/faqs" class="item">FAQ</a>
         </form>
         <form action="/login" method="post">
-          <a href="/login" class="item">Login</a>
+          <a href="/login" class="item">Log in</a>
         </form>
       </div>
       <!--End: Desktop Nav-->

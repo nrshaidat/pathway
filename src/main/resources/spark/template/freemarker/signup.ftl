@@ -16,8 +16,10 @@
     <div class="ui container grid">
         <!--Start: Desktop Nav-->
         <div class="computer only row">
-            <a class="header item">Pathway</a>
-            <a class="active item">Home</a>
+            <form action="/login" method="post">
+                <a class="header item">Pathway</a>
+            </form>
+            <a class="active item">Sign Up</a>
             <form action="/faqs" method="post">
                 <a href="/faqs" class="item">FAQ</a>
             </form>
