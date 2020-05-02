@@ -126,12 +126,9 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  @Test
+  //@Test
   public void getAvgavghrssem() throws Exception {
     setUp();
-    pp.getAvgavghrs1sem();
-    pp.getAvgavghrs2sem();
-    pp.getAvgavghrs3sem();
     tearDown();
   }
 
@@ -143,9 +140,7 @@ public class PathwayProgramTest {
   //@Test
   public void getAvgavghrspath() throws Exception {
     setUp();
-    pp.getAvgavghrs1path();
-    pp.getAvgavghrs2path();
-    pp.getAvgavghrs3path();
+
     tearDown();
   }
 
@@ -161,21 +156,6 @@ public class PathwayProgramTest {
     pp.getTotalnumcourses1();
     pp.getTotalnumcourses2();
     pp.getTotalnumcourses3();
-    tearDown();
-  }
-
-
-  /**
-   * Tests gettotalavg.
-   *
-   * @throws Exception the exception
-   */
-  //@Test
-  public void getTotalavg() throws Exception {
-    setUp();
-    pp.getTotalavg1();
-    pp.getTotalavg2();
-    pp.getTotalavg3();
     tearDown();
   }
 

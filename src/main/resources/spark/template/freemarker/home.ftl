@@ -64,52 +64,32 @@
 <p> Choose Your University: </p>
 
 
-<form action="/login" method="post">
-<#--    Using an ftl loop, we use the universityList passed into
-    the ImmutableMap to display a Dropdown of universities offered-->
-<div class="ui container">
-    <select name="year" id="university" key="university" class = "ui selection dropdown">
-        <#list universityList as item>
-            <option value="${item}">${item}</option>
-        </#list>
-    </select>
-</div>
+<form action="/login" method="get">
+    <#--    Using an ftl loop, we use the universityList passed into
+        the ImmutableMap to display a Dropdown of universities offered-->
+    <div class="ui container">
+        <select name="year" id="university" key="university" class="ui selection dropdown">
+            <#list universityList as item>
+                <option value="${item}">${item}</option>
+            </#list>
+        </select>
+    </div>
 
-<script>
-    // Activates the dropdown using jQuery
-    $('#university').dropdown();
-</script>
+    <script>
+        // Activates the dropdown using jQuery
+        $('#university').dropdown();
+    </script>
 
-<input class = "ui button" id = "btnSubmit" type="submit" value="Submit"/>
+    <input class="ui button" id="btnSubmit" type="submit" value="Submit"/>
+</form>
 <script>
     function submitForm() {
 
         //On clicking the submit button, we post the form data to the new page.
-        $("#btnSubmit").button().click(function(){
-            $.ajax({ type: 'POST', url: '/api/someRestEndpoint', data: formData, success: onFormSubmitted });
+        $("#btnSubmit").button().click(function () {
+            $.ajax({type: 'POST', url: '/api/someRestEndpoint', data: formData, success: onFormSubmitted});
         });
 
-    }
-</script>
-</form>
-
-
-<br>
-<br>
-<br>
-<br>
-
-<p><small> For any questions or ideas about how Pathway can be improved, please
-        <a href="mailto: melissa_cui@brown.edu" class="link"> send us an email! </a>
-    </small>
-</p>
-
-</body>
-
-<script>
-    <#--    Fixing the flash of unstyled content problem with jquery -->
-    function js_Load() {
-        document.body.style.visibility = 'visible';
     }
 </script>
 <script>
@@ -134,6 +114,27 @@
             $('.ui.vertical.menu').toggle("250", "linear")
         });
     });
+</script>
+
+
+<br>
+<br>
+<br>
+<br>
+
+<p><small> For any questions or ideas about how Pathway can be improved, please
+        <a href="mailto: melissa_cui@brown.edu" class="link"> send us an email! </a>
+    </small>
+</p>
+
+</body>
+
+<script>
+    <#--    Fixing the flash of unstyled content problem with jquery -->
+
+    function js_Load() {
+        document.body.style.visibility = 'visible';
+    }
 </script>
 <noscript>
     <style> body {
