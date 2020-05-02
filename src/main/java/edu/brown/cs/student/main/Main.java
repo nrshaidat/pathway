@@ -58,7 +58,6 @@ public final class Main {
     parser.accepts("gui");
     parser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(DEFAULT_PORT);
     OptionSet options = parser.parse(args);
-
     runSparkServer((int) options.valueOf("port"));
     pathwayProgram = new PathwayProgram();
 
@@ -124,9 +123,7 @@ public final class Main {
     @Override
     public ModelAndView handle(Request req, Response res) {
       List<String> gradeList = pathwayProgram.getGradeList();
-
       List<String> yearList = pathwayProgram.getYearList();
-
       Map<String, Object> variables = ImmutableMap
           .of("concentrationList", pathwayProgram.getConcentrationsList(), "gradeList", gradeList,
               "yearList", yearList, "courseList", pathwayProgram.getCourseList());
@@ -143,9 +140,6 @@ public final class Main {
    * by adding, swapping, or removing a course.
    */
   private static class PathLandingHandler implements TemplateViewRoute {
-
-    private final int magicNum7 = 7;
-
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
       QueryParamsMap qm = req.queryMap();
@@ -160,9 +154,6 @@ public final class Main {
         }
       } else { //new user or guest user
         concentration = qm.value("concentration");
-        if (concentration == null) {
-          concentration = pathwayProgram.getConcentrationName();
-        }
         int semester = PathwayProgram.parseGradeLevel(gradeLev, semesterLev);
         boolean aggressive = false;
         if (qm.value("aggressive") != null) {
@@ -179,7 +170,6 @@ public final class Main {
       List<String> uniques1 = pathwayProgram.getPath1Uniques();
       List<String> uniques2 = pathwayProgram.getPath2Uniques();
       List<String> uniques3 = pathwayProgram.getPath3Uniques();
-
       Map<String, Object> variables =
           ImmutableMap.<String, Object>builder().put("header", display).put("results1", pathway1)
               .put("results2", pathway2).put("results3", pathway3).put("stats", pathwayProgram)
