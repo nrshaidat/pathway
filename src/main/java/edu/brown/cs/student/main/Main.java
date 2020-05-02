@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import com.google.common.collect.ImmutableMap;
 import edu.brown.cs.student.pathway.Node;
 import edu.brown.cs.student.pathway.Semester;
@@ -156,7 +159,7 @@ public final class Main {
       String semesterLev = qm.value("year");
       if (gradeLev == null || semesterLev == null) {
         concentration = pathwayProgram.getConcentrationName();
-        if (pathwayProgram.getPath1() == null) {
+        if (!pathwayProgram.isSet()) {
           //user defaults when signing in
           pathwayProgram.makePathways(concentration, new HashSet<>(), 1, false);
         }

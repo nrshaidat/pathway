@@ -75,6 +75,7 @@ public class PathwayProgramTest {
     List<Node> tak22 = new ArrayList<>();
     tak22.add(cache.getCourseData("MATH 0100"));
     tak22.add(cache.getCourseData("CSCI 0180"));
+    tak22.add(cache.getCourseData("CSCI 0220"));
     Semester spring22 = new Semester(2, tak22);
     p2.add(spring22);
     //path 3
@@ -82,16 +83,19 @@ public class PathwayProgramTest {
     List<Semester> p3 = new ArrayList<>();
     //fall 1
     List<Node> tak13 = new ArrayList<>();
-    tak13.add(cache.getCourseData("MATH 0090"));
     tak13.add(cache.getCourseData("CSCI 0190"));
     Semester fall13 = new Semester(1, tak13);
     p3.add(fall13);
     //spring 2
     List<Node> tak23 = new ArrayList<>();
     tak23.add(cache.getCourseData("MATH 0100"));
-    tak23.add(cache.getCourseData("CSCI 0180"));
     Semester spring23 = new Semester(2, tak23);
     p3.add(spring23);
+    //fall 2
+    List<Node> tak32 = new ArrayList<>();
+    tak32.add(cache.getCourseData("CSCI 1450"));
+    Semester fall32 = new Semester(3, tak32);
+    p3.add(fall32);
     pp.setPath1(p1);
     pp.setPath2(p2);
     pp.setPath3(p3);
@@ -130,33 +134,10 @@ public class PathwayProgramTest {
   public void getAvgavghrspath() throws Exception {
     setUpStats();
     assertEquals(7, pp.getAvgavghrs1path());
+    assertEquals(7, pp.getAvgavghrs2path());
+    assertEquals(7, pp.getAvgavghrs3path());
     tearDown();
   }
-
-  /**
-   * Tests getavgmaxhrspath.
-   *
-   * @throws Exception the exception
-   */
-  @Test
-  public void getAvgmaxhrspath() throws Exception {
-    setUpStats();
-    assertEquals(12, pp.getAvgmaxhrs1path());
-    tearDown();
-  }
-
-  /**
-   * Tests getavgratingpath.
-   *
-   * @throws Exception the exception
-   */
-  @Test
-  public void getAvgratingpath() throws Exception {
-    setUpStats();
-    assertTrue(3.9775 == pp.getAvgrating1path());
-    tearDown();
-  }
-
 
   /**
    * Tests gettotalnumcourses.
@@ -167,6 +148,8 @@ public class PathwayProgramTest {
   public void getTotalnumcourses() throws Exception {
     setUpStats();
     assertEquals(4,pp.getTotalnumcourses1());
+    assertEquals(5, pp.getTotalnumcourses2());
+    assertEquals(3, pp.getTotalnumcourses3());
     tearDown();
   }
 
@@ -180,6 +163,8 @@ public class PathwayProgramTest {
   public void getNumsemesters() throws Exception {
     setUpStats();
     assertEquals(2, pp.getNumsemesters1());
+    assertEquals(2, pp.getNumsemesters2());
+    assertEquals(3, pp.getNumsemesters3());
     tearDown();
   }
 
@@ -189,14 +174,24 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getPath() throws Exception {
     setUp();
     //test default
+    assertNull(pp.getPath1());
+    assertNull(pp.getPath2());
+    assertNull(pp.getPath3());
+    assertNull(pp.getPath1Uniques());
+    assertNull(pp.getPath2Uniques());
+    assertNull(pp.getPath3Uniques());
     //test setting new
-    pp.getPath1();
-    pp.getPath2();
-    pp.getPath3();
+    pp.makePathways("Computer Science B.A.", new HashSet<>(), 1, false);
+    assertNotNull(pp.getPath1());
+    assertNotNull(pp.getPath2());
+    assertNotNull(pp.getPath3());
+    assertNotNull(pp.getPath1Uniques());
+    assertNotNull(pp.getPath2Uniques());
+    assertNotNull(pp.getPath3Uniques());
     tearDown();
   }
 
@@ -233,15 +228,14 @@ public class PathwayProgramTest {
   }
 
   /**
-   * Tests getConcentrationName.
+   * Tests getConcentrationName returns default concentration when concentration is not set.
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getConcentrationName() throws Exception {
     setUp();
-    //test default
-    //test new
+    assertEquals("Computer Science B.A.", pp.getConcentrationName());
     tearDown();
   }
 
@@ -267,43 +261,34 @@ public class PathwayProgramTest {
   public void invalidsetConcentrationName() throws Exception {
     setUp();
     pp.setConcentrationName("Cognitive Neuroscience B.T.");
-    assertNull(pp.getConcentrationName());
+    assertEquals("Computer Science B.A.",pp.getConcentrationName());
     tearDown();
   }
 
-
-  /**
-   * Tests makePathways.
-   *
-   * @throws Exception the exception
-   */
-  //@Test
-  public void makePathways() throws Exception {
-    setUp();
-    tearDown();
-  }
 
   /**
    * Tests isSet.
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void isSet() throws Exception {
     setUp();
-    //default
-    //new set
+    assertFalse(pp.isSet());
+    pp.makePathways("Computer Science B.A.", new HashSet<>(), 1, false);
+    assertTrue(pp.isSet());
     tearDown();
   }
 
   /**
-   * Tests getConcentration.
+   * Tests getConcentration on default value.
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getConcentration() throws Exception {
     setUp();
+    assertEquals("computerscienceba", pp.getConcentration());
     tearDown();
   }
 
@@ -315,40 +300,37 @@ public class PathwayProgramTest {
   //@Test
   public void getConcentrationsList() throws Exception {
     setUp();
-
+    assertEquals(cache.getConcentrationsMap().keySet(), pp.getConcentrationsList());
     tearDown();
   }
 
   /**
-   * Tests setPathStats1.
+   * Tests setPathStats for all pathways.
    *
    * @throws Exception the exception
    */
-  //@Test
-  public void setPathStats1() throws Exception {
+  @Test
+  public void setPathStats() throws Exception {
     setUp();
-    tearDown();
-  }
-
-  /**
-   * Tests setPathStats2.
-   *
-   * @throws Exception the exception
-   */
-  //@Test
-  public void setPathStats2() throws Exception {
-    setUp();
-    tearDown();
-  }
-
-  /**
-   * Tests setPathStats3.
-   *
-   * @throws Exception the exception
-   */
-  //@Test
-  public void setPathStats3() throws Exception {
-    setUp();
+    assertNull(pp.getTotalnumcourses1());
+    assertNull(pp.getTotalnumcourses2());
+    assertNull(pp.getTotalnumcourses3());
+    assertNull(pp.getNumsemesters1());
+    assertNull(pp.getNumsemesters2());
+    assertNull(pp.getNumsemesters3());
+    assertNull(pp.getAvgavghrs1path());
+    assertNull(pp.getAvgavghrs2path());
+    assertNull(pp.getAvgavghrs3path());
+    pp.makePathways("Computer Science B.A.", new HashSet<>(), 1, false);
+    assertNotNull(pp.getTotalnumcourses1());
+    assertNotNull(pp.getTotalnumcourses2());
+    assertNotNull(pp.getTotalnumcourses3());
+    assertNotNull(pp.getNumsemesters1());
+    assertNotNull(pp.getNumsemesters2());
+    assertNotNull(pp.getNumsemesters3());
+    assertNotNull(pp.getAvgavghrs1path());
+    assertNotNull(pp.getAvgavghrs2path());
+    assertNotNull(pp.getAvgavghrs3path());
     tearDown();
   }
 
@@ -357,9 +339,13 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void setPathUniques() throws Exception {
     setUp();
+    pp.setPathUniques();
+    assertEquals(0,pp.getPath1Uniques().size());
+    assertEquals(0, pp.getPath2Uniques().size());
+    assertEquals(0, pp.getPath3Uniques().size());
     tearDown();
   }
 
@@ -368,12 +354,27 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getPathUniques() throws Exception {
-    setUp();
-    pp.getPath1Uniques();
-    pp.getPath2Uniques();
-    pp.getPath3Uniques();
+    setUpStats();
+    pp.setPathUniques();
+    List<String> path1u = new ArrayList<>();
+    path1u.add("CSCI 0150");
+    path1u.add("CSCI 0160");
+    assertTrue(pp.getPath1Uniques().containsAll(path1u));
+    assertEquals(2, pp.getPath1Uniques().size());
+    List<String> path2u = new ArrayList<>();
+    path2u.add("CSCI 0170");
+    path2u.add("CSCI 0220");
+    path2u.add("CSCI 0180");
+    assertTrue(pp.getPath2Uniques().containsAll(path2u));
+    assertEquals(3, pp.getPath2Uniques().size());
+    List<String> path3u = new ArrayList<>();
+    path3u.add("CSCI 0190");
+    path3u.add("CSCI 1450");
+    assertTrue(pp.getPath3Uniques().containsAll(path3u));
+    assertEquals(2, pp.getPath3Uniques().size());
+
     tearDown();
   }
 }

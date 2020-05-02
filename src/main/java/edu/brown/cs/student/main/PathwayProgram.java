@@ -4,7 +4,6 @@ import edu.brown.cs.student.pathway.Node;
 import edu.brown.cs.student.pathway.Pathway;
 import edu.brown.cs.student.pathway.Semester;
 import com.google.common.collect.Sets;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,12 +32,6 @@ public class PathwayProgram {
   private double avgavghrs1path;
   private double avgavghrs2path;
   private double avgavghrs3path;
-  private double avgmaxhrs1path;
-  private double avgmaxhrs2path;
-  private double avgmaxhrs3path;
-  private double avgrating1path;
-  private double avgrating2path;
-  private double avgrating3path;
   private int numsemesters1;
   private int numsemesters2;
   private int numsemesters3;
@@ -62,8 +55,9 @@ public class PathwayProgram {
 
   /**
    * The PathwayProgram constructor that sets all of the necessary variables. It
-   * sets the dummy values for the number of semesters,
-   * and information about each semester like the average and maxmimum number of hours.
+   * sets the default values for user signing, sets information about each pathway like the
+   * average weekly hours of a course in the pathway, number of courses, and number of semesters
+   * in the pathway.
    *
    * @throws SQLException for problems with querying db.
    */
@@ -76,28 +70,61 @@ public class PathwayProgram {
     courseList = cache.getAllCourseIDs();
     this.setConcentrationName("Computer Science B.A.");
   }
+
+  /**
+   * Gets the year list to display in GUI.
+   *
+   * @return the year list aka Spring, Fall
+   */
   public static List<String> getYearList() {
     return yearList;
   }
+
+  /**
+   * Gets grade list for the GUI to display.
+   *
+   * @return the grade list aka Freshmen, Junior, etc
+   */
   public static List<String> getGradeList() {
     return gradeList;
   }
 
+  /**
+   * Sets path 1.
+   *
+   * @param path1 the path 1
+   */
   public void setPath1(List<Semester> path1) {
     this.path1 = path1;
     this.setPathStats1();
   }
 
+  /**
+   * Sets path 2.
+   *
+   * @param path2 the path 2
+   */
   public void setPath2(List<Semester> path2) {
     this.path2 = path2;
     this.setPathStats2();
   }
 
+  /**
+   * Sets path 3.
+   *
+   * @param path3 the path 3
+   */
   public void setPath3(List<Semester> path3) {
     this.path3 = path3;
     this.setPathStats3();
   }
 
+  /**
+   * Parse taken set.
+   *
+   * @param coursestaken the coursestaken
+   * @return the set
+   */
   public Set<Node> parseTaken(String coursestaken) {
     String[] cList = coursestaken.split(",");
     Set<Node> taken = new HashSet<>();
@@ -120,65 +147,86 @@ public class PathwayProgram {
     return courseList;
   }
 
-  // Getter and setter methods for Apache Spark
+  /**
+   * Gets avgavghrs 1 path.
+   *
+   * @return the avgavghrs 1 path
+   */
+// Getter and setter methods for Apache Spark
   public int getAvgavghrs1path() {
     return ((int) avgavghrs1path);
   }
 
+  /**
+   * Gets avgavghrs 2 path.
+   *
+   * @return the avgavghrs 2 path
+   */
   public int getAvgavghrs2path() {
     return ((int) avgavghrs2path);
   }
 
+  /**
+   * Gets avgavghrs 3 path.
+   *
+   * @return the avgavghrs 3 path
+   */
   public int getAvgavghrs3path() {
     return ((int) avgavghrs3path);
   }
 
-  public int getAvgmaxhrs1path() {
-    return ((int) avgmaxhrs1path);
-  }
-
-  public int getAvgmaxhrs2path() {
-    return ((int) avgmaxhrs2path);
-  }
-
-  public int getAvgmaxhrs3path() {
-    return ((int) avgmaxhrs3path);
-  }
-
-  public double getAvgrating1path() {
-    return avgrating1path;
-  }
-
-  public double getAvgrating2path() {
-    return avgrating2path;
-  }
-
-  public double getAvgrating3path() {
-    return avgrating3path;
-  }
-
+  /**
+   * Gets totalnumcourses 1.
+   *
+   * @return the totalnumcourses 1
+   */
   public int getTotalnumcourses1() {
     return totalnumcourses1;
   }
 
+  /**
+   * Gets totalnumcourses 2.
+   *
+   * @return the totalnumcourses 2
+   */
   public int getTotalnumcourses2() {
     return totalnumcourses2;
   }
 
+  /**
+   * Gets totalnumcourses 3.
+   *
+   * @return the totalnumcourses 3
+   */
   public int getTotalnumcourses3() {
     return totalnumcourses3;
   }
 
+  /**
+   * Gets numsemesters 1.
+   *
+   * @return the numsemesters 1
+   */
   public int getNumsemesters1() {
     numsemesters1 = this.path1.size();
     return numsemesters1;
   }
 
+  /**
+   * Gets numsemesters 2.
+   *
+   * @return the numsemesters 2
+   */
   public int getNumsemesters2() {
     numsemesters2 = this.path2.size();
     return numsemesters2;
   }
 
+  /**
+   * Gets numsemesters 3.
+   *
+   * @return the numsemesters 3
+   */
   public int getNumsemesters3() {
     numsemesters3 = this.path3.size();
     return numsemesters3;
@@ -250,9 +298,10 @@ public class PathwayProgram {
   }
 
   /**
-   * Getter method to set the concentration name.
+   * Setter method to set the concentration name.
    *
    * @param concentrationName A String representing the user-chosen concentration.
+   * @throws SQLException the sql exception
    */
   public void setConcentrationName(String concentrationName) throws SQLException {
     if (this.concentrationMap.containsKey(concentrationName)) {
@@ -303,6 +352,13 @@ public class PathwayProgram {
     setPathUniques();
   }
 
+  /**
+   * Parse grade level int.
+   *
+   * @param gradeL    the grade level from the gui aka Freshmen, Junior, etc
+   * @param semesterL the semester level from the gui aka Fall or Spring
+   * @return the int
+   */
   public static int parseGradeLevel(String gradeL, String semesterL) {
     int semester;
     if (gradeL.equals("Freshman")) {
@@ -321,12 +377,12 @@ public class PathwayProgram {
   }
 
   /**
-   * A method to return if the concentration has been set of not.
+   * A method to return if paths have neen made.
    *
-   * @return a boolean checking if concentration is null.
+   * @return a boolean checking if pathways have been made.
    */
   public boolean isSet() {
-    return concentration == null;
+    return this.getPath1() != null;
   }
 
   /**
@@ -349,120 +405,137 @@ public class PathwayProgram {
   }
 
   /**
-   * This method sets the statistics of Pathway1, the lowest workload pathway.
-   * It calcualtes the average rating, hours, and maximum hours by averaging the
-   * rating, average hours and maximum hours of each class in the semester. After
+   * This method sets the statistics of Pathway1, the average workload per course, the number of
+   * courses, and the number of semesters in the pathway.
+   * It calcualtes the average weekly hours of each class in the pathway. After
    * generating this information, these parameters can be used in the front-end to
    * display a semester summary.
    */
   public void setPathStats1() {
     totalnumcourses1 = 0;
     avgavghrs1path = 0.0;
-    avgmaxhrs1path = 0.0;
-    avgrating1path = 0.0;
     for (Semester sem : getPath1()) {
       sem.setStats();
       totalnumcourses1 += sem.getCourses().size();
       avgavghrs1path += sem.getAvghrs();
-      avgmaxhrs1path += sem.getMaxhrs();
-      avgrating1path += sem.getRating();
     }
     avgavghrs1path = Math.round(avgavghrs1path / totalnumcourses1);
-    avgmaxhrs1path = Math.round(avgmaxhrs1path / totalnumcourses1);
-    avgrating1path = avgrating1path / totalnumcourses1;
-
   }
 
   /**
-   * This method sets the statistics of Pathway2, the medium workload pathway.
-   * It calcualtes the average rating, hours, and maximum hours by averaging the
-   * rating, average hours and maximum hours of each class in the semester. After
+   * This method sets the statistics of Pathway2, the average workload per course, the number of
+   * courses, and the number of semesters in the pathway.
+   * It calcualtes the average weekly hours of each class in the pathway. After
    * generating this information, these parameters can be used in the front-end to
    * display a semester summary.
    */
   public void setPathStats2() {
     totalnumcourses2 = 0;
     avgavghrs2path = 0.0;
-    avgmaxhrs2path = 0.0;
-    avgrating2path = 0.0;
     for (Semester sem : getPath2()) {
       sem.setStats();
       totalnumcourses2 += sem.getCourses().size();
       avgavghrs2path += sem.getAvghrs();
-      avgmaxhrs2path += sem.getMaxhrs();
-      avgrating2path += sem.getRating();
     }
     avgavghrs2path = Math.round(avgavghrs2path / totalnumcourses2);
-    avgmaxhrs2path = Math.round(avgmaxhrs2path / totalnumcourses2);
-    avgrating2path = avgrating2path / totalnumcourses2;
   }
 
   /**
-   * This method sets the statistics of Pathway3, the most workload intensive pathway.
-   * It calcualtes the average rating, hours, and maximum hours by averaging the
-   * rating, average hours and maximum hours of each class in the semester. After
+   * This method sets the statistics of Pathway3, the average workload per course, the number of
+   * courses, and the number of semesters in the pathway.
+   * It calcualtes the average weekly hours of each class in the pathway. After
    * generating this information, these parameters can be used in the front-end to
    * display a semester summary.
    */
   public void setPathStats3() {
     totalnumcourses3 = 0;
     avgavghrs3path = 0.0;
-    avgmaxhrs3path = 0.0;
-    avgrating3path = 0.0;
     for (Semester sem : getPath3()) {
       sem.setStats();
       totalnumcourses3 += sem.getCourses().size();
       avgavghrs3path += sem.getAvghrs();
-      avgmaxhrs3path += sem.getMaxhrs();
-      avgrating3path += sem.getRating();
     }
     avgavghrs3path = Math.round(avgavghrs3path / totalnumcourses3);
-    avgmaxhrs3path = Math.round(avgmaxhrs3path / totalnumcourses3);
-    avgrating3path = avgrating3path / totalnumcourses3;
   }
 
+  /**
+   * Sets path unique courses.
+   */
   public void setPathUniques() {
-    Set<Node> path1Courses = new HashSet<>();
-    for (Semester s : path1) {
-      path1Courses.addAll(s.getCourses());
-    }
-    Set<Node> path2Courses = new HashSet<>();
-    for (Semester s : path2) {
-      path2Courses.addAll(s.getCourses());
-    }
-    Set<Node> path3Courses = new HashSet<>();
-    for (Semester s : path3) {
-      path3Courses.addAll(s.getCourses());
-    }
-    Set<Node> path1UniqueNodes =
-        Sets.difference(path1Courses, Sets.union(path2Courses, path3Courses));
-    Set<Node> path2UniqueNodes =
-        Sets.difference(path2Courses, Sets.union(path1Courses, path3Courses));
-    Set<Node> path3UniqueNodes =
-        Sets.difference(path3Courses, Sets.union(path1Courses, path2Courses));
-    path1Uniques = new ArrayList<>();
-    path2Uniques = new ArrayList<>();
-    path3Uniques = new ArrayList<>();
-    for (Node n : path1UniqueNodes) {
-      path1Uniques.add(n.getId());
-    }
-    for (Node n : path2UniqueNodes) {
-      path2Uniques.add(n.getId());
-    }
-    for (Node n : path3UniqueNodes) {
-      path3Uniques.add(n.getId());
+    if (this.isSet()) {
+      Set<Node> path1Courses = new HashSet<>();
+      for (Semester s : path1) {
+        path1Courses.addAll(s.getCourses());
+      }
+      Set<Node> path2Courses = new HashSet<>();
+      for (Semester s : path2) {
+        path2Courses.addAll(s.getCourses());
+      }
+      Set<Node> path3Courses = new HashSet<>();
+      for (Semester s : path3) {
+        path3Courses.addAll(s.getCourses());
+      }
+      Set<Node> path1UniqueNodes =
+          Sets.difference(path1Courses, Sets.union(path2Courses, path3Courses));
+      Set<Node> path2UniqueNodes =
+          Sets.difference(path2Courses, Sets.union(path1Courses, path3Courses));
+      Set<Node> path3UniqueNodes =
+          Sets.difference(path3Courses, Sets.union(path1Courses, path2Courses));
+      path1Uniques = new ArrayList<>();
+      path2Uniques = new ArrayList<>();
+      path3Uniques = new ArrayList<>();
+      for (Node n : path1UniqueNodes) {
+        path1Uniques.add(n.getId());
+      }
+      for (Node n : path2UniqueNodes) {
+        path2Uniques.add(n.getId());
+      }
+      for (Node n : path3UniqueNodes) {
+        path3Uniques.add(n.getId());
+      }
+    } else {
+      path1Uniques = new ArrayList<>();
+      path2Uniques = new ArrayList<>();
+      path3Uniques = new ArrayList<>();
     }
   }
 
+  /**
+   * Gets pathway path 1 unique courses.
+   *
+   * @return the path 1 unique courses as a list of course IDs
+   */
   public List<String> getPath1Uniques() {
-    return path1Uniques.size() > 3 ? path1Uniques.subList(0, 3) : path1Uniques;
+    if (path1Uniques != null) {
+      return path1Uniques.size() > 3 ? path1Uniques.subList(0, 3) : path1Uniques;
+    } else {
+      return null;
+    }
   }
 
+  /**
+   * Gets pathway path 2 unique courses.
+   *
+   * @return the path 2 unique courses as a list of course IDs
+   */
   public List<String> getPath2Uniques() {
-    return path2Uniques.size() > 3 ? path2Uniques.subList(0, 3) : path2Uniques;
+    if (path2Uniques != null) {
+      return path2Uniques.size() > 3 ? path2Uniques.subList(0, 3) : path2Uniques;
+    } else {
+      return null;
+    }
   }
 
+  /**
+   * Gets path 3 unique courses.
+   *
+   * @return the path 3 unique courses as a list of course IDs
+   */
   public List<String> getPath3Uniques() {
-    return path3Uniques.size() > 3 ? path3Uniques.subList(0, 3) : path3Uniques;
+    if (path3Uniques != null) {
+      return path3Uniques.size() > 3 ? path3Uniques.subList(0, 3) : path3Uniques;
+    } else {
+      return null;
+    }
   }
 }
