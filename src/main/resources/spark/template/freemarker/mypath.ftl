@@ -154,13 +154,20 @@
                 <br>
                 <h4>Swap Out A Course From This Semester</h4>
                 <div class="field">
-                    <label>Courses: </label>
-                    <select name="eq-courses" key="eq-courses" id="multi-select2"
-                            class="ui fluid search selection dropdown" multiple="">
-                        <#list courseList as item>
-                            <option value="${item}">${item}</option>
-                        </#list>
-                    </select>
+                    <form class="ui form">
+                        <div class="field">
+                            <label style="font-size: 1em">Swap Course: </label>
+                            <input id="course-to-swap" placeholder='e.g. BIOL 0200'/>
+                        </div>
+                            <label style="font-family: Lato; font-weight: bold">With Course: </label>
+                            <select name="eq-courses" key="eq-courses" id="multi-select2"
+                                    class="ui fluid search selection dropdown" multiple="">
+                                <#list courseList as item>
+                                    <option value="${item}">${item}</option>
+                                </#list>
+                            </select>
+                    </form>
+
                     <br>
                     <button id="btn-swp-confirm">Confirm Changes</button>
                     <br>
@@ -178,9 +185,10 @@
     <div class="ui-cards">
 
 <#--        Displays the results by semester cards in the /mypath/:id pages. The display results in two-->
-<#--        side by side semester "cards", that users can click on and modify. If there is no content in a particular-->
-<#--        semester, the semester is defined as a "Free Semester," which is the else condition in the following statement.-->
-<#--        If there is content for each of the possible courses, then the course ID is displayed. -->
+<#--        side by side semester "cards", that users can click on and modify. If there is no content in a -->
+<#--        particular semester, the semester is defined as a "Free Semester," which is the else -->
+<#--        condition in the following statement. If there is content for each of the possible courses, -->
+<#--        then the course ID is displayed. -->
         <#list results as semester>
             <div class="ui-raised-link-card" id="myBtn${semester.semnumber}">
 
@@ -190,7 +198,7 @@
                 <div class="year" id="senior${semester.semnumber}" style="display: none">Senior Year</div>
                 <div class="year" id="supersenior${semester.semnumber}" style="display: none">Super Senior Year</div>
 
-                <div class="myBtn" id="myBtn${semester.semnumber}" style="cursor:pointer">
+                <div class="myBtn" id="myBtn${semester.semnumber}">
                     <div class="header-cc_pointer">Semester ${semester.semnumber}:
                         <div class="meta-cc_pointer">${["Spring", "Fall"][semester.semnumber%2]}</div>
                     </div>
@@ -198,27 +206,29 @@
                         <br>
                         <#if semester.courses ? has_content>
                             <#if semester.courseid1 ? has_content>
-                                <p id="${semester.courseid1}">${semester.courseid1}</p>
+                                <p id="${semester.courseid1}" style="cursor:pointer;">${semester.courseid1}</p>
                             </#if>
                             <#if semester.courseid2 ? has_content>
-                                <p id="${semester.courseid2}">${semester.courseid2}</p>
+                                <p id="${semester.courseid2}" style="cursor:pointer;">${semester.courseid2}</p>
                             </#if>
                             <#if semester.courseid3 ? has_content>
-                                <p id="${semester.courseid3}">${semester.courseid3}</p>
+                                <p id="${semester.courseid3}" style="cursor:pointer;">${semester.courseid3}</p>
                             </#if>
                             <#if semester.courseid4 ? has_content>
-                                <p id="${semester.courseid4}">${semester.courseid4}</p>
+                                <p id="${semester.courseid4}" style="cursor:pointer;">${semester.courseid4}</p>
                             </#if>
                         <#else>
                             Free Semester
                         </#if>
                     </div>
                 </div>
+                <button class="modify" id="modifyBtn${semester.semnumber}">Modify</button>
             </div>
         </#list>
     </div>
 </div>
 <script>
+    // Add year text according to semester number
     $('.header-cc_pointer').each(function() {
         if ($(this).text().includes("1") || $(this).text().includes("2")) {
             $('#freshman1').css("display", "block");
@@ -240,6 +250,7 @@
         }
     });
 
+    // Color code cards by year
     $('.ui-raised-link-card').each(function() {
         $(this).children('div.year').each(function() {
             if ($(this).css('display') === 'block') {
@@ -249,7 +260,7 @@
                     $(this).parent().addClass("bluegreen");
                 } else if ($(this).text().includes("Junior")) {
                     $(this).parent().addClass("lavender");
-                } else if ($(this).text().includes("Senior")) {
+                } else if (!($(this).text().includes("Super"))) {
                     $(this).parent().addClass("pink");
                 } else {
                     $(this).parent().addClass("terracotta");
@@ -260,26 +271,28 @@
 
     // Get the modal
     const modal = document.getElementById("myModal");
+    // Get modal content
+    const cont = document.getElementsByClassName("modal-content")[0];
     // Get this semester text
     const sem = document.getElementById("this-sem");
+
     // Get course adder
     const adder = document.getElementsByClassName("add-course")[0];
     // Get course mover
     const mover = document.getElementsByClassName("move-course")[0];
     // Get course swapper
     const swapper = document.getElementsByClassName("swap-course")[0];
-    // Get modal content
-    const cont = document.getElementsByClassName("modal-content")[0];
     // Get confirm add message
     const addconfirm = document.getElementById("add-confirm");
-    // Get confirm add message
+    // Get confirm mov message
     const movconfirm = document.getElementById("mov-confirm");
+    // Get confirm swp message
+    const swpconfirm = document.getElementById("swp-confirm");
 
     // Get add button and make is show adder
     const addbtn = document.getElementById("btn1");
     addbtn.onclick = function () {
         adder.style.display = "block";
-
         swapper.style.display = "none";
         mover.style.display = "none";
         cont.style.height = '100%';
@@ -289,7 +302,6 @@
     const movbtn = document.getElementById("btn2");
     movbtn.onclick = function () {
         mover.style.display = "block";
-
         swapper.style.display = "none";
         adder.style.display = "none";
         cont.style.height = '100%';
@@ -299,7 +311,6 @@
     const swapbtn = document.getElementById("btn3");
     swapbtn.onclick = function () {
         swapper.style.display = "block";
-
         mover.style.display = "none";
         adder.style.display = "none";
         cont.style.height = '100%';
@@ -361,9 +372,43 @@
         movconfirm.style.display = "block";
     }
 
-    // Make all semester list items open the modal
+    // Get swp confirm button and make it swap courses
+    const swpconfirmbtn = document.getElementById("btn-swp-confirm");
+    swpconfirmbtn.onclick = function () {
+        const swapCourse = document.getElementById("course-to-swap");
+        if (swapCourse.value === "") {
+            alert("Please enter a course from this semester to swap out.");
+            return;
+        }
+        const courses = $('#multi-select2').dropdown('get values');
+        const sem = document.getElementById("this-sem");
+        const text = sem.innerText.trim();
+        const lastCharacter = text[text.length - 2];
+        const parent = document.getElementById("myBtn" + lastCharacter);
+        const child = parent.querySelectorAll(".description")[0];
+
+        const children = [].slice.call(child.getElementsByTagName('p'), 0);
+        for (let i = 0; i < children.length; i++) {
+            let name = children[i].getAttribute("id");
+            if (name.toLowerCase().replace(/\s/g, '') === swapCourse.value.toLowerCase().replace(/\s/g, '')) {
+                child.removeChild(children[i]);
+            }
+        }
+
+        for (let i = 0; i < courses.length; i++) {
+            const node = document.createElement("P");
+            node.innerHTML = courses[i];
+            child.appendChild(node);
+        }
+
+
+
+        swpconfirm.style.display = "block";
+    }
+
+    // Make modify buttons open the modal
     window.onload = function () {
-        const btns = document.getElementsByClassName("ui-raised-link-card");
+        const btns = document.getElementsByClassName("modify");
         for (let i = 0; i < btns.length; i++) {
             const btn = btns[i];
             btn.onclick = function () {
@@ -384,6 +429,8 @@
         addconfirm.style.display = "none";
         mover.style.display = "none";
         movconfirm.style.display = "none";
+        swapper.style.display = "none";
+        swpconfirm.style.display = "none";
         cont.style.height = '40%';
     }
 
@@ -395,6 +442,8 @@
             addconfirm.style.display = "none";
             mover.style.display = "none";
             movconfirm.style.display = "none";
+            swapper.style.display = "none";
+            swpconfirm.style.display = "none";
             cont.style.height = '40%';
         }
     }
