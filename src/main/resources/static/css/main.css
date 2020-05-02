@@ -29,7 +29,7 @@ a.item {
 
 /* Nav */
 .ui.fixed.borderless.menu {
-    background-image: linear-gradient(to bottom right, #8373e6, rgba(55, 192, 157, 0.96));
+    background-image: linear-gradient(to bottom right, #e676ca, rgba(102, 105, 192, 0.96));
     text-align: right;
     float: right;
     height: 5vh;
