@@ -61,6 +61,24 @@
     </#list>
 </h1>
 <p>Click on a semester to customize it! Refresh the page if you wish to revert to the original pathway.</p>
+<#list id as node>
+    <#if node=="1">
+        <p> Number of Semesters: ${stats.numsemesters1}</p>
+        <p> Number of Courses: ${stats.totalnumcourses1}</p>
+        <p> Average Workload Per Semester (hrs): ${stats.avgavghrs1sem} </p>
+        <p> Average Workload Per Course (hrs): ${stats.avgavghrs1path} </p>
+    <#elseif node=="2">
+        <p> Number of Semesters: ${stats.numsemesters2}</p>
+        <p> Number of Courses: ${stats.totalnumcourses2}</p>
+        <p> Average Workload Per Semester (hrs): ${stats.avgavghrs2sem} </p>
+        <p> Average Workload Per Course (hrs): ${stats.avgavghrs2path} </p>
+    <#elseif node=="3">
+        <p> Number of Semesters: ${stats.numsemesters3}</p>
+        <p> Number of Courses: ${stats.totalnumcourses3}</p>
+        <p> Average Workload Per Semester (hrs): ${stats.avgavghrs3sem} </p>
+        <p> Average Workload Per Course (hrs): ${stats.avgavghrs3path} </p>
+    </#if>
+</#list>
 <div class="redirect">
     <form method="POST" action="/mypath">
         <button id="submit" type="submit" value="Go back">

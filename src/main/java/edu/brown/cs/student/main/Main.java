@@ -236,9 +236,20 @@ public final class Main {
       List<Object> titles = new ArrayList<>();
       titles.add("Pathway");
 
-      Map<String, Object> variables = ImmutableMap
-          .of("header", display, "results1", pathway1, "results2", pathway2, "results3",
-              pathway3, "stats", pathwayProgram);
+      List<String> uniques1 = pathwayProgram.getPath1Uniques();
+      List<String> uniques2 = pathwayProgram.getPath2Uniques();
+      List<String> uniques3 = pathwayProgram.getPath3Uniques();
+
+      Map<String, Object> variables = ImmutableMap.<String, Object>builder()
+          .put("header", display)
+          .put("results1", pathway1)
+          .put("results2", pathway2)
+          .put("results3", pathway3)
+          .put("stats", pathwayProgram)
+          .put("uniques1", uniques1)
+          .put("uniques2", uniques2)
+          .put("uniques3", uniques3)
+          .build();
       return new ModelAndView(variables, "pathway.ftl");
     }
   }
@@ -269,9 +280,9 @@ public final class Main {
       }
       List<String> pathnumlst = new ArrayList<>();
       pathnumlst.add(pathNum);
-      Map<String, List<?>> variables =
+      Map<String, Object> variables =
           ImmutableMap.of("id", pathnumlst, "results", path, "courseList",
-              pathwayProgram.getCourseList());
+              pathwayProgram.getCourseList(), "stats", pathwayProgram);
       return new ModelAndView(variables, "mypath.ftl");
 
     }

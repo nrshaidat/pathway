@@ -3,6 +3,7 @@ package edu.brown.cs.student.main;
 import edu.brown.cs.student.pathway.Node;
 import edu.brown.cs.student.pathway.Pathway;
 import edu.brown.cs.student.pathway.Semester;
+import com.google.common.collect.Sets;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -18,6 +19,9 @@ public class PathwayProgram {
   private List<Semester> path1;
   private List<Semester> path2;
   private List<Semester> path3;
+  private List<String> path1Uniques;
+  private List<String> path2Uniques;
+  private List<String> path3Uniques;
   private int totalnumcourses1;
   private int totalnumcourses2;
   private int totalnumcourses3;
@@ -385,6 +389,8 @@ public class PathwayProgram {
     pathway3.makePathway(taken, sem, aggressive, "hi");
     path3 = pathway3.getPath();
     this.setPathStats3();
+
+    setPathUniques();
   }
 
   /**
@@ -500,5 +506,44 @@ public class PathwayProgram {
       avgavghrs3sem += (sem.getAvghrs() / totalnumcourses3);
       avgmaxhrs3sem += (sem.getMaxhrs() / totalnumcourses3);
     }
+  }
+
+  public void setPathUniques() {
+    Set<Node> path1Courses = new HashSet<>();
+    for (Semester s: path1) {
+      path1Courses.addAll(s.getCourses());
+    }
+    Set<Node> path2Courses = new HashSet<>();
+    for (Semester s: path2) {
+      path2Courses.addAll(s.getCourses());
+    }
+    Set<Node> path3Courses = new HashSet<>();
+    for (Semester s: path3) {
+      path3Courses.addAll(s.getCourses());
+    }
+    Set<Node> path1UniqueNodes = Sets.difference(path1Courses, Sets.union(path2Courses, path3Courses));
+    Set<Node> path2UniqueNodes = Sets.difference(path2Courses, Sets.union(path1Courses, path3Courses));
+    Set<Node> path3UniqueNodes = Sets.difference(path3Courses, Sets.union(path1Courses, path2Courses));
+    path1Uniques = new ArrayList<>();
+    path2Uniques = new ArrayList<>();
+    path3Uniques = new ArrayList<>();
+    for (Node n: path1UniqueNodes) {
+      path1Uniques.add(n.getId());
+    }
+    for (Node n: path2UniqueNodes) {
+      path2Uniques.add(n.getId());
+    }
+    for (Node n: path3UniqueNodes) {
+      path3Uniques.add(n.getId());
+    }
+  }
+  public List<String> getPath1Uniques() {
+    return path1Uniques;
+  }
+  public List<String> getPath2Uniques() {
+    return path2Uniques;
+  }
+  public List<String> getPath3Uniques() {
+    return path3Uniques;
   }
 }
