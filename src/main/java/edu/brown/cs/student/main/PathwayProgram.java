@@ -25,9 +25,6 @@ public class PathwayProgram {
   private int totalnumcourses1;
   private int totalnumcourses2;
   private int totalnumcourses3;
-  private int totalflexcourses1;
-  private int totalflexcourses2;
-  private int totalflexcourses3;
   private double totalavg1;
   private double totalavg2;
   private double totalavg3;
@@ -72,7 +69,7 @@ public class PathwayProgram {
 
   /**
    * The PathwayProgram constructor that sets all of the necessary variables. It
-   * sets the dummy values for the number of semesters, the number of flexcourses,
+   * sets the dummy values for the number of semesters,
    * and information about each semester like the average and maxmimum number of hours.
    *
    * @throws SQLException for problems with querying db.
@@ -197,18 +194,6 @@ public class PathwayProgram {
 
   public int getTotalnumcourses3() {
     return totalnumcourses3;
-  }
-
-  public int getTotalflexcourses1() {
-    return totalflexcourses1;
-  }
-
-  public int getTotalflexcourses2() {
-    return totalflexcourses2;
-  }
-
-  public int getTotalflexcourses3() {
-    return totalflexcourses3;
   }
 
   public double getTotalavg1() {
@@ -430,7 +415,6 @@ public class PathwayProgram {
    */
   public void setPathStats1() {
     totalnumcourses1 = 0;
-    totalflexcourses1 = 0;
     totalavg1 = 0.0;
     totalmax1 = 0.0;
     totalrating1 = 0.0;
@@ -440,7 +424,6 @@ public class PathwayProgram {
     for (Semester sem : getPath1()) {
       sem.setStats();
       totalnumcourses1 += sem.getCourses().size();
-      totalflexcourses1 += sem.getNumflex();
       totalavg1 += sem.getAvghrs();
       totalmax1 += sem.getMaxhrs();
       totalrating1 += sem.getRating();
@@ -459,7 +442,6 @@ public class PathwayProgram {
    */
   public void setPathStats2() {
     totalnumcourses2 = 0;
-    totalflexcourses2 = 0;
     totalavg2 = 0.0;
     totalmax2 = 0.0;
     totalrating2 = 0.0;
@@ -469,7 +451,6 @@ public class PathwayProgram {
     for (Semester sem : getPath2()) {
       sem.setStats();
       totalnumcourses2 += sem.getCourses().size();
-      totalflexcourses2 += sem.getNumflex();
       totalavg2 += sem.getAvghrs();
       totalmax2 += sem.getMaxhrs();
       totalrating2 += sem.getRating();
@@ -488,7 +469,6 @@ public class PathwayProgram {
    */
   public void setPathStats3() {
     totalnumcourses3 = 0;
-    totalflexcourses3 = 0;
     totalavg3 = 0.0;
     totalmax3 = 0.0;
     totalrating3 = 0.0;
@@ -498,7 +478,6 @@ public class PathwayProgram {
     for (Semester sem : getPath3()) {
       sem.setStats();
       totalnumcourses3 += sem.getCourses().size();
-      totalflexcourses3 += sem.getNumflex();
       totalavg3 += sem.getAvghrs();
       totalmax3 += sem.getMaxhrs();
       totalrating3 += sem.getRating();
