@@ -8,9 +8,8 @@ body {
 }
 
 a.header.item {
-    text-align: left;
-    float: left;
-    font-size: xx-large;
+    top: -0.3em;
+    font-size: 1.3em;
 }
 
 .flags a {
@@ -20,14 +19,15 @@ a.header.item {
 a.item {
     padding-right: 5%;
     float: right;
-    text-align: right;
+    text-align: left;
 }
 
 /* Nav */
 .ui.fixed.borderless.menu {
-    background-color: #4a008a;
+    background-image: linear-gradient(to bottom right, #e676ca, rgba(102, 105, 192, 0.96));
     text-align: right;
-    float:right;
+    float: right;
+    height: 5vh;
 }
 
 .ui .computer.only .item {
@@ -66,10 +66,6 @@ a.item {
     background-color: #6311aa !important;
     color: #fff !important;
     border-bottom: 1px solid #fff;
-}
-
-.ui.fixed.borderless.menu .row > a.header.item {
-    font-size: 1.2em;
 }
 
 /* Mobile */
@@ -312,15 +308,15 @@ a.link {
 .course:hover .more-info {
     display: block;
     position: absolute;
+    text-align: left;
     right: -6em;
     top: -1em;
     z-index: 2;
     background-color: rgba(158, 191, 250, 0.96); /* Black w/ opacity */
     padding: 0.6em;
     border-radius: 2px;
-    text-align: center;
     height: fit-content;
-    width: 15em;
+    width: 17em;
     border: 3px solid #4337b6;
     box-shadow: 1px 1px 2px #888;
 }
@@ -412,6 +408,7 @@ a.link {
     position: absolute;
     bottom: 1em;
     right: 1em;
+    box-shadow: 1px 1px 1px #888;
 }
 
 .description {
@@ -420,8 +417,8 @@ a.link {
 }
 
 .redirect {
-    float: left;
     position: absolute;
+    left: 1em;
 }
 
 #submit {

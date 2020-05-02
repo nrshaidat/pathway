@@ -4,10 +4,10 @@ import edu.brown.cs.student.pathway.Node;
 import edu.brown.cs.student.pathway.Pathway;
 import edu.brown.cs.student.pathway.Semester;
 import com.google.common.collect.Sets;
-
 import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.lang.Math;
 
 /**
  * PathwayProgram.
@@ -109,19 +109,19 @@ public class PathwayProgram {
     return avgrating3sem;
   }
 
-  public double getAvgavghrs1sem() {
-    avgavghrs1sem = (totalavg1 / numsemesters1);
-    return avgavghrs1sem;
+  public int getAvgavghrs1sem() {
+    avgavghrs1sem = Math.round(totalavg1 / numsemesters1);
+    return ((int) avgavghrs1sem);
   }
 
-  public double getAvgavghrs2sem() {
-    avgavghrs2sem = (totalavg2 / numsemesters2);
-    return avgavghrs2sem;
+  public int getAvgavghrs2sem() {
+    avgavghrs2sem = Math.round(totalavg2 / numsemesters2);
+    return ((int) avgavghrs2sem);
   }
 
-  public double getAvgavghrs3sem() {
-    avgavghrs3sem = (totalavg3 / numsemesters3);
-    return avgavghrs3sem;
+  public int getAvgavghrs3sem() {
+    avgavghrs3sem = Math.round(totalavg3 / numsemesters3);
+    return ((int) avgavghrs3sem);
   }
 
   public double getAvgmaxhrs1sem() {
@@ -154,19 +154,19 @@ public class PathwayProgram {
     return avgrating3path;
   }
 
-  public double getAvgavghrs1path() {
-    avgavghrs1path = (totalavg1 / totalnumcourses1);
-    return avgavghrs1path;
+  public int getAvgavghrs1path() {
+    avgavghrs1path = Math.round(totalavg1 / totalnumcourses1);
+    return ((int) avgavghrs1path);
   }
 
-  public double getAvgavghrs2path() {
-    avgavghrs2path = (totalavg2 / totalnumcourses2);
-    return avgavghrs2path;
+  public int getAvgavghrs2path() {
+    avgavghrs2path = Math.round(totalavg2 / totalnumcourses2);
+    return ((int) avgavghrs2path);
   }
 
-  public double getAvgavghrs3path() {
-    avgavghrs3path = (totalavg3 / totalnumcourses3);
-    return avgavghrs3path;
+  public int getAvgavghrs3path() {
+    avgavghrs3path = Math.round(totalavg3 / totalnumcourses3);
+    return ((int) avgavghrs3path);
   }
 
   public double getAvgmaxhrs1path() {
@@ -517,12 +517,12 @@ public class PathwayProgram {
     }
   }
   public List<String> getPath1Uniques() {
-    return path1Uniques;
+    return path1Uniques.size() > 3 ? path1Uniques.subList(0, 3) : path1Uniques;
   }
   public List<String> getPath2Uniques() {
-    return path2Uniques;
+    return path2Uniques.size() > 3 ? path2Uniques.subList(0, 3) : path2Uniques;
   }
   public List<String> getPath3Uniques() {
-    return path3Uniques;
+    return path3Uniques.size() > 3 ? path3Uniques.subList(0, 3) : path3Uniques;
   }
 }
