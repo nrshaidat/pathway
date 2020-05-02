@@ -79,10 +79,11 @@ public interface DatabaseInterface {
   /**
    * getAllCourseIDs gets all course ids from the courses table to load each course into the cache.
    *
-   * @return the all course i ds
+   * @param cornell
+   * @return the all course ids
    * @throws SQLException the sql exception
    */
-  List<String> getAllCourseIDs() throws SQLException;
+  List<String> getAllCourseIDs(boolean cornell) throws SQLException;
 
   /**
    * getConcentrationsMap gets the concentrations gui names mapped to their sql table names in the

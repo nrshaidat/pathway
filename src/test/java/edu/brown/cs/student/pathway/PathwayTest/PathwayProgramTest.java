@@ -38,8 +38,8 @@ public class PathwayProgramTest {
    */
   @Before
   public void setUp() throws Exception {
-    pp = new PathwayProgram();
-    cache = new DatabaseCache(new Database("data/coursesDB.db"));
+    pp = new PathwayProgram(false);
+    cache = new DatabaseCache(new Database("data/coursesDB.db"), false);
   }
 
   /**
@@ -49,8 +49,8 @@ public class PathwayProgramTest {
    */
   @Before
   public void setUpStats() throws Exception {
-    pp = new PathwayProgram();
-    cache = new DatabaseCache(new Database("data/coursesDB.db"));
+    pp = new PathwayProgram(false);
+    cache = new DatabaseCache(new Database("data/coursesDB.db"), false);
     //path 1
     List<Semester> p1 = new ArrayList<>();
     //fall 1
@@ -122,7 +122,7 @@ public class PathwayProgramTest {
   public void getCourseList() throws Exception {
     setUp();
     List<String> cl = pp.getCourseList();
-    List<String> cl2 = cache.getAllCourseIDs();
+    List<String> cl2 = cache.getAllCourseIDs(false);
     assertEquals(cl2, cl);
     tearDown();
   }

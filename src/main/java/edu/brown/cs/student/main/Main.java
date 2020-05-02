@@ -66,7 +66,7 @@ public final class Main {
     parser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(DEFAULT_PORT);
     OptionSet options = parser.parse(args);
     runSparkServer((int) options.valueOf("port"));
-    pathwayProgram = new PathwayProgram();
+    pathwayProgram = new PathwayProgram(cornell);
 
   }
 
@@ -158,9 +158,19 @@ public final class Main {
     public ModelAndView handle(Request req, Response res) {
       List<String> gradeList = pathwayProgram.getGradeList();
       List<String> yearList = pathwayProgram.getYearList();
+
+      List<String> concentrationList = new ArrayList<>();
+
+      if (cornell) {
+        concentrationList.add("Economics B.A.");
+      } else {
+        //not cornell, Brown pathway
+        concentrationList = pathwayProgram.getConcentrationsList();
+      }
+
       Map<String, Object> variables = ImmutableMap
           .of("uniNameShort", uniNameShort, "concentrationList",
-              pathwayProgram.getConcentrationsList(), "gradeList", gradeList, "yearList", yearList,
+              concentrationList, "gradeList", gradeList, "yearList", yearList,
               "courseList", pathwayProgram.getCourseList());
       return new ModelAndView(variables, "generate.ftl");
     }

@@ -61,13 +61,13 @@ public class PathwayProgram {
    *
    * @throws SQLException for problems with querying db.
    */
-  public PathwayProgram() throws SQLException {
+  public PathwayProgram(boolean cornell) throws SQLException {
     String file = "data/coursesDB.db";
     Database realDB = new Database(file); // real database that handles sql queries
-    cache = new DatabaseCache(realDB);
+    cache = new DatabaseCache(realDB, cornell);
     concentrationMap = cache.getConcentrationsMap();
     concentrationsList = new ArrayList<>(this.concentrationMap.keySet());
-    courseList = cache.getAllCourseIDs();
+    courseList = cache.getAllCourseIDs(cornell);
     this.setConcentrationName("Computer Science B.A.");
     totalnumcourses1 = 0;
     totalnumcourses2 = 0;

@@ -28,11 +28,11 @@ public class DatabaseCache implements DatabaseInterface {
    * @param dB database instance
    * @throws SQLException the sql exception
    */
-  public DatabaseCache(DatabaseInterface dB) throws SQLException {
+  public DatabaseCache(DatabaseInterface dB, boolean cornell) throws SQLException {
     if (dB.hasConnection()) {
       realDB = dB;
       this.init();
-      this.loadALLCourses();
+      this.loadALLCourses(cornell);
     } else {
       realDB = null;
     }
@@ -180,12 +180,13 @@ public class DatabaseCache implements DatabaseInterface {
   /**
    * getAllCourseIDs gets all course ids from the courses table to load each course into the cache.
    *
-   * @return the all course i ds
+   * @param cornell boolean representing if cornell pathway or not
+   * @return  the all course ids
    * @throws SQLException the sql exception
    */
   @Override
-  public List<String> getAllCourseIDs() throws SQLException {
-    return realDB.getAllCourseIDs();
+  public List<String> getAllCourseIDs(boolean cornell) throws SQLException {
+    return realDB.getAllCourseIDs(cornell);
   }
 
   /**
@@ -206,8 +207,8 @@ public class DatabaseCache implements DatabaseInterface {
    *
    * @throws SQLException the sql exception
    */
-  private void loadALLCourses() throws SQLException {
-    List<String> courseIDS = this.getAllCourseIDs();
+  private void loadALLCourses(boolean cornell) throws SQLException {
+    List<String> courseIDS = this.getAllCourseIDs(cornell);
     for (String id : courseIDS) {
       this.getCourseData(id);
     }

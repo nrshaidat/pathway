@@ -27,7 +27,7 @@ public class PathwayWithDatabaseTest {
 
   @Before
   public void setUp() throws SQLException {
-    cache = new DatabaseCache(new Database("data/coursesDB.db"));
+    cache = new DatabaseCache(new Database("data/coursesDB.db"), false);
     workloads = ImmutableMap.of("lo", Range.closedOpen(1.0, 25.0),
         "med", Range.closedOpen(25.0, 40.0),
         "hi", Range.closedOpen(40.0, 80.0));

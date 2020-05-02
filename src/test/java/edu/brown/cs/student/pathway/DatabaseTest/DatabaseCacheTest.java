@@ -32,7 +32,7 @@ public class DatabaseCacheTest {
   public void setUp() throws SQLException {
     String file = "data/coursesDB.db";
     Database realDB = new Database(file); // real database that handles sql queries
-    cache = new DatabaseCache(realDB);
+    cache = new DatabaseCache(realDB, false);
   }
 
   /**

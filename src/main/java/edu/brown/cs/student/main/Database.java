@@ -653,23 +653,38 @@ public class Database implements DatabaseInterface {
   /**
    * getAllCourseIDs gets all the course's id's for the cache database to populate the cache with.
    *
+   * @param cornell boolean seeing if cornell pathway
    * @return a list of concentration names
    * @throws SQLException the sql exception
    */
   @Override
-  public List<String> getAllCourseIDs() throws SQLException {
+  public List<String> getAllCourseIDs(boolean cornell) throws SQLException {
     PreparedStatement prep = null;
     ResultSet rs = null;
     List<String> courseIDs = new ArrayList<>();
     try {
-      prep = conn.prepareStatement("SELECT course_id " + " FROM courses");
-      rs = prep.executeQuery();
-      while (rs.next()) {
-        courseIDs.add(rs.getString("course_id"));
+
+      if (!cornell) {
+        prep = conn.prepareStatement("SELECT course_id " + " FROM courses");
+        rs = prep.executeQuery();
+        while (rs.next()) {
+          courseIDs.add(rs.getString("course_id"));
+        }
+        rs.close();
+        prep.close();
+        return courseIDs;
+      } else {
+        //if cornell
+        prep = conn.prepareStatement("SELECT course_id " + " FROM cornellcourses");
+        rs = prep.executeQuery();
+        while (rs.next()) {
+          courseIDs.add(rs.getString("course_id"));
+        }
+        rs.close();
+        prep.close();
+        return courseIDs;
       }
-      rs.close();
-      prep.close();
-      return courseIDs;
+
     } catch (SQLException e) {
       return courseIDs;
     } finally {
