@@ -33,6 +33,7 @@ public final class Main {
   private static final List<String> universityList = new ArrayList<>();
   private static String uniName;
   private static String uniNameShort;
+  private static boolean firstLogin = true;
 
   /**
    * Main is called when execution begins.
@@ -97,9 +98,15 @@ public final class Main {
 
   }
 
+  /**
+   * Home Handler lets the user choose the University they're attending. We currently support
+   * Brown University and Cornell University.
+   */
   private static class HomeHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
+      firstLogin = true;
+
       Map<String, Object> variables = ImmutableMap.of("universityList", universityList);
       return new ModelAndView(variables, "home.ftl");
     }
@@ -115,11 +122,12 @@ public final class Main {
     @Override
     public ModelAndView handle(Request req, Response res) {
 
-      QueryParamsMap qm = req.queryMap();
-      System.out.println(qm.value("university"));
-
-      uniName = qm.value("university");
-      uniNameShort = uniName.split(" ")[0];
+      if (firstLogin) {
+        QueryParamsMap qm = req.queryMap();
+        uniName = qm.value("university");
+        uniNameShort = uniName.split(" ")[0];
+        firstLogin = false;
+      }
 
       Map<String, Object> variables = ImmutableMap.of("uniName", uniName,
               "uniNameShort", uniNameShort);
