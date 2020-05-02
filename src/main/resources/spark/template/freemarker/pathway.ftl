@@ -58,14 +58,13 @@
 
 <a href="mypath/1" class="link" name="pathway" id="pathway" value="one">
     <div id="container1">
-
-<#--        Displays the statistics for Pathway 1-->
         <header> Pathway 1</header>
+        <p> Low Workload </p>
+        <p> Unique classes: </p>
+            <#list uniques1 as u>
+                <p> ${u} </p>
+            </#list>
 
-        <p> Number of Semesters: ${stats.numsemesters1}</p>
-        <p> Number of Courses: ${stats.totalnumcourses1}</p>
-        <p> Average Workload Per Semester (hrs): ${stats.avgavghrs1sem} </p>
-        <p> Average Workload Per Course (hrs): ${stats.avgavghrs1path} </p>
     </div>
 </a>
 
@@ -74,11 +73,13 @@
 
         <#--        Displays the statistics for Pathway 2-->
         <header> Pathway 2</header>
+        <p> Medium Workload </p>
+        <p> Unique classes: </p>
 
-        <p> Number of Semesters: ${stats.numsemesters2}</p>
-        <p> Number of Courses: ${stats.totalnumcourses2}</p>
-        <p> Average Workload Per Semester (hrs): ${stats.avgavghrs2sem}  </p>
-        <p> Average Workload Per Course (hrs): ${stats.avgavghrs2path} </p>
+        <#list uniques2 as u>
+            <p> ${u} </p>
+        </#list>
+
     </div>
 </a>
 
@@ -88,10 +89,13 @@
         <#--        Displays the statistics for Pathway 3-->
         <header> Pathway 3</header>
 
-        <p> Number of Semesters: ${stats.numsemesters3}</p>
-        <p> Number of Courses: ${stats.totalnumcourses3}</p>
-        <p> Average Workload Per Semester (hrs): ${stats.avgavghrs3sem}  </p>
-        <p> Average Workload Per Course (hrs): ${stats.avgavghrs3path} </p>
+        <p> High Workload </p>
+        <p> Unique classes: </p>
+
+        <#list uniques3 as u>
+            <p> ${u} </p>
+        </#list>
+
     </div>
 </a>
 <br>
