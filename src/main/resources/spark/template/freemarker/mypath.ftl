@@ -2,6 +2,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Pathway:</title>
     <link rel="shortcut icon" href="/logo/t.png"/>
     <link rel="stylesheet" href="/css/mypath.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -36,24 +37,10 @@
                     </div>
                 </a>
             </div>
-            <div class="ui vertical accordion borderless fluid menu">
-                <!-- Start: Search -->
-                <!-- End: Search -->
-                <a class="active item"> Home</a>
-                <form action="/faqs" method="post">
-                    <a class="item">FAQ</a>
-                </form>
-                <a class="item"> Log out</a>
-                <div class="ui divider"></div>
-                <a class="item" href="#">Default</a>
-                <a class="item" href="#">Static top</a>
-                <a class="active item" href="#">Fixed top</a>
-            </div>
         </div>
         <!--End: Mobile Nav-->
     </div>
 </div>
-<title style="text-align: center;">My Pathway:</title>
 <br>
 <br>
 <br>
@@ -66,23 +53,20 @@
 <p>Customize your pathway here! Refresh the page if you wish to revert to the original pathway.</p>
 <div style="position: absolute; right:2.4vw; top:14.5em;
     border-radius: 2px; border: solid darkslategrey; padding: 0.5em; width: 20vw;">
-    <h3 style="color:rgba(59,59,90,0.93)">Pathway Summary</h3>
+    <h3 style="color:rgba(59,59,90,0.93); font-size: 1.5vw;">Pathway Summary</h3>
     <#list id as node>
         <#if node=="1">
-            <div> Number of Semesters: ${stats.numsemesters1}</div>
-            <div> Number of Courses: ${stats.totalnumcourses1}</div>
-            <div> Average Semester Workload: ${stats.avgavghrs1sem} hrs/wk</div>
-            <div> Average Course Workload: ${stats.avgavghrs1path} hrs/wk</div>
+            <div style="font-size: 1.1vw;"> Number of Semesters: ${stats.numsemesters1}</div>
+            <div style="font-size: 1.1vw;"> Number of Courses: ${stats.totalnumcourses1}</div>
+            <div style="font-size: 1.1vw;"> Average Course Workload: ${stats.avgavghrs1path} hrs/wk</div>
         <#elseif node=="2">
-            <div> Number of Semesters: ${stats.numsemesters2}</div>
-            <div> Number of Courses: ${stats.totalnumcourses2}</div>
-            <div> Average Semester Workload: ${stats.avgavghrs2sem} hrs/wk</div>
-            <div> Average Course Workload: ${stats.avgavghrs2path} hrs/wk</div>
+            <div style="font-size: 1.1vw;"> Number of Semesters: ${stats.numsemesters2}</div>
+            <div style="font-size: 1.1vw;"> Number of Courses: ${stats.totalnumcourses2}</div>
+            <div style="font-size: 1.1vw;"> Average Course Workload: ${stats.avgavghrs2path} hrs/wk</div>
         <#elseif node=="3">
-            <div> Number of Semesters: ${stats.numsemesters3}</div>
-            <div> Number of Courses: ${stats.totalnumcourses3}</div>
-            <div> Average Semester Workload: ${stats.avgavghrs3sem} hrs/wk</div>
-            <div> Average Course Workload: ${stats.avgavghrs3path} hrs/wk</div>
+            <div style="font-size: 1.1vw;"> Number of Semesters: ${stats.numsemesters3}</div>
+            <div style="font-size: 1.1vw;"> Number of Courses: ${stats.totalnumcourses3}</div>
+            <div style="font-size: 1.1vw;"> Average Course Workload: ${stats.avgavghrs3path} hrs/wk</div>
         </#if>
     </#list>
 </div>

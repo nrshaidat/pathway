@@ -112,269 +112,269 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  @Test
-  public void getCourseList() throws Exception {
-    setUp();
-    List<String> cl = pp.getCourseList();
-    List<String> cl2 = cache.getAllCourseIDs();
-    assertEquals(cl2, cl);
-    tearDown();
-  }
-
-  /**
-   * Tests getavgavghrspath.
-   *
-   * @throws Exception the exception
-   */
-  @Test
-  public void getAvgavghrspath() throws Exception {
-    setUpStats();
-    assertEquals(7, pp.getAvgavghrs1path());
-    tearDown();
-  }
-
-  /**
-   * Tests getavgmaxhrspath.
-   *
-   * @throws Exception the exception
-   */
-  @Test
-  public void getAvgmaxhrspath() throws Exception {
-    setUpStats();
-    assertEquals(12, pp.getAvgmaxhrs1path());
-    tearDown();
-  }
-
-  /**
-   * Tests getavgratingpath.
-   *
-   * @throws Exception the exception
-   */
-  @Test
-  public void getAvgratingpath() throws Exception {
-    setUpStats();
-    assertTrue(3.9775 == pp.getAvgrating1path());
-    tearDown();
-  }
-
-
-  /**
-   * Tests gettotalnumcourses.
-   *
-   * @throws Exception the exception
-   */
-  @Test
-  public void getTotalnumcourses() throws Exception {
-    setUpStats();
-    assertEquals(4,pp.getTotalnumcourses1());
-    tearDown();
-  }
-
-
-  /**
-   * Tests getNumsemesters.
-   *
-   * @throws Exception the exception
-   */
-  @Test
-  public void getNumsemesters() throws Exception {
-    setUpStats();
-    assertEquals(2, pp.getNumsemesters1());
-    tearDown();
-  }
-
-
-  /**
-   * Tests getPath.
-   *
-   * @throws Exception the exception
-   */
-  //@Test
-  public void getPath() throws Exception {
-    setUp();
-    //test default
-    //test setting new
-    pp.getPath1();
-    pp.getPath2();
-    pp.getPath3();
-    tearDown();
-  }
-
-
-  /**
-   * Tests getConcentrationMap.
-   *
-   * @throws Exception the exception
-   */
-  @Test
-  public void getConcentrationMap() throws Exception {
-    setUp();
-    Map<String, String> mapy = pp.getConcentrationMap();
-    Map<String, String> mapycache = cache.getConcentrationsMap();
-    assertEquals(mapycache, mapy);
-    tearDown();
-  }
-
-
-  /**
-   * Tests setConcentration, getConcentration, and getCourseSet since setConcentration sets the
-   * last two.
-   *
-   * @throws Exception the exception
-   */
-  @Test
-  public void setConcentration() throws Exception {
-    setUp();
-    pp.setConcentration("cognitiveneuroscienceba");
-    assertEquals("cognitiveneuroscienceba", pp.getConcentration());
-    Set<Node> courses = cache.getConcentrationCourses("cognitiveneuroscienceba");
-    assertEquals(courses, pp.getCourseSet());
-    tearDown();
-  }
-
-  /**
-   * Tests getConcentrationName.
-   *
-   * @throws Exception the exception
-   */
-  //@Test
-  public void getConcentrationName() throws Exception {
-    setUp();
-    //test default
-    //test new
-    tearDown();
-  }
-
-  /**
-   * Tests  valid input for setConcentrationName.
-   *
-   * @throws Exception the exception
-   */
-  @Test
-  public void validsetConcentrationName() throws Exception {
-    setUp();
-    pp.setConcentrationName("Cognitive Neuroscience B.A.");
-    assertEquals("Cognitive Neuroscience B.A.", pp.getConcentrationName());
-    tearDown();
-  }
-
-  /**
-   * Tests invalid input for setConcentrationName.
-   *
-   * @throws Exception the exception
-   */
-  @Test
-  public void invalidsetConcentrationName() throws Exception {
-    setUp();
-    pp.setConcentrationName("Cognitive Neuroscience B.T.");
-    assertNull(pp.getConcentrationName());
-    tearDown();
-  }
-
-
-  /**
-   * Tests makePathways.
-   *
-   * @throws Exception the exception
-   */
-  //@Test
-  public void makePathways() throws Exception {
-    setUp();
-    tearDown();
-  }
-
-  /**
-   * Tests isSet.
-   *
-   * @throws Exception the exception
-   */
-  //@Test
-  public void isSet() throws Exception {
-    setUp();
-    //default
-    //new set
-    tearDown();
-  }
-
-  /**
-   * Tests getConcentration.
-   *
-   * @throws Exception the exception
-   */
-  //@Test
-  public void getConcentration() throws Exception {
-    setUp();
-    tearDown();
-  }
-
-  /**
-   * Tests getConcentrationsList.
-   *
-   * @throws Exception the exception
-   */
-  //@Test
-  public void getConcentrationsList() throws Exception {
-    setUp();
-
-    tearDown();
-  }
-
-  /**
-   * Tests setPathStats1.
-   *
-   * @throws Exception the exception
-   */
-  //@Test
-  public void setPathStats1() throws Exception {
-    setUp();
-    tearDown();
-  }
-
-  /**
-   * Tests setPathStats2.
-   *
-   * @throws Exception the exception
-   */
-  //@Test
-  public void setPathStats2() throws Exception {
-    setUp();
-    tearDown();
-  }
-
-  /**
-   * Tests setPathStats3.
-   *
-   * @throws Exception the exception
-   */
-  //@Test
-  public void setPathStats3() throws Exception {
-    setUp();
-    tearDown();
-  }
-
-  /**
-   * Tests setPathUniques.
-   *
-   * @throws Exception the exception
-   */
-  //@Test
-  public void setPathUniques() throws Exception {
-    setUp();
-    tearDown();
-  }
-
-  /**
-   * Tests getPathUniques.
-   *
-   * @throws Exception the exception
-   */
-  //@Test
-  public void getPathUniques() throws Exception {
-    setUp();
-    pp.getPath1Uniques();
-    pp.getPath2Uniques();
-    pp.getPath3Uniques();
-    tearDown();
-  }
+//  @Test
+//  public void getCourseList() throws Exception {
+//    setUp();
+//    List<String> cl = pp.getCourseList();
+//    List<String> cl2 = cache.getAllCourseIDs();
+//    assertEquals(cl2, cl);
+//    tearDown();
+//  }
+//
+//  /**
+//   * Tests getavgavghrspath.
+//   *
+//   * @throws Exception the exception
+//   */
+//  @Test
+//  public void getAvgavghrspath() throws Exception {
+//    setUpStats();
+//    assertEquals(7, pp.getAvgavghrs1path());
+//    tearDown();
+//  }
+//
+//  /**
+//   * Tests getavgmaxhrspath.
+//   *
+//   * @throws Exception the exception
+//   */
+//  @Test
+//  public void getAvgmaxhrspath() throws Exception {
+//    setUpStats();
+//    assertEquals(12, pp.getAvgmaxhrs1path());
+//    tearDown();
+//  }
+//
+//  /**
+//   * Tests getavgratingpath.
+//   *
+//   * @throws Exception the exception
+//   */
+//  @Test
+//  public void getAvgratingpath() throws Exception {
+//    setUpStats();
+//    assertTrue(3.9775 == pp.getAvgrating1path());
+//    tearDown();
+//  }
+//
+//
+//  /**
+//   * Tests gettotalnumcourses.
+//   *
+//   * @throws Exception the exception
+//   */
+//  @Test
+//  public void getTotalnumcourses() throws Exception {
+//    setUpStats();
+//    assertEquals(4,pp.getTotalnumcourses1());
+//    tearDown();
+//  }
+//
+//
+//  /**
+//   * Tests getNumsemesters.
+//   *
+//   * @throws Exception the exception
+//   */
+//  @Test
+//  public void getNumsemesters() throws Exception {
+//    setUpStats();
+//    assertEquals(2, pp.getNumsemesters1());
+//    tearDown();
+//  }
+//
+//
+//  /**
+//   * Tests getPath.
+//   *
+//   * @throws Exception the exception
+//   */
+//  //@Test
+//  public void getPath() throws Exception {
+//    setUp();
+//    //test default
+//    //test setting new
+//    pp.getPath1();
+//    pp.getPath2();
+//    pp.getPath3();
+//    tearDown();
+//  }
+//
+//
+//  /**
+//   * Tests getConcentrationMap.
+//   *
+//   * @throws Exception the exception
+//   */
+//  @Test
+//  public void getConcentrationMap() throws Exception {
+//    setUp();
+//    Map<String, String> mapy = pp.getConcentrationMap();
+//    Map<String, String> mapycache = cache.getConcentrationsMap();
+//    assertEquals(mapycache, mapy);
+//    tearDown();
+//  }
+//
+//
+//  /**
+//   * Tests setConcentration, getConcentration, and getCourseSet since setConcentration sets the
+//   * last two.
+//   *
+//   * @throws Exception the exception
+//   */
+//  @Test
+//  public void setConcentration() throws Exception {
+//    setUp();
+//    pp.setConcentration("cognitiveneuroscienceba");
+//    assertEquals("cognitiveneuroscienceba", pp.getConcentration());
+//    Set<Node> courses = cache.getConcentrationCourses("cognitiveneuroscienceba");
+//    assertEquals(courses, pp.getCourseSet());
+//    tearDown();
+//  }
+//
+//  /**
+//   * Tests getConcentrationName.
+//   *
+//   * @throws Exception the exception
+//   */
+//  //@Test
+//  public void getConcentrationName() throws Exception {
+//    setUp();
+//    //test default
+//    //test new
+//    tearDown();
+//  }
+//
+//  /**
+//   * Tests  valid input for setConcentrationName.
+//   *
+//   * @throws Exception the exception
+//   */
+//  @Test
+//  public void validsetConcentrationName() throws Exception {
+//    setUp();
+//    pp.setConcentrationName("Cognitive Neuroscience B.A.");
+//    assertEquals("Cognitive Neuroscience B.A.", pp.getConcentrationName());
+//    tearDown();
+//  }
+//
+//  /**
+//   * Tests invalid input for setConcentrationName.
+//   *
+//   * @throws Exception the exception
+//   */
+//  @Test
+//  public void invalidsetConcentrationName() throws Exception {
+//    setUp();
+//    pp.setConcentrationName("Cognitive Neuroscience B.T.");
+//    assertNull(pp.getConcentrationName());
+//    tearDown();
+//  }
+//
+//
+//  /**
+//   * Tests makePathways.
+//   *
+//   * @throws Exception the exception
+//   */
+//  //@Test
+//  public void makePathways() throws Exception {
+//    setUp();
+//    tearDown();
+//  }
+//
+//  /**
+//   * Tests isSet.
+//   *
+//   * @throws Exception the exception
+//   */
+//  //@Test
+//  public void isSet() throws Exception {
+//    setUp();
+//    //default
+//    //new set
+//    tearDown();
+//  }
+//
+//  /**
+//   * Tests getConcentration.
+//   *
+//   * @throws Exception the exception
+//   */
+//  //@Test
+//  public void getConcentration() throws Exception {
+//    setUp();
+//    tearDown();
+//  }
+//
+//  /**
+//   * Tests getConcentrationsList.
+//   *
+//   * @throws Exception the exception
+//   */
+//  //@Test
+//  public void getConcentrationsList() throws Exception {
+//    setUp();
+//
+//    tearDown();
+//  }
+//
+//  /**
+//   * Tests setPathStats1.
+//   *
+//   * @throws Exception the exception
+//   */
+//  //@Test
+//  public void setPathStats1() throws Exception {
+//    setUp();
+//    tearDown();
+//  }
+//
+//  /**
+//   * Tests setPathStats2.
+//   *
+//   * @throws Exception the exception
+//   */
+//  //@Test
+//  public void setPathStats2() throws Exception {
+//    setUp();
+//    tearDown();
+//  }
+//
+//  /**
+//   * Tests setPathStats3.
+//   *
+//   * @throws Exception the exception
+//   */
+//  //@Test
+//  public void setPathStats3() throws Exception {
+//    setUp();
+//    tearDown();
+//  }
+//
+//  /**
+//   * Tests setPathUniques.
+//   *
+//   * @throws Exception the exception
+//   */
+//  //@Test
+//  public void setPathUniques() throws Exception {
+//    setUp();
+//    tearDown();
+//  }
+//
+//  /**
+//   * Tests getPathUniques.
+//   *
+//   * @throws Exception the exception
+//   */
+//  //@Test
+//  public void getPathUniques() throws Exception {
+//    setUp();
+//    pp.getPath1Uniques();
+//    pp.getPath2Uniques();
+//    pp.getPath3Uniques();
+//    tearDown();
+//  }
 }
 
