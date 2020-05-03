@@ -7,12 +7,14 @@ import edu.brown.cs.student.main.DatabaseInterface;
 import edu.brown.cs.student.main.PathwayProgram;
 import edu.brown.cs.student.pathway.Node;
 import edu.brown.cs.student.pathway.Semester;
+import com.google.common.collect.Sets;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -96,6 +98,75 @@ public class PathwayProgramTest {
     //fall 2
     List<Node> tak32 = new ArrayList<>();
     tak32.add(cache.getCourseData("CSCI 1450"));
+    Semester fall32 = new Semester(3, tak32);
+    p3.add(fall32);
+    pp.setPath1(p1);
+    pp.setPath2(p2);
+    pp.setPath3(p3);
+  }
+
+  /**
+   * Another method to set up pathways for unique testing.
+   * @throws Exception An exception
+   */
+  @Before
+  public void setUpStats2() throws Exception {
+    pp = new PathwayProgram(false);
+    cache = new DatabaseCache(new Database("data/coursesDB.db"), false);
+    //path 1
+    List<Semester> p1 = new ArrayList<>();
+    //fall 1
+    List<Node> tak1 = new ArrayList<>();
+    tak1.add(cache.getCourseData("MATH 0090"));
+    tak1.add(cache.getCourseData("CSCI 0150"));
+    Semester fall1 = new Semester(1, tak1);
+    p1.add(fall1);
+    //spring 2
+    List<Node> tak2 = new ArrayList<>();
+    tak2.add(cache.getCourseData("MATH 0100"));
+    tak2.add(cache.getCourseData("CSCI 0160"));
+    Semester spring2 = new Semester(2, tak2);
+    p1.add(spring2);
+    //fall 2
+    List<Node> tak3 = new ArrayList<>();
+    tak3.add(cache.getCourseData("MATH 0180"));
+    tak3.add(cache.getCourseData("CSCI 1230"));
+    Semester fall2 = new Semester(3, tak3);
+    p1.add(fall2);
+
+
+    //path 2
+    List<Semester> p2 = new ArrayList<>();
+    //fall 1
+    List<Node> tak12 = new ArrayList<>();
+    tak12.add(cache.getCourseData("MATH 0090"));
+    tak12.add(cache.getCourseData("CSCI 0170"));
+    Semester fall12 = new Semester(1, tak12);
+    p2.add(fall12);
+    //spring 2
+    List<Node> tak22 = new ArrayList<>();
+    tak22.add(cache.getCourseData("MATH 0100"));
+    tak22.add(cache.getCourseData("CSCI 0180"));
+    tak22.add(cache.getCourseData("CSCI 0220"));
+    Semester spring22 = new Semester(2, tak22);
+    p2.add(spring22);
+    //path 3
+    //path 2
+    List<Semester> p3 = new ArrayList<>();
+    //fall 1
+    List<Node> tak13 = new ArrayList<>();
+    tak13.add(cache.getCourseData("CSCI 0190"));
+    Semester fall13 = new Semester(1, tak13);
+    p3.add(fall13);
+    //spring 2
+    List<Node> tak23 = new ArrayList<>();
+    tak23.add(cache.getCourseData("MATH 0100"));
+    tak23.add(cache.getCourseData("CSCI 0320"));
+    Semester spring23 = new Semester(2, tak23);
+    p3.add(spring23);
+    //fall 2
+    List<Node> tak32 = new ArrayList<>();
+    tak32.add(cache.getCourseData("APMA 1650"));
     Semester fall32 = new Semester(3, tak32);
     p3.add(fall32);
     pp.setPath1(p1);
@@ -378,6 +449,24 @@ public class PathwayProgramTest {
     assertTrue(pp.getPath3Uniques().containsAll(path3u));
     assertEquals(2, pp.getPath3Uniques().size());
     tearDown();
+
+    setUpStats2();
+    pp.setPathUniques();
+    /* Path 1 should actually have 4 uniques (cs 15, cs 15, math 180, and cs 1230), but
+    getPath1Uniques should cut it off at 3.
+     */
+    List<String> u1 = new ArrayList<>(Arrays.asList("CSCI 0150", "CSCI 0160", "MATH 0180", "CSCI 1230"));
+    assertTrue(u1.containsAll(pp.getPath1Uniques()) && pp.getPath1Uniques().size() == 3);
+    List<String> u2 = new ArrayList<>(Arrays.asList("CSCI 0170", "CSCI 0180", "CSCI 0220"));
+    assertTrue(pp.getPath2Uniques().containsAll(u2) && u2.containsAll(pp.getPath2Uniques()));
+    List<String> u3 = new ArrayList<>(Arrays.asList("CSCI 0190", "CSCI 0320", "APMA 1650"));
+    assertTrue(pp.getPath3Uniques().containsAll(u3) && u3.containsAll(pp.getPath3Uniques()));
+    tearDown();
+  }
+
+  //@Test
+  public void testSetOps() {
+    /* Add tests for Sets.union, Sets.difference on Nodes */
   }
 }
 
