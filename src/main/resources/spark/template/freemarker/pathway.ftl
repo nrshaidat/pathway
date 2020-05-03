@@ -20,6 +20,9 @@
             <form action="/faqs" method="post">
                 <a href="/faqs" class="item">FAQ</a>
             </form>
+            <form action="/login" method="post">
+                <a href="/login" class="item">Log out</a>
+            </form>
         </div>
 
         <!--Start: Mobile Nav-->

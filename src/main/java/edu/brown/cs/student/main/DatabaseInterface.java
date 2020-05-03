@@ -82,7 +82,7 @@ public interface DatabaseInterface {
    * @return the all course ids
    * @throws SQLException the sql exception
    */
-  List<String> getAllCourseIDs(boolean cornell) throws SQLException;
+  List<String> getAllCourseIDs() throws SQLException;
 
 
   /**
@@ -92,5 +92,5 @@ public interface DatabaseInterface {
    * @return a list of concentration names
    * @throws SQLException the sql exception
    */
-  Map<String, String> getConcentrationsMap(boolean cornell) throws SQLException;
+  Map<String, String> getConcentrationsMap() throws SQLException;
 }

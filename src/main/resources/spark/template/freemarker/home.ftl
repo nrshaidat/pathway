@@ -59,13 +59,13 @@
 <p> Choose Your University: </p>
 
 
-<form action="/login" method="get">
+<form action="/signin" method="post">
     <#--    Using an ftl loop, we use the universityList passed into
         the ImmutableMap to display a Dropdown of universities offered-->
     <div class="ui container">
         <select name="university" id="university" key="university" class="ui selection dropdown">
             <#list universityList as item>
-                <option value="${item}">${item}</option>
+                <option value="${item}">${item}.</option>
             </#list>
         </select>
     </div>
@@ -77,16 +77,6 @@
 
     <input class="ui button" id="btnSubmit" type="submit" value="Submit"/>
 </form>
-<script>
-    function submitForm() {
-
-        //On clicking the submit button, we post the form data to the new page.
-        $("#btnSubmit").button().click(function () {
-            $.ajax({type: 'POST', url: '/api/someRestEndpoint', data: formData, success: onFormSubmitted});
-        });
-
-    }
-</script>
 <script>
     <#--    When the document is ready, the dropdown menu is instantiated-->
     $(document).ready(function () {

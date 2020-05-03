@@ -25,14 +25,14 @@ public class DatabaseCache implements DatabaseInterface {
   /**
    * DatabaseCache constructor.
    *
-   * @param dB database instance
+   * @param dB      database instance
    * @throws SQLException the sql exception
    */
-  public DatabaseCache(DatabaseInterface dB, boolean cornell) throws SQLException {
+  public DatabaseCache(DatabaseInterface dB) throws SQLException {
     if (dB.hasConnection()) {
       realDB = dB;
       this.init();
-      this.loadALLCourses(cornell);
+      this.loadALLCourses();
     } else {
       realDB = null;
     }
@@ -180,13 +180,12 @@ public class DatabaseCache implements DatabaseInterface {
   /**
    * getAllCourseIDs gets all course ids from the courses table to load each course into the cache.
    *
-   * @param cornell boolean representing if cornell pathway or not
-   * @return  the all course ids
+   * @return the all course ids
    * @throws SQLException the sql exception
    */
   @Override
-  public List<String> getAllCourseIDs(boolean cornell) throws SQLException {
-    return realDB.getAllCourseIDs(cornell);
+  public List<String> getAllCourseIDs() throws SQLException {
+    return realDB.getAllCourseIDs();
   }
 
   /**
@@ -197,8 +196,8 @@ public class DatabaseCache implements DatabaseInterface {
    * @throws SQLException the sql exception
    */
   @Override
-  public Map<String, String> getConcentrationsMap(boolean cornell) throws SQLException {
-    return realDB.getConcentrationsMap(cornell);
+  public Map<String, String> getConcentrationsMap() throws SQLException {
+    return realDB.getConcentrationsMap();
   }
 
   /**
@@ -207,8 +206,8 @@ public class DatabaseCache implements DatabaseInterface {
    *
    * @throws SQLException the sql exception
    */
-  private void loadALLCourses(boolean cornell) throws SQLException {
-    List<String> courseIDS = this.getAllCourseIDs(cornell);
+  private void loadALLCourses() throws SQLException {
+    List<String> courseIDS = this.getAllCourseIDs();
     for (String id : courseIDS) {
       this.getCourseData(id);
     }

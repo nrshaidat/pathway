@@ -10,7 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import com.google.common.collect.ImmutableMap;
 import edu.brown.cs.student.pathway.Node;
 import edu.brown.cs.student.pathway.Semester;
@@ -93,6 +92,7 @@ public final class Main {
     FreeMarkerEngine freeMarker = createEngine();
     // Setup Spark Routes
     Spark.get("/home", new HomeHandler(), freeMarker);
+    Spark.post("/signin", new LoginHandler(), freeMarker);
     Spark.get("/login", new LoginHandler(), freeMarker);
     Spark.post("/generate", new GenerateHandler(), freeMarker);
     Spark.get("/faqs", new FaqHandler(), freeMarker);
@@ -109,7 +109,6 @@ public final class Main {
   private static class HomeHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
-      firstLogin = true;
       Map<String, Object> variables = ImmutableMap.of("universityList", UNI);
       return new ModelAndView(variables, "home.ftl");
     }
@@ -124,27 +123,21 @@ public final class Main {
   private static class LoginHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) throws SQLException {
-
-      pathwayProgram = new PathwayProgram(cornell);
-      pathwayProgram.getCourseList(cornell);
-
-      if (firstLogin) {
-        QueryParamsMap qm = req.queryMap();
-        uniName = qm.value("university");
-
-        if (uniName == null) {
-          uniName = "Brown University";
-        }
-        uniNameShort = uniName.split(" ")[0];
-        firstLogin = false;
-
-        if (uniNameShort.equals("Cornell")) {
-          cornell = true;
-        }
+      QueryParamsMap qm = req.queryMap();
+      uniName = qm.value("university");
+      if (uniName == null) {
+        uniName = "Brown University";
+        cornell = false;
+      } else if (uniName.equals("Brown University")) {
+        cornell = false;
+      } else {
+        cornell = true;
       }
+      uniNameShort = uniName.split(" ")[0];
+      pathwayProgram = new PathwayProgram(cornell);
 
       Map<String, Object> variables =
-              ImmutableMap.of("uniName", uniName, "uniNameShort", uniNameShort);
+          ImmutableMap.of("uniName", uniName, "uniNameShort", uniNameShort);
       return new ModelAndView(variables, "main.ftl");
     }
 
@@ -164,29 +157,10 @@ public final class Main {
     public ModelAndView handle(Request req, Response res) throws SQLException {
       List<String> gradeList = pathwayProgram.getGradeList();
       List<String> yearList = pathwayProgram.getYearList();
-
-//      List<String> concentrationList;
-
-//      if (cornell == true) {
-//        System.out.println("cornell mode");
-//      }
-
-
-//      if (cornell) {
-//        System.out.println("===================================");
-//        System.out.println("cornell mode");
-//        System.out.println("===================================");
-//        concentrationList = pathwayProgram.getConcentrationsList(true);
-//        System.out.println(concentrationList);
-//      } else {
-//        //not cornell, Brown pathway
-//        concentrationList = pathwayProgram.getConcentrationsList(false);
-//      }
-
       Map<String, Object> variables = ImmutableMap
-              .of("uniNameShort", uniNameShort, "concentrationList",
-                      pathwayProgram.getConcentrationsList(), "gradeList", gradeList, "yearList", yearList,
-                      "courseList", pathwayProgram.getCourseList(cornell));
+          .of("uniNameShort", uniNameShort, "concentrationList",
+              pathwayProgram.getConcentrationsList(), "gradeList", gradeList, "yearList", yearList,
+              "courseList", pathwayProgram.getCourseList());
       return new ModelAndView(variables, "generate.ftl");
     }
 
@@ -231,10 +205,10 @@ public final class Main {
       List<String> uniques2 = pathwayProgram.getPath2Uniques();
       List<String> uniques3 = pathwayProgram.getPath3Uniques();
       Map<String, Object> variables =
-              ImmutableMap.<String, Object>builder().put("header", display).put("results1", pathway1)
-                      .put("results2", pathway2).put("results3", pathway3).put("stats", pathwayProgram)
-                      .put("uniques1", uniques1).put("uniques2", uniques2).put("uniques3", uniques3)
-                      .build();
+          ImmutableMap.<String, Object>builder().put("header", display).put("results1", pathway1)
+              .put("results2", pathway2).put("results3", pathway3).put("stats", pathwayProgram)
+              .put("uniques1", uniques1).put("uniques2", uniques2).put("uniques3", uniques3)
+              .build();
       return new ModelAndView(variables, "pathway.ftl");
     }
   }
@@ -265,7 +239,7 @@ public final class Main {
       }
       List<String> pathnumlst = new ArrayList<>();
       pathnumlst.add(pathNum);
-      List<String> allCourses = pathwayProgram.getCourseList(cornell);
+      List<String> allCourses = pathwayProgram.getCourseList();
       List<String> addCoursesFall = new ArrayList<>();
       List<String> addCoursesSpring = new ArrayList<>();
 
@@ -291,8 +265,8 @@ public final class Main {
 
       Map<String, Object> variables =
           ImmutableMap.<String, Object>builder().put("id", pathnumlst).put("results", path)
-              .put("courseList", allCourses).put("stats", pathwayProgram).put("fallAdd", addCoursesFall)
-              .put("springAdd", addCoursesSpring).build();
+              .put("courseList", allCourses).put("stats", pathwayProgram)
+              .put("fallAdd", addCoursesFall).put("springAdd", addCoursesSpring).build();
 
       return new ModelAndView(variables, "mypath.ftl");
 
@@ -310,7 +284,7 @@ public final class Main {
     @Override
     public ModelAndView handle(Request req, Response res) {
       Map<String, Object> variables =
-              ImmutableMap.of("title", "Pathway Sign Up", "uniName", uniName);
+          ImmutableMap.of("title", "Pathway Sign Up", "uniName", uniName);
       return new ModelAndView(variables, "signup.ftl");
     }
   }

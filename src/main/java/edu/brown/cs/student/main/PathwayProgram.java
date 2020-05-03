@@ -42,42 +42,43 @@ public class PathwayProgram {
   private String concentration;
   private String concentrationName;
   private static List<String> yearList = new ArrayList<>() {{
-    add("Fall");
-    add("Spring");
-  }};
+      add("Fall");
+      add("Spring");
+    }};
   private static List<String> gradeList = new ArrayList<>() {{
-    add("Freshman");
-    add("Sophomore");
-    add("Junior");
-    add("Senior");
-  }};
+      add("Freshman");
+      add("Sophomore");
+      add("Junior");
+      add("Senior");
+    }};
   private List<String> courseList;
-  private boolean cornell;
 
   /**
    * The PathwayProgram constructor that sets all of the necessary variables. It
    * sets the default values for user signing, sets information about each pathway like the
    * average weekly hours of a course in the pathway, number of courses, and number of semesters
    * in the pathway.
+   * @param cornellUniv boolean for cornell
    *
    * @throws SQLException for problems with querying db.
    */
   public PathwayProgram(boolean cornellUniv) throws SQLException {
-    cornell = cornellUniv;
-    String file = "data/coursesDB.db";
-    Database realDB = new Database(file); // real database that handles sql queries
-    cache = new DatabaseCache(realDB, cornell);
-    concentrationMap = cache.getConcentrationsMap(cornell);
-    concentrationsList = new ArrayList<>(this.concentrationMap.keySet());
-
-
-    courseList = cache.getAllCourseIDs(cornell);
-    if (!cornell) {
-      this.setConcentrationName("Computer Science B.A.");
+    String file;
+    if (cornellUniv) {
+      file = "data/cornellcoursesDB.db";
     } else {
-      this.setConcentrationName("Economics B.A.");
+      file = "data/coursesDB.db";
     }
-
+    Database realDB = new Database(file); // real database that handles sql queries
+    cache = new DatabaseCache(realDB);
+    concentrationMap = cache.getConcentrationsMap();
+    concentrationsList = new ArrayList<>(this.concentrationMap.keySet());
+    courseList = cache.getAllCourseIDs();
+    if (cornellUniv) {
+      this.setConcentrationName("Economics B.A.");
+    } else {
+      this.setConcentrationName("Computer Science B.A.");
+    }
     totalnumcourses1 = 0;
     totalnumcourses2 = 0;
     totalnumcourses3 = 0;
@@ -156,15 +157,15 @@ public class PathwayProgram {
 
   /**
    * Returns a list of Strings representing the courseList.
-   *
    * @return a list of Strings.
    */
-  public List<String> getCourseList(boolean cornell) throws SQLException {
-    courseList = cache.getAllCourseIDs(cornell);
+  public List<String> getCourseList() throws SQLException {
+    courseList = cache.getAllCourseIDs();
     return courseList;
   }
 
-  /**i
+  /**
+   * i
    * Gets avgavghrs 1 path.
    *
    * @return the avgavghrs 1 path
@@ -239,7 +240,7 @@ public class PathwayProgram {
    * @return the numsemesters 2
    */
   public int getNumsemesters2() {
-    if (path2 !=  null) {
+    if (path2 != null) {
       numsemesters2 = this.path2.size();
       return numsemesters2;
     } else {
@@ -294,8 +295,7 @@ public class PathwayProgram {
    * @return a Map of key and value String pairs.
    */
   public Map<String, String> getConcentrationMap() throws SQLException {
-    System.out.println(cornell);
-    concentrationMap = cache.getConcentrationsMap(cornell);
+    concentrationMap = cache.getConcentrationsMap();
     return concentrationMap;
   }
 
@@ -358,7 +358,7 @@ public class PathwayProgram {
    * @throws SQLException if there are errors with querying the database.
    */
   public void makePathways(String con, Set<Node> taken, int sem, boolean aggressive)
-          throws SQLException {
+      throws SQLException {
     this.setConcentrationName(con);
     List<Integer> reqsTmp = cache.getRequirements(concentration + "_rules");
     reqs = reqsTmp.stream().mapToInt(i -> i).toArray();
@@ -507,11 +507,11 @@ public class PathwayProgram {
         path3Courses.addAll(s.getCourses());
       }
       Set<Node> path1UniqueNodes =
-              Sets.difference(path1Courses, Sets.union(path2Courses, path3Courses));
+          Sets.difference(path1Courses, Sets.union(path2Courses, path3Courses));
       Set<Node> path2UniqueNodes =
-              Sets.difference(path2Courses, Sets.union(path1Courses, path3Courses));
+          Sets.difference(path2Courses, Sets.union(path1Courses, path3Courses));
       Set<Node> path3UniqueNodes =
-              Sets.difference(path3Courses, Sets.union(path1Courses, path2Courses));
+          Sets.difference(path3Courses, Sets.union(path1Courses, path2Courses));
       path1Uniques = new ArrayList<>();
       path2Uniques = new ArrayList<>();
       path3Uniques = new ArrayList<>();

@@ -93,7 +93,7 @@ public class Database implements DatabaseInterface {
     try {
       //query the concentrationName table to populate its array of
       String strQuery = "SELECT category, COUNT(*) AS 'available_courses' " + " FROM $tableName "
-              + " GROUP BY category " + " ORDER BY category ASC ";
+          + " GROUP BY category " + " ORDER BY category ASC ";
       String query = strQuery.replace("$tableName", concentrationName);
       prep = conn.prepareStatement(query);
       rs = prep.executeQuery();
@@ -256,7 +256,7 @@ public class Database implements DatabaseInterface {
    * @throws SQLException the sql exception
    */
   public boolean checkConcentrationRulesColNames(String concentrationNameRules)
-          throws SQLException {
+      throws SQLException {
     ResultSet rs = null;
     try {
       DatabaseMetaData metadata = conn.getMetaData();
@@ -296,7 +296,6 @@ public class Database implements DatabaseInterface {
    * @return a boolean representing if the way table column names are of the correct format
    * @throws SQLException the sql exception
    */
-  @SuppressWarnings("checkstyle:MagicNumber")
   public boolean checkCoursesColNames() throws SQLException {
     ResultSet rs = null;
     try {
@@ -560,7 +559,7 @@ public class Database implements DatabaseInterface {
     List<Integer> reqs = new ArrayList<>();
     try {
       String strQuery =
-              " SELECT * " + " FROM $tableName " + " ORDER BY cast(category as unsigned) ASC ";
+          " SELECT * " + " FROM $tableName " + " ORDER BY cast(category as unsigned) ASC ";
       String query = strQuery.replace("$tableName", tableName);
       prep = conn.prepareStatement(query);
       rs = prep.executeQuery();
@@ -594,33 +593,20 @@ public class Database implements DatabaseInterface {
    * @throws SQLException the sql exception
    */
   @Override
-  public Map<String, String> getConcentrationsMap(boolean cornell) throws SQLException {
+  public Map<String, String> getConcentrationsMap() throws SQLException {
 
     PreparedStatement prep = null;
     ResultSet rs = null;
     Map<String, String> concentrationMap = new HashMap<>();
     try {
-      if (!cornell) {
-        prep = conn.prepareStatement(
-                "SELECT * FROM concentrations ORDER BY concentration_name ASC ");
-        rs = prep.executeQuery();
-        while (rs.next()) {
-          concentrationMap.put(rs.getString("concentration_name"), rs.getString("concentration_id"));
-        }
-        rs.close();
-        prep.close();
-        return concentrationMap;
-      } else {
-        prep = conn.prepareStatement(
-                "SELECT * FROM cornellconcentrations");
-        rs = prep.executeQuery();
-        while (rs.next()) {
-          concentrationMap.put(rs.getString("concentration_name"), rs.getString("concentration_id"));
-        }
-        rs.close();
-        prep.close();
-        return concentrationMap;
+      prep = conn.prepareStatement("SELECT * FROM concentrations ORDER BY concentration_name ASC ");
+      rs = prep.executeQuery();
+      while (rs.next()) {
+        concentrationMap.put(rs.getString("concentration_name"), rs.getString("concentration_id"));
       }
+      rs.close();
+      prep.close();
+      return concentrationMap;
     } catch (SQLException e) {
       return null;
     } finally {
@@ -667,38 +653,23 @@ public class Database implements DatabaseInterface {
   /**
    * getAllCourseIDs gets all the course's id's for the cache database to populate the cache with.
    *
-   * @param cornell boolean seeing if cornell pathway
    * @return a list of concentration names
    * @throws SQLException the sql exception
    */
   @Override
-  public List<String> getAllCourseIDs(boolean cornell) throws SQLException {
+  public List<String> getAllCourseIDs() throws SQLException {
     PreparedStatement prep = null;
     ResultSet rs = null;
     List<String> courseIDs = new ArrayList<>();
     try {
-
-      if (!cornell) {
-        prep = conn.prepareStatement("SELECT course_id " + " FROM courses ORDER BY course_id asc");
-        rs = prep.executeQuery();
-        while (rs.next()) {
-          courseIDs.add(rs.getString("course_id"));
-        }
-        rs.close();
-        prep.close();
-        return courseIDs;
-      } else {
-        //if cornell
-        prep = conn.prepareStatement("SELECT course_id " + " FROM cornellcourses ORDER BY course_id asc");
-        rs = prep.executeQuery();
-        while (rs.next()) {
-          courseIDs.add(rs.getString("course_id"));
-        }
-        rs.close();
-        prep.close();
-        return courseIDs;
+      prep = conn.prepareStatement("SELECT course_id " + " FROM courses ORDER BY course_id asc");
+      rs = prep.executeQuery();
+      while (rs.next()) {
+        courseIDs.add(rs.getString("course_id"));
       }
-
+      rs.close();
+      prep.close();
+      return courseIDs;
     } catch (SQLException e) {
       return courseIDs;
     } finally {
