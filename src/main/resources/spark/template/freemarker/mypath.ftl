@@ -164,12 +164,6 @@
                             <input id="course-to-swap" placeholder='e.g. BIOL 0200'/>
                         </div>
                             <label style="font-family: Lato; font-weight: bold">Swap In Course: </label>
-<#--                            <select name="eq-courses" key="eq-courses" id="multi-select2"-->
-<#--                                    class="ui fluid search selection dropdown" multiple="">-->
-<#--                                <#list courseList as item>-->
-<#--                                    <option value="${item}">${item}</option>-->
-<#--                                </#list>-->
-<#--                            </select>-->
                         <br>
                         <label>Fall Courses: </label>
                         <select name="courses" key="courses" id="multi-selectFS"
@@ -199,7 +193,6 @@
                 <script>
                     $('#multi-selectFS').dropdown();
                     $('#multi-selectSS').dropdown();
-                    // $('#multi-select2').dropdown();
                 </script>
             </div>
         </div>
@@ -246,6 +239,9 @@
                                         <#if semester.sems1 == 0>
                                             Offered: Spring
                                         </#if>
+                                        <br>
+                                        <br>
+                                        <a href="${semester.url1}" target="_blank">More Details</a>
                                     </div>
                                 </div>
                             </#if>
@@ -268,6 +264,9 @@
                                         <#if semester.sems2 == 0>
                                             Offered: Spring
                                         </#if>
+                                        <br>
+                                        <br>
+                                        <a href="${semester.url2}" target="_blank">More Details</a>
                                     </div>
                                 </div>
                             </#if>
@@ -290,6 +289,9 @@
                                         <#if semester.sems3 == 0>
                                             Offered: Spring
                                         </#if>
+                                        <br>
+                                        <br>
+                                        <a href="${semester.url3}" target="_blank">More Details</a>
                                     </div>
                                 </div>
                             </#if>
@@ -312,6 +314,9 @@
                                         <#if semester.sems4 == 0>
                                             Offered: Spring
                                         </#if>
+                                        <br>
+                                        <br>
+                                        <a href="${semester.url4}" target="_blank">More Details</a>
                                     </div>
                                 </div>
                             </#if>
@@ -423,16 +428,25 @@
         let courses;
         if (parseInt(lastCharacter) % 2 === 1) {
             courses = $('#multi-selectF').dropdown('get values');
+            $('#multi-selectF :selected').val('').trigger("change");
+            $('#multi-selectF :selected').attr("disabled", true);
         } else {
             courses = $('#multi-selectS').dropdown('get values');
+            $('#multi-selectS :selected').val('').trigger("change");
+            $('#multi-selectS :selected').attr("disabled", true);
         }
 
         const parent = document.getElementById("myBtn" + lastCharacter);
         const child = parent.querySelectorAll(".description")[0];
 
         for (let i = 0; i < courses.length; i++) {
-            const node = document.createElement("P");
+            const node = document.createElement("div");
+            node.style.cursor = "pointer";
+            node.style.fontSize = "1.1em";
+            node.style.marginBottom = "1em";
+            node.style.position = "relative";
             node.innerHTML = courses[i];
+            node.setAttribute("id", courses[i]);
             child.appendChild(node);
         }
 
@@ -463,9 +477,9 @@
         for (let i = 0; i < children.length; i++) {
 
             let name = children[i].getAttribute("id");
-            if (name != null && name.toLowerCase().replace(/\s/g, '') === moveCourse.value.toLowerCase().replace(/\s/g, '')) {
+            if (name != null && name.toLowerCase().replace(/\s/g, '') === moveCourse.
+                                                            value.toLowerCase().replace(/\s/g, '')) {
                 child.removeChild(children[i]);
-
 
                 const parent2 = document.getElementById("myBtn" + destSem.value);
                 const child2 = parent2.querySelectorAll(".description")[0];
@@ -502,16 +516,21 @@
         const children = [].slice.call(child.getElementsByTagName('div'), 0);
         for (let i = 0; i < children.length; i++) {
             let name = children[i].getAttribute("id");
-            if (name != null && name.toLowerCase().replace(/\s/g, '') === swapCourse.value.toLowerCase().replace(/\s/g, '')) {
+            console.log(name);
+            if (name != null && name.toLowerCase().replace(/\s/g, '') === swapCourse.
+                                                            value.toLowerCase().replace(/\s/g, '')) {
                 child.removeChild(children[i]);
             }
         }
 
         for (let i = 0; i < courses.length; i++) {
-            const node = document.createElement("P");
+            const node = document.createElement("div");
             node.style.cursor = "pointer";
             node.style.fontSize = "1.1em";
+            node.style.marginBottom = "1em";
+            node.style.position = "relative";
             node.innerHTML = courses[i];
+            node.setAttribute("id", courses[i]);
             child.appendChild(node);
         }
 

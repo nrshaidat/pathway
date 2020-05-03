@@ -134,6 +134,7 @@ public class DatabaseCache implements DatabaseInterface {
           tmp.setName(cachetmp.getName());
           tmp.setPrereqs(cachetmp.getPrereqs());
           tmp.setProfessor(cachetmp.getProfessor());
+          tmp.setSsurl(cachetmp.getSsurl());
           if (nody.getNextID().length() > 0) {
             Node next = this.getCourseData(nody.getNextID());
             next.setCategory(nody.getCategory());

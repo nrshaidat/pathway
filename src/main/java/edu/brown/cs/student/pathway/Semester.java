@@ -44,6 +44,10 @@ public class Semester {
   private String prof2;
   private String prof3;
   private String prof4;
+  private String url1;
+  private String url2;
+  private String url3;
+  private String url4;
   private int sems1;
   private int sems2;
   private int sems3;
@@ -128,6 +132,7 @@ public class Semester {
           courseid1 = n.getId();
           coursename1 = n.getName();
           prof1 = n.getProfessor();
+          url1 = n.getSsurl();
           Set<Integer> semSet = n.getSemestersOffered();
           if (semSet.size() == 2) {
             sems1 = 2;
@@ -143,6 +148,7 @@ public class Semester {
           courseid2 = n.getId();
           coursename2 = n.getName();
           prof2 = n.getProfessor();
+          url2 = n.getSsurl();
           semSet = n.getSemestersOffered();
           if (semSet.size() == 2) {
             sems2 = 2;
@@ -158,6 +164,7 @@ public class Semester {
           courseid3 = n.getId();
           coursename3 = n.getName();
           prof3 = n.getProfessor();
+          url3 = n.getSsurl();
           semSet = n.getSemestersOffered();
           if (semSet.size() == 2) {
             sems3 = 2;
@@ -173,6 +180,7 @@ public class Semester {
           courseid4 = n.getId();
           coursename4 = n.getName();
           prof4 = n.getProfessor();
+          url4 = n.getSsurl();
           semSet = n.getSemestersOffered();
           if (semSet.size() == 2) {
             sems4 = 2;
@@ -295,6 +303,38 @@ public class Semester {
    */
   public String getProf4() {
     return prof4;
+  }
+
+  /**
+   * Get url1.
+   * @return url
+   */
+  public String getUrl1() {
+    return url1;
+  }
+
+  /**
+   * Get url2.
+   * @return url
+   */
+  public String getUrl2() {
+    return url2;
+  }
+
+  /**
+   * Get url3.
+   * @return url
+   */
+  public String getUrl3() {
+    return url3;
+  }
+
+  /**
+   * Get url4.
+   * @return url
+   */
+  public String getUrl4() {
+    return url4;
   }
 
   /**

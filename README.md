@@ -112,23 +112,26 @@ None.
         -Cleaning CAB parsing data (removing nulls, extra commas, numbers), debugging cab 
          scraping, and figuring out CAB / Self Service scraping 
         -Routing and various handling of user input
-        -Styling and adding functionality to front end (navbar)
+        -Navigation bar functionality
         -Extensive debugging of all parts (db, algo & frontend)
 	    -Setting up login, login as guest, and sign up routing correctly
-	    -Setting up cornell's extensibility 
-	    -22/23 of the PathwayProgram junit tests
+	    -Setting up university extensibility 
 	    -Setting up PathwayProgram
+	    -PathwayProgram JUnit tests
 
 	Mel:
         -Critical Review scraping
-        -Manually double checking, fixing inaccurate prereqs, and entering missing prereqs for all courses in ECON
+        -Manually double checking, fixing inaccurate prereqs, and entering missing prereqs for 
+         all courses in ECON
         -Concentrations table in the database
         -Connecting Spark to our Java code
         -Setting up the entire front end framework
         -Routing, alerting and comprehensive handling of user input
         -Styling and adding functionality to front end (login, faq, main form, 3-pathway display)
         -Transitioned styling to semantic ui to improve user experience 
+        -Solving Flash of Unstyled Content (when the HTML loads before the CSS)
 	    -Setting up cornell db and integrating cornell into GUI
+	    -Setting up university extensibility 
        
 	Ifechi:
         -Developing and optimizing the fundamental makePathway algorithm
@@ -140,18 +143,18 @@ None.
          for all courses in CHEM, PHYS, HIAA.
         -Solving deep copy of the course set to make multiple unique and valid pathways
         -mypath.ftl & mypath.css
-        -Implementing and styling customization functionality on the front end (add, move, swap),
-         mapping out and handling all edge cases 
-        -Implementing and styling hover to show course details
-        -Styling semester boxes, arrows, navigation bar, and pathway statistics (everything responsive) 
-	    -Styling nav bar
+        -Implementing and styling customization functionality on the front end (add, move, swap)
+        -Implementing and styling hover to show course details + linking to Self-Service
+        -Adjusting style according to pathway data (grouping by year and fall/spring)
+        -Styling semester boxes, arrows, and pathway statistics (everything responsive) 
+	    -Styling all navigation bars
         
     Nick:
         -CAB/self service scraping
         -Manually fixing prereqs for CHEM
         -Unit testing CAB database outputs
 	    -Username/password fields on sign up page, guest button in the login page
-	    -1/23 junit tests on PathwayProgram Tests
+	    -Unique courses for 3-pathway display and pathway statistics
 		
 
 #### Member: Melissa Cui
