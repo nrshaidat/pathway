@@ -47,12 +47,11 @@
 
 <p>Your personalized concentration pathway generator for ${uniName}. <p>
     <p> Pathway generates courses within your specified concentration to help you plan out your next years at ${uniNameShort}. </p>
+
 <h2>Login</h2>
-
 <form action="/mypath" method="post">
-
     <div class="container">
-        <label name="username" id="username" for="uname"><b></b></label>
+        <label name="username" id="username" for="uname"><b>Username</b></label>
         <input name="username" id="username"
                type="text" placeholder="Enter Username" name="uname" value="" required>
 
@@ -60,17 +59,24 @@
         <input name="password" id="password"
                type="password" placeholder="Enter Password" name="psw" required>
 
-        <button type="submit">Login</button>
+
+
+
     </div>
 
-</form>
-<br>
+    <br>
+    <button type="submit">Login</button>
 
+</form>
+
+<br>
+<br>
+<br>
 <form action="/generate" method="post">
     <button id="guest" type="submit">Login as Guest</button>
 </form>
 
-<h3><a href="/signup" class="link"> Sign Up </a></h3>
+<h3><a href="/signup"> Sign Up </a></h3>
 
 <br>
 

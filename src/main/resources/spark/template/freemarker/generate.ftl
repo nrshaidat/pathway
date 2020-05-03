@@ -21,7 +21,7 @@
           <a href="/faqs" class="item">FAQ</a>
         </form>
         <form action="/login" method="post">
-          <a href="/login" class="item">Log in</a>
+          <a href="/login" class="item">Log out</a>
         </form>
         <form action="/home" method="get">
           <a href="/home" class="item"> Home </a>
