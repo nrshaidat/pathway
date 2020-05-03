@@ -10,10 +10,10 @@ import java.util.Map;
 import java.util.Set;
 import edu.brown.cs.student.pathway.Node;
 
-
 /**
  * DatabaseCache that has a course cache and calls on the real database that handles the sql
  * queries.
+ * @author nrshaida (Natalie Rshaidat)
  */
 public class DatabaseCache implements DatabaseInterface {
   private DatabaseInterface realDB;
@@ -27,6 +27,7 @@ public class DatabaseCache implements DatabaseInterface {
    *
    * @param dB      database instance
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   public DatabaseCache(DatabaseInterface dB) throws SQLException {
     if (dB.hasConnection()) {
@@ -40,6 +41,7 @@ public class DatabaseCache implements DatabaseInterface {
 
   /**
    * init gets called once per run of the application and sets up the cache.
+   * @author nrshaida (Natalie Rshaidat)
    */
   private void init() {
     coursesLoader = new CacheLoader<String, Node>() { // anonymous CacheLoader class
@@ -59,6 +61,7 @@ public class DatabaseCache implements DatabaseInterface {
    *
    * @return boolean representing if table is empty of not
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Override
   public boolean isEmptyCourses() throws SQLException {
@@ -71,6 +74,7 @@ public class DatabaseCache implements DatabaseInterface {
    *
    * @param courseID course id such as CSCI 0320
    * @return Node object with everything filled in except category and next
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Override
   public Node getCourseData(String courseID) {
@@ -88,6 +92,7 @@ public class DatabaseCache implements DatabaseInterface {
    * @return an int array where the index is the category and the value at that index is the
    * number of courses needed to fulfill the requirement
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Override
   public List<Integer> getRequirements(String tableName) throws SQLException {
@@ -105,6 +110,7 @@ public class DatabaseCache implements DatabaseInterface {
    * @param tableName the concentrationName table name to search for
    * @return a set of courses all populated with category and next populated
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Override
   public Set<Node> getConcentrationCourses(String tableName) throws SQLException {
@@ -146,6 +152,7 @@ public class DatabaseCache implements DatabaseInterface {
    * hasConnection checks if the database could connect.
    *
    * @return a boolean if the database was able to connect
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Override
   public boolean hasConnection() {
@@ -160,6 +167,7 @@ public class DatabaseCache implements DatabaseInterface {
    *                          with ba/bs on the end
    * @return a boolean if the database has the accurate concentration data from the db
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Override
   public boolean checkConcentration(String concentrationName) throws SQLException {
@@ -171,6 +179,7 @@ public class DatabaseCache implements DatabaseInterface {
    *
    * @return a boolean if the database has the courses data from the db
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Override
   public boolean checkCoursesTable() throws SQLException {
@@ -182,6 +191,7 @@ public class DatabaseCache implements DatabaseInterface {
    *
    * @return the all course ids
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Override
   public List<String> getAllCourseIDs() throws SQLException {
@@ -194,6 +204,7 @@ public class DatabaseCache implements DatabaseInterface {
    *
    * @return a list of concentration names
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Override
   public Map<String, String> getConcentrationsMap() throws SQLException {
@@ -205,6 +216,7 @@ public class DatabaseCache implements DatabaseInterface {
    * called on initialization of the cache object.
    *
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   private void loadALLCourses() throws SQLException {
     List<String> courseIDS = this.getAllCourseIDs();

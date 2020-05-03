@@ -7,13 +7,10 @@ import edu.brown.cs.student.pathway.Node;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -21,12 +18,14 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * DatabaseCacheTest.
+ * @author nrshaida (Natalie Rshaidat)
  */
 public class DatabaseCacheTest {
   DatabaseInterface cache;
 
   /**
    * Sets up the database connection.
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Before
   public void setUp() throws SQLException {
@@ -37,6 +36,7 @@ public class DatabaseCacheTest {
 
   /**
    * Resets the the databases.
+   * @author nrshaida (Natalie Rshaidat)
    */
   @After
   public void tearDown() {
@@ -46,6 +46,7 @@ public class DatabaseCacheTest {
   /**
    * Tests the getConcentrationCourses method returns the correct course data
    * the current db.
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void validGetConcentrationData() throws SQLException {
@@ -100,6 +101,7 @@ public class DatabaseCacheTest {
 
   /**
    * Tests invalid input on getters in the cache.
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void invalidInput() throws SQLException {
@@ -112,6 +114,7 @@ public class DatabaseCacheTest {
 
   /**
    * Tests invalid input on getters in the cache.
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void invaliddb() throws SQLException {
@@ -124,6 +127,7 @@ public class DatabaseCacheTest {
 
   /**
    * Tests invalid input on getters in the cache.
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void invalidcol() throws SQLException {
@@ -136,6 +140,7 @@ public class DatabaseCacheTest {
 
   /**
    * Tests valid input on getters in the cache.
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void validdb() throws SQLException {
@@ -148,6 +153,7 @@ public class DatabaseCacheTest {
 
   /**
    * Tests getConcentrationsMap method in cache.
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void validgetConcentrationsMap() throws SQLException {
@@ -183,6 +189,7 @@ public class DatabaseCacheTest {
    *
    * @param cp the cp
    * @return the map
+   * @author nrshaida (Natalie Rshaidat)
    */
   public Map<String, Node> covertDict(Set<Node> cp) {
     Map<String, Node> mapy = new HashMap<>();

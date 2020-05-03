@@ -63,6 +63,7 @@ public class Node {
    * @param nextid   the course ID of the next course in a sequence if none exists then it is an
    *                 empty string
    * @param cat      the category associated with the course
+   * @author nrshaida (Natalie Rshaidat)
    */
   public Node(String courseID, String nextid, int cat) {
     id = courseID;
@@ -71,11 +72,11 @@ public class Node {
   }
 
   /**
-   * Gets cab url.
+   * Gets self service url.
    *
    * @return the cab url
    */
-  public String getCABurl() {
+  public String getSsurl() {
     return ssurl;
   }
 

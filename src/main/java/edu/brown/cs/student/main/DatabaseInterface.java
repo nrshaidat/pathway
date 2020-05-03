@@ -9,6 +9,7 @@ import java.util.Set;
 
 /**
  * DatabaseInterface that the sql database and the cache database implement.
+ * @author nrshaida (Natalie Rshaidat)
  */
 public interface DatabaseInterface {
   /**
@@ -17,6 +18,7 @@ public interface DatabaseInterface {
    *
    * @return boolean representing if table is empty of not
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   boolean isEmptyCourses() throws SQLException;
 
@@ -27,6 +29,7 @@ public interface DatabaseInterface {
    * @param courseID course id such as CSCI 0320
    * @return Node object with everything filled in except category and next
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   Node getCourseData(String courseID) throws SQLException;
 
@@ -37,6 +40,7 @@ public interface DatabaseInterface {
    * @return an int array where the index is the category and the value at that index is the number
    * of courses needed to fulfill the requirement
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   List<Integer> getRequirements(String tableName) throws SQLException;
 
@@ -47,6 +51,7 @@ public interface DatabaseInterface {
    * @param tableName the concentrationName table name to search for
    * @return a set of courses all populated with category and next populated
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   Set<Node> getConcentrationCourses(String tableName) throws SQLException;
 
@@ -54,6 +59,7 @@ public interface DatabaseInterface {
    * hasConnection checks if the database could connect.
    *
    * @return a boolean if the database was able to connect
+   * @author nrshaida (Natalie Rshaidat)
    */
   boolean hasConnection();
 
@@ -65,6 +71,7 @@ public interface DatabaseInterface {
    *                          with ba/bs on the end
    * @return a boolean if the database has the accurate concentration data from the db
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   boolean checkConcentration(String concentrationName) throws SQLException;
 
@@ -73,6 +80,7 @@ public interface DatabaseInterface {
    *
    * @return a boolean if the database has the courses data from the db
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   boolean checkCoursesTable() throws SQLException;
 
@@ -81,6 +89,7 @@ public interface DatabaseInterface {
    *
    * @return the all course ids
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   List<String> getAllCourseIDs() throws SQLException;
 
@@ -91,6 +100,7 @@ public interface DatabaseInterface {
    *
    * @return a list of concentration names
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   Map<String, String> getConcentrationsMap() throws SQLException;
 }

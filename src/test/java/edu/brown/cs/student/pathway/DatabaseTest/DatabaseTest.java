@@ -5,13 +5,11 @@ import edu.brown.cs.student.pathway.Node;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -19,12 +17,16 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * DatabaseTest.
+ *
+ * @author nrshaida (Natalie Rshaidat)
  */
 public class DatabaseTest {
   Database realDB;
 
   /**
    * Sets up the database connection.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Before
   public void setUp() {
@@ -34,6 +36,8 @@ public class DatabaseTest {
 
   /**
    * Resets the the databases.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @After
   public void tearDown() {
@@ -42,6 +46,8 @@ public class DatabaseTest {
 
   /**
    * Tests the checkCoursesTable method returns true for the current db.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void validCheckCoursesTable() throws SQLException {
@@ -52,6 +58,8 @@ public class DatabaseTest {
 
   /**
    * Tests the checkCoursesColNames method returns true for the current db.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void validCoursesColNames() throws SQLException {
@@ -62,6 +70,8 @@ public class DatabaseTest {
 
   /**
    * Tests the checkTableExists method returns true for the courses table in the current db.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void validCheckTableExists() throws SQLException {
@@ -72,6 +82,8 @@ public class DatabaseTest {
 
   /**
    * Tests the isEmptyCourses method returns false for the current db.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void validisEmptyCourses() throws SQLException {
@@ -82,6 +94,8 @@ public class DatabaseTest {
 
   /**
    * Tests the hasConnection method returns true for the current db.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void validhasConnection() {
@@ -93,6 +107,8 @@ public class DatabaseTest {
   /**
    * Tests the checkConcentration method returns true for a valid concentration in the the current
    * db.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void validCheckConcentration() throws SQLException {
@@ -105,6 +121,8 @@ public class DatabaseTest {
   /**
    * Tests the checkConcentration method returns false for an invalid concentration not in the the
    * current db.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void invalidCheckConcentration() throws SQLException {
@@ -117,6 +135,8 @@ public class DatabaseTest {
   /**
    * Tests the checkConcentrationColNames method returns true for a valid concentration in the the
    * current db.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void validCheckConcentrationColNames() throws SQLException {
@@ -129,6 +149,8 @@ public class DatabaseTest {
   /**
    * Tests the checkConcentrationRulesColNames method returns true for a valid concentration in the
    * the current db.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void validCheckConcentrationRulesColNames() throws SQLException {
@@ -139,10 +161,11 @@ public class DatabaseTest {
     tearDown();
   }
 
-
   /**
    * Tests the getRequirements method returns the valid list for a valid concentration in the
    * the current db.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void validGetRequirements() throws SQLException {
@@ -175,6 +198,8 @@ public class DatabaseTest {
   /**
    * Tests the getRequirements method returns null an invalid concentration in the
    * the current db.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void invalidGetRequirements() throws SQLException {
@@ -188,6 +213,8 @@ public class DatabaseTest {
 
   /**
    * Tests the parseSemestersOffered method returns the correct values for valid input.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void validParseSemestersOffered() {
@@ -210,6 +237,8 @@ public class DatabaseTest {
 
   /**
    * Tests the parseSemestersOffered method returns null for invalid input.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void invalidParseSemestersOffered() {
@@ -221,7 +250,10 @@ public class DatabaseTest {
   }
 
   /**
-   * Tests the parsePrereqs method returns the correct values for a multitude of variations of prereqs.
+   * Tests the parsePrereqs method returns the correct values for a multitude of variations of
+   * prereqs.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void validParsePrereqs() throws SQLException {
@@ -286,6 +318,8 @@ public class DatabaseTest {
   /**
    * Tests the parsePrereqs method returns the correct values for prereqs with courses that are
    * not offered at Brown anymore aka not in the courses table.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void invalidParsePrereqs() throws SQLException {
@@ -303,7 +337,7 @@ public class DatabaseTest {
     assertTrue(sol1.get(0).contains(cs19));
     List<Set<Node>> sol2 = realDB.parsePrereqs(notOfferedOrs);
     assertEquals(2, sol2.size());
-    assertEquals(1,sol2.get(0).size());
+    assertEquals(1, sol2.get(0).size());
     assertTrue(sol2.get(0).contains(cs15));
     assertTrue(sol2.get(1).contains(math10));
     List<Set<Node>> sol3 = realDB.parsePrereqs("");
@@ -314,6 +348,8 @@ public class DatabaseTest {
   /**
    * Tests the getCourseData method returns the correct course data for valid input
    * the current db.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void validGetCourseData() throws SQLException {
@@ -334,8 +370,7 @@ public class DatabaseTest {
     assertTrue(math10.getSemestersOffered().contains(1));
     assertEquals("https://selfservice.brown.edu/ss/bwckctlg"
             + ".p_disp_course_detail?cat_term_in=201920&subj_code_in=MATH&crse_numb_in=0100",
-        math10.getCABurl());
-
+        math10.getSsurl());
     //math90
     assertEquals("MATH 0090", math9.getId());
     assertEquals("Introductory Calculus, Part I", math9.getName());
@@ -381,6 +416,8 @@ public class DatabaseTest {
 
   /**
    * Tests the getCourseData method returns null for invalid input.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void invalidGetCourseData() throws SQLException {
@@ -394,6 +431,8 @@ public class DatabaseTest {
   /**
    * Tests the getConcentrationCourses method returns the correct course data
    * the current db.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void validGetConcentrationData() throws SQLException {
@@ -402,42 +441,41 @@ public class DatabaseTest {
     Set<Node> comp = realDB.getConcentrationCourses(validCon);
     assertEquals(18, comp.size());
     Map<String, Node> mapy = this.covertDict(comp);
-    Node math10 = realDB.getCourseData("MATH 0100");
     assertEquals("MATH 0100", mapy.get("MATH 0090").getNextID());
     assertEquals(0, mapy.get("MATH 0090").getCategory());
     assertEquals(1, mapy.get("BIOL 0200").getCategory());
-    assertEquals("",mapy.get("BIOL 0200").getNextID());
+    assertEquals("", mapy.get("BIOL 0200").getNextID());
     assertEquals(2, mapy.get("BIOL 0470").getCategory());
-    assertEquals("",mapy.get("BIOL 0470").getNextID());
+    assertEquals("", mapy.get("BIOL 0470").getNextID());
     assertEquals(3, mapy.get("BIOL 0280").getCategory());
-    assertEquals("",mapy.get("BIOL 0280").getNextID());
+    assertEquals("", mapy.get("BIOL 0280").getNextID());
     assertEquals(3, mapy.get("BIOL 0500").getCategory());
-    assertEquals("",mapy.get("BIOL 0500").getNextID());
+    assertEquals("", mapy.get("BIOL 0500").getNextID());
     assertEquals(4, mapy.get("CHEM 0100").getCategory());
-    assertEquals("CHEM 0330",mapy.get("CHEM 0100").getNextID());
+    assertEquals("CHEM 0330", mapy.get("CHEM 0100").getNextID());
     assertEquals(4, mapy.get("CHEM 0350").getCategory());
-    assertEquals("",mapy.get("CHEM 0350").getNextID());
+    assertEquals("", mapy.get("CHEM 0350").getNextID());
     assertEquals("CSCI 0160", mapy.get("CSCI 0150").getNextID());
     assertEquals(5, mapy.get("CSCI 0150").getCategory());
     assertEquals("CSCI 0180", mapy.get("CSCI 0170").getNextID());
     assertEquals(5, mapy.get("CSCI 0170").getCategory());
-    assertEquals("",mapy.get("CSCI 0190").getNextID());
+    assertEquals("", mapy.get("CSCI 0190").getNextID());
     assertEquals(5, mapy.get("CSCI 0190").getCategory());
-    assertEquals("",mapy.get("APMA 1650").getNextID());
+    assertEquals("", mapy.get("APMA 1650").getNextID());
     assertEquals(6, mapy.get("APMA 1650").getCategory());
-    assertEquals("",mapy.get("CSCI 1450").getNextID());
+    assertEquals("", mapy.get("CSCI 1450").getNextID());
     assertEquals(6, mapy.get("CSCI 1450").getCategory());
-    assertEquals("",mapy.get("MATH 1610").getNextID());
+    assertEquals("", mapy.get("MATH 1610").getNextID());
     assertEquals(6, mapy.get("MATH 1610").getCategory());
-    assertEquals("",mapy.get("CSCI 1810").getNextID());
+    assertEquals("", mapy.get("CSCI 1810").getNextID());
     assertEquals(7, mapy.get("CSCI 1810").getCategory());
-    assertEquals("",mapy.get("APMA 1080").getNextID());
+    assertEquals("", mapy.get("APMA 1080").getNextID());
     assertEquals(7, mapy.get("APMA 1080").getCategory());
-    assertEquals("CSCI 1420",mapy.get("MATH 0520").getNextID());
+    assertEquals("CSCI 1420", mapy.get("MATH 0520").getNextID());
     assertEquals(8, mapy.get("MATH 0520").getCategory());
-    assertEquals("",mapy.get("APMA 1690").getNextID());
+    assertEquals("", mapy.get("APMA 1690").getNextID());
     assertEquals(8, mapy.get("APMA 1690").getCategory());
-    assertEquals("",mapy.get("APMA 1660").getNextID());
+    assertEquals("", mapy.get("APMA 1660").getNextID());
     assertEquals(8, mapy.get("APMA 1660").getCategory());
     tearDown();
   }
@@ -445,6 +483,8 @@ public class DatabaseTest {
   /**
    * Tests the getConcentrationCourses method returns the null for an invalid table name in
    * the current db.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void invalidGetConcentrationData() throws SQLException {
@@ -458,19 +498,21 @@ public class DatabaseTest {
   /**
    * Tests that the courses data does not have a loop for example VISA 1520 says it has VISA 1530 as
    * a prereq and VISA 1530 has VISA 1520 as a prereq in the current db.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void validCourseNoLoops() throws SQLException {
     setUp();
     assertTrue(realDB.hasLoop());
-
     tearDown();
   }
 
 
-
   /**
    * Tests the multiple db methods on an invalid db with wrong data types.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void invalidDBType() throws SQLException {
@@ -487,6 +529,8 @@ public class DatabaseTest {
 
   /**
    * Tests the multiple db methods on an invalid db with wrong data types.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void invalidDBCols() throws SQLException {
@@ -499,16 +543,18 @@ public class DatabaseTest {
     assertFalse(realdb.checkConcentration(conc));
     assertFalse(realdb.checkConcentrationRulesColNames(concr2));
     assertFalse(realdb.checkConcentrationRulesColNames(concr1));
-    realdb = null;
   }
+
   /**
    * Tests that the concentration map is valid.
+   *
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void validgetConcentrationsMap() throws SQLException {
     setUp();
     Map<String, String> mapy = realDB.getConcentrationsMap();
-    assertEquals(9,mapy.size());
+    assertEquals(9, mapy.size());
     //gui names is key
     //table names is value
     assertTrue(mapy.containsKey("Economics B.A."));
@@ -519,10 +565,10 @@ public class DatabaseTest {
     assertEquals("cognitiveneuroscienceba", mapy.get("Cognitive Neuroscience B.A."));
     assertTrue(mapy.containsKey("Cognitive Neuroscience B.S."));
     assertEquals("cognitiveneurosciencebs", mapy.get("Cognitive Neuroscience B.S."));
-    assertTrue(mapy.containsKey("Computational Biology (Applied Mathematics and Statistics Track)"
-        + " B.S."));
-    assertEquals("computationalbiologyappliedmathematicsandstatisticstrackbs", mapy.get(
-        "Computational Biology (Applied Mathematics and Statistics Track) B.S."));
+    assertTrue(mapy.containsKey(
+        "Computational Biology (Applied Mathematics and Statistics Track)" + " B.S."));
+    assertEquals("computationalbiologyappliedmathematicsandstatisticstrackbs",
+        mapy.get("Computational Biology (Applied Mathematics and Statistics Track) B.S."));
     assertTrue(mapy.containsKey("Computational Biology B.A."));
     assertEquals("computationalbiologyba", mapy.get("Computational Biology B.A."));
     assertTrue(mapy.containsKey("Computer Science B.A."));
@@ -530,11 +576,10 @@ public class DatabaseTest {
     assertTrue(mapy.containsKey("History of Art and Architecture B.A."));
     assertEquals("historyofartandarchitectureba", mapy.get("History of Art and Architecture B.A."));
     assertTrue(mapy.containsKey("Computational Biology (Computer Science Track) B.S."));
-    assertEquals("computationalbiologycomputersciencetrackbs", mapy.get("Computational Biology "
-        + "(Computer Science Track) B.S."));
+    assertEquals("computationalbiologycomputersciencetrackbs",
+        mapy.get("Computational Biology " + "(Computer Science Track) B.S."));
     tearDown();
   }
-
 
   /**
    * CovertDict is a helper method that converts the set of nodes to a dictionary for
@@ -542,6 +587,7 @@ public class DatabaseTest {
    *
    * @param cp the cp
    * @return the map
+   * @author nrshaida (Natalie Rshaidat)
    */
   public Map<String, Node> covertDict(Set<Node> cp) {
     Map<String, Node> mapy = new HashMap<>();

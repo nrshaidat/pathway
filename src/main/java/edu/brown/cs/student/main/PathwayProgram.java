@@ -13,7 +13,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * PathwayProgram.
+ * PathwayProgram handles integrating the Pathway class, the main class aka user input, and the
+ * database cache.
+ * @author nrshaida (Natalie Rshaidat)
  */
 public class PathwayProgram {
   private static final int MAGICNUM = 7;
@@ -61,6 +63,7 @@ public class PathwayProgram {
    *
    * @param univ string representing the first word in the unversity name ie brown or cornell
    * @throws SQLException for problems with querying db.
+   * @author nrshaida (Natalie Rshaidat)
    */
   public PathwayProgram(String univ) throws SQLException {
     String file;
@@ -91,6 +94,7 @@ public class PathwayProgram {
    * @param id the id
    * @return the course data
    * @throws SQLException the sql exception
+   * @author iilozor (Ifechi Ilozor)
    */
   public Node getCourseData(String id) throws SQLException {
     return cache.getCourseData(id);
@@ -100,6 +104,7 @@ public class PathwayProgram {
    * Gets the year list to display in GUI.
    *
    * @return the year list aka Spring, Fall
+   * @author nrshaida (Natalie Rshaidat)
    */
   public static List<String> getYearList() {
     return yearList;
@@ -109,6 +114,7 @@ public class PathwayProgram {
    * Gets grade list for the GUI to display.
    *
    * @return the grade list aka Freshmen, Junior, etc
+   * @author nrshaida (Natalie Rshaidat)
    */
   public static List<String> getGradeList() {
     return gradeList;
@@ -118,6 +124,7 @@ public class PathwayProgram {
    * Sets path 1.
    *
    * @param path1 the path 1
+   * @author nrshaida (Natalie Rshaidat)
    */
   public void setPath1(List<Semester> path1) {
     this.path1 = path1;
@@ -128,6 +135,7 @@ public class PathwayProgram {
    * Sets path 2.
    *
    * @param path2 the path 2
+   * @author nrshaida (Natalie Rshaidat)
    */
   public void setPath2(List<Semester> path2) {
     this.path2 = path2;
@@ -138,6 +146,7 @@ public class PathwayProgram {
    * Sets path 3.
    *
    * @param path3 the path 3
+   * @author nrshaida (Natalie Rshaidat)
    */
   public void setPath3(List<Semester> path3) {
     this.path3 = path3;
@@ -151,6 +160,7 @@ public class PathwayProgram {
    * @param con          concentration in GUI form
    * @return the set
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat) & mcui5 (Melissa Cui)
    */
   public Set<Node> parseTaken(String coursestaken, String con) throws SQLException {
     this.setConcentrationName(con);
@@ -171,6 +181,7 @@ public class PathwayProgram {
    *
    * @return a list of Strings.
    * @throws SQLException sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   public List<String> getCourseList() throws SQLException {
     courseList = cache.getAllCourseIDs();
@@ -178,10 +189,10 @@ public class PathwayProgram {
   }
 
   /**
-   * i
-   * Gets avgavghrs 1 path.
+   * Gets avgavghrs for path 1.
    *
-   * @return the avgavghrs 1 path
+   * @return the avgavghrs for path 1
+   * @author nrshaida (Natalie Rshaidat)
    */
 // Getter and setter methods for Apache Spark
   public int getAvgavghrs1path() {
@@ -189,54 +200,60 @@ public class PathwayProgram {
   }
 
   /**
-   * Gets avgavghrs 2 path.
+   * Gets avgavghrs for path 2.
    *
-   * @return the avgavghrs 2 path
+   * @return the avgavghrs for path 2
+   * @author nrshaida (Natalie Rshaidat)
    */
   public int getAvgavghrs2path() {
     return (int) avgavghrs2path;
   }
 
   /**
-   * Gets avgavghrs 3 path.
+   * Gets avgavghrs for path 3.
    *
-   * @return the avgavghrs 3 path
+   * @return the avgavghrs for path 3
+   * @author nrshaida (Natalie Rshaidat)
    */
   public int getAvgavghrs3path() {
     return (int) avgavghrs3path;
   }
 
   /**
-   * Gets totalnumcourses 1.
+   * Gets totalnumcourses for path 1.
    *
-   * @return the totalnumcourses 1
+   * @return the totalnumcourses for path1
+   * @author nrshaida (Natalie Rshaidat)
    */
   public int getTotalnumcourses1() {
     return totalnumcourses1;
   }
 
   /**
-   * Gets totalnumcourses 2.
+   * Gets totalnumcourses for path 2.
    *
-   * @return the totalnumcourses 2
+   * @return the totalnumcourses for path 2
+   * @author nrshaida (Natalie Rshaidat)
    */
   public int getTotalnumcourses2() {
     return totalnumcourses2;
   }
 
   /**
-   * Gets totalnumcourses 3.
+   * Gets totalnumcourses for path 3.
    *
-   * @return the totalnumcourses 3
+   * @return the totalnumcourses for path 3
+   * @author nrshaida (Natalie Rshaidat)
    */
   public int getTotalnumcourses3() {
     return totalnumcourses3;
   }
 
   /**
-   * Gets numsemesters 1.
+   * Gets numsemesters for path 1.
    *
-   * @return the numsemesters 1
+   * @return the numsemesters for path 1
+   * @author nrshaida (Natalie Rshaidat)
    */
   public int getNumsemesters1() {
     if (path1 != null) {
@@ -248,9 +265,10 @@ public class PathwayProgram {
   }
 
   /**
-   * Gets numsemesters 2.
+   * Gets numsemesters for path 2.
    *
-   * @return the numsemesters 2
+   * @return the numsemesters for path 2
+   * @author nrshaida (Natalie Rshaidat)
    */
   public int getNumsemesters2() {
     if (path2 != null) {
@@ -262,9 +280,10 @@ public class PathwayProgram {
   }
 
   /**
-   * Gets numsemesters 3.
+   * Gets numsemesters for path 3.
    *
-   * @return the numsemesters 3
+   * @return the numsemesters for path 3
+   * @author nrshaida (Natalie Rshaidat)
    */
   public int getNumsemesters3() {
     if (path3 != null) {
@@ -276,37 +295,42 @@ public class PathwayProgram {
   }
 
   /**
-   * Getter method that gets the first pathway, Pathway 1.
+   * Getter method that gets the first pathway, Pathway 1 aka the low workload pathway.
    *
    * @return a List of Semesters for the first pathway.
+   * @author nrshaida (Natalie Rshaidat)
    */
   public List<Semester> getPath1() {
     return path1;
   }
 
   /**
-   * Getter method that gets the second pathway, Pathway 2.
+   * Getter method that gets the second pathway, Pathway 2 aka the medium workload pathway.
    *
    * @return a List of Semesters for the second pathway.
+   * @author nrshaida (Natalie Rshaidat)
    */
   public List<Semester> getPath2() {
     return path2;
   }
 
   /**
-   * Getter method that gets the third pathway, Pathway 3.
+   * Getter method that gets the third pathway, Pathway 3 aka the high workload pathway.
    *
    * @return a List of Semesters for the third pathway.
+   * @author nrshaida (Natalie Rshaidat)
    */
   public List<Semester> getPath3() {
     return path3;
   }
 
   /**
-   * Returns a Map of the concentration.
+   * Returns a Map of the concentrations where the key is GUI name for the concentration and the
+   * value is the sql table name for that concentration.
    *
    * @return a Map of key and value String pairs.
    * @throws SQLException sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   public Map<String, String> getConcentrationMap() throws SQLException {
     concentrationMap = cache.getConcentrationsMap();
@@ -317,16 +341,19 @@ public class PathwayProgram {
    * Returns a Set of nodes representing the courseSet for the current or last used concentration.
    *
    * @return a Node Set.
+   * @author nrshaida (Natalie Rshaidat)
    */
   public Set<Node> getCourseSet() {
     return courseSet;
   }
 
   /**
-   * A setter method that sets the concentration in this class to the user-specified value.
+   * A setter method that sets the concentration and its course set in this class to the
+   * user-specified value.
    *
    * @param concentration the specified concentration as its table name as a String.
    * @throws SQLException if there are problems accessing the database.
+   * @author nrshaida (Natalie Rshaidat)
    */
   public void setConcentration(String concentration) throws SQLException {
     this.concentration = concentration;
@@ -334,19 +361,21 @@ public class PathwayProgram {
   }
 
   /**
-   * Returns the concentration name that the user has specified.
+   * Returns the concentration name aka GUI name that the user has specified.
    *
    * @return a String representing the concentration Name.
+   * @author nrshaida (Natalie Rshaidat)
    */
   public String getConcentrationName() {
     return concentrationName;
   }
 
   /**
-   * Setter method to set the concentration name.
+   * Setter method to set the concentration GUI name and the concentration table name.
    *
    * @param concentrationName A String representing the user-chosen concentration.
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   public void setConcentrationName(String concentrationName) throws SQLException {
     if (this.concentrationMap.containsKey(concentrationName)) {
@@ -370,6 +399,7 @@ public class PathwayProgram {
    *                   specified concentration as fast as possible (in the least number
    *                   of semesters).
    * @throws SQLException if there are errors with querying the database.
+   * @author nrshaida (Natalie Rshaidat) && iilozor (Ifechi Ilozor) && nkirstead (Nick)
    */
   public void makePathways(String con, Set<Node> taken, int sem, boolean aggressive)
       throws SQLException {
@@ -393,7 +423,6 @@ public class PathwayProgram {
     pathway3.makePathway(taken, sem, aggressive, "hi");
     path3 = pathway3.getPath();
     this.setPath3(path3);
-
     setPathUniques();
   }
 
@@ -402,7 +431,8 @@ public class PathwayProgram {
    *
    * @param gradeL    the grade level from the gui aka Freshmen, Junior, etc
    * @param semesterL the semester level from the gui aka Fall or Spring
-   * @return the int
+   * @return the int representing the semester level
+   * @author mcui5 (Melissa Cui)
    */
   public static int parseGradeLevel(String gradeL, String semesterL) {
     int semester;
@@ -422,9 +452,10 @@ public class PathwayProgram {
   }
 
   /**
-   * A method to return if paths have neen made.
+   * A method to return if paths have been made.
    *
    * @return a boolean checking if pathways have been made.
+   * @author nrshaida (Natalie Rshaidat)
    */
   public boolean isSet() {
     return this.getPath1() != null;
@@ -434,16 +465,18 @@ public class PathwayProgram {
    * Returns the last concentration used for when the user returns back to the page showing all
    * three pathways from each pathway page.
    *
-   * @return a String representing the pathways generated for a certain concentration.
+   * @return a String representing the concentration sql table name.
+   * @author nrshaida (Natalie Rshaidat)
    */
   public String getConcentration() {
     return concentration;
   }
 
   /**
-   * Returns the concentration list, a list of strings.
+   * Returns the concentration list, a list of strings for use in the GUI.
    *
    * @return a List of Strings
+   * @author nrshaida (Natalie Rshaidat)
    */
   public List<String> getConcentrationsList() {
     return concentrationsList;
@@ -455,6 +488,7 @@ public class PathwayProgram {
    * It calcualtes the average weekly hours of each class in the pathway. After
    * generating this information, these parameters can be used in the front-end to
    * display a semester summary.
+   * @author nrshaida (Natalie Rshaidat)
    */
   public void setPathStats1() {
     totalnumcourses1 = 0;
@@ -473,6 +507,7 @@ public class PathwayProgram {
    * It calcualtes the average weekly hours of each class in the pathway. After
    * generating this information, these parameters can be used in the front-end to
    * display a semester summary.
+   * @author nrshaida (Natalie Rshaidat)
    */
   public void setPathStats2() {
     totalnumcourses2 = 0;
@@ -491,6 +526,7 @@ public class PathwayProgram {
    * It calcualtes the average weekly hours of each class in the pathway. After
    * generating this information, these parameters can be used in the front-end to
    * display a semester summary.
+   * @author nrshaida (Natalie Rshaidat)
    */
   public void setPathStats3() {
     totalnumcourses3 = 0;
@@ -505,6 +541,7 @@ public class PathwayProgram {
 
   /**
    * Sets path unique courses.
+   * @author nkirstead (Nick) && nrshaida (Natalie Rshaidat)
    */
   public void setPathUniques() {
     if (this.isSet()) {
@@ -549,6 +586,7 @@ public class PathwayProgram {
    * Gets pathway path 1 unique courses.
    *
    * @return the path 1 unique courses as a list of course IDs
+   * @author nrshaida (Natalie Rshaidat) && nkirstead (Nick)
    */
   public List<String> getPath1Uniques() {
     if (path1Uniques != null) {
@@ -562,6 +600,7 @@ public class PathwayProgram {
    * Gets pathway path 2 unique courses.
    *
    * @return the path 2 unique courses as a list of course IDs
+   * @author nrshaida (Natalie Rshaidat) && nkirstead (Nick)
    */
   public List<String> getPath2Uniques() {
     if (path2Uniques != null) {
@@ -575,6 +614,7 @@ public class PathwayProgram {
    * Gets path 3 unique courses.
    *
    * @return the path 3 unique courses as a list of course IDs
+   * @author nrshaida (Natalie Rshaidat) && nkirstead (Nick)
    */
   public List<String> getPath3Uniques() {
     if (path3Uniques != null) {

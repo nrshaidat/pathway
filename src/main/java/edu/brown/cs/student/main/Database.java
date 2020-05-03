@@ -14,11 +14,11 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Map;
 import java.util.Set;
-
 import edu.brown.cs.student.pathway.Node;
 
 /**
  * Database class that handles sql queries to the sql database.
+ * @author nrshaida (Natalie Rshaidat)
  */
 public class Database implements DatabaseInterface {
   private static final int COURSE = 13; //courses table number of columns
@@ -42,6 +42,7 @@ public class Database implements DatabaseInterface {
    * Database constructor.
    *
    * @param filename for the sql database to connect to
+   * @author nrshaida (Natalie Rshaidat)
    */
   public Database(String filename) {
     if (!this.connectDB(filename)) {
@@ -53,6 +54,7 @@ public class Database implements DatabaseInterface {
    * hasConnection checks if the database could connect.
    *
    * @return a boolean if the database was able to connect
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Override
   public boolean hasConnection() {
@@ -67,6 +69,7 @@ public class Database implements DatabaseInterface {
    *                          with ba/bs on the end
    * @return a boolean if the database has the accurate concentration data from the db
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Override
   public boolean checkConcentration(String concentrationName) throws SQLException {
@@ -139,6 +142,7 @@ public class Database implements DatabaseInterface {
    *
    * @param filename to connect to
    * @return boolean representing if it could connect to the database file
+   * @author nrshaida (Natalie Rshaidat)
    */
   private boolean connectDB(String filename) {
     try {
@@ -164,6 +168,7 @@ public class Database implements DatabaseInterface {
    *
    * @return a boolean that represents if the database is of the correct format
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Override
   public boolean checkCoursesTable() throws SQLException {
@@ -176,6 +181,7 @@ public class Database implements DatabaseInterface {
    * @param tableName name of the table to check
    * @return a boolean representing if the table names are of the correct format
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   public boolean checkTableExists(String tableName) throws SQLException {
     ResultSet rs = null;
@@ -210,6 +216,7 @@ public class Database implements DatabaseInterface {
    * @param concentrationName concentration name in lowercase and no spaces
    * @return a boolean representing if the way table column names are of the correct format
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   public boolean checkConcentrationColNames(String concentrationName) throws SQLException {
     ResultSet rs = null;
@@ -254,6 +261,7 @@ public class Database implements DatabaseInterface {
    * @param concentrationNameRules concentration name for rules table
    * @return a boolean representing if the way table column names are of the correct format
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   public boolean checkConcentrationRulesColNames(String concentrationNameRules)
       throws SQLException {
@@ -295,6 +303,7 @@ public class Database implements DatabaseInterface {
    *
    * @return a boolean representing if the way table column names are of the correct format
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   public boolean checkCoursesColNames() throws SQLException {
     ResultSet rs = null;
@@ -359,6 +368,7 @@ public class Database implements DatabaseInterface {
    *
    * @return boolean representing if table is empty of not
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Override
   public boolean isEmptyCourses() throws SQLException {
@@ -389,6 +399,7 @@ public class Database implements DatabaseInterface {
    * @param courseID course id such as CSCI 0320
    * @return Node object with everything filled in except category and next
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Override
   public Node getCourseData(String courseID) throws SQLException {
@@ -455,6 +466,7 @@ public class Database implements DatabaseInterface {
    * @param tableName the concentrationName table name to search for
    * @return a set of courses all populated with category and next populated
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Override
   public Set<Node> getConcentrationCourses(String tableName) throws SQLException {
@@ -493,6 +505,7 @@ public class Database implements DatabaseInterface {
    * @param prereqs the string of courseID's
    * @return a list of prereqs course objects
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   public List<Set<Node>> parsePrereqs(String prereqs) throws SQLException {
     String[] parsedLine = prereqs.split(","); //split on , (AND)
@@ -525,6 +538,7 @@ public class Database implements DatabaseInterface {
    *
    * @param sem the string of semester_offered 2 is both semesters, 1 is fall, and 0 is spring
    * @return set of the semesters offered
+   * @author nrshaida (Natalie Rshaidat)
    */
   public Set<Integer> parseSemesterOffered(String sem) {
     if (sem == null || sem.length() < 1) {
@@ -551,6 +565,7 @@ public class Database implements DatabaseInterface {
    * @return an int array where the index is the category and the value at that index is the number
    * of courses needed to fulfill the requirement
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Override
   public List<Integer> getRequirements(String tableName) throws SQLException {
@@ -591,6 +606,7 @@ public class Database implements DatabaseInterface {
    *
    * @return a list of concentration names
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Override
   public Map<String, String> getConcentrationsMap() throws SQLException {
@@ -627,6 +643,7 @@ public class Database implements DatabaseInterface {
    *
    * @return a list of concentration names
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   public boolean hasLoop() throws SQLException {
     PreparedStatement prep = null;
@@ -655,6 +672,7 @@ public class Database implements DatabaseInterface {
    *
    * @return a list of concentration names
    * @throws SQLException the sql exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Override
   public List<String> getAllCourseIDs() throws SQLException {
@@ -680,6 +698,5 @@ public class Database implements DatabaseInterface {
         prep.close();
       }
     }
-
   }
 }

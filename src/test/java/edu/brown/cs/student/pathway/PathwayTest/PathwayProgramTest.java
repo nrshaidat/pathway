@@ -1,33 +1,35 @@
 package edu.brown.cs.student.pathway.PathwayTest;
 
-
 import edu.brown.cs.student.main.Database;
 import edu.brown.cs.student.main.DatabaseCache;
 import edu.brown.cs.student.main.DatabaseInterface;
 import edu.brown.cs.student.main.PathwayProgram;
 import edu.brown.cs.student.pathway.Node;
 import edu.brown.cs.student.pathway.Semester;
-import com.google.common.collect.Sets;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-import static org.junit.Assert.*;
 
 /**
  * PathwayProgramTest.
+ * @author nrshaida (Natalie Rshaidat)
  */
 public class PathwayProgramTest {
   /**
    * The pathway program instance.
+   * @author nrshaida (Natalie Rshaidat)
    */
   PathwayProgram pp;
   DatabaseInterface cache;
@@ -37,6 +39,7 @@ public class PathwayProgramTest {
    * Sets up pathway program for testing.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Before
   public void setUp() throws Exception {
@@ -45,9 +48,10 @@ public class PathwayProgramTest {
   }
 
   /**
-   * Sets up pathway program for testing.
+   * Sets up pathway program for testing for cornell db.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Before
   public void setUpCornell() throws Exception {
@@ -59,6 +63,7 @@ public class PathwayProgramTest {
    * Sets up pathway program and static pathways for stats testing.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Before
   public void setUpStats() throws Exception {
@@ -119,7 +124,9 @@ public class PathwayProgramTest {
   /**
    * Another method to set up pathways for unique testing where there are more than 3 unique
    * courses.
+   *
    * @throws Exception An exception
+   * @author nkirstead (Nick)
    */
   @Before
   public void setUpStats2() throws Exception {
@@ -145,8 +152,6 @@ public class PathwayProgramTest {
     tak3.add(cache.getCourseData("CSCI 1230"));
     Semester fall2 = new Semester(3, tak3);
     p1.add(fall2);
-
-
     //path 2
     List<Semester> p2 = new ArrayList<>();
     //fall 1
@@ -190,6 +195,7 @@ public class PathwayProgramTest {
    * courses.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Before
   public void setUpStats3() throws Exception {
@@ -246,10 +252,10 @@ public class PathwayProgramTest {
   /**
    * Tear down.
    *
-   * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     pp = null;
   }
 
@@ -257,6 +263,7 @@ public class PathwayProgramTest {
    * Tests course list.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void getCourseList() throws Exception {
@@ -271,6 +278,7 @@ public class PathwayProgramTest {
    * Tests getavgavghrspath.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void getAvgavghrspath() throws Exception {
@@ -282,9 +290,10 @@ public class PathwayProgramTest {
   }
 
   /**
-   * Tests gettotalnumcourses.
+   * Tests gettotalnumcourses for all paths.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void getTotalnumcourses() throws Exception {
@@ -297,9 +306,10 @@ public class PathwayProgramTest {
 
 
   /**
-   * Tests getNumsemesters.
+   * Tests getNumsemesters for all paths.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void getNumsemesters() throws Exception {
@@ -312,9 +322,10 @@ public class PathwayProgramTest {
 
 
   /**
-   * Tests getPath.
+   * Tests getPath for all paths.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void getPath() throws Exception {
@@ -342,6 +353,7 @@ public class PathwayProgramTest {
    * Tests getConcentrationMap.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void getConcentrationMap() throws Exception {
@@ -358,6 +370,7 @@ public class PathwayProgramTest {
    * last two.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void setConcentration() throws Exception {
@@ -373,6 +386,7 @@ public class PathwayProgramTest {
    * Tests getConcentrationName returns default concentration when concentration is not set.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void getConcentrationName() throws Exception {
@@ -385,6 +399,7 @@ public class PathwayProgramTest {
    * Tests  valid input for setConcentrationName.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void validsetConcentrationName() throws Exception {
@@ -398,6 +413,7 @@ public class PathwayProgramTest {
    * Tests invalid input for setConcentrationName.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void invalidsetConcentrationName() throws Exception {
@@ -412,6 +428,7 @@ public class PathwayProgramTest {
    * Tests isSet.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void isSet() throws Exception {
@@ -426,6 +443,7 @@ public class PathwayProgramTest {
    * Tests getConcentration on default value.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void getConcentration() throws Exception {
@@ -438,6 +456,7 @@ public class PathwayProgramTest {
    * Tests getConcentrationsList.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void getConcentrationsList() throws Exception {
@@ -451,29 +470,30 @@ public class PathwayProgramTest {
    * Tests setPathStats for all pathways.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void setPathStats() throws Exception {
     setUp();
-    assertEquals(0,pp.getTotalnumcourses1());
-    assertEquals(0,pp.getTotalnumcourses2());
-    assertEquals(0,pp.getTotalnumcourses3());
-    assertEquals(0,pp.getNumsemesters1());
-    assertEquals(0,pp.getNumsemesters2());
-    assertEquals(0,pp.getNumsemesters3());
-    assertEquals(0,pp.getAvgavghrs1path());
-    assertEquals(0,pp.getAvgavghrs2path());
-    assertEquals(0,pp.getAvgavghrs3path());
+    assertEquals(0, pp.getTotalnumcourses1());
+    assertEquals(0, pp.getTotalnumcourses2());
+    assertEquals(0, pp.getTotalnumcourses3());
+    assertEquals(0, pp.getNumsemesters1());
+    assertEquals(0, pp.getNumsemesters2());
+    assertEquals(0, pp.getNumsemesters3());
+    assertEquals(0, pp.getAvgavghrs1path());
+    assertEquals(0, pp.getAvgavghrs2path());
+    assertEquals(0, pp.getAvgavghrs3path());
     pp.makePathways("Computer Science B.A.", new HashSet<>(), 1, false);
-    assertTrue(pp.getTotalnumcourses1()>0);
-    assertTrue(pp.getTotalnumcourses2()>0);
-    assertTrue(pp.getTotalnumcourses3()>0);
-    assertTrue(pp.getNumsemesters1()>0);
-    assertTrue(pp.getNumsemesters2()>0);
-    assertTrue(pp.getNumsemesters3()>0);
-    assertTrue(pp.getAvgavghrs1path()>0);
-    assertTrue(pp.getAvgavghrs2path()>0);
-    assertTrue(pp.getAvgavghrs3path()>0);
+    assertTrue(pp.getTotalnumcourses1() > 0);
+    assertTrue(pp.getTotalnumcourses2() > 0);
+    assertTrue(pp.getTotalnumcourses3() > 0);
+    assertTrue(pp.getNumsemesters1() > 0);
+    assertTrue(pp.getNumsemesters2() > 0);
+    assertTrue(pp.getNumsemesters3() > 0);
+    assertTrue(pp.getAvgavghrs1path() > 0);
+    assertTrue(pp.getAvgavghrs2path() > 0);
+    assertTrue(pp.getAvgavghrs3path() > 0);
     tearDown();
   }
 
@@ -481,6 +501,7 @@ public class PathwayProgramTest {
    * Tests setPathUniques.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void setPathUniques() throws Exception {
@@ -496,6 +517,7 @@ public class PathwayProgramTest {
    * Tests less than or equal to 3 unique courses case getPathUniques.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void getPathUniques() throws Exception {
@@ -524,6 +546,7 @@ public class PathwayProgramTest {
    * Tests no 3 unique courses case getPathUniques.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void getPathNoUniques() throws Exception {
@@ -539,6 +562,7 @@ public class PathwayProgramTest {
    * Tests getPathUniques on more than 3 unique courses .
    *
    * @throws Exception the exception
+   * @author nkirstead (Nick)
    */
   @Test
   public void getPathUniques2() throws Exception {
@@ -547,12 +571,15 @@ public class PathwayProgramTest {
     /* Path 1 should actually have 4 uniques (cs 15, cs 15, math 180, and cs 1230), but
     getPath1Uniques should cut it off at 3.
      */
-    List<String> u1 = new ArrayList<>(Arrays.asList("CSCI 0150", "CSCI 0160", "MATH 0180", "CSCI 1230"));
+    List<String> u1 =
+        new ArrayList<>(Arrays.asList("CSCI 0150", "CSCI 0160", "MATH 0180", "CSCI 1230"));
     assertTrue(u1.containsAll(pp.getPath1Uniques()) && pp.getPath1Uniques().size() == 3);
     List<String> u2 = new ArrayList<>(Arrays.asList("CSCI 0170", "CSCI 0180", "CSCI 0220"));
-    assertTrue(pp.getPath2Uniques().containsAll(u2) && u2.containsAll(pp.getPath2Uniques()) && pp.getPath2Uniques().size() == 3);
+    assertTrue(pp.getPath2Uniques().containsAll(u2) && u2.containsAll(pp.getPath2Uniques())
+        && pp.getPath2Uniques().size() == 3);
     List<String> u3 = new ArrayList<>(Arrays.asList("CSCI 0190", "CSCI 0320", "APMA 1650"));
-    assertTrue(pp.getPath3Uniques().containsAll(u3) && u3.containsAll(pp.getPath3Uniques()) && pp.getPath3Uniques().size() == 3);
+    assertTrue(pp.getPath3Uniques().containsAll(u3) && u3.containsAll(pp.getPath3Uniques())
+        && pp.getPath3Uniques().size() == 3);
     tearDown();
   }
 
@@ -560,6 +587,7 @@ public class PathwayProgramTest {
    * Tests defaults are correctly set with cornell university.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void differentUni() throws Exception {
@@ -568,12 +596,12 @@ public class PathwayProgramTest {
     assertEquals(1, pp.getConcentrationsList().size());
     assertEquals("Economics B.A.", pp.getConcentrationName());
     assertEquals("economicsba", pp.getConcentration());
-    assertEquals(cache.getAllCourseIDs(),pp.getCourseList());
+    assertEquals(cache.getAllCourseIDs(), pp.getCourseList());
     assertNull(pp.getPath1());
     assertNull(pp.getPath2());
     assertNull(pp.getPath3());
     pp.makePathways("Economics B.A.", new HashSet<>(), 1, false);
-    assertEquals(cache.getConcentrationCourses("economicsba"),pp.getCourseSet());
+    assertEquals(cache.getConcentrationCourses("economicsba"), pp.getCourseSet());
     assertNotNull(pp.getPath1());
     assertNotNull(pp.getPath2());
     assertNotNull(pp.getPath3());
@@ -584,14 +612,15 @@ public class PathwayProgramTest {
    * Tests parseTaken method.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void parseTaken() throws Exception {
     setUp();
     String con = "Computer Science B.A.";
     Set<Node> taken = new HashSet<Node>();
-    assertEquals(taken,pp.parseTaken("", con));
-    assertEquals(2, pp.parseTaken("CSCI 0150,MATH 0100",con).size());
+    assertEquals(taken, pp.parseTaken("", con));
+    assertEquals(2, pp.parseTaken("CSCI 0150,MATH 0100", con).size());
     assertEquals(1, pp.parseTaken("CSCI 0150,CLPS 0010", con).size());
     tearDown();
   }
@@ -600,6 +629,7 @@ public class PathwayProgramTest {
    * Tests parseGradeLevel method.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void parseGradeLevel() throws Exception {
@@ -619,11 +649,12 @@ public class PathwayProgramTest {
    * Tests getGradeList and getYearList method.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void getGradeYearList() throws Exception {
     setUp();
-    List<String>  ll = new ArrayList<>();
+    List<String> ll = new ArrayList<>();
     ll.add("Freshman");
     ll.add("Sophomore");
     ll.add("Junior");
@@ -640,6 +671,7 @@ public class PathwayProgramTest {
    * Tests getCourseData method.
    *
    * @throws Exception the exception
+   * @author nrshaida (Natalie Rshaidat)
    */
   @Test
   public void getCourseData() throws Exception {
@@ -648,6 +680,5 @@ public class PathwayProgramTest {
     assertEquals(cs16, pp.getCourseData("CSCI 0160"));
     tearDown();
   }
-
 }
 

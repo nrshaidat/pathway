@@ -194,7 +194,6 @@ public class Semester {
    *
    * @return the courseid 1
    */
-// Getters for Apache Spark & Freemarker
   public String getCourseid1() {
     return courseid1;
   }
