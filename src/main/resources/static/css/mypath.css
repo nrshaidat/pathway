@@ -270,8 +270,8 @@ a.link {
     display: block;
     position: absolute;
     text-align: left;
-    right: -6em;
-    top: -1em;
+    right: -10em;
+    top: -4em;
     z-index: 2;
     background-color: rgba(158, 191, 250, 0.96); /* Black w/ opacity */
     padding: 0.6em;
