@@ -49,16 +49,13 @@
      <br>
 
     <div style="margin: 0 auto;">
-     <p style="margin-left:25vw; font-size:1.3em;" align="left"> 1. How do we generate concentrations? </p>
+     <p style="margin-left:25vw; font-size:1.3em;" align="left"> 1. How do we generate concentration pathways? </p>
 
-     <div class="content" style="margin-left:25vw;" align="left">  We take into account each student's workload preferences,
-         whether they want their pathway to be aggressively completed (in the least number of semesters) or not,
-         as well as the courses they have received credit for in the past to generate the most optimal concentration!
-
-         We use a weighted shuffle algorithm that takes the course requirements in a concentration, and finds the best courses to take
-         depending on information you put in, like how fast you prefer your concentration to be finished, semester level, and courses you have received
-         credit for! This information then is used to weight each course in the department, then the algorithm chooses the optimal pathways in three
-         different workload amounts.
+     <div class="content" style="margin-left:25vw;" align="left">We take into account whether the student wants their concentration
+         to be completed quickly or not, as well as the courses they have received credit for to generate
+         optimal pathways! We always give three options with varying workloads plus we make sure that if it's
+         feasible, the pathway completes in the spring of their senior year, at latest. We also make sure
+         to prioritize courses with good ratings so that the student gets the best courses in their pathway!
      </div>
 
      <br>
@@ -73,8 +70,8 @@
      <br>
      <p style="margin-left:25vw; font-size:1.3em;" align="left"> 3. Can I edit my pathway? </p>
 
-     <div class="content" style="margin-left:25vw;" align="left"> Yes! If you click on a semester, you can edit your pathway by adding, removing,
-     or swapping a course. </div>
+     <div class="content" style="margin-left:25vw;" align="left"> Yes! If you click on a semester, you can edit your pathway by
+         adding, removing, or swapping out a course for another. </div>
 
     </div>
 
