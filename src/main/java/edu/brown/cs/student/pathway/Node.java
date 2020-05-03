@@ -26,10 +26,6 @@ public class Node {
   private double rating;
   private int classSize;
   private String ssurl;
-  private Set<Node> prereqspath; //prereqs taken in the path
-  private Set<Node> prereqsforpath; //courses in the path that list it as a prereq
-  private List<Node> prereqspathlist; //prereqs taken in the path
-  private List<Node> prereqsforpathlist;
 
   /**
    * Instantiates a new Node.
@@ -38,8 +34,6 @@ public class Node {
    */
   public Node(String courseID) {
     id = courseID;
-    prereqspath = new HashSet<Node>();
-    prereqsforpath = new HashSet<Node>();
     prereqs = new ArrayList<Set<Node>>();
     semestersOffered = new HashSet<Integer>();
   }
@@ -83,29 +77,6 @@ public class Node {
   public void setSsurl(String ssurl) {
     this.ssurl = ssurl;
   }
-  //  public void setPrereqspathlist() {
-//    prereqspathlist = new ArrayList<>();
-//    prereqspathlist.addAll(prereqspath);
-//  }
-//
-//  public void setPrereqsforpathlist() {
-//    prereqsforpathlist = new ArrayList<>();
-//    this.prereqsforpathlist.addAll(prereqsforpath);
-//  }
-//
-//  public List<Node> getPrereqspathlist() {
-//    if (prereqspathlist == null) {
-//      this.setPrereqspathlist();
-//    }
-//    return prereqspathlist;
-//  }
-//
-//  public List<Node> getPrereqsforpathlist() {
-//    if (prereqsforpathlist == null) {
-//      this.setPrereqsforpathlist();
-//    }
-//    return prereqsforpathlist;
-//  }
 
   /**
    * getNextID gets next id as a string, this is only used for the cache database to build the
@@ -236,18 +207,6 @@ public class Node {
   public List<Set<Node>> getPrereqs() {
     return prereqs;
   }
-
-//  public Set<Node> getPrereqspath() {
-//    return prereqspath;
-//  }
-//
-//  public void addPrereqspath(Node course) {
-//    prereqspath.add(course);
-//  }
-//
-//  public void addPrereqsforpath(Node course) {
-//    prereqsforpath.add(course);
-//  }
 
   /**
    * setNext sets the next course in a sequence (CS15's next field would be CS16).

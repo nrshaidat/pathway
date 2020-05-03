@@ -171,7 +171,7 @@ public class PathwayProgram {
    */
 // Getter and setter methods for Apache Spark
   public int getAvgavghrs1path() {
-    return ((int) avgavghrs1path);
+    return (int) avgavghrs1path;
   }
 
   /**
@@ -180,7 +180,7 @@ public class PathwayProgram {
    * @return the avgavghrs 2 path
    */
   public int getAvgavghrs2path() {
-    return ((int) avgavghrs2path);
+    return (int) avgavghrs2path;
   }
 
   /**
@@ -189,7 +189,7 @@ public class PathwayProgram {
    * @return the avgavghrs 3 path
    */
   public int getAvgavghrs3path() {
-    return ((int) avgavghrs3path);
+    return (int) avgavghrs3path;
   }
 
   /**

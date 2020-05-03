@@ -167,7 +167,7 @@ public class Database implements DatabaseInterface {
    */
   @Override
   public boolean checkCoursesTable() throws SQLException {
-    return (checkTableExists("courses") && checkCoursesColNames());
+    return checkTableExists("courses") && checkCoursesColNames();
   }
 
   /**
