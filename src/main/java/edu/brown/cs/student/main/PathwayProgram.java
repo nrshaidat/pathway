@@ -58,14 +58,14 @@ public class PathwayProgram {
    * sets the default values for user signing, sets information about each pathway like the
    * average weekly hours of a course in the pathway, number of courses, and number of semesters
    * in the pathway.
-   * @param cornellUniv boolean for cornell
+   * @param univ string representing the first word in the unversity name ie brown or cornell
    *
    * @throws SQLException for problems with querying db.
    */
-  public PathwayProgram(String cornellUniv) throws SQLException {
+  public PathwayProgram(String univ) throws SQLException {
     String file;
-    cornellUniv = cornellUniv.toLowerCase();
-    if (cornellUniv.equals("cornell")) {
+    univ = univ.toLowerCase();
+    if (univ.equals("cornell")) {
       file = "data/cornellcoursesDB.db";
     } else {
       file = "data/coursesDB.db";
@@ -75,7 +75,7 @@ public class PathwayProgram {
     concentrationMap = cache.getConcentrationsMap();
     concentrationsList = new ArrayList<>(this.concentrationMap.keySet());
     courseList = cache.getAllCourseIDs();
-    if (cornellUniv.equals("cornell")) {
+    if (univ.equals("cornell")) {
       this.setConcentrationName("Economics B.A.");
     } else {
       this.setConcentrationName("Computer Science B.A.");

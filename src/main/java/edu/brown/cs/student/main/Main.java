@@ -36,8 +36,6 @@ public final class Main {
   private static final List<String> UNI = new ArrayList<>();
   private static String uniName;
   private static String uniNameShort;
-  private static boolean firstLogin = true;
-  private static boolean cornell = false;
 
   /**
    * Main is called when execution begins.
@@ -127,15 +125,9 @@ public final class Main {
       uniName = qm.value("university");
       if (uniName == null) {
         uniName = "Brown University";
-        cornell = false;
-      } else if (uniName.equals("Brown University")) {
-        cornell = false;
-      } else {
-        cornell = true;
       }
       uniNameShort = uniName.split(" ")[0];
       pathwayProgram = new PathwayProgram(uniNameShort);
-
       Map<String, Object> variables =
           ImmutableMap.of("uniName", uniName, "uniNameShort", uniNameShort);
       return new ModelAndView(variables, "main.ftl");
