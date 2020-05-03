@@ -100,10 +100,10 @@ public class Database implements DatabaseInterface {
       String query = strQuery.replace("$tableName", concentrationName);
       prep = conn.prepareStatement(query);
       rs = prep.executeQuery();
-      List<Integer> reqsAvailable = new ArrayList<Integer>();
+      List<Integer> reqsAvailable = new ArrayList<>();
       while (rs.next()) {
-        Integer categoryNum = Integer.parseInt(rs.getString("category"));
-        Integer numAvailable = Integer.parseInt(rs.getString("available_courses"));
+        int categoryNum = Integer.parseInt(rs.getString("category"));
+        int numAvailable = Integer.parseInt(rs.getString("available_courses"));
         if (categoryNum < 0) {
           return false;
         } else {
@@ -472,14 +472,14 @@ public class Database implements DatabaseInterface {
   public Set<Node> getConcentrationCourses(String tableName) throws SQLException {
     PreparedStatement prep = null;
     ResultSet rs = null;
-    Set<Node> courseSet = new HashSet<Node>();
+    Set<Node> courseSet = new HashSet<>();
     try {
       String strQuery = " SELECT * " + " FROM $tableName " + " ORDER BY category ASC ";
       String query = strQuery.replace("$tableName", tableName);
       prep = conn.prepareStatement(query);
       rs = prep.executeQuery();
       while (rs.next()) {
-        Integer category = Integer.parseInt(rs.getString("category"));
+        int category = Integer.parseInt(rs.getString("category"));
         String nextID = rs.getString("next");
         String courseID = rs.getString("course_id");
         Node tmp = new Node(courseID, nextID, category);
@@ -512,7 +512,7 @@ public class Database implements DatabaseInterface {
     List<Set<Node>> courseList = new ArrayList<>();
     for (String courseID : parsedLine) { //loop thru each required prereqs (AND)
       String[] parsedOrs = courseID.split("="); //split each requirement on = (OR)
-      Set<Node> courseSet = new HashSet<Node>();
+      Set<Node> courseSet = new HashSet<>();
       if (parsedOrs.length == 1) { //no ors in prereqs
         Node tmp = this.getCourseData(parsedOrs[0]);
         if (tmp != null) {
@@ -544,8 +544,8 @@ public class Database implements DatabaseInterface {
     if (sem == null || sem.length() < 1) {
       return null;
     } else {
-      Integer semOff = Integer.parseInt(sem);
-      Set<Integer> semset = new HashSet<Integer>();
+      int semOff = Integer.parseInt(sem);
+      Set<Integer> semset = new HashSet<>();
       if (semOff == 2) {
         semset.add(0);
         semset.add(1);

@@ -34,8 +34,8 @@ public class Node {
    */
   public Node(String courseID) {
     id = courseID;
-    prereqs = new ArrayList<Set<Node>>();
-    semestersOffered = new HashSet<Integer>();
+    prereqs = new ArrayList<>();
+    semestersOffered = new HashSet<>();
   }
 
   /**
@@ -47,8 +47,8 @@ public class Node {
   public Node(String courseID, int courseCategory) {
     id = courseID;
     category = courseCategory;
-    prereqs = new ArrayList<Set<Node>>();
-    semestersOffered = new HashSet<Integer>();
+    prereqs = new ArrayList<>();
+    semestersOffered = new HashSet<>();
   }
 
   /**

@@ -2,32 +2,11 @@ package edu.brown.cs.student.pathway;
 
 import java.util.List;
 import java.util.Set;
-import java.util.Iterator;
 
 /**
  * The Semester Class contains the courses a student takes in a specific
  * semester (made in the makePathway method). Additional courses info
  * is in the Semester class that allows Pathway customization in the GUI.
- */
-
-/**
- * Notes on swapping:
- * <p>
- * If I got a Pathway and wanted to edit it, how would I change it?
- * - Swap with course of same category
- * - What if they swap a course that is a next or has a next?
- * - What if they swap a course that is a prereq for another course in pathway?
- * - What if the swap can't happen that semester?
- * - Can we honor workload preference if they swap?
- * <p>
- * - Move course to a different semester (take AI in semester 5 instead of 3)
- * - What if they try to move the course to a semester when it's not offered?
- * - What if they try to move the course to a semester when it's not a source?
- * <p>
- * - Add a desired course
- * - What if they want to add a course to a semester when it's not offered?
- * <p>
- * - Users CANNOT just remove a course (won't satisfy reqs)
  */
 public class Semester {
   private List<Node> courses;
@@ -73,14 +52,6 @@ public class Semester {
     rating = 0.0;
   }
 
-  /**
-   * Public getter method to return the maximum hours of a semester.
-   *
-   * @return a double representing maxhrs variable.
-   */
-  public double getMaxhrs() {
-    return maxhrs;
-  }
 
   /**
    * Sets the statistics for a semester like maxHrs, avghrs, and rating.
@@ -91,6 +62,89 @@ public class Semester {
       avghrs += c.getAvgHrs();
       rating += c.getRating();
     }
+  }
+
+  /**
+   * Sets courses.
+   */
+  public void setCourses() {
+    for (int i = 0; i < courses.size(); i++) {
+      switch (i) {
+        case 0:
+          Node n = courses.get(0);
+          courseid1 = n.getId();
+          coursename1 = n.getName();
+          prof1 = n.getProfessor();
+          url1 = n.getSsurl();
+          Set<Integer> semSet = n.getSemestersOffered();
+          if (semSet.size() == 2) {
+            sems1 = 2;
+          } else { // only 1 number in the set
+            for (Integer integer : semSet) {
+              sems1 = integer;
+            }
+          }
+          break;
+        case 1:
+          n = courses.get(1);
+          courseid2 = n.getId();
+          coursename2 = n.getName();
+          prof2 = n.getProfessor();
+          url2 = n.getSsurl();
+          semSet = n.getSemestersOffered();
+          if (semSet.size() == 2) {
+            sems2 = 2;
+          } else { // only 1 number in the set
+            for (Integer integer : semSet) {
+              sems2 = integer;
+            }
+          }
+          break;
+        case 2:
+          n = courses.get(2);
+          courseid3 = n.getId();
+          coursename3 = n.getName();
+          prof3 = n.getProfessor();
+          url3 = n.getSsurl();
+          semSet = n.getSemestersOffered();
+          if (semSet.size() == 2) {
+            sems3 = 2;
+          } else { // only 1 number in the set
+            for (Integer integer : semSet) {
+              sems3 = integer;
+            }
+          }
+          break;
+        case 3:
+          n = courses.get(3);
+          courseid4 = n.getId();
+          coursename4 = n.getName();
+          prof4 = n.getProfessor();
+          url4 = n.getSsurl();
+          semSet = n.getSemestersOffered();
+          if (semSet.size() == 2) {
+            sems4 = 2;
+          } else { // only 1 number in the set
+            for (Integer integer : semSet) {
+              sems4 = integer;
+            }
+          }
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
+
+  // Getters for Apache Spark
+  /**
+   * Public getter method to return the maximum hours of a semester.
+   *
+   * @return a double representing maxhrs variable.
+   */
+  public double getMaxhrs() {
+    return maxhrs;
   }
 
   /**
@@ -119,82 +173,6 @@ public class Semester {
   public int getNumcourses() {
     numcourses = this.courses.size();
     return numcourses;
-  }
-
-  /**
-   * Sets courses.
-   */
-  public void setCourses() {
-    for (int i = 0; i < courses.size(); i++) {
-      switch (i) {
-        case 0:
-          Node n = courses.get(0);
-          courseid1 = n.getId();
-          coursename1 = n.getName();
-          prof1 = n.getProfessor();
-          url1 = n.getSsurl();
-          Set<Integer> semSet = n.getSemestersOffered();
-          if (semSet.size() == 2) {
-            sems1 = 2;
-          } else { // only 1 number in the set
-            Iterator<Integer> s = semSet.iterator();
-            while (s.hasNext()) {
-              sems1 = s.next();
-            }
-          }
-          break;
-        case 1:
-          n = courses.get(1);
-          courseid2 = n.getId();
-          coursename2 = n.getName();
-          prof2 = n.getProfessor();
-          url2 = n.getSsurl();
-          semSet = n.getSemestersOffered();
-          if (semSet.size() == 2) {
-            sems2 = 2;
-          } else { // only 1 number in the set
-            Iterator<Integer> s = semSet.iterator();
-            while (s.hasNext()) {
-              sems2 = s.next();
-            }
-          }
-          break;
-        case 2:
-          n = courses.get(2);
-          courseid3 = n.getId();
-          coursename3 = n.getName();
-          prof3 = n.getProfessor();
-          url3 = n.getSsurl();
-          semSet = n.getSemestersOffered();
-          if (semSet.size() == 2) {
-            sems3 = 2;
-          } else { // only 1 number in the set
-            Iterator<Integer> s = semSet.iterator();
-            while (s.hasNext()) {
-              sems3 = s.next();
-            }
-          }
-          break;
-        case 3:
-          n = courses.get(3);
-          courseid4 = n.getId();
-          coursename4 = n.getName();
-          prof4 = n.getProfessor();
-          url4 = n.getSsurl();
-          semSet = n.getSemestersOffered();
-          if (semSet.size() == 2) {
-            sems4 = 2;
-          } else { // only 1 number in the set
-            Iterator<Integer> s = semSet.iterator();
-            while (s.hasNext()) {
-              sems4 = s.next();
-            }
-          }
-          break;
-        default:
-          break;
-      }
-    }
   }
 
   /**

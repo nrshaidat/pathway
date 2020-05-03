@@ -160,7 +160,7 @@ public class PathwayProgram {
    * @param con          concentration in GUI form
    * @return the set
    * @throws SQLException the sql exception
-   * @author nrshaida (Natalie Rshaidat) & mcui5 (Melissa Cui)
+   * @author nrshaida (Natalie Rshaidat) and mcui5 (Melissa Cui)
    */
   public Set<Node> parseTaken(String coursestaken, String con) throws SQLException {
     this.setConcentrationName(con);
@@ -399,7 +399,7 @@ public class PathwayProgram {
    *                   specified concentration as fast as possible (in the least number
    *                   of semesters).
    * @throws SQLException if there are errors with querying the database.
-   * @author nrshaida (Natalie Rshaidat) && iilozor (Ifechi Ilozor) && nkirstead (Nick)
+   * @author nrshaida (Natalie Rshaidat) and iilozor (Ifechi Ilozor) and nkirstead (Nick)
    */
   public void makePathways(String con, Set<Node> taken, int sem, boolean aggressive)
       throws SQLException {
@@ -541,7 +541,7 @@ public class PathwayProgram {
 
   /**
    * Sets path unique courses.
-   * @author nkirstead (Nick) && nrshaida (Natalie Rshaidat)
+   * @author nkirstead (Nick) and nrshaida (Natalie Rshaidat)
    */
   public void setPathUniques() {
     if (this.isSet()) {
@@ -586,7 +586,7 @@ public class PathwayProgram {
    * Gets pathway path 1 unique courses.
    *
    * @return the path 1 unique courses as a list of course IDs
-   * @author nrshaida (Natalie Rshaidat) && nkirstead (Nick)
+   * @author nrshaida (Natalie Rshaidat) and nkirstead (Nick)
    */
   public List<String> getPath1Uniques() {
     if (path1Uniques != null) {
@@ -600,7 +600,7 @@ public class PathwayProgram {
    * Gets pathway path 2 unique courses.
    *
    * @return the path 2 unique courses as a list of course IDs
-   * @author nrshaida (Natalie Rshaidat) && nkirstead (Nick)
+   * @author nrshaida (Natalie Rshaidat) and nkirstead (Nick)
    */
   public List<String> getPath2Uniques() {
     if (path2Uniques != null) {
@@ -614,7 +614,7 @@ public class PathwayProgram {
    * Gets path 3 unique courses.
    *
    * @return the path 3 unique courses as a list of course IDs
-   * @author nrshaida (Natalie Rshaidat) && nkirstead (Nick)
+   * @author nrshaida (Natalie Rshaidat) and nkirstead (Nick)
    */
   public List<String> getPath3Uniques() {
     if (path3Uniques != null) {
