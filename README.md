@@ -127,8 +127,8 @@ None.
         -Setting up the entire front end framework
         -Routing, alerting and comprehensive handling of user input
         -Styling and adding functionality to front end (login, faq, main form, 3-pathway display)
-        -Transitioned styling to semantic ui to improve user experience
-	-Setting up cornell db and integrating cornell into GUI
+        -Transitioned styling to semantic ui to improve user experience 
+	    -Setting up cornell db and integrating cornell into GUI
        
 	Ifechi:
         -Developing and optimizing the fundamental makePathway algorithm
@@ -143,8 +143,8 @@ None.
         -Implementing and styling customization functionality on the front end (add, move, swap),
          mapping out and handling all edge cases 
         -Implementing and styling hover to show course details
-        -Styling semester boxes, arrows, navigation bar, and pathway statistics (everything responsive)
-	-Styling nav bar
+        -Styling semester boxes, arrows, navigation bar, and pathway statistics (everything responsive) 
+	    -Styling nav bar
         
     Nick:
         -CAB/self service scraping
