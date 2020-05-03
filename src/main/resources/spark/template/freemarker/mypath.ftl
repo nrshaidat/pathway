@@ -16,8 +16,8 @@
     <div class="ui container grid">
         <!--Start: Desktop Nav-->
         <div class="computer only row">
-            <form action="/login" method="post">
-                <a href="/login" class="header item">Pathway</a>
+            <form action="/home" method="post">
+                <a href="/home" class="header item">Pathway</a>
             </form>
             <form action="/login" method="post">
                 <a href="/login" class="item">Log out</a>

@@ -15,7 +15,7 @@
 <div class="ui fixed borderless huge menu">
     <div class="ui container grid">
         <div class="computer only row">
-            <a id="defunct" class="header item">Pathway</a>
+            <a class="header item" href="/home" >Pathway</a>
 
             <div style="float: right;"
             <form action="/faqs" method="post">

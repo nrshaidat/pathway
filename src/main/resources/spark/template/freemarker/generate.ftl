@@ -14,8 +14,8 @@
     <div class="ui container grid">
       <!--Start: Desktop Nav-->
       <div class="computer only row">
-        <form action="/login" method="post">
-          <a class="header item">Pathway - ${uniNameShort}</a>
+        <form action="/home" method="post">
+          <a class="header item" href="/home"> Pathway - ${uniNameShort}</a>
         </form>
         <form action="/faqs" method="post">
           <a href="/faqs" class="item">FAQ</a>
