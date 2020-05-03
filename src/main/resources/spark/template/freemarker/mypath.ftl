@@ -459,11 +459,13 @@
         const parent = document.getElementById("myBtn" + lastCharacter);
         const child = parent.querySelectorAll(".description")[0];
 
-        const children = [].slice.call(child.getElementsByTagName('p'), 0);
+        const children = [].slice.call(child.getElementsByTagName('div'), 0);
         for (let i = 0; i < children.length; i++) {
+
             let name = children[i].getAttribute("id");
-            if (name.toLowerCase().replace(/\s/g, '') === moveCourse.value.toLowerCase().replace(/\s/g, '')) {
+            if (name != null && name.toLowerCase().replace(/\s/g, '') === moveCourse.value.toLowerCase().replace(/\s/g, '')) {
                 child.removeChild(children[i]);
+
 
                 const parent2 = document.getElementById("myBtn" + destSem.value);
                 const child2 = parent2.querySelectorAll(".description")[0];
