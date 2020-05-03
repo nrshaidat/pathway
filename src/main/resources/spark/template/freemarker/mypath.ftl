@@ -267,9 +267,9 @@
                             </#if>
                             <#if semester.courseid4 ? has_content>
                                 <div class="course" id="${semester.courseid4}" style="cursor:pointer;">
-                                    ${semester.courseid4} - ${semester.courseid4}
+                                    ${semester.courseid4}
                                     <div class="more-info">
-                                        ${semester.coursename4}
+                                        ${semester.courseid4} - ${semester.coursename4}
                                         <br>
                                         <br>
                                         Professor: ${semester.prof4}
