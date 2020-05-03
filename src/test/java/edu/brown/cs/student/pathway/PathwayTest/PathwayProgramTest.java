@@ -40,7 +40,7 @@ public class PathwayProgramTest {
    */
   @Before
   public void setUp() throws Exception {
-    pp = new PathwayProgram(false);
+    pp = new PathwayProgram("brown");
     cache = new DatabaseCache(new Database("data/coursesDB.db"));
   }
 
@@ -51,7 +51,7 @@ public class PathwayProgramTest {
    */
   @Before
   public void setUpStats() throws Exception {
-    pp = new PathwayProgram(false);
+    pp = new PathwayProgram("brown");
     cache = new DatabaseCache(new Database("data/coursesDB.db"));
     //path 1
     List<Semester> p1 = new ArrayList<>();
@@ -112,7 +112,7 @@ public class PathwayProgramTest {
    */
   @Before
   public void setUpStats2() throws Exception {
-    pp = new PathwayProgram(false);
+    pp = new PathwayProgram("brown");
     cache = new DatabaseCache(new Database("data/coursesDB.db"));
     //path 1
     List<Semester> p1 = new ArrayList<>();
@@ -182,7 +182,7 @@ public class PathwayProgramTest {
    */
   @Before
   public void setUpStats3() throws Exception {
-    pp = new PathwayProgram(false);
+    pp = new PathwayProgram("brown");
     cache = new DatabaseCache(new Database("data/coursesDB.db"));
     //path 1
     List<Semester> p1 = new ArrayList<>();

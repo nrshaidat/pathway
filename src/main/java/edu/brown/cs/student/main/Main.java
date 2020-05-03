@@ -134,7 +134,7 @@ public final class Main {
         cornell = true;
       }
       uniNameShort = uniName.split(" ")[0];
-      pathwayProgram = new PathwayProgram(cornell);
+      pathwayProgram = new PathwayProgram(uniNameShort);
 
       Map<String, Object> variables =
           ImmutableMap.of("uniName", uniName, "uniNameShort", uniNameShort);

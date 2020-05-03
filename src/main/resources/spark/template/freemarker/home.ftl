@@ -65,7 +65,7 @@
     <div class="ui container">
         <select name="university" id="university" key="university" class="ui selection dropdown">
             <#list universityList as item>
-                <option value="${item}">${item}.</option>
+                <option value="${item}">${item}</option>
             </#list>
         </select>
     </div>

@@ -62,9 +62,10 @@ public class PathwayProgram {
    *
    * @throws SQLException for problems with querying db.
    */
-  public PathwayProgram(boolean cornellUniv) throws SQLException {
+  public PathwayProgram(String cornellUniv) throws SQLException {
     String file;
-    if (cornellUniv) {
+    cornellUniv = cornellUniv.toLowerCase();
+    if (cornellUniv.equals("cornell")) {
       file = "data/cornellcoursesDB.db";
     } else {
       file = "data/coursesDB.db";
@@ -74,7 +75,7 @@ public class PathwayProgram {
     concentrationMap = cache.getConcentrationsMap();
     concentrationsList = new ArrayList<>(this.concentrationMap.keySet());
     courseList = cache.getAllCourseIDs();
-    if (cornellUniv) {
+    if (cornellUniv.equals("cornell")) {
       this.setConcentrationName("Economics B.A.");
     } else {
       this.setConcentrationName("Computer Science B.A.");
