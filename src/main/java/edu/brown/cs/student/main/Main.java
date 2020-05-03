@@ -265,9 +265,35 @@ public final class Main {
       }
       List<String> pathnumlst = new ArrayList<>();
       pathnumlst.add(pathNum);
-      Map<String, Object> variables = ImmutableMap
-              .of("id", pathnumlst, "results", path, "courseList", pathwayProgram.getCourseList(cornell),
-                      "stats", pathwayProgram);
+      List<String> allCourses = pathwayProgram.getCourseList(cornell);
+      List<String> addCoursesFall = new ArrayList<>();
+      List<String> addCoursesSpring = new ArrayList<>();
+
+      for (String id : allCourses) {
+        Node course = pathwayProgram.getCourseData(id);
+        if (course.getSemestersOffered().contains(1)) {
+          addCoursesFall.add(id);
+        }
+        if (course.getSemestersOffered().contains(0)) {
+          addCoursesSpring.add(id);
+        }
+      }
+
+      List<String> pathCourses = new ArrayList<>();
+      for (Semester s : path) {
+        for (Node c : s.getCourses()) {
+          pathCourses.add(c.getId());
+        }
+      }
+
+      addCoursesFall.removeAll(pathCourses);
+      addCoursesSpring.removeAll(pathCourses);
+
+      Map<String, Object> variables =
+          ImmutableMap.<String, Object>builder().put("id", pathnumlst).put("results", path)
+              .put("courseList", allCourses).put("stats", pathwayProgram).put("fallAdd", addCoursesFall)
+              .put("springAdd", addCoursesSpring).build();
+
       return new ModelAndView(variables, "mypath.ftl");
 
     }
