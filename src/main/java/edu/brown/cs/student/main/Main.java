@@ -186,7 +186,7 @@ public final class Main {
           aggressive = true;
         }
         String coursestaken = qm.value("results");
-        Set<Node> taken = pathwayProgram.parseTaken(coursestaken);
+        Set<Node> taken = pathwayProgram.parseTaken(coursestaken, concentration);
         pathwayProgram.makePathways(concentration, taken, semester, aggressive);
       }
       String display = "Pathways generated for the concentration: " + concentration;

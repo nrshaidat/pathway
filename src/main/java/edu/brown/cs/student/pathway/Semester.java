@@ -107,11 +107,19 @@ public class Semester {
     return avghrs;
   }
 
+  /**
+   * Gets numcourses.
+   *
+   * @return the numcourses
+   */
   public int getNumcourses() {
     numcourses = this.courses.size();
     return numcourses;
   }
 
+  /**
+   * Sets courses.
+   */
   public void setCourses() {
     for (int i = 0; i < courses.size(); i++) {
       switch (i) {
@@ -156,7 +164,7 @@ public class Semester {
           } else { // only 1 number in the set
             Iterator<Integer> s = semSet.iterator();
             while (s.hasNext()) {
-              sems3= s.next();
+              sems3 = s.next();
             }
           }
           break;
@@ -181,67 +189,147 @@ public class Semester {
     }
   }
 
-  // Getters for Apache Spark & Freemarker
+  /**
+   * Gets courseid 1.
+   *
+   * @return the courseid 1
+   */
+// Getters for Apache Spark & Freemarker
   public String getCourseid1() {
     return courseid1;
   }
 
+  /**
+   * Gets courseid 2.
+   *
+   * @return the courseid 2
+   */
   public String getCourseid2() {
     return courseid2;
   }
 
+  /**
+   * Gets courseid 3.
+   *
+   * @return the courseid 3
+   */
   public String getCourseid3() {
     return courseid3;
   }
 
+  /**
+   * Gets courseid 4.
+   *
+   * @return the courseid 4
+   */
   public String getCourseid4() {
     return courseid4;
   }
 
+  /**
+   * Gets coursename 1.
+   *
+   * @return the coursename 1
+   */
   public String getCoursename1() {
     return coursename1;
   }
 
+  /**
+   * Gets coursename 2.
+   *
+   * @return the coursename 2
+   */
   public String getCoursename2() {
     return coursename2;
   }
 
+  /**
+   * Gets coursename 3.
+   *
+   * @return the coursename 3
+   */
   public String getCoursename3() {
     return coursename3;
   }
 
+  /**
+   * Gets coursename 4.
+   *
+   * @return the coursename 4
+   */
   public String getCoursename4() {
     return coursename4;
   }
 
+  /**
+   * Gets prof 1.
+   *
+   * @return the prof 1
+   */
   public String getProf1() {
     return prof1;
   }
 
+  /**
+   * Gets prof 2.
+   *
+   * @return the prof 2
+   */
   public String getProf2() {
     return prof2;
   }
 
+  /**
+   * Gets prof 3.
+   *
+   * @return the prof 3
+   */
   public String getProf3() {
     return prof3;
   }
 
+  /**
+   * Gets prof 4.
+   *
+   * @return the prof 4
+   */
   public String getProf4() {
     return prof4;
   }
 
+  /**
+   * Gets sems 1.
+   *
+   * @return the sems 1
+   */
   public int getSems1() {
     return sems1;
   }
 
+  /**
+   * Gets sems 2.
+   *
+   * @return the sems 2
+   */
   public int getSems2() {
     return sems2;
   }
 
+  /**
+   * Gets sems 3.
+   *
+   * @return the sems 3
+   */
   public int getSems3() {
     return sems3;
   }
 
+  /**
+   * Gets sems 4.
+   *
+   * @return the sems 4
+   */
   public int getSems4() {
     return sems4;
   }

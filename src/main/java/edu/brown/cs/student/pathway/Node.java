@@ -70,10 +70,20 @@ public class Node {
     category = cat;
   }
 
+  /**
+   * Gets cab url.
+   *
+   * @return the cab url
+   */
   public String getCABurl() {
     return ssurl;
   }
 
+  /**
+   * Sets ss url.
+   *
+   * @param ssurl the ss url
+   */
   public void setSsurl(String ssurl) {
     this.ssurl = ssurl;
   }

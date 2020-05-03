@@ -58,8 +58,8 @@ public class PathwayProgram {
    * sets the default values for user signing, sets information about each pathway like the
    * average weekly hours of a course in the pathway, number of courses, and number of semesters
    * in the pathway.
-   * @param univ string representing the first word in the unversity name ie brown or cornell
    *
+   * @param univ string representing the first word in the unversity name ie brown or cornell
    * @throws SQLException for problems with querying db.
    */
   public PathwayProgram(String univ) throws SQLException {
@@ -85,6 +85,13 @@ public class PathwayProgram {
     totalnumcourses3 = 0;
   }
 
+  /**
+   * Gets course data.
+   *
+   * @param id the id
+   * @return the course data
+   * @throws SQLException the sql exception
+   */
   public Node getCourseData(String id) throws SQLException {
     return cache.getCourseData(id);
   }
@@ -141,9 +148,12 @@ public class PathwayProgram {
    * Parse taken set.
    *
    * @param coursestaken the coursestaken
+   * @param con          concentration in GUI form
    * @return the set
+   * @throws SQLException the sql exception
    */
-  public Set<Node> parseTaken(String coursestaken) {
+  public Set<Node> parseTaken(String coursestaken, String con) throws SQLException {
+    this.setConcentrationName(con);
     String[] cList = coursestaken.split(",");
     Set<Node> taken = new HashSet<>();
     for (int i = 0; i < cList.length; i++) {
@@ -158,7 +168,9 @@ public class PathwayProgram {
 
   /**
    * Returns a list of Strings representing the courseList.
+   *
    * @return a list of Strings.
+   * @throws SQLException sql exception
    */
   public List<String> getCourseList() throws SQLException {
     courseList = cache.getAllCourseIDs();
@@ -294,6 +306,7 @@ public class PathwayProgram {
    * Returns a Map of the concentration.
    *
    * @return a Map of key and value String pairs.
+   * @throws SQLException sql exception
    */
   public Map<String, String> getConcentrationMap() throws SQLException {
     concentrationMap = cache.getConcentrationsMap();
@@ -317,7 +330,7 @@ public class PathwayProgram {
    */
   public void setConcentration(String concentration) throws SQLException {
     this.concentration = concentration;
-    courseSet = cache.getConcentrationCourses(concentration);
+    this.courseSet = cache.getConcentrationCourses(concentration);
   }
 
   /**

@@ -45,6 +45,17 @@ public class PathwayProgramTest {
   }
 
   /**
+   * Sets up pathway program for testing.
+   *
+   * @throws Exception the exception
+   */
+  @Before
+  public void setUpCornell() throws Exception {
+    pp = new PathwayProgram("cornell");
+    cache = new DatabaseCache(new Database("data/cornellcoursesDB.db"));
+  }
+
+  /**
    * Sets up pathway program and static pathways for stats testing.
    *
    * @throws Exception the exception
@@ -539,10 +550,104 @@ public class PathwayProgramTest {
     List<String> u1 = new ArrayList<>(Arrays.asList("CSCI 0150", "CSCI 0160", "MATH 0180", "CSCI 1230"));
     assertTrue(u1.containsAll(pp.getPath1Uniques()) && pp.getPath1Uniques().size() == 3);
     List<String> u2 = new ArrayList<>(Arrays.asList("CSCI 0170", "CSCI 0180", "CSCI 0220"));
-    assertTrue(pp.getPath2Uniques().containsAll(u2) && u2.containsAll(pp.getPath2Uniques()));
+    assertTrue(pp.getPath2Uniques().containsAll(u2) && u2.containsAll(pp.getPath2Uniques()) && pp.getPath2Uniques().size() == 3);
     List<String> u3 = new ArrayList<>(Arrays.asList("CSCI 0190", "CSCI 0320", "APMA 1650"));
-    assertTrue(pp.getPath3Uniques().containsAll(u3) && u3.containsAll(pp.getPath3Uniques()));
+    assertTrue(pp.getPath3Uniques().containsAll(u3) && u3.containsAll(pp.getPath3Uniques()) && pp.getPath3Uniques().size() == 3);
     tearDown();
   }
+
+  /**
+   * Tests defaults are correctly set with cornell university.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void differentUni() throws Exception {
+    setUpCornell();
+    assertEquals(1, pp.getConcentrationMap().size());
+    assertEquals(1, pp.getConcentrationsList().size());
+    assertEquals("Economics B.A.", pp.getConcentrationName());
+    assertEquals("economicsba", pp.getConcentration());
+    assertEquals(cache.getAllCourseIDs(),pp.getCourseList());
+    assertNull(pp.getPath1());
+    assertNull(pp.getPath2());
+    assertNull(pp.getPath3());
+    pp.makePathways("Economics B.A.", new HashSet<>(), 1, false);
+    assertEquals(cache.getConcentrationCourses("economicsba"),pp.getCourseSet());
+    assertNotNull(pp.getPath1());
+    assertNotNull(pp.getPath2());
+    assertNotNull(pp.getPath3());
+    tearDown();
+  }
+
+  /**
+   * Tests parseTaken method.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void parseTaken() throws Exception {
+    setUp();
+    String con = "Computer Science B.A.";
+    Set<Node> taken = new HashSet<Node>();
+    assertEquals(taken,pp.parseTaken("", con));
+    assertEquals(2, pp.parseTaken("CSCI 0150,MATH 0100",con).size());
+    assertEquals(1, pp.parseTaken("CSCI 0150,CLPS 0010", con).size());
+    tearDown();
+  }
+
+  /**
+   * Tests parseGradeLevel method.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void parseGradeLevel() throws Exception {
+    setUp();
+    assertEquals(1, pp.parseGradeLevel("Freshman", "Fall"));
+    assertEquals(2, pp.parseGradeLevel("Freshman", "Spring"));
+    assertEquals(3, pp.parseGradeLevel("Sophomore", "Fall"));
+    assertEquals(4, pp.parseGradeLevel("Sophomore", "Spring"));
+    assertEquals(5, pp.parseGradeLevel("Junior", "Fall"));
+    assertEquals(6, pp.parseGradeLevel("Junior", "Spring"));
+    assertEquals(7, pp.parseGradeLevel("Senior", "Fall"));
+    assertEquals(8, pp.parseGradeLevel("Senior", "Spring"));
+    tearDown();
+  }
+
+  /**
+   * Tests getGradeList and getYearList method.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void getGradeYearList() throws Exception {
+    setUp();
+    List<String>  ll = new ArrayList<>();
+    ll.add("Freshman");
+    ll.add("Sophomore");
+    ll.add("Junior");
+    ll.add("Senior");
+    assertTrue(pp.getGradeList().containsAll(ll));
+    List<String> l = new ArrayList<>();
+    l.add("Fall");
+    l.add("Spring");
+    assertTrue(pp.getYearList().containsAll(l));
+    tearDown();
+  }
+
+  /**
+   * Tests getCourseData method.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void getCourseData() throws Exception {
+    setUp();
+    Node cs16 = cache.getCourseData("CSCI 0160");
+    assertEquals(cs16, pp.getCourseData("CSCI 0160"));
+    tearDown();
+  }
+
 }
 
