@@ -16,7 +16,7 @@ None
 	
   * DatabaseCache Class:  The class that has the cache of all courses and calls on the Database class to query the sql database. 
 	
- -PathwayProgram class:  A class that contains all the information needed from the GUI and executes making pathways for the main class.  
+ -PathwayProgram class:  A class that contains all the information needed from the GUI and executes making pathways for the main class. It also serves as integrater class between the pathway class, main class, and database classes.   
  -GUI Design:  
  
 #### Pathway Package:  
@@ -41,7 +41,7 @@ don't fail when building.
 ## Tests we wrote:
 	
 ## Data files:
-	-coursesDB.db:
+	-coursesDB.db: Brown Courses Database
 		-courses table: contains all courses from Fall 2020 and Spring 2020
 			-course_id: Deptartment code +space+ course number  (CSCI 0150) from CAB
 			-course_name: Name of the course (Intro to Object Oriented Programming) from CAB
@@ -69,6 +69,31 @@ don't fail when building.
 		-cognitiveneuroscienceba_rules table: sample concentration rules table
 			-category: 0-20+ we organized concentration rules into categories where one has to take a specified number of courses from one category to satisfy a certain number of credits for the concentration
 			-num_credits: the number of course one must take to satisfy the categories requierements 
+	-cornellcoursesDB.db: Cornell Courses Database
+		-courses table: contains all courses from Fall 2020 and Spring 2020
+			-course_id: Deptartment code +space+ course number  (CSCI 0150) from ss_link
+			-course_name: Name of the course (Intro to Object Oriented Programming) from cornell course ss_link
+			-prereqs: courseID's of the prereqs for this course where a ',' represents AND and '=' represents OR from ss_link
+			-semester_offered: 0 is spring, 1 is fall, and 2 is both semesters from ss_link
+			-professor: the course's professor from ss_link
+			-courseRating: the most recent course rating from cure reviews (0-5)
+			-avg_hrs: the most recent record of average hours listed on cure reviews (hrs)
+			-max_hrs: the most recent record of maximum hours listed on cure reviews (hrs)
+			-CR_link: the https://www.cureviews.org link equivalent to brown's critical review
+			-class_size: the most recent record of the class size from CR_link
+			-department: the 3-4 letter code of the department the course is in (CSCI 0150-> CSCI)
+			-number: the course number listed after the department code in the course id (CSCI 0150-> 0150)
+			-ss_link: the https://classes.cornell.edu link for each course
+		-concentrations table:
+			-concentration_id: the table name associated with the concentration name 
+			-concentration_name: the name of the concentration for displaying on the GUI
+		-economicsba table: sample concentration courses table
+			-course_id: the course id used in the courses table
+			-next: course id of the next course in a sequence (CS15 would have CS16 as its next)
+			-category: the category that the course is credit for
+		-economicsba_rules table: sample concentration rules table
+			-category: 0-20+ we organized concentration rules into categories where one has to take a specified number of courses from one category to satisfy a certain number of credits for the concentration
+			-num_credits: the number of course one must take to satisfy the categories requierements 
 	-coursesDBColErr.db:has wrong column names and number of columns for a multitude of tables for testing
 	-coursesDBempty.db: has an empty courses table for testing
 	-coursesDBInvalid.db: has wrong type fields in multiple tables for testing
@@ -90,6 +115,9 @@ None.
         -Styling and adding functionality to front end (navbar)
         -Extensive debugging of all parts (db, algo & frontend)
 	    -Setting up login, login as guest, and sign up routing correctly
+	    -Setting up cornell's extensibility 
+	    -22/23 of the PathwayProgram junit tests
+	    -Setting up PathwayProgram
 
 	Mel:
         -Critical Review scraping
@@ -100,6 +128,7 @@ None.
         -Routing, alerting and comprehensive handling of user input
         -Styling and adding functionality to front end (login, faq, main form, 3-pathway display)
         -Transitioned styling to semantic ui to improve user experience
+	-Setting up cornell db and integrating cornell into GUI
        
 	Ifechi:
         -Developing and optimizing the fundamental makePathway algorithm
@@ -115,12 +144,14 @@ None.
          mapping out and handling all edge cases 
         -Implementing and styling hover to show course details
         -Styling semester boxes, arrows, navigation bar, and pathway statistics (everything responsive)
+	-Styling nav bar
         
     Nick:
         -CAB/self service scraping
         -Manually fixing prereqs for CHEM
         -Unit testing CAB database outputs
-	    -Username/password fields on sign up page, guest button in the login page 
+	    -Username/password fields on sign up page, guest button in the login page
+	    -1/23 junit tests on PathwayProgram Tests
 		
 
 #### Member: Melissa Cui
