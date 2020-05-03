@@ -83,6 +83,10 @@ public class PathwayProgram {
     totalnumcourses3 = 0;
   }
 
+  public Node getCourseData(String id) throws SQLException {
+    return cache.getCourseData(id);
+  }
+
   /**
    * Gets the year list to display in GUI.
    *

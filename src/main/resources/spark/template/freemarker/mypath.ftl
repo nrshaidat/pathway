@@ -17,7 +17,7 @@
         <!--Start: Desktop Nav-->
         <div class="computer only row">
             <form action="/login" method="post">
-                <a class="header item">Pathway</a>
+                <a href="/login" class="header item">Pathway</a>
             </form>
             <form action="/login" method="post">
                 <a href="/login" class="item">Log out</a>
@@ -98,13 +98,22 @@
                 <br>
                 <h4>Add A Course To This Semester</h4>
                 <div class="field">
-                    <label>Courses: </label>
-                    <select name="courses" key="courses" id="multi-select"
-                            class="ui fluid search selection dropdown" multiple="">
-                        <#list courseList as item>
+                    <label>Fall Courses: </label>
+                    <select name="courses" key="courses" id="multi-selectF"
+                            class="ui fluid search selection dropdown" multiple="" data-toggle="dropdown">
+                        <#list fallAdd as item>
                             <option value="${item}">${item}</option>
                         </#list>
                     </select>
+                    <br>
+                    <label>Spring Courses: </label>
+                    <select name="courses" key="courses" id="multi-selectS"
+                            class="ui fluid search selection dropdown" multiple="" data-toggle="dropdown">
+                        <#list springAdd as item>
+                            <option value="${item}">${item}</option>
+                        </#list>
+                    </select>
+
                     <br>
                     <button id="btn-add-confirm">Confirm Changes</button>
                     <br>
@@ -114,7 +123,8 @@
 
                 </div>
                 <script>
-                    $('#multi-select').dropdown();
+                    $('#multi-selectF').dropdown();
+                    $('#multi-selectS').dropdown();
                 </script>
             </div>
 
@@ -150,16 +160,32 @@
                 <div class="field">
                     <form class="ui form">
                         <div class="field">
-                            <label style="font-size: 1em">Swap Course: </label>
+                            <label style="font-size: 1em">Swap Out Course: </label>
                             <input id="course-to-swap" placeholder='e.g. BIOL 0200'/>
                         </div>
-                            <label style="font-family: Lato; font-weight: bold">With Course: </label>
-                            <select name="eq-courses" key="eq-courses" id="multi-select2"
-                                    class="ui fluid search selection dropdown" multiple="">
-                                <#list courseList as item>
-                                    <option value="${item}">${item}</option>
-                                </#list>
-                            </select>
+                            <label style="font-family: Lato; font-weight: bold">Swap In Course: </label>
+<#--                            <select name="eq-courses" key="eq-courses" id="multi-select2"-->
+<#--                                    class="ui fluid search selection dropdown" multiple="">-->
+<#--                                <#list courseList as item>-->
+<#--                                    <option value="${item}">${item}</option>-->
+<#--                                </#list>-->
+<#--                            </select>-->
+                        <br>
+                        <label>Fall Courses: </label>
+                        <select name="courses" key="courses" id="multi-selectFS"
+                                class="ui fluid search selection dropdown" multiple="" data-toggle="dropdown">
+                            <#list fallAdd as item>
+                                <option value="${item}">${item}</option>
+                            </#list>
+                        </select>
+                        <br>
+                        <label>Spring Courses: </label>
+                        <select name="courses" key="courses" id="multi-selectSS"
+                                class="ui fluid search selection dropdown" multiple="" data-toggle="dropdown">
+                            <#list springAdd as item>
+                                <option value="${item}">${item}</option>
+                            </#list>
+                        </select>
                     </form>
 
                     <br>
@@ -171,7 +197,9 @@
 
                 </div>
                 <script>
-                    $('#multi-select2').dropdown();
+                    $('#multi-selectFS').dropdown();
+                    $('#multi-selectSS').dropdown();
+                    // $('#multi-select2').dropdown();
                 </script>
             </div>
         </div>
@@ -389,10 +417,16 @@
     // Get add confirm button and make it add courses
     const addconfirmbtn = document.getElementById("btn-add-confirm");
     addconfirmbtn.onclick = function () {
-        const courses = $('#multi-select').dropdown('get values');
         const sem = document.getElementById("this-sem");
         const text = sem.innerText.trim();
         const lastCharacter = text[text.length - 2];
+        let courses;
+        if (parseInt(lastCharacter) % 2 === 1) {
+            courses = $('#multi-selectF').dropdown('get values');
+        } else {
+            courses = $('#multi-selectS').dropdown('get values');
+        }
+
         const parent = document.getElementById("myBtn" + lastCharacter);
         const child = parent.querySelectorAll(".description")[0];
 
@@ -450,28 +484,34 @@
             alert("Please enter a course from this semester to swap out.");
             return;
         }
-        const courses = $('#multi-select2').dropdown('get values');
         const sem = document.getElementById("this-sem");
         const text = sem.innerText.trim();
         const lastCharacter = text[text.length - 2];
+        let courses;
+        if (parseInt(lastCharacter) % 2 === 1) {
+            courses = $('#multi-selectFS').dropdown('get values');
+        } else {
+            courses = $('#multi-selectSS').dropdown('get values');
+        }
+
         const parent = document.getElementById("myBtn" + lastCharacter);
         const child = parent.querySelectorAll(".description")[0];
 
-        const children = [].slice.call(child.getElementsByTagName('p'), 0);
+        const children = [].slice.call(child.getElementsByTagName('div'), 0);
         for (let i = 0; i < children.length; i++) {
             let name = children[i].getAttribute("id");
-            if (name.toLowerCase().replace(/\s/g, '') === swapCourse.value.toLowerCase().replace(/\s/g, '')) {
+            if (name != null && name.toLowerCase().replace(/\s/g, '') === swapCourse.value.toLowerCase().replace(/\s/g, '')) {
                 child.removeChild(children[i]);
             }
         }
 
         for (let i = 0; i < courses.length; i++) {
             const node = document.createElement("P");
+            node.style.cursor = "pointer";
+            node.style.fontSize = "1.1em";
             node.innerHTML = courses[i];
             child.appendChild(node);
         }
-
-
 
         swpconfirm.style.display = "block";
     }
