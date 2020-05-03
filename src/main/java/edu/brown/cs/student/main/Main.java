@@ -167,9 +167,9 @@ public final class Main {
 
 //      List<String> concentrationList;
 
-      if (cornell == true) {
-        System.out.println("cornell mode");
-      }
+//      if (cornell == true) {
+//        System.out.println("cornell mode");
+//      }
 
 
 //      if (cornell) {

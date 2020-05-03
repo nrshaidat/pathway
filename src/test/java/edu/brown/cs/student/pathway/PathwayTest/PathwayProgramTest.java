@@ -118,7 +118,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getCourseList() throws Exception {
     setUp();
     List<String> cl = pp.getCourseList(false);
@@ -132,7 +132,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getAvgavghrspath() throws Exception {
     setUpStats();
     assertEquals(7, pp.getAvgavghrs1path());
@@ -146,7 +146,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getTotalnumcourses() throws Exception {
     setUpStats();
     assertEquals(4, pp.getTotalnumcourses1());
@@ -161,7 +161,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getNumsemesters() throws Exception {
     setUpStats();
     assertEquals(2, pp.getNumsemesters1());
@@ -176,7 +176,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getPath() throws Exception {
     setUp();
     //test default
@@ -203,7 +203,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getConcentrationMap() throws Exception {
     setUp();
     Map<String, String> mapy = pp.getConcentrationMap();
@@ -219,7 +219,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void setConcentration() throws Exception {
     setUp();
     pp.setConcentration("cognitiveneuroscienceba");
@@ -234,7 +234,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getConcentrationName() throws Exception {
     setUp();
     assertEquals("Computer Science B.A.", pp.getConcentrationName());
@@ -246,7 +246,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void validsetConcentrationName() throws Exception {
     setUp();
     pp.setConcentrationName("Cognitive Neuroscience B.A.");
@@ -259,7 +259,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void invalidsetConcentrationName() throws Exception {
     setUp();
     pp.setConcentrationName("Cognitive Neuroscience B.T.");
@@ -273,7 +273,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void isSet() throws Exception {
     setUp();
     assertFalse(pp.isSet());
@@ -287,7 +287,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getConcentration() throws Exception {
     setUp();
     assertEquals("computerscienceba", pp.getConcentration());
@@ -299,7 +299,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getConcentrationsList() throws Exception {
     setUp();
     assertEquals(new ArrayList<>(cache.getConcentrationsMap(false).keySet()),
@@ -312,7 +312,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void setPathStats() throws Exception {
     setUp();
     assertEquals(0,pp.getTotalnumcourses1());
@@ -342,7 +342,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void setPathUniques() throws Exception {
     setUp();
     pp.setPathUniques();
@@ -357,7 +357,7 @@ public class PathwayProgramTest {
    *
    * @throws Exception the exception
    */
-  //@Test
+  @Test
   public void getPathUniques() throws Exception {
     setUpStats();
     pp.setPathUniques();

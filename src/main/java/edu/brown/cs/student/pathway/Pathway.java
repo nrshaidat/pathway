@@ -323,14 +323,14 @@ public class Pathway {
     // lag tells us if we are ahead or behind on our requirements, relative to semester level
     double lag = semFrac - reqsFracAvg;
     if (aggressive) { // if agressive, we fake being behind so that we take more courses earlier on
-      lag += (2.0 / SEMESTER_COUNT);
+      lag += 2.0 / SEMESTER_COUNT;
     }
 
     if (lag <= (-1.0 / SEMESTER_COUNT)) { // ahead by 2 semesters, reduce maxFrac
-      maxFrac -= (1.0 / SEMESTER_SIZE);
+      maxFrac -= 1.0 / SEMESTER_SIZE;
     }
     if (lag > (1.0 / SEMESTER_COUNT)) { // behind, increase maxFrac
-      maxFrac += (1.0 / SEMESTER_SIZE);
+      maxFrac += 1.0 / SEMESTER_SIZE;
     }
 
     // Math.ceil(maxFrac * max) is ideally how many courses we take; we Math.min with
@@ -400,7 +400,7 @@ public class Pathway {
       // Avg vs. max hours priority
       double avgOverMax = course.getAvgHrs() / course.getMaxHrs();
       // Rating has bigger impact on priority than hours variance
-      double priority = (MAGICNUMBERTHREEFOURTH * trueRating) + (MAGICNUMBERFOURTH * avgOverMax);
+      double priority = MAGICNUMBERTHREEFOURTH * trueRating + MAGICNUMBERFOURTH * avgOverMax;
       weights.add(priority);
       acc += priority;
       running.add(acc);
