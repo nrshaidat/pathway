@@ -588,6 +588,7 @@ public class PathwayProgram {
   /**
    * Sets path unique courses.
    * @author nkeirste (Nick) and nrshaida (Natalie Rshaidat)
+   * @throw SQLException sql exception
    */
   public void setPathUniques() throws SQLException {
     if (this.isSet()) {
