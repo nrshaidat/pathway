@@ -53,7 +53,7 @@
 </head>
 <body>
 
-<p> To generate the most accurate pathway, please input as much information as possible!
+<p> To generate the best pathways, please input as much information as possible!
   <br> For FAQs on how we design pathways, <a href="/faqs" class="link"> click here. </a> </p>
 
 <br>

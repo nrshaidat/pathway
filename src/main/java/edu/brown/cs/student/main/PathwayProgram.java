@@ -85,9 +85,6 @@ public class PathwayProgram {
     } else {
       this.setConcentrationName("Computer Science B.A.");
     }
-    totalnumcourses1 = 0;
-    totalnumcourses2 = 0;
-    totalnumcourses3 = 0;
   }
 
   /**
@@ -536,7 +533,7 @@ public class PathwayProgram {
   /**
    * Sets path unique courses.
    * @author nkeirste (Nick) and nrshaida (Natalie Rshaidat)
-   * @throw SQLException sql exception
+   * @throws SQLException sql exception
    */
   public void setPathUniques() throws SQLException {
     if (this.isSet()) {
