@@ -85,9 +85,6 @@ public class PathwayProgram {
     } else {
       this.setConcentrationName("Computer Science B.A.");
     }
-    totalnumcourses1 = 0;
-    totalnumcourses2 = 0;
-    totalnumcourses3 = 0;
   }
 
   /**

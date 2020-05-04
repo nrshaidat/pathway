@@ -52,9 +52,8 @@ public class Semester {
   }
 
 
-
-
   // Getters for Apache Spark
+
   /**
    * Public getter method to return the maximum hours of a semester.
    *
