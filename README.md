@@ -39,7 +39,7 @@ don't fail when building.
 ## How to run our tests:
 	- To run unit tests: "mvn test", or using one of the build commands (mvn package)
 ## Tests we wrote:
-	
+Since we do not have a REPL and only a GUI, I decided to make a Pathway Program class that handles all of the user input parsing and outputs data to gui. By having this class I was able to thuroughly test all outputs that would be displayed back to the user, which is why PathwayProgram has 100% coverage in jacoco. The testing suite for pathway program tests cornell extensibility, pathway outputs, pathway stats, pathway unique courses and not returning null pointers back to the main class. In addition, I also had to test all of database data and wrote 8 additional public methods to tests that the concentration tables are lining up, the data types are of the correct format, and to check that data was clean. Given that the unclean sql database has caused a lot of bugs and errors in classes that use that database's data, I had to use these error checking methods in my testing suite which is why I left those methods public.
 ## Data files:
 	-coursesDB.db: Brown Courses Database
 		-courses table: contains all courses from Fall 2020 and Spring 2020
@@ -116,8 +116,11 @@ None.
         -Extensive debugging of all parts (db, algo & frontend)
 	    -Setting up login, login as guest, and sign up routing correctly
 	    -Setting up university extensibility 
-	    -Setting up PathwayProgram
-	    -PathwayProgram JUnit tests
+	    -Setting up PathwayProgram and calculating stats for pathways
+	    -All of PathwayProgram JUnit tests (unique courses, cornell, brown) and optimizing their runtime
+	    -Making unique courses hover info and making the the 3 pathway containers clickable in 3 pathway page 
+	    -Making GUI flexible to changes in course size
+	    
 
 	Mel:
         -Critical Review scraping
@@ -151,10 +154,10 @@ None.
         
     Nick:
         -CAB/self service scraping
-        -Manually fixing prereqs for CHEM and CSCI
-        -Unit testing CAB database outputs and PathwayProgram unique courses
+        -Manually fixing prereqs for CHEM
+        -Unit testing CAB database outputs
 	    -Username/password fields on sign up page, guest button in the login page
-	    -Unique courses for 3-pathway display and pathway statistics
+	    -Unique courses for 3-pathway display and displaying pathway statistics
 	    -Sorting pathways by workload to display correctly
 	    
 
