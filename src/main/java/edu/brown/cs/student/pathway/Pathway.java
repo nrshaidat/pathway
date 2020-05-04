@@ -35,6 +35,9 @@ public class Pathway {
   private List<Semester> path; // path to be returned
   private int currSemester;
 
+  private int numCourses; // total number of courses across semesters
+  private double avgAvgHrs; // average of average semester hours
+
   //Creating public static final ints for the numbers that cause Maven issues
   //These numbers cause Magic Number errors, so we assign them to variables instead.
   private static final double MEDLOWBOUNDHRS = 25.0;
@@ -71,6 +74,25 @@ public class Pathway {
     workloads = ImmutableMap.of("lo", Range.closedOpen(1.0, MEDLOWBOUNDHRS), "med",
         Range.closedOpen(MEDLOWBOUNDHRS, MEDHIGHBOUNDHRS), "hi",
         Range.closedOpen(MEDHIGHBOUNDHRS, HIHIGHBOUNDHRS));
+  }
+
+  private void setStats() {
+    avgAvgHrs = 0.0;
+    numCourses = 0;
+    for (Semester sem : this.path) {
+      sem.setStats();
+      avgAvgHrs += sem.getAvghrs();
+      numCourses += sem.getCourses().size();
+    }
+    avgAvgHrs = Math.round(avgAvgHrs / numCourses);
+  }
+
+  public int getNumCourses() {
+    return numCourses;
+  }
+
+  public double getAvgAvgHrs() {
+    return avgAvgHrs;
   }
 
   /**
@@ -187,6 +209,7 @@ public class Pathway {
       path.add(semester);
       currSemester++;
     }
+    setStats();
   }
 
   /**

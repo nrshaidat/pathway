@@ -128,9 +128,9 @@ public class PathwayProgram {
    * @param path1 the path 1
    * @author nrshaida (Natalie Rshaidat)
    */
-  public void setPath1(List<Semester> path1) {
-    this.path1 = path1;
-    this.setPathStats1();
+  public void setPath1(Pathway path1) {
+    this.path1 = path1.getPath();
+    this.setPathStats1(path1);
   }
 
   /**
@@ -139,9 +139,9 @@ public class PathwayProgram {
    * @param path2 the path 2
    * @author nrshaida (Natalie Rshaidat)
    */
-  public void setPath2(List<Semester> path2) {
-    this.path2 = path2;
-    this.setPathStats2();
+  public void setPath2(Pathway path2) {
+    this.path2 = path2.getPath();
+    this.setPathStats2(path2);
   }
 
   /**
@@ -150,9 +150,9 @@ public class PathwayProgram {
    * @param path3 the path 3
    * @author nrshaida (Natalie Rshaidat)
    */
-  public void setPath3(List<Semester> path3) {
-    this.path3 = path3;
-    this.setPathStats3();
+  public void setPath3(Pathway path3) {
+    this.path3 = path3.getPath();
+    this.setPathStats3(path3);
   }
 
   /**
@@ -413,39 +413,33 @@ public class PathwayProgram {
 
     Pathway pathway1 = new Pathway(reqs, courseSet);
     pathway1.makePathway(taken, sem, aggressive, "lo");
-    List<Semester> p1 = pathway1.getPath();
 
     Pathway pathway2 = new Pathway(reqs2, courseSet);
     pathway2.makePathway(taken, sem, aggressive, "med");
-    List<Semester> p2 = pathway2.getPath();
 
     Pathway pathway3 = new Pathway(reqs3, courseSet);
     pathway3.makePathway(taken, sem, aggressive, "hi");
-    List<Semester> p3 = pathway3.getPath();
-
-    double p1Hrs = getPathAvgHrs(p1);
-    double p2Hrs = getPathAvgHrs(p2);
-    double p3Hrs = getPathAvgHrs(p3);
 
     /* Check avg hours for paths 1, 2, 3 and reorder if needed so that path 1 actually has the
     lowest avg hours, path 2 has middle, path 3 has highest. */
-    List<Map.Entry<List<Semester>, Double>> pathHours = new ArrayList<>();
-    pathHours.add(Map.entry(p1, p1Hrs));
-    pathHours.add(Map.entry(p2, p2Hrs));
-    pathHours.add(Map.entry(p3, p3Hrs));
-    Collections.sort(pathHours, new Comparator<Map.Entry<List<Semester>, Double>>() {
+    List<Map.Entry<Pathway, Double>> pathHours = new ArrayList<>();
+    pathHours.add(Map.entry(pathway1, pathway1.getAvgAvgHrs()));
+    pathHours.add(Map.entry(pathway2, pathway2.getAvgAvgHrs()));
+    pathHours.add(Map.entry(pathway3, pathway3.getAvgAvgHrs()));
+    Collections.sort(pathHours, new Comparator<Map.Entry<Pathway, Double>>() {
       @Override
-      public int compare(Map.Entry<List<Semester>, Double> e1,
-                         Map.Entry<List<Semester>, Double> e2) {
-        return e1.getValue().compareTo(e2.getValue());
+      public int compare(Map.Entry<Pathway, Double> e1,
+                         Map.Entry<Pathway, Double> e2) {
+        int cmp = e1.getValue().compareTo(e2.getValue());
+        if (cmp == 0) {
+          /* If same avgAvgHrs, sort by total number of courses */
+          return Integer.compare(e1.getKey().getNumCourses(), e2.getKey().getNumCourses());
+        } else {
+          return cmp;
+        }
       }
     });
-    /* Reset stats for each path, because had to calculate avgHrs to sort pathways */
-    for (Map.Entry<List<Semester>, Double> e: pathHours) {
-      for (Semester s : e.getKey()) {
-        s.resetStats();
-      }
-    }
+
     this.setPath1(pathHours.get(0).getKey());
     this.setPath2(pathHours.get(1).getKey());
     this.setPath3(pathHours.get(2).getKey());
@@ -510,79 +504,33 @@ public class PathwayProgram {
   }
 
   /**
-   * This method sets the statistics of Pathway1, the average workload per course, the number of
-   * courses, and the number of semesters in the pathway.
-   * It calcualtes the average weekly hours of each class in the pathway. After
-   * generating this information, these parameters can be used in the front-end to
-   * display a semester summary.
-   * @author nrshaida (Natalie Rshaidat)
+   * This method sets the statistics for what the front end displays as pathway1.
+   * @param p1 The pathway chosen to be pathway 1.
+   * @author nrshaida (Natalie Rshaidat) and nkeirste
    */
-  public void setPathStats1() {
-    totalnumcourses1 = 0;
-    avgavghrs1path = 0.0;
-    for (Semester sem : getPath1()) {
-      sem.setStats();
-      totalnumcourses1 += sem.getCourses().size();
-      avgavghrs1path += sem.getAvghrs();
-    }
-    avgavghrs1path = Math.round(avgavghrs1path / totalnumcourses1);
+  public void setPathStats1(Pathway p1) {
+    totalnumcourses1 = p1.getNumCourses();
+    avgavghrs1path = p1.getAvgAvgHrs();
   }
 
   /**
-   * This method sets the statistics of Pathway2, the average workload per course, the number of
-   * courses, and the number of semesters in the pathway.
-   * It calcualtes the average weekly hours of each class in the pathway. After
-   * generating this information, these parameters can be used in the front-end to
-   * display a semester summary.
-   * @author nrshaida (Natalie Rshaidat)
+   * This method sets the statistics for what the front end displays as pathway2.
+   * @param p2 The pathway chosen to be pathway 2.
+   * @author nrshaida (Natalie Rshaidat) and nkeirste
    */
-  public void setPathStats2() {
-    totalnumcourses2 = 0;
-    avgavghrs2path = 0.0;
-    for (Semester sem : getPath2()) {
-      sem.setStats();
-      totalnumcourses2 += sem.getCourses().size();
-      avgavghrs2path += sem.getAvghrs();
-    }
-    avgavghrs2path = Math.round(avgavghrs2path / totalnumcourses2);
+  public void setPathStats2(Pathway p2) {
+    totalnumcourses2 = p2.getNumCourses();
+    avgavghrs2path = p2.getAvgAvgHrs();
   }
 
   /**
-   * This method sets the statistics of Pathway3, the average workload per course, the number of
-   * courses, and the number of semesters in the pathway.
-   * It calcualtes the average weekly hours of each class in the pathway. After
-   * generating this information, these parameters can be used in the front-end to
-   * display a semester summary.
-   * @author nrshaida (Natalie Rshaidat)
+   * This method sets the statistics for what the front end displays as pathway3.
+   * @param p3 The pathway chosen to be pathway 3.
+   * @author nrshaida (Natalie Rshaidat) and nkeirste
    */
-  public void setPathStats3() {
-    totalnumcourses3 = 0;
-    avgavghrs3path = 0.0;
-    for (Semester sem : getPath3()) {
-      sem.setStats();
-      totalnumcourses3 += sem.getCourses().size();
-      avgavghrs3path += sem.getAvghrs();
-    }
-    avgavghrs3path = Math.round(avgavghrs3path / totalnumcourses3);
-  }
-
-  /**
-   * A method that calculates the average number of hours in a pathway per semester. This is used
-   * in makePathways to get the workload of each pathway and sort them, ensuring path1 is the
-   * lowest hours, path 2 is the medium, path 3 is the highest.
-   * @param path The pathway, a list of semesters
-   * @return The average number of hours per semester for path
-   * @author nkeirste (Nick Keirstead)
-   */
-  private double getPathAvgHrs(List<Semester> path) {
-    double avgHrs = 0.0;
-    int numCourses = 0;
-    for (Semester sem : path) {
-      sem.setStats();
-      avgHrs += sem.getAvghrs();
-      numCourses += sem.getCourses().size();
-    }
-    return Math.round(avgHrs / numCourses);
+  public void setPathStats3(Pathway p3) {
+    totalnumcourses3 = p3.getNumCourses();
+    avgavghrs3path = p3.getAvgAvgHrs();
   }
 
   /**
