@@ -26,7 +26,6 @@ public class Node {
   private double rating;
   private int classSize;
   private String ssurl;
-  private int sem;
 
   /**
    * Instantiates a new Node.

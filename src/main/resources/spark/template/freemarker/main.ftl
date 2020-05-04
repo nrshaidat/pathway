@@ -46,7 +46,8 @@
 <h1>Welcome to Pathway</h1>
 
 <p>Your personalized concentration pathway generator for ${uniName}. <p>
-    <p> Pathway generates courses within your specified concentration to help you plan out your next years at ${uniNameShort}. </p>
+    <p> Pathway generates course roadmaps within your specified concentration to help you
+        plan out your next years at ${uniNameShort}. </p>
 
 <h2>Login</h2>
 <form action="/mypath" method="post">
