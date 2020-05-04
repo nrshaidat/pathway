@@ -26,6 +26,7 @@ public class Node {
   private double rating;
   private int classSize;
   private String ssurl;
+  private int sem;
 
   /**
    * Instantiates a new Node.
@@ -69,6 +70,16 @@ public class Node {
     id = courseID;
     nextID = nextid;
     category = cat;
+  }
+
+  public int getSem() {
+    if (this.getSemestersOffered().size() == 2) {
+      return 2;
+    } else if (this.getSemestersOffered().contains(0)) {
+      return 0;
+    } else {
+      return 1;
+    }
   }
 
   /**

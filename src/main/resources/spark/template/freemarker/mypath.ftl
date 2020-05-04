@@ -163,7 +163,7 @@
                             <label style="font-size: 1em">Swap Out Course: </label>
                             <input id="course-to-swap" placeholder='e.g. BIOL 0200'/>
                         </div>
-                            <label style="font-family: Lato; font-weight: bold">Swap In Course: </label>
+                        <label style="font-family: Lato; font-weight: bold">Swap In Course: </label>
                         <br>
                         <label>Fall Courses: </label>
                         <select name="courses" key="courses" id="multi-selectFS"
@@ -199,11 +199,11 @@
     </div>
     <div class="ui-cards">
 
-<#--        Displays the results by semester cards in the /mypath/:id pages. The display results in two-->
-<#--        side by side semester "cards", that users can click on and modify. If there is no content in a -->
-<#--        particular semester, the semester is defined as a "Free Semester," which is the else -->
-<#--        condition in the following statement. If there is content for each of the possible courses, -->
-<#--        then the course ID is displayed. -->
+        <#--        Displays the results by semester cards in the /mypath/:id pages. The display results in two-->
+        <#--        side by side semester "cards", that users can click on and modify. If there is no content in a -->
+        <#--        particular semester, the semester is defined as a "Free Semester," which is the else -->
+        <#--        condition in the following statement. If there is content for each of the possible courses, -->
+        <#--        then the course ID is displayed. -->
         <#list results as semester>
             <div class="ui-raised-link-card" id="myBtn${semester.semnumber}">
 
@@ -220,108 +220,31 @@
                     <div class="description">
                         <br>
                         <#if semester.courses ? has_content>
-                            <#if semester.courseid1 ? has_content>
-                                <div class="course" id="${semester.courseid1}" style="cursor:pointer;">
-                                    ${semester.courseid1}
+                            <#list semester.courses as course>
+                                <div class="course" id="${course.id}" style="cursor:pointer;">
+                                    ${course.id}
                                     <div class="more-info">
-                                        ${semester.courseid1} - ${semester.coursename1}
+                                        ${course.id} - ${course.name}
                                         <br>
                                         <br>
-                                        Professor: ${semester.prof1}
+                                        Professor: ${course.professor}
                                         <br>
                                         <br>
-                                        <#if semester.sems1 == 2>
+                                        <#if course.sem == 2>
                                             Offered: Fall & Spring
                                         </#if>
-                                        <#if semester.sems1 == 1>
+                                        <#if course.sem == 1>
                                             Offered: Fall
                                         </#if>
-                                        <#if semester.sems1 == 0>
+                                        <#if course.sem == 0>
                                             Offered: Spring
                                         </#if>
                                         <br>
                                         <br>
-                                        <a href="${semester.url1}" target="_blank">More Details</a>
+                                        <a href="${course.ssurl}" target="_blank">More Details</a>
                                     </div>
                                 </div>
-                            </#if>
-                            <#if semester.courseid2 ? has_content>
-                                <div class="course" id="${semester.courseid2}" style="cursor:pointer;">
-                                    ${semester.courseid2}
-                                    <div class="more-info">
-                                        ${semester.courseid2} - ${semester.coursename2}
-                                        <br>
-                                        <br>
-                                        Professor: ${semester.prof2}
-                                        <br>
-                                        <br>
-                                        <#if semester.sems2 == 2>
-                                            Offered: Fall & Spring
-                                        </#if>
-                                        <#if semester.sems2 == 1>
-                                            Offered: Fall
-                                        </#if>
-                                        <#if semester.sems2 == 0>
-                                            Offered: Spring
-                                        </#if>
-                                        <br>
-                                        <br>
-                                        <a href="${semester.url2}" target="_blank">More Details</a>
-                                    </div>
-                                </div>
-                            </#if>
-                            <#if semester.courseid3 ? has_content>
-                                <div class="course" id="${semester.courseid3}" style="cursor:pointer;">
-                                    ${semester.courseid3}
-                                    <div class="more-info">
-                                        ${semester.courseid3} - ${semester.coursename3}
-                                        <br>
-                                        <br>
-                                        Professor: ${semester.prof3}
-                                        <br>
-                                        <br>
-                                        <#if semester.sems3 == 2>
-                                            Offered: Fall & Spring
-                                        </#if>
-                                        <#if semester.sems3 == 1>
-                                            Offered: Fall
-                                        </#if>
-                                        <#if semester.sems3 == 0>
-                                            Offered: Spring
-                                        </#if>
-                                        <br>
-                                        <br>
-                                        <a href="${semester.url3}" target="_blank">More Details</a>
-                                    </div>
-                                </div>
-                            </#if>
-                            <#if semester.courseid4 ? has_content>
-                                <div class="course" id="${semester.courseid4}" style="cursor:pointer;">
-                                    ${semester.courseid4}
-                                    <div class="more-info">
-                                        ${semester.courseid4} - ${semester.coursename4}
-                                        <br>
-                                        <br>
-                                        Professor: ${semester.prof4}
-                                        <br>
-                                        <br>
-                                        <#if semester.sems4 == 2>
-                                            Offered: Fall & Spring
-                                        </#if>
-                                        <#if semester.sems4 == 1>
-                                            Offered: Fall
-                                        </#if>
-                                        <#if semester.sems4 == 0>
-                                            Offered: Spring
-                                        </#if>
-                                        <br>
-                                        <br>
-                                        <a href="${semester.url4}" target="_blank">More Details</a>
-                                    </div>
-                                </div>
-                            </#if>
-                        <#else>
-                            Free Semester
+                            </#list>
                         </#if>
                     </div>
                 </div>
@@ -332,7 +255,7 @@
 </div>
 <script>
     // Add year text according to semester number
-    $('.header-cc_pointer').each(function() {
+    $('.header-cc_pointer').each(function () {
         if ($(this).text().includes("1") || $(this).text().includes("2")) {
             $('#freshman1').css("display", "block");
             $('#freshman2').css("display", "block");
@@ -354,8 +277,8 @@
     });
 
     // Color code cards by year
-    $('.ui-raised-link-card').each(function() {
-        $(this).children('div.year').each(function() {
+    $('.ui-raised-link-card').each(function () {
+        $(this).children('div.year').each(function () {
             if ($(this).css('display') === 'block') {
                 if ($(this).text().includes("Freshman")) {
                     $(this).parent().addClass("blue");
@@ -477,8 +400,7 @@
         for (let i = 0; i < children.length; i++) {
 
             let name = children[i].getAttribute("id");
-            if (name != null && name.toLowerCase().replace(/\s/g, '') === moveCourse.
-                                                            value.toLowerCase().replace(/\s/g, '')) {
+            if (name != null && name.toLowerCase().replace(/\s/g, '') === moveCourse.value.toLowerCase().replace(/\s/g, '')) {
                 child.removeChild(children[i]);
 
                 const parent2 = document.getElementById("myBtn" + destSem.value);
@@ -517,8 +439,7 @@
         for (let i = 0; i < children.length; i++) {
             let name = children[i].getAttribute("id");
             console.log(name);
-            if (name != null && name.toLowerCase().replace(/\s/g, '') === swapCourse.
-                                                            value.toLowerCase().replace(/\s/g, '')) {
+            if (name != null && name.toLowerCase().replace(/\s/g, '') === swapCourse.value.toLowerCase().replace(/\s/g, '')) {
                 child.removeChild(children[i]);
             }
         }
@@ -584,8 +505,12 @@
 <script>
     // Script for fixing the flash of unstyled content problem
     function js_Load() {
-        document.body.style.visibility= 'visible';
+        document.body.style.visibility = 'visible';
     }
 </script>
-<noscript><style> body { visibility: visible; }</style></noscript>
+<noscript>
+    <style> body {
+            visibility: visible;
+        }</style>
+</noscript>
 </html>
