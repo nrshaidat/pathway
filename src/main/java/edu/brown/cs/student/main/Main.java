@@ -193,9 +193,9 @@ public final class Main {
       List<Semester> pathway1 = pathwayProgram.getPath1();
       List<Semester> pathway2 = pathwayProgram.getPath2();
       List<Semester> pathway3 = pathwayProgram.getPath3();
-      List<String> uniques1 = pathwayProgram.getPath1Uniques();
-      List<String> uniques2 = pathwayProgram.getPath2Uniques();
-      List<String> uniques3 = pathwayProgram.getPath3Uniques();
+      List<Node> uniques1 = pathwayProgram.getPath1Uniques();
+      List<Node> uniques2 = pathwayProgram.getPath2Uniques();
+      List<Node> uniques3 = pathwayProgram.getPath3Uniques();
       Map<String, Object> variables =
           ImmutableMap.<String, Object>builder().put("header", display).put("results1", pathway1)
               .put("results2", pathway2).put("results3", pathway3).put("stats", pathwayProgram)

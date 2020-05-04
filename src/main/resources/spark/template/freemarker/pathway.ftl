@@ -48,47 +48,104 @@
 
 <br>
 
-<a href="mypath/1" class="link" name="pathway" id="pathway" value="one">
-    <div id="container1">
-        <#--Displays the workload and unique courses for pathway 1-->
-        <header> Pathway 1</header>
-        <p> Low Workload </p>
-        <p> Unique classes: </p>
-        <#list uniques1 as u>
-            <p> ${u} </p>
-        </#list>
 
-    </div>
-</a>
+<div id="container1" onclick="location.href='mypath/1';" style="cursor: pointer;">
+    <#--Displays the workload and unique courses for pathway 1-->
+    <header> Pathway 1</header>
+    <p> Low Workload </p>
+    <p> Unique classes: </p>
+    <#list uniques1 as course>
+        <div class="course" id="${course.id}" style="cursor:pointer;">
+            ${course.id}
+            <div class="more-info">
+                ${course.id} - ${course.name}
+                <br>
+                <br>
+                Professor: ${course.professor}
+                <br>
+                <br>
+                <#if course.sem == 2>
+                    Offered: Fall & Spring
+                </#if>
+                <#if course.sem == 1>
+                    Offered: Fall
+                </#if>
+                <#if course.sem == 0>
+                    Offered: Spring
+                </#if>
+                <br>
+                <br>
+                <a href="${course.ssurl}" target="_blank">More Details</a>
+            </div>
+        </div>
+    </#list>
+</div>
 
-<a href="mypath/2" class="link">
-    <div id="container2">
+<div id="container2" onclick="location.href='mypath/2';" style="cursor: pointer;">
+    <#--Displays the workload and unique courses for pathway 2-->
+    <header> Pathway 2</header>
+    <p> Medium Workload </p>
+    <p> Unique classes: </p>
+    <#list uniques2 as course>
+        <div class="course" id="${course.id}" style="cursor:pointer;">
+            ${course.id}
+            <div class="more-info">
+                ${course.id} - ${course.name}
+                <br>
+                <br>
+                Professor: ${course.professor}
+                <br>
+                <br>
+                <#if course.sem == 2>
+                    Offered: Fall & Spring
+                </#if>
+                <#if course.sem == 1>
+                    Offered: Fall
+                </#if>
+                <#if course.sem == 0>
+                    Offered: Spring
+                </#if>
+                <br>
+                <br>
+                <a href="${course.ssurl}" target="_blank">More Details</a>
+            </div>
+        </div>
+    </#list>
 
-        <#--Displays the workload and unique courses for pathway 2-->
-        <header> Pathway 2</header>
-        <p> Medium Workload </p>
-        <p> Unique classes: </p>
-        <#list uniques2 as u>
-            <p> ${u} </p>
-        </#list>
+</div>
 
-    </div>
-</a>
 
-<a href="mypath/3" class="link">
-    <div id="container3">
-
-        <#--Displays the workload and unique courses for pathway 3-->
-        <header> Pathway 3</header>
-
-        <p> High Workload </p>
-        <p> Unique classes: </p>
-        <#list uniques3 as u>
-            <p> ${u} </p>
-        </#list>
-
-    </div>
-</a>
+<div id="container3" onclick="location.href='mypath/3';" style="cursor: pointer;">
+    <#--Displays the workload and unique courses for pathway 3-->
+    <header> Pathway 3</header>
+    <p> High Workload </p>
+    <p> Unique classes: </p>
+    <#list uniques3 as course>
+        <div class="course" id="${course.id}" style="cursor:pointer;">
+            ${course.id}
+            <div class="more-info">
+                ${course.id} - ${course.name}
+                <br>
+                <br>
+                Professor: ${course.professor}
+                <br>
+                <br>
+                <#if course.sem == 2>
+                    Offered: Fall & Spring
+                </#if>
+                <#if course.sem == 1>
+                    Offered: Fall
+                </#if>
+                <#if course.sem == 0>
+                    Offered: Spring
+                </#if>
+                <br>
+                <br>
+                <a href="${course.ssurl}" target="_blank">More Details</a>
+            </div>
+        </div>
+    </#list>
+</div>
 <br>
 <form action="/generate" method="post">
     <button class="regen" type="submit">Generate New Pathways</button>
@@ -97,7 +154,8 @@
 </body>
 <script>
 
-<#--    Script to fix the flash of unstyled content problem-->
+    <#--    Script to fix the flash of unstyled content problem-->
+
     function js_Load() {
         document.body.style.visibility = 'visible';
     }

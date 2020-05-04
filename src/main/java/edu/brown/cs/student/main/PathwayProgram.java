@@ -27,9 +27,9 @@ public class PathwayProgram {
   private List<Semester> path1;
   private List<Semester> path2;
   private List<Semester> path3;
-  private List<String> path1Uniques;
-  private List<String> path2Uniques;
-  private List<String> path3Uniques;
+  private List<Node> path1Uniques;
+  private List<Node> path2Uniques;
+  private List<Node> path3Uniques;
   private int totalnumcourses1;
   private int totalnumcourses2;
   private int totalnumcourses3;
@@ -589,7 +589,7 @@ public class PathwayProgram {
    * Sets path unique courses.
    * @author nkeirste (Nick) and nrshaida (Natalie Rshaidat)
    */
-  public void setPathUniques() {
+  public void setPathUniques() throws SQLException {
     if (this.isSet()) {
       Set<Node> path1Courses = new HashSet<>();
       for (Semester s : path1) {
@@ -613,13 +613,13 @@ public class PathwayProgram {
       path2Uniques = new ArrayList<>();
       path3Uniques = new ArrayList<>();
       for (Node n : path1UniqueNodes) {
-        path1Uniques.add(n.getId());
+        path1Uniques.add(cache.getCourseData(n.getId()));
       }
       for (Node n : path2UniqueNodes) {
-        path2Uniques.add(n.getId());
+        path2Uniques.add(cache.getCourseData(n.getId()));
       }
       for (Node n : path3UniqueNodes) {
-        path3Uniques.add(n.getId());
+        path3Uniques.add(cache.getCourseData(n.getId()));
       }
     } else {
       path1Uniques = new ArrayList<>();
@@ -631,10 +631,10 @@ public class PathwayProgram {
   /**
    * Gets pathway path 1 unique courses.
    *
-   * @return the path 1 unique courses as a list of course IDs
+   * @return the path 1 unique courses as a list of nodes
    * @author nrshaida (Natalie Rshaidat) and nkeirste (Nick)
    */
-  public List<String> getPath1Uniques() {
+  public List<Node> getPath1Uniques() {
     if (path1Uniques != null) {
       return path1Uniques.size() > 3 ? path1Uniques.subList(0, 3) : path1Uniques;
     } else {
@@ -645,10 +645,10 @@ public class PathwayProgram {
   /**
    * Gets pathway path 2 unique courses.
    *
-   * @return the path 2 unique courses as a list of course IDs
+   * @return the path 2 unique courses as a list of nodes
    * @author nrshaida (Natalie Rshaidat) and nkeirste (Nick)
    */
-  public List<String> getPath2Uniques() {
+  public List<Node> getPath2Uniques() {
     if (path2Uniques != null) {
       return path2Uniques.size() > 3 ? path2Uniques.subList(0, 3) : path2Uniques;
     } else {
@@ -659,10 +659,10 @@ public class PathwayProgram {
   /**
    * Gets path 3 unique courses.
    *
-   * @return the path 3 unique courses as a list of course IDs
+   * @return the path 3 unique courses as a list of nodes
    * @author nrshaida (Natalie Rshaidat) and nkeirste (Nick)
    */
-  public List<String> getPath3Uniques() {
+  public List<Node> getPath3Uniques() {
     if (path3Uniques != null) {
       return path3Uniques.size() > 3 ? path3Uniques.subList(0, 3) : path3Uniques;
     } else {

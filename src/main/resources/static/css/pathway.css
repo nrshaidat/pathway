@@ -15,7 +15,10 @@ a.header.item {
 .flags a {
     padding: .012em;
 }
-
+a.link{
+    color: black;
+    text-decoration: none;
+}
 a.item {
     padding-right: 5%;
     float: right;
@@ -86,10 +89,6 @@ span.psw {
     padding-top: 16px;
 }
 
-a.link {
-    color: grey;
-    text-decoration: none;
-}
 
 #container1 {
     display: inline-block;
@@ -140,10 +139,7 @@ span.psw {
     padding-top: 16px;
 }
 
-a.link {
-    color: grey;
-    text-decoration: none;
-}
+
 .regen {
     border-radius: 4px;
     border-color: white;
@@ -155,4 +151,30 @@ a.link {
 }
 .no-fouc {
     display: none;
+}
+
+.course {
+    font-size: 1.1em;
+    margin-bottom: 1em;
+    position: relative;
+}
+
+.more-info {
+    display: none;
+}
+
+.course:hover .more-info {
+    display: block;
+    position: absolute;
+    text-align: left;
+    right: -10em;
+    top: -4em;
+    z-index: 2;
+    background-color: rgba(158, 191, 250, 0.96); /* Black w/ opacity */
+    padding: 0.6em;
+    border-radius: 2px;
+    height: fit-content;
+    width: 17em;
+    border: 3px solid #4337b6;
+    box-shadow: 1px 1px 2px #888;
 }
