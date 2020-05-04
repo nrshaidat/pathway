@@ -76,6 +76,9 @@ public class Pathway {
         Range.closedOpen(MEDHIGHBOUNDHRS, HIHIGHBOUNDHRS));
   }
 
+  /**
+   * Calculates the stats for this pathway, including average hours and total number of courses.
+   */
   private void setStats() {
     avgAvgHrs = 0.0;
     numCourses = 0;
@@ -87,10 +90,18 @@ public class Pathway {
     avgAvgHrs = Math.round(avgAvgHrs / numCourses);
   }
 
+  /**
+   * A getter for the total number of courses in pathway.
+   * @return numCourses
+   */
   public int getNumCourses() {
     return numCourses;
   }
 
+  /**
+   * A getter for average hours in the pathway.
+   * @return avgAvgHrs
+   */
   public double getAvgAvgHrs() {
     return avgAvgHrs;
   }
@@ -102,6 +113,15 @@ public class Pathway {
    */
   public List<Semester> getPath() {
     return path;
+  }
+
+  /**
+   * A method to set this pathway's list of semesters. Used only in PathwayProgramTest.
+   * @param p A list of semesters
+   */
+  public void setPath(List<Semester> p) {
+    path = p;
+    setStats();
   }
 
   /**

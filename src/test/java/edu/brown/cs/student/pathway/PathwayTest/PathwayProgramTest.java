@@ -5,6 +5,7 @@ import edu.brown.cs.student.main.DatabaseCache;
 import edu.brown.cs.student.main.DatabaseInterface;
 import edu.brown.cs.student.main.PathwayProgram;
 import edu.brown.cs.student.pathway.Node;
+import edu.brown.cs.student.pathway.Pathway;
 import edu.brown.cs.student.pathway.Semester;
 import org.junit.After;
 import org.junit.Before;
@@ -12,6 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -121,9 +123,17 @@ public class PathwayProgramTest {
     tak32.add(cache.getCourseData("CSCI 1450"));
     Semester fall32 = new Semester(3, tak32);
     p3.add(fall32);
-    pp.setPath1(p1);
-    pp.setPath2(p2);
-    pp.setPath3(p3);
+
+    Pathway pathway1 = new Pathway(new int[]{}, new HashSet<>());
+    Pathway pathway2 = new Pathway(new int[]{}, new HashSet<>());
+    Pathway pathway3 = new Pathway(new int[]{}, new HashSet<>());
+    pathway1.setPath(p1);
+    pathway2.setPath(p2);
+    pathway3.setPath(p3);
+
+    pp.setPath1(pathway1);
+    pp.setPath2(pathway2);
+    pp.setPath3(pathway3);
   }
 
   /**
@@ -188,9 +198,17 @@ public class PathwayProgramTest {
     tak32.add(cache.getCourseData("APMA 1650"));
     Semester fall32 = new Semester(3, tak32);
     p3.add(fall32);
-    pp.setPath1(p1);
-    pp.setPath2(p2);
-    pp.setPath3(p3);
+
+    Pathway pathway1 = new Pathway(new int[]{}, new HashSet<>());
+    Pathway pathway2 = new Pathway(new int[]{}, new HashSet<>());
+    Pathway pathway3 = new Pathway(new int[]{}, new HashSet<>());
+    pathway1.setPath(p1);
+    pathway2.setPath(p2);
+    pathway3.setPath(p3);
+
+    pp.setPath1(pathway1);
+    pp.setPath2(pathway2);
+    pp.setPath3(pathway3);
   }
 
   /**
@@ -245,9 +263,17 @@ public class PathwayProgramTest {
     tak23.add(cache.getCourseData("CSCI 0160"));
     Semester spring23 = new Semester(2, tak23);
     p3.add(spring23);
-    pp.setPath1(p1);
-    pp.setPath2(p2);
-    pp.setPath3(p3);
+
+    Pathway pathway1 = new Pathway(new int[]{}, new HashSet<>());
+    Pathway pathway2 = new Pathway(new int[]{}, new HashSet<>());
+    Pathway pathway3 = new Pathway(new int[]{}, new HashSet<>());
+    pathway1.setPath(p1);
+    pathway2.setPath(p2);
+    pathway3.setPath(p3);
+
+    pp.setPath1(pathway1);
+    pp.setPath2(pathway2);
+    pp.setPath3(pathway3);
   }
 
   /**

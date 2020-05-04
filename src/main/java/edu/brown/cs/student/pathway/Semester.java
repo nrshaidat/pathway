@@ -42,16 +42,6 @@ public class Semester {
     }
   }
 
-  /**
-   * Resets the statistics for a semester to zero. Used in PathwayProgram.
-   */
-  public void resetStats() {
-    maxhrs = 0.0;
-    avghrs = 0.0;
-    rating = 0.0;
-  }
-
-
   // Getters for Apache Spark
 
   /**
