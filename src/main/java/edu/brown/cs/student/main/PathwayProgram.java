@@ -7,6 +7,8 @@ import com.google.common.collect.Sets;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -399,7 +401,7 @@ public class PathwayProgram {
    *                   specified concentration as fast as possible (in the least number
    *                   of semesters).
    * @throws SQLException if there are errors with querying the database.
-   * @author nrshaida (Natalie Rshaidat) and iilozor (Ifechi Ilozor) and nkirstead (Nick)
+   * @author nrshaida (Natalie Rshaidat) and iilozor (Ifechi Ilozor) and nkeirste (Nick)
    */
   public void makePathways(String con, Set<Node> taken, int sem, boolean aggressive)
       throws SQLException {
@@ -411,19 +413,44 @@ public class PathwayProgram {
 
     Pathway pathway1 = new Pathway(reqs, courseSet);
     pathway1.makePathway(taken, sem, aggressive, "lo");
-    path1 = pathway1.getPath();
-    this.setPath1(path1);
+    List<Semester> p1 = pathway1.getPath();
 
     Pathway pathway2 = new Pathway(reqs2, courseSet);
     pathway2.makePathway(taken, sem, aggressive, "med");
-    path2 = pathway2.getPath();
-    this.setPath2(path2);
+    List<Semester> p2 = pathway2.getPath();
 
     Pathway pathway3 = new Pathway(reqs3, courseSet);
     pathway3.makePathway(taken, sem, aggressive, "hi");
-    path3 = pathway3.getPath();
-    this.setPath3(path3);
-    setPathUniques();
+    List<Semester> p3 = pathway3.getPath();
+
+    double p1Hrs = getPathAvgHrs(p1);
+    double p2Hrs = getPathAvgHrs(p2);
+    double p3Hrs = getPathAvgHrs(p3);
+
+    /* Check avg hours for paths 1, 2, 3 and reorder if needed so that path 1 actually has the
+    lowest avg hours, path 2 has middle, path 3 has highest. */
+    List<Map.Entry<List<Semester>, Double>> pathHours = new ArrayList<>();
+    pathHours.add(Map.entry(p1, p1Hrs));
+    pathHours.add(Map.entry(p2, p2Hrs));
+    pathHours.add(Map.entry(p3, p3Hrs));
+    Collections.sort(pathHours, new Comparator<Map.Entry<List<Semester>, Double>>() {
+      @Override
+      public int compare(Map.Entry<List<Semester>, Double> e1,
+                         Map.Entry<List<Semester>, Double> e2) {
+        return e1.getValue().compareTo(e2.getValue());
+      }
+    });
+    /* Reset stats for each path, because had to calculate avgHrs to sort pathways */
+    for (Map.Entry<List<Semester>, Double> e: pathHours) {
+      for (Semester s : e.getKey()) {
+        s.resetStats();
+      }
+    }
+    this.setPath1(pathHours.get(0).getKey());
+    this.setPath2(pathHours.get(1).getKey());
+    this.setPath3(pathHours.get(2).getKey());
+
+    this.setPathUniques();
   }
 
   /**
@@ -540,8 +567,27 @@ public class PathwayProgram {
   }
 
   /**
+   * A method that calculates the average number of hours in a pathway per semester. This is used
+   * in makePathways to get the workload of each pathway and sort them, ensuring path1 is the
+   * lowest hours, path 2 is the medium, path 3 is the highest.
+   * @param path The pathway, a list of semesters
+   * @return The average number of hours per semester for path
+   * @author nkeirste (Nick Keirstead)
+   */
+  private double getPathAvgHrs(List<Semester> path) {
+    double avgHrs = 0.0;
+    int numCourses = 0;
+    for (Semester sem : path) {
+      sem.setStats();
+      avgHrs += sem.getAvghrs();
+      numCourses += sem.getCourses().size();
+    }
+    return Math.round(avgHrs / numCourses);
+  }
+
+  /**
    * Sets path unique courses.
-   * @author nkirstead (Nick) and nrshaida (Natalie Rshaidat)
+   * @author nkeirste (Nick) and nrshaida (Natalie Rshaidat)
    */
   public void setPathUniques() {
     if (this.isSet()) {
@@ -586,7 +632,7 @@ public class PathwayProgram {
    * Gets pathway path 1 unique courses.
    *
    * @return the path 1 unique courses as a list of course IDs
-   * @author nrshaida (Natalie Rshaidat) and nkirstead (Nick)
+   * @author nrshaida (Natalie Rshaidat) and nkeirste (Nick)
    */
   public List<String> getPath1Uniques() {
     if (path1Uniques != null) {
@@ -600,7 +646,7 @@ public class PathwayProgram {
    * Gets pathway path 2 unique courses.
    *
    * @return the path 2 unique courses as a list of course IDs
-   * @author nrshaida (Natalie Rshaidat) and nkirstead (Nick)
+   * @author nrshaida (Natalie Rshaidat) and nkeirste (Nick)
    */
   public List<String> getPath2Uniques() {
     if (path2Uniques != null) {
@@ -614,7 +660,7 @@ public class PathwayProgram {
    * Gets path 3 unique courses.
    *
    * @return the path 3 unique courses as a list of course IDs
-   * @author nrshaida (Natalie Rshaidat) and nkirstead (Nick)
+   * @author nrshaida (Natalie Rshaidat) and nkeirste (Nick)
    */
   public List<String> getPath3Uniques() {
     if (path3Uniques != null) {

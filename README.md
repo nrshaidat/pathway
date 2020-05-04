@@ -151,11 +151,12 @@ None.
         
     Nick:
         -CAB/self service scraping
-        -Manually fixing prereqs for CHEM
-        -Unit testing CAB database outputs
+        -Manually fixing prereqs for CHEM and CSCI
+        -Unit testing CAB database outputs and PathwayProgram unique courses
 	    -Username/password fields on sign up page, guest button in the login page
 	    -Unique courses for 3-pathway display and pathway statistics
-		
+	    -Sorting pathways by workload to display correctly
+	    
 
 #### Member: Melissa Cui
 ##### Strengths
