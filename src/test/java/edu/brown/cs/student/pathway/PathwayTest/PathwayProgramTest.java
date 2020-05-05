@@ -662,5 +662,60 @@ public class PathwayProgramTest {
     Node cs16 = cache.getCourseData("CSCI 0160");
     assertEquals(cs16, pp.getCourseData("CSCI 0160"));
   }
+
+  /**
+   * Tests that pathways are sorted correctly by low->high workload (and low->high num classes
+   * for ties).
+   * @throws Exception The exception
+   */
+  @Test
+  public void testPathwaysSorted() throws Exception {
+    String[] testConcs = {"computerscienceba", "economicsba", "businesseconomicsba"};
+    /* Test for 3 concentrations above, freshman fall, no taken */
+    for (String c : testConcs) {
+      pp.makePathways(c, new HashSet<>(), 1, false);
+      double avg1 = pp.getAvgavghrs1path();
+      double avg2 = pp.getAvgavghrs2path();
+      double avg3 = pp.getAvgavghrs3path();
+      int num1 = pp.getTotalnumcourses1();
+      int num2 = pp.getTotalnumcourses2();
+      int num3 = pp.getTotalnumcourses3();
+      assertTrue(avg1 < avg2 || (avg1 == avg2 && num1 <= num2));
+      assertTrue(avg1 < avg3 || (avg1 == avg3 && num1 <= num3));
+      assertTrue(avg2 < avg3 || (avg2 == avg3 && num2 <= num3));
+    }
+    /* Test for 3 above, sophomore spring, no taken */
+    for (String c : testConcs) {
+      pp.makePathways(c, new HashSet<>(), 4, false);
+      double avg1 = pp.getAvgavghrs1path();
+      double avg2 = pp.getAvgavghrs2path();
+      double avg3 = pp.getAvgavghrs3path();
+      int num1 = pp.getTotalnumcourses1();
+      int num2 = pp.getTotalnumcourses2();
+      int num3 = pp.getTotalnumcourses3();
+      assertTrue(avg1 < avg2 || (avg1 == avg2 && num1 <= num2));
+      assertTrue(avg1 < avg3 || (avg1 == avg3 && num1 <= num3));
+      assertTrue(avg2 < avg3 || (avg2 == avg3 && num2 <= num3));
+    }
+    /* Test for 3 above, junior fall, with some taken */
+    Set<Node> taken = new HashSet<>();
+    taken.add(cache.getCourseData("CSCI 0170"));
+    taken.add(cache.getCourseData("CSCI 0180"));
+    taken.add(cache.getCourseData("CSCI 0320"));
+    taken.add(cache.getCourseData("ECON 0110"));
+    taken.add(cache.getCourseData("ECON 1130"));
+    for (String c : testConcs) {
+      pp.makePathways(c, taken, 5, false);
+      double avg1 = pp.getAvgavghrs1path();
+      double avg2 = pp.getAvgavghrs2path();
+      double avg3 = pp.getAvgavghrs3path();
+      int num1 = pp.getTotalnumcourses1();
+      int num2 = pp.getTotalnumcourses2();
+      int num3 = pp.getTotalnumcourses3();
+      assertTrue(avg1 < avg2 || (avg1 == avg2 && num1 <= num2));
+      assertTrue(avg1 < avg3 || (avg1 == avg3 && num1 <= num3));
+      assertTrue(avg2 < avg3 || (avg2 == avg3 && num2 <= num3));
+    }
+  }
 }
 
