@@ -8,7 +8,7 @@ None
 ## Design details:
 #### Main Package:  
  Database Design:  
- (Natalie) I used the proxy pattern to abstract away the interactions between the sql database and any class that wants data from it. It also allowed me to use the Guava cache to store all the courses in the courses table when the cache is first initialized. This not only optimized times needed to get data from sql database, but it also allowed for me to populate each course's data when I get the courses associated with a concentration and avoid having the result set opened to query the concentration table and the courses table. 
+ We used the proxy pattern to abstract away the interactions between the sql database and any class that wants data from it. It also allowed me to use the Guava cache to store all the courses in the courses table when the cache is first initialized. This not only optimized times needed to get data from sql database, but it also allowed for us to populate each course's data when we get the courses associated with a concentration and avoid having the result set opened to query the concentration table and the courses table. 
  
   * DatabaseInterface:  Contains all the methods that the Database class and DatabaseCache share. 
 	
