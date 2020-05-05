@@ -17,15 +17,14 @@ None
   * DatabaseCache Class:  The class that has the cache of all courses and calls on the Database class to query the sql database. 
 	
  -PathwayProgram class:  A class that contains all the information needed from the GUI and executes making pathways for the main class. It also serves as integrater class between the pathway class, main class, and database classes.   
- -GUI Design:  
+ -GUI Design: In our GUI we have a home page that allows the user to select their university and once a university is selected it takes the user to a login page that allows the user to login, sign up, or login as a guest. After they have completed some sort of logging in then they are taken to a generate pathway page which asks the user for concentration information in order to build 3 pathways for them. They are then shown a low, median, and high pathway and can select on any of them to look at more stats and modify the courses listed. 
  
 #### Pathway Package:  
- Node class:  
- Semester class:  
- Pathway class:  
+ Node class: This class represents courses in the database.  
+ Semester class: This class represents a semester object with references to the courses in this semester and semester related stats.
+ Pathway class: This class builds the actuals pathway for the concentration. 
 ## Runtime/Space optimizations:
  Time optimizations were made by using the guava cache to load in all of the courses upon initialization of the databaseCache class. This optimization made queries runtime cut in half. Since there were only 1900 courses we felt it was not that immense of a burden on space compared to the runtime burden of each sql query. It takes 5 seconds on average to load in all of the courses which is done while the user is inputing their user preferences. 
-
 
 ## How to build and run our program:
 - To build:  
