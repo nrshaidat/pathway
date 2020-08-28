@@ -49,6 +49,7 @@ don't fail when building.
 
 - To run Pathway via terminal:  
 	./run 
+	open google chrome or safari and enter http://localhost:4567/login
 
 ## How to run our tests:
 	- To run unit tests: "mvn test", or using one of the build commands (mvn package)
